@@ -1,0 +1,89 @@
+@import './fonts.css';
+@import './tailwind.css';
+@import './theme.css';
+
+/* Smooth scroll + black background */
+html, body {
+  scroll-behavior: smooth;
+  background-color: #000;
+}
+
+/* Custom scrollbar styles for Netflix-like experience */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Custom scrollbar — thin, elegant, BrightMind red */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #E50914; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #FF2D3B; }
+* { scrollbar-width: thin; scrollbar-color: #E50914 transparent; }
+
+/* ─── Shared Animations ─────────────────────────────── */
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in { animation: fade-in 0.8s ease-out forwards; }
+
+@keyframes floatUp {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+.animate-float-up { animation: floatUp 3s infinite; }
+
+@keyframes scrollVertical {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-100%); }
+}
+.animate-scroll-vertical { animation: scrollVertical 60s linear infinite; }
+.animate-scroll-vertical:hover { animation-play-state: paused; }
+
+@keyframes colUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(calc(-100% / 3)); }
+}
+@keyframes colDown {
+  0% { transform: translateY(calc(-100% / 3)); }
+  100% { transform: translateY(0); }
+}
+.col-scroll-up { animation: colUp 30s linear infinite; will-change: transform; }
+.col-scroll-down { animation: colDown 35s linear infinite; will-change: transform; }
+.col-scroll-up:hover, .col-scroll-down:hover { animation-play-state: paused; }
+
+@keyframes trendingScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.trending-scroll { animation: trendingScroll 60s linear infinite; }
+.trending-scroll:hover { animation-play-state: paused; }
+
+@keyframes scrollUp {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-scroll-up { animation: scrollUp 60s linear infinite; }
+.animate-scroll-up:hover { animation-play-state: paused; }
+
+/* ─── Netflix-level easing utilities ─────────────────── */
+.ease-premium { transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1); }
+.ease-spring { transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+/* Text selection styles */
+::selection { background-color: rgba(229, 9, 20, 0.35); color: white; }
+::-moz-selection { background-color: rgba(229, 9, 20, 0.35); color: white; }
+
+/* Focus visible styles */
+:focus-visible { outline: 2px solid #E50914; outline-offset: 2px; }
+
+/* Improved image loading */
+img { image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; }
+
+/* Backdrop blur support */
+@supports (backdrop-filter: blur(12px)) {
+  .backdrop-blur-sm { backdrop-filter: blur(4px); }
+  .backdrop-blur-md { backdrop-filter: blur(8px); }
+  .backdrop-blur-lg { backdrop-filter: blur(12px); }
+}
