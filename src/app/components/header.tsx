@@ -79,7 +79,7 @@ export function Header() {
         {/* Logo and Navigation */}
         <div className="flex items-center gap-6 md:gap-10">
           <Link to="/" className="group">
-            <span className="text-red-600 text-2xl md:text-3xl font-black tracking-tight hover:text-red-500 transition-colors">BrightMind</span>
+            <span className="text-white text-2xl md:text-3xl font-black tracking-tight hover:text-white/80 transition-colors">BRIGHTMIND</span>
           </Link>
           {!showSearch && (
             <nav className="hidden md:flex items-center gap-6 lg:gap-8">

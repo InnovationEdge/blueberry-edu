@@ -150,6 +150,81 @@ interface AppTranslations {
   sessionAddPhoto: string;
   sessionPost: string;
 
+  // Login
+  loginWelcomeBack: string;
+  loginSubtitle: string;
+  loginContinueGoogle: string;
+  loginContinueApple: string;
+  loginSecureSignIn: string;
+  loginTermsPrefix: string;
+  loginTermsOfService: string;
+  loginTermsAnd: string;
+  loginPrivacyPolicy: string;
+  loginNewToBM: string;
+  loginGetStarted: string;
+
+  // Landing
+  landingSignIn: string;
+  landingHeroTitle1: string;
+  landingHeroTitle2: string;
+  landingHeroSubtitle: string;
+  landingHeroCTA: string;
+  landingEmailPlaceholder: string;
+  landingGetStarted: string;
+  landingWhatsIncluded: string;
+  landingGift: string;
+  landingAllClasses: string;
+  landingAllClassesDesc: string;
+  landingAudioLessons: string;
+  landingAudioLessonsDesc: string;
+  landingDownloadOffline: string;
+  landingDownloadOfflineDesc: string;
+  landingWatchDevices: string;
+  landingWatchDevicesDesc: string;
+  landingNewClasses: string;
+  landingNewClassesDesc: string;
+  landingMoneyBack: string;
+  landingMoneyBackDesc: string;
+  landingWorkChanged: string;
+  landingTimeLearning: string;
+  landingPayPerCourse: string;
+  landingTrendingNow: string;
+  landingCertification: string;
+  landingEarnCertificate: string;
+  landingCertificateDesc: string;
+  landingVerifiedCompletion: string;
+  landingVerifiedCompletionDesc: string;
+  landingShareableCredentials: string;
+  landingShareableCredentialsDesc: string;
+  landingLifetimeAccess: string;
+  landingLifetimeAccessDesc: string;
+  landingStartLearningToday: string;
+  landingFooterAbout: string;
+  landingFooterAboutUs: string;
+  landingFooterCareers: string;
+  landingFooterPress: string;
+  landingFooterBlog: string;
+  landingFooterSupport: string;
+  landingFooterHelpCenter: string;
+  landingFooterContactUs: string;
+  landingFooterFAQ: string;
+  landingFooterAccount: string;
+  landingFooterLegal: string;
+  landingFooterTermsOfUse: string;
+  landingFooterPrivacyPolicy: string;
+  landingFooterCookiePreferences: string;
+  landingFooterCorporateInfo: string;
+  landingFooterConnect: string;
+  landingFooterRights: string;
+  landingEnjoyOnTV: string;
+  landingEnjoyOnTVDesc: string;
+  landingDownloadCourses: string;
+  landingDownloadCoursesDesc: string;
+  landingWatchEverywhere: string;
+  landingWatchEverywhereDesc: string;
+  landingCreateProfiles: string;
+  landingCreateProfilesDesc: string;
+
   // Onboarding
   onboardingBack: string;
   onboardingProfile: string;
@@ -311,6 +386,81 @@ const ka: AppTranslations = {
   sessionAddPhoto: 'ფოტოს დამატება',
   sessionPost: 'გამოქვეყნება',
 
+  // Login
+  loginWelcomeBack: 'კეთილი იყოს შენი მობრძანება',
+  loginSubtitle: 'შედი სისტემაში სწავლის გასაგრძელებლად',
+  loginContinueGoogle: 'გაგრძელება Google-ით',
+  loginContinueApple: 'გაგრძელება Apple-ით',
+  loginSecureSignIn: 'უსაფრთხო ავტორიზაცია',
+  loginTermsPrefix: 'გაგრძელებით თქვენ ეთანხმებით BrightMind-ის',
+  loginTermsOfService: 'მომსახურების პირობებს',
+  loginTermsAnd: 'და',
+  loginPrivacyPolicy: 'კონფიდენციალურობის პოლიტიკას',
+  loginNewToBM: 'ახალი ხარ BrightMind-ზე?',
+  loginGetStarted: 'დაწყება',
+
+  // Landing
+  landingSignIn: 'შესვლა',
+  landingHeroTitle1: 'ისწავლე საუკეთესოსგან,',
+  landingHeroTitle2: 'გახდი საუკეთესო.',
+  landingHeroSubtitle: 'მიიღე შეუზღუდავი წვდომა ათასობით მოკლე გაკვეთილზე.',
+  landingHeroCTA: 'მზად ხარ? შეიყვანე ელ. ფოსტა წევრობის დასაწყებად ან განსაახლებლად.',
+  landingEmailPlaceholder: 'ელ. ფოსტის მისამართი',
+  landingGetStarted: 'დაწყება',
+  landingWhatsIncluded: 'რას მოიცავს ყველა BrightMind კურსი?',
+  landingGift: 'საჩუქარი',
+  landingAllClasses: 'გადაიხადე ერთხელ — კურსი შენია სამუდამოდ',
+  landingAllClassesDesc: 'არანაირი გამოწერა, არანაირი ყოველთვიური გადასახადი',
+  landingAudioLessons: 'გადმოწერე და ისწავლე ოფლაინ',
+  landingAudioLessonsDesc: 'წვდომა კურსებზე ინტერნეტის გარეშეც',
+  landingDownloadOffline: 'უვადო წვდომა შეძენილ კურსებზე',
+  landingDownloadOfflineDesc: 'Lifetime access — შენი კურსი არასდროს იბლოკება',
+  landingWatchDevices: 'უყურე კომპიუტერზე, ტელევიზორზე ან მობილურზე',
+  landingWatchDevicesDesc: 'ისწავლე ნებისმიერი მოწყობილობით',
+  landingNewClasses: 'მიიღე დასრულების სერტიფიკატი',
+  landingNewClassesDesc: 'ვერიფიცირებული სერტიფიკატი LinkedIn-ისა და რეზიუმესთვის',
+  landingMoneyBack: '30-დღიანი თანხის დაბრუნების გარანტია',
+  landingMoneyBackDesc: 'სცადე რისკის გარეშე, სრული თანხის დაბრუნებით',
+  landingWorkChanged: 'სამუშაო შეიცვალა.',
+  landingTimeLearning: 'დროა სწავლაც შეიცვალოს.',
+  landingPayPerCourse: 'გადაიხადე კურსის მიხედვით ყველა კლასზე წვდომისთვის',
+  landingTrendingNow: 'ტრენდული ახლა',
+  landingCertification: 'სერტიფიკაცია',
+  landingEarnCertificate: 'მიიღე დასრულების სერტიფიკატი',
+  landingCertificateDesc: 'დაასრულე ნებისმიერი კურსი და მიიღე პერსონალიზებული სერტიფიკატი შენი მიღწევის საჩვენებლად. გააზიარე LinkedIn-ზე, დაამატე რეზიუმეში ან ჩაკიდე კედელზე.',
+  landingVerifiedCompletion: 'ვერიფიცირებული დასრულება',
+  landingVerifiedCompletionDesc: 'ოფიციალური სერტიფიკატი უნიკალური ვერიფიკაციის კოდით',
+  landingShareableCredentials: 'გასაზიარებელი კრედენციალები',
+  landingShareableCredentialsDesc: 'დაამატე LinkedIn პროფილსა და პროფესიონალურ პორტფოლიოს',
+  landingLifetimeAccess: 'უვადო წვდომა',
+  landingLifetimeAccessDesc: 'გადმოწერე და შეინახე სერტიფიკატი სამუდამოდ',
+  landingStartLearningToday: 'დაიწყე სწავლა დღეს',
+  landingFooterAbout: 'ჩვენს შესახებ',
+  landingFooterAboutUs: 'ჩვენს შესახებ',
+  landingFooterCareers: 'კარიერა',
+  landingFooterPress: 'პრესა',
+  landingFooterBlog: 'ბლოგი',
+  landingFooterSupport: 'დახმარება',
+  landingFooterHelpCenter: 'დახმარების ცენტრი',
+  landingFooterContactUs: 'დაგვიკავშირდით',
+  landingFooterFAQ: 'ხშირი კითხვები',
+  landingFooterAccount: 'ანგარიში',
+  landingFooterLegal: 'სამართლებრივი',
+  landingFooterTermsOfUse: 'გამოყენების პირობები',
+  landingFooterPrivacyPolicy: 'კონფიდენციალურობის პოლიტიკა',
+  landingFooterCookiePreferences: 'Cookie პარამეტრები',
+  landingFooterCorporateInfo: 'კორპორატიული ინფორმაცია',
+  landingFooterConnect: 'დაკავშირება',
+  landingFooterRights: '© 2026 BrightMind სასწავლო პლატფორმა. ყველა უფლება დაცულია.',
+  landingEnjoyOnTV: 'ისწავლე ნებისმიერ ეკრანზე',
+  landingEnjoyOnTVDesc: 'უყურე კომპიუტერზე, Smart TV-ზე, ტაბლეტზე, ტელეფონზე — შენი პროგრესი სინქრონიზდება ყველგან.',
+  landingDownloadCourses: 'გადმოწერე და ისწავლე ოფლაინ',
+  landingDownloadCoursesDesc: 'შეინახე გაკვეთილები და ისწავლე ინტერნეტის გარეშეც, ნებისმიერ დროს.',
+  landingWatchEverywhere: 'მიიღე სერტიფიკატი',
+  landingWatchEverywhereDesc: 'დაასრულე კურსი და მიიღე ვერიფიცირებული სერტიფიკატი, რომელიც გააზიარე LinkedIn-ზე.',
+  landingCreateProfiles: 'ისწავლე შენი ტემპით',
+  landingCreateProfilesDesc: 'არანაირი ვადა — შეძენილი კურსი შენია სამუდამოდ, დაბრუნდი ნებისმიერ დროს.',
+
   onboardingBack: 'უკან',
   onboardingProfile: 'შექმენი პროფილი',
   onboardingProfileSub: 'ეს არის შენი ანგარიშის პროფილი.',
@@ -471,6 +621,81 @@ const en: AppTranslations = {
   sessionAddPhoto: 'Add Photo(s)',
   sessionPost: 'Post',
 
+  // Login
+  loginWelcomeBack: 'Welcome Back',
+  loginSubtitle: 'Sign in to continue your learning journey',
+  loginContinueGoogle: 'Continue with Google',
+  loginContinueApple: 'Continue with Apple',
+  loginSecureSignIn: 'Secure sign-in',
+  loginTermsPrefix: "By continuing, you agree to BrightMind's",
+  loginTermsOfService: 'Terms of Service',
+  loginTermsAnd: 'and',
+  loginPrivacyPolicy: 'Privacy Policy',
+  loginNewToBM: 'New to BrightMind?',
+  loginGetStarted: 'Get Started',
+
+  // Landing
+  landingSignIn: 'Sign In',
+  landingHeroTitle1: 'Learn from the best,',
+  landingHeroTitle2: 'Be your best.',
+  landingHeroSubtitle: 'Get unlimited access to thousands of bite-sized lessons.',
+  landingHeroCTA: 'Ready to watch? Enter your email to create or restart your membership.',
+  landingEmailPlaceholder: 'Email address',
+  landingGetStarted: 'Get Started',
+  landingWhatsIncluded: "What's included in every BrightMind course?",
+  landingGift: 'Gift',
+  landingAllClasses: 'Pay once — the course is yours forever',
+  landingAllClassesDesc: 'No subscriptions, no monthly fees',
+  landingAudioLessons: 'Download and learn offline',
+  landingAudioLessonsDesc: 'Access courses without internet',
+  landingDownloadOffline: 'Lifetime access to purchased courses',
+  landingDownloadOfflineDesc: 'Your course never expires or gets locked',
+  landingWatchDevices: 'Watch on desktop, TV, or mobile devices',
+  landingWatchDevicesDesc: 'Learn from any device you own',
+  landingNewClasses: 'Earn a completion certificate',
+  landingNewClassesDesc: 'Verified certificate for LinkedIn and your resume',
+  landingMoneyBack: '30-day money back guarantee',
+  landingMoneyBackDesc: 'Try risk-free with full refund',
+  landingWorkChanged: 'Work changed.',
+  landingTimeLearning: "It's time learning did too.",
+  landingPayPerCourse: 'Pay per course to access all classes',
+  landingTrendingNow: 'Trending Now',
+  landingCertification: 'Certification',
+  landingEarnCertificate: 'Earn Your Certificate of Completion',
+  landingCertificateDesc: 'Complete any course and receive a personalized certificate to showcase your achievement. Share it on LinkedIn, add it to your resume, or frame it on your wall.',
+  landingVerifiedCompletion: 'Verified Completion',
+  landingVerifiedCompletionDesc: 'Official certificate with unique verification code',
+  landingShareableCredentials: 'Shareable Credentials',
+  landingShareableCredentialsDesc: 'Add to your LinkedIn profile and professional portfolio',
+  landingLifetimeAccess: 'Lifetime Access',
+  landingLifetimeAccessDesc: 'Download and keep your certificate forever',
+  landingStartLearningToday: 'Start Learning Today',
+  landingFooterAbout: 'About',
+  landingFooterAboutUs: 'About Us',
+  landingFooterCareers: 'Careers',
+  landingFooterPress: 'Press',
+  landingFooterBlog: 'Blog',
+  landingFooterSupport: 'Support',
+  landingFooterHelpCenter: 'Help Center',
+  landingFooterContactUs: 'Contact Us',
+  landingFooterFAQ: 'FAQ',
+  landingFooterAccount: 'Account',
+  landingFooterLegal: 'Legal',
+  landingFooterTermsOfUse: 'Terms of Use',
+  landingFooterPrivacyPolicy: 'Privacy Policy',
+  landingFooterCookiePreferences: 'Cookie Preferences',
+  landingFooterCorporateInfo: 'Corporate Info',
+  landingFooterConnect: 'Connect',
+  landingFooterRights: '© 2026 BrightMind Learning Platform. All rights reserved.',
+  landingEnjoyOnTV: 'Enjoy on your TV',
+  landingEnjoyOnTVDesc: 'Watch on Smart TVs, Playstation, Xbox, Chromecast, Apple TV, Blu-ray players, and more.',
+  landingDownloadCourses: 'Download your courses offline',
+  landingDownloadCoursesDesc: 'Save your favorites easily and always have something to watch.',
+  landingWatchEverywhere: 'Watch everywhere',
+  landingWatchEverywhereDesc: 'Stream unlimited courses and lessons on your phone, tablet, laptop, and TV.',
+  landingCreateProfiles: 'Create profiles for learners',
+  landingCreateProfilesDesc: 'Send learners on adventures with their favorite instructors.',
+
   onboardingBack: 'Back',
   onboardingProfile: 'Set up your profile',
   onboardingProfileSub: "This is your account profile.",
@@ -630,6 +855,81 @@ const ru: AppTranslations = {
   sessionPostPlaceholder: 'Поделитесь мыслями...',
   sessionAddPhoto: 'Добавить фото',
   sessionPost: 'Опубликовать',
+
+  // Login
+  loginWelcomeBack: 'С возвращением',
+  loginSubtitle: 'Войдите, чтобы продолжить обучение',
+  loginContinueGoogle: 'Продолжить с Google',
+  loginContinueApple: 'Продолжить с Apple',
+  loginSecureSignIn: 'Безопасный вход',
+  loginTermsPrefix: 'Продолжая, вы соглашаетесь с',
+  loginTermsOfService: 'Условиями использования',
+  loginTermsAnd: 'и',
+  loginPrivacyPolicy: 'Политикой конфиденциальности',
+  loginNewToBM: 'Впервые на BrightMind?',
+  loginGetStarted: 'Начать',
+
+  // Landing
+  landingSignIn: 'Войти',
+  landingHeroTitle1: 'Учитесь у лучших,',
+  landingHeroTitle2: 'Будьте лучшими.',
+  landingHeroSubtitle: 'Получите неограниченный доступ к тысячам коротких уроков.',
+  landingHeroCTA: 'Готовы смотреть? Введите email для создания или возобновления подписки.',
+  landingEmailPlaceholder: 'Адрес электронной почты',
+  landingGetStarted: 'Начать',
+  landingWhatsIncluded: 'Что включено в каждый курс BrightMind?',
+  landingGift: 'Подарок',
+  landingAllClasses: 'Заплатите один раз — курс ваш навсегда',
+  landingAllClassesDesc: 'Никаких подписок, никаких ежемесячных платежей',
+  landingAudioLessons: 'Скачайте и учитесь офлайн',
+  landingAudioLessonsDesc: 'Доступ к курсам без интернета',
+  landingDownloadOffline: 'Пожизненный доступ к купленным курсам',
+  landingDownloadOfflineDesc: 'Ваш курс никогда не истекает и не блокируется',
+  landingWatchDevices: 'Смотрите на компьютере, ТВ или мобильном',
+  landingWatchDevicesDesc: 'Учитесь с любого устройства',
+  landingNewClasses: 'Получите сертификат о завершении',
+  landingNewClassesDesc: 'Верифицированный сертификат для LinkedIn и резюме',
+  landingMoneyBack: '30-дневная гарантия возврата денег',
+  landingMoneyBackDesc: 'Попробуйте без риска с полным возвратом',
+  landingWorkChanged: 'Работа изменилась.',
+  landingTimeLearning: 'Пора измениться и обучению.',
+  landingPayPerCourse: 'Платите за курс для доступа ко всем классам',
+  landingTrendingNow: 'Популярное сейчас',
+  landingCertification: 'Сертификация',
+  landingEarnCertificate: 'Получите сертификат о прохождении',
+  landingCertificateDesc: 'Завершите любой курс и получите персонализированный сертификат для демонстрации ваших достижений. Поделитесь в LinkedIn, добавьте в резюме или повесьте на стену.',
+  landingVerifiedCompletion: 'Подтверждённое завершение',
+  landingVerifiedCompletionDesc: 'Официальный сертификат с уникальным кодом верификации',
+  landingShareableCredentials: 'Общие учётные данные',
+  landingShareableCredentialsDesc: 'Добавьте в профиль LinkedIn и профессиональное портфолио',
+  landingLifetimeAccess: 'Пожизненный доступ',
+  landingLifetimeAccessDesc: 'Скачайте и сохраните сертификат навсегда',
+  landingStartLearningToday: 'Начните обучение сегодня',
+  landingFooterAbout: 'О нас',
+  landingFooterAboutUs: 'О нас',
+  landingFooterCareers: 'Карьера',
+  landingFooterPress: 'Пресса',
+  landingFooterBlog: 'Блог',
+  landingFooterSupport: 'Поддержка',
+  landingFooterHelpCenter: 'Центр помощи',
+  landingFooterContactUs: 'Связаться с нами',
+  landingFooterFAQ: 'Частые вопросы',
+  landingFooterAccount: 'Аккаунт',
+  landingFooterLegal: 'Правовая информация',
+  landingFooterTermsOfUse: 'Условия использования',
+  landingFooterPrivacyPolicy: 'Политика конфиденциальности',
+  landingFooterCookiePreferences: 'Настройки Cookie',
+  landingFooterCorporateInfo: 'Корпоративная информация',
+  landingFooterConnect: 'Связь',
+  landingFooterRights: '© 2026 BrightMind Образовательная платформа. Все права защищены.',
+  landingEnjoyOnTV: 'Наслаждайтесь на ТВ',
+  landingEnjoyOnTVDesc: 'Смотрите на Smart TV, Playstation, Xbox, Chromecast, Apple TV, Blu-ray плеерах и других.',
+  landingDownloadCourses: 'Скачивайте курсы офлайн',
+  landingDownloadCoursesDesc: 'Сохраняйте избранное и всегда имейте что посмотреть.',
+  landingWatchEverywhere: 'Смотрите везде',
+  landingWatchEverywhereDesc: 'Стримьте неограниченное количество курсов на телефоне, планшете, ноутбуке и ТВ.',
+  landingCreateProfiles: 'Создавайте профили для учеников',
+  landingCreateProfilesDesc: 'Отправьте учеников в приключения с любимыми инструкторами.',
 
   onboardingBack: 'Назад',
   onboardingProfile: 'Настройте профиль',
