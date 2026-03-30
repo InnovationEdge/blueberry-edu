@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { ChevronDown, ChevronUp, Play, Lock, CheckCircle, Bell, X } from 'lucide-react';
 import { getCourseById } from '../data/courses';
+import { useAuth } from '../context/auth-context';
+import { getAppT } from '../i18n/app';
 
 interface Lesson {
   id: string;
@@ -25,6 +27,8 @@ export function CourseSession() {
   const { id } = useParams();
   const navigate = useNavigate();
   const course = getCourseById(id || '');
+  const { language } = useAuth();
+  const t = getAppT(language);
   const [expandedChapter, setExpandedChapter] = useState<string>('1');
   const [activeTab, setActiveTab] = useState<'activities' | 'community'>('activities');
   const [showCompleted, setShowCompleted] = useState(false);
@@ -227,7 +231,7 @@ export function CourseSession() {
           >
             <div className="flex items-center gap-2">
               <div className="text-[#E50914] font-black text-xl">BM</div>
-              <span className="text-sm font-semibold">Exit Session</span>
+              <span className="text-sm font-semibold">{t.sessionExit}</span>
             </div>
           </button>
 
@@ -241,7 +245,7 @@ export function CourseSession() {
                   : 'text-gray-400 hover:text-white'
               }`}
             >
-              My Activities
+              {t.sessionActivities}
             </button>
             <button
               onClick={() => setActiveTab('community')}
@@ -251,7 +255,7 @@ export function CourseSession() {
                   : 'text-gray-400 hover:text-white'
               }`}
             >
-              Community
+              {t.sessionCommunity}
             </button>
           </div>
 
@@ -294,7 +298,7 @@ export function CourseSession() {
             {/* Activities Header */}
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-4">
-                <h2 className="text-2xl font-bold text-black">My Activities</h2>
+                <h2 className="text-2xl font-bold text-black">{t.sessionActivities}</h2>
                 <label className="flex items-center gap-2 cursor-pointer">
                   <div className="relative">
                     <input
@@ -305,7 +309,7 @@ export function CourseSession() {
                     />
                     <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-black"></div>
                   </div>
-                  <span className="text-sm text-gray-500">Show Completed</span>
+                  <span className="text-sm text-gray-500">{t.sessionCompleted}</span>
                 </label>
               </div>
 
@@ -443,7 +447,7 @@ export function CourseSession() {
                                     {lesson.completed ? (
                                       <div className="flex items-center gap-2 text-sm text-green-600 font-semibold">
                                         <CheckCircle className="w-5 h-5" />
-                                        <span>Completed</span>
+                                        <span>{t.sessionCompleted}</span>
                                       </div>
                                     ) : (
                                       <div></div>
@@ -453,13 +457,13 @@ export function CourseSession() {
                                         handleStartLesson(chapter.id, lesson.id, lesson.locked || false)
                                       }
                                       disabled={lesson.locked}
-                                      className={`px-8 py-3 rounded-lg text-sm font-bold transition-all ${
+                                      className={`px-8 py-3 rounded text-sm font-bold transition-all ${
                                         lesson.locked
                                           ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                                           : 'bg-[#E50914] text-white hover:bg-[#c40812] transform hover:scale-105 shadow-lg hover:shadow-xl'
                                       }`}
                                     >
-                                      {lesson.completed ? 'Replay' : 'Start Activity'}
+                                      {lesson.completed ? t.sessionReplay : t.sessionStart}
                                     </button>
                                   </div>
                                 </div>
@@ -483,7 +487,7 @@ export function CourseSession() {
               {/* Left Sidebar - Sections */}
               <div className="lg:col-span-1">
                 <div className="bg-white rounded-xl border border-gray-200 p-6 sticky top-24">
-                  <h3 className="text-lg font-bold text-black mb-6">Sections</h3>
+                  <h3 className="text-lg font-bold text-black mb-6">{t.sessionSections}</h3>
                   <div className="space-y-3">
                     {chapters.map((chapter) => {
                       const isCompleted = chapter.lessons.every((l) => l.completed);
@@ -508,7 +512,7 @@ export function CourseSession() {
                     })}
                   </div>
                   <button className="mt-6 text-sm text-gray-600 hover:text-black underline font-medium">
-                    Community Guidelines
+                    {t.sessionGuidelines}
                   </button>
                 </div>
               </div>
@@ -522,18 +526,18 @@ export function CourseSession() {
                       U
                     </div>
                     <div className="flex-1">
-                      <h4 className="text-sm font-bold text-black mb-3">Create Post</h4>
+                      <h4 className="text-sm font-bold text-black mb-3">{t.sessionCreatePost}</h4>
                       <textarea
-                        placeholder="Ask a question or start a discussion in this section"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:border-black resize-none"
+                        placeholder={t.sessionPostPlaceholder}
+                        className="w-full px-4 py-3 border border-gray-300 rounded text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:border-black resize-none"
                         rows={3}
                       />
                       <div className="flex items-center justify-between mt-3">
-                        <button className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
-                          Add Photo(s)
+                        <button className="px-4 py-2 border border-gray-300 rounded text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
+                          {t.sessionAddPhoto}
                         </button>
-                        <button className="px-6 py-2 bg-[#E50914] text-white rounded-lg text-sm font-bold hover:bg-[#c40812] transition-colors">
-                          Post
+                        <button className="px-6 py-2 bg-[#E50914] text-white rounded text-sm font-bold hover:bg-[#c40812] transition-colors">
+                          {t.sessionPost}
                         </button>
                       </div>
                     </div>

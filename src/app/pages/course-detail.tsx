@@ -4,8 +4,12 @@ import { Play, Plus, Share2, ChevronDown, ChevronUp, Check, Star, Clock, BarChar
 import { CourseRow } from '../components/course-row';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { getAppT } from '../i18n/app';
+import { useAuth } from '../context/auth-context';
 
 export function CourseDetail() {
+  const { language } = useAuth();
+  const t = getAppT(language);
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const course = id ? getCourseById(id) : null;
@@ -15,9 +19,9 @@ export function CourseDetail() {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center space-y-4">
-          <h1 className="text-2xl text-white">Course not found</h1>
+          <h1 className="text-2xl text-white">{t.detailNotFound}</h1>
           <Link to="/" className="text-red-600 hover:underline">
-            Return to Home
+            {t.detailReturnHome}
           </Link>
         </div>
       </div>
@@ -220,11 +224,11 @@ export function CourseDetail() {
                 <span className="text-gray-400">({totalReviews.toLocaleString()} ratings)</span>
               </div>
               <span>•</span>
-              <span>{course.students.toLocaleString()} students</span>
+              <span>{course.students.toLocaleString()} {t.detailStudents}</span>
             </div>
 
             <div className="text-base text-gray-400">
-              Created by <span className="text-gray-200 font-medium">{course.instructor}</span>
+              {t.detailCreatedBy} <span className="text-gray-200 font-medium">{course.instructor}</span>
             </div>
 
             <div className="flex items-center gap-5 text-base text-gray-300">
@@ -257,7 +261,7 @@ export function CourseDetail() {
               
               {/* What You'll Learn */}
               <div className="bg-zinc-900 rounded-lg p-8">
-                <h2 className="text-2xl font-bold text-white mb-6">What you'll learn</h2>
+                <h2 className="text-2xl font-bold text-white mb-6">{t.detailWhatLearn}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {learningOutcomes.map((outcome, index) => (
                     <div key={index} className="flex gap-3">
@@ -270,9 +274,9 @@ export function CourseDetail() {
 
               {/* Course Content */}
               <div>
-                <h2 className="text-2xl font-bold text-white mb-4">Course content</h2>
+                <h2 className="text-2xl font-bold text-white mb-4">{t.detailCourseContent}</h2>
                 <div className="text-sm text-gray-400 mb-6">
-                  {courseSections.length} sections • {totalLectures} lectures • {course.duration} total length
+                  {courseSections.length} {t.detailSections} • {totalLectures} {t.detailLectures} • {course.duration} {t.detailTotalLength}
                 </div>
                 <div className="space-y-2">
                   {courseSections.map((section, sectionIndex) => (
@@ -290,7 +294,7 @@ export function CourseDetail() {
                           <span className="text-white font-semibold">{section.title}</span>
                         </div>
                         <div className="text-sm text-gray-400">
-                          {section.lectures} lectures • {section.duration}
+                          {section.lectures} {t.detailLectures} • {section.duration}
                         </div>
                       </button>
                       
@@ -317,7 +321,7 @@ export function CourseDetail() {
                                 </div>
                                 <div className="flex items-center gap-3">
                                   {lesson.preview && (
-                                    <span className="text-xs text-red-500 font-semibold">Preview</span>
+                                    <span className="text-xs text-red-500 font-semibold">{t.detailPreview}</span>
                                   )}
                                   <span className="text-sm text-gray-400">{lesson.duration}</span>
                                 </div>
@@ -334,7 +338,7 @@ export function CourseDetail() {
 
               {/* Requirements */}
               <div>
-                <h2 className="text-2xl font-bold text-white mb-4">Requirements</h2>
+                <h2 className="text-2xl font-bold text-white mb-4">{t.detailRequirements}</h2>
                 <ul className="space-y-2">
                   {requirements.map((req, index) => (
                     <li key={index} className="flex gap-2 text-gray-300 text-sm">
@@ -347,7 +351,7 @@ export function CourseDetail() {
 
               {/* Description */}
               <div>
-                <h2 className="text-2xl font-bold text-white mb-4">Description</h2>
+                <h2 className="text-2xl font-bold text-white mb-4">{t.detailDescription}</h2>
                 <div className="text-gray-300 space-y-4 text-sm leading-relaxed">
                   <p>
                     {course.subtitle} This comprehensive course is designed to take you from beginner to advanced level,
@@ -367,7 +371,7 @@ export function CourseDetail() {
 
               {/* Instructor */}
               <div>
-                <h2 className="text-2xl font-bold text-white mb-6">Instructor</h2>
+                <h2 className="text-2xl font-bold text-white mb-6">{t.detailInstructor}</h2>
                 <div className="flex gap-6">
                   <div className="w-32 h-32 rounded-full bg-zinc-800 flex items-center justify-center flex-shrink-0">
                     <span className="text-4xl font-bold text-white">{course.instructor.charAt(0)}</span>
@@ -389,15 +393,15 @@ export function CourseDetail() {
                     <div className="flex items-center gap-6 text-sm text-gray-400">
                       <div className="flex items-center gap-2">
                         <Star className="w-4 h-4" />
-                        <span>{course.rating} Instructor Rating</span>
+                        <span>{course.rating} {t.detailRating}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <Users className="w-4 h-4" />
-                        <span>{course.students.toLocaleString()} Students</span>
+                        <span>{course.students.toLocaleString()} {t.detailStudents}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <PlayCircle className="w-4 h-4" />
-                        <span>{Math.floor(Math.random() * 10) + 5} Courses</span>
+                        <span>{Math.floor(Math.random() * 10) + 5} {t.detailCourses}</span>
                       </div>
                     </div>
                     <p className="text-gray-300 text-sm leading-relaxed pt-2">
@@ -410,7 +414,7 @@ export function CourseDetail() {
 
               {/* Student Reviews */}
               <div>
-                <h2 className="text-2xl font-bold text-white mb-6">Student feedback</h2>
+                <h2 className="text-2xl font-bold text-white mb-6">{t.detailFeedback}</h2>
                 <div className="mb-8">
                   <div className="flex items-center gap-3 mb-2">
                     <span className="text-5xl font-bold text-yellow-500">{averageRating}</span>
@@ -420,7 +424,7 @@ export function CourseDetail() {
                           <Star key={i} className={`w-5 h-5 ${i < Math.floor(averageRating) ? 'text-yellow-500 fill-yellow-500' : 'text-gray-600'}`} />
                         ))}
                       </div>
-                      <p className="text-sm text-gray-400">Course Rating</p>
+                      <p className="text-sm text-gray-400">{t.detailRating}</p>
                     </div>
                   </div>
                 </div>
@@ -448,9 +452,9 @@ export function CourseDetail() {
                           <div className="flex items-center gap-4 text-xs text-gray-500">
                             <button className="flex items-center gap-1 hover:text-gray-300 transition-colors">
                               <ThumbsUp className="w-3 h-3" />
-                              Helpful ({review.helpful})
+                              {t.detailHelpful} ({review.helpful})
                             </button>
-                            <button className="hover:text-gray-300 transition-colors">Report</button>
+                            <button className="hover:text-gray-300 transition-colors">{t.detailReport}</button>
                           </div>
                         </div>
                       </div>
@@ -477,7 +481,7 @@ export function CourseDetail() {
                     <div className="flex items-baseline gap-3">
                       <span className="text-3xl font-bold text-white">${discountedPrice}</span>
                       <span className="text-lg text-gray-500 line-through">${originalPrice}</span>
-                      <span className="text-sm font-semibold text-white bg-yellow-600 px-2 py-1 rounded">{discount}% off</span>
+                      <span className="text-sm font-semibold text-white bg-yellow-600 px-2 py-1 rounded">{discount}% {t.detailOff}</span>
                     </div>
                     <p className="text-xs text-red-400 font-semibold">2 days left at this price!</p>
                   </div>
@@ -485,19 +489,19 @@ export function CourseDetail() {
                   <div className="pt-4 space-y-3">
                     <button 
                       onClick={() => navigate(`/course/${course.id}/success`)}
-                      className="w-full h-12 rounded bg-red-600 hover:bg-red-700 text-white font-bold transition-all"
+                      className="w-full h-10 rounded bg-red-600 hover:bg-red-700 text-white font-bold text-sm transition-all"
                     >
-                      Enroll Now
+                      {t.detailEnroll}
                     </button>
-                    <button className="w-full h-12 rounded border border-zinc-700 hover:bg-zinc-800 text-white font-semibold transition-all">
-                      Add to Wishlist
+                    <button className="w-full h-10 rounded border border-zinc-700 hover:bg-zinc-800 text-white font-semibold text-sm transition-all">
+                      {t.detailWishlist}
                     </button>
                   </div>
 
-                  <p className="text-center text-xs text-gray-400 pt-2">30-Day Money-Back Guarantee</p>
+                  <p className="text-center text-xs text-gray-400 pt-2">{t.detailGuarantee}</p>
                   
                   <div className="border-t border-zinc-800 pt-4 space-y-3 text-sm">
-                    <h3 className="font-bold text-white mb-3">This course includes:</h3>
+                    <h3 className="font-bold text-white mb-3">{t.detailIncludes}</h3>
                     <div className="flex items-center gap-3 text-gray-300">
                       <Clock className="w-4 h-4 text-gray-400 flex-shrink-0" />
                       <span>{course.duration} on-demand video</span>
@@ -522,7 +526,7 @@ export function CourseDetail() {
 
                   <div className="border-t border-zinc-800 pt-4">
                     <button className="w-full text-center text-sm text-gray-400 hover:text-white transition-colors">
-                      Share <Share2 className="w-4 h-4 inline ml-1" />
+                      {t.detailShare} <Share2 className="w-4 h-4 inline ml-1" />
                     </button>
                   </div>
                 </div>
@@ -533,7 +537,7 @@ export function CourseDetail() {
           {/* More Like This */}
           {relatedCourses.length > 0 && (
             <div className="mt-20 mb-12">
-              <CourseRow title="More Like This" courses={relatedCourses} />
+              <CourseRow title={t.detailMoreLikeThis} courses={relatedCourses} />
             </div>
           )}
         </div>

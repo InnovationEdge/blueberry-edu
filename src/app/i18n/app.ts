@@ -96,6 +96,15 @@ interface AppTranslations {
   progressSortProgress: string;
   progressCourses: string;
   progressBadgeCompleted: string;
+  progressContinueWatching: string;
+  progressWeeklyStreak: string;
+  progressWeeks: string;
+  progressMinutesWatched: string;
+  progressMin: string;
+  progressCoursesCompleted: string;
+  progressLessonsLeft: string;
+  progressResume: string;
+  progressOf: string;
 
   // Search
   searchExplore: string;
@@ -171,6 +180,8 @@ interface AppTranslations {
   landingHeroCTA: string;
   landingEmailPlaceholder: string;
   landingGetStarted: string;
+  heroPlay: string;
+  heroMoreInfo: string;
   landingWhatsIncluded: string;
   landingGift: string;
   landingAllClasses: string;
@@ -325,7 +336,7 @@ const ka: AppTranslations = {
   detailNotFound: 'კურსი ვერ მოიძებნა',
   detailReturnHome: 'მთავარზე დაბრუნება',
 
-  progressTitle: 'ჩემი სწავლა',
+  progressTitle: 'პროგრესი',
   progressAll: 'ყველა კურსი',
   progressInProgress: 'მიმდინარე',
   progressCompleted: 'დასრულებული',
@@ -336,6 +347,15 @@ const ka: AppTranslations = {
   progressSortProgress: 'პროგრესით',
   progressCourses: 'კურსი',
   progressBadgeCompleted: 'დასრულებული',
+  progressContinueWatching: 'გააგრძელე ყურება',
+  progressWeeklyStreak: 'კვირის სტრიქი',
+  progressWeeks: 'კვირა',
+  progressMinutesWatched: 'ნანახი წუთები',
+  progressMin: 'წთ',
+  progressCoursesCompleted: 'დასრულებული',
+  progressLessonsLeft: 'გაკვეთილი დარჩა',
+  progressResume: 'გაგრძელება',
+  progressOf: '/',
 
   searchExplore: 'მეტის აღმოჩენა:',
   searchNoResults: 'შედეგები ვერ მოიძებნა',
@@ -407,6 +427,8 @@ const ka: AppTranslations = {
   landingHeroCTA: 'მზად ხარ? შეიყვანე ელ. ფოსტა წევრობის დასაწყებად ან განსაახლებლად.',
   landingEmailPlaceholder: 'ელ. ფოსტის მისამართი',
   landingGetStarted: 'დაწყება',
+  heroPlay: 'დაწყება',
+  heroMoreInfo: 'დეტალურად',
   landingWhatsIncluded: 'რას მოიცავს ყველა BrightMind კურსი?',
   landingGift: 'საჩუქარი',
   landingAllClasses: 'გადაიხადე ერთხელ — კურსი შენია სამუდამოდ',
@@ -560,7 +582,7 @@ const en: AppTranslations = {
   detailNotFound: 'Course not found',
   detailReturnHome: 'Return to Home',
 
-  progressTitle: 'My Learning',
+  progressTitle: 'Progress',
   progressAll: 'All Courses',
   progressInProgress: 'In Progress',
   progressCompleted: 'Completed',
@@ -571,6 +593,15 @@ const en: AppTranslations = {
   progressSortProgress: 'Progress',
   progressCourses: 'courses',
   progressBadgeCompleted: 'Completed',
+  progressContinueWatching: 'Continue Watching',
+  progressWeeklyStreak: 'Weekly Streak',
+  progressWeeks: 'weeks',
+  progressMinutesWatched: 'Minutes Watched',
+  progressMin: 'min',
+  progressCoursesCompleted: 'Completed',
+  progressLessonsLeft: 'lessons left',
+  progressResume: 'Resume',
+  progressOf: '/',
 
   searchExplore: 'More to explore:',
   searchNoResults: 'No results found',
@@ -642,6 +673,8 @@ const en: AppTranslations = {
   landingHeroCTA: 'Ready to watch? Enter your email to create or restart your membership.',
   landingEmailPlaceholder: 'Email address',
   landingGetStarted: 'Get Started',
+  heroPlay: 'Play',
+  heroMoreInfo: 'More Info',
   landingWhatsIncluded: "What's included in every BrightMind course?",
   landingGift: 'Gift',
   landingAllClasses: 'Pay once — the course is yours forever',
@@ -795,7 +828,7 @@ const ru: AppTranslations = {
   detailNotFound: 'Курс не найден',
   detailReturnHome: 'На главную',
 
-  progressTitle: 'Моё обучение',
+  progressTitle: 'Прогресс',
   progressAll: 'Все курсы',
   progressInProgress: 'В процессе',
   progressCompleted: 'Завершённые',
@@ -806,6 +839,15 @@ const ru: AppTranslations = {
   progressSortProgress: 'По прогрессу',
   progressCourses: 'курсов',
   progressBadgeCompleted: 'Завершено',
+  progressContinueWatching: 'Продолжить просмотр',
+  progressWeeklyStreak: 'Недельная серия',
+  progressWeeks: 'недель',
+  progressMinutesWatched: 'Минут просмотрено',
+  progressMin: 'мин',
+  progressCoursesCompleted: 'Завершено',
+  progressLessonsLeft: 'уроков осталось',
+  progressResume: 'Продолжить',
+  progressOf: '/',
 
   searchExplore: 'Исследуйте:',
   searchNoResults: 'Ничего не найдено',
@@ -877,6 +919,8 @@ const ru: AppTranslations = {
   landingHeroCTA: 'Готовы смотреть? Введите email для создания или возобновления подписки.',
   landingEmailPlaceholder: 'Адрес электронной почты',
   landingGetStarted: 'Начать',
+  heroPlay: 'Смотреть',
+  heroMoreInfo: 'Подробнее',
   landingWhatsIncluded: 'Что включено в каждый курс BrightMind?',
   landingGift: 'Подарок',
   landingAllClasses: 'Заплатите один раз — курс ваш навсегда',

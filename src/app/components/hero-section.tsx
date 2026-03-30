@@ -1,46 +1,114 @@
-import { Play, BookmarkPlus } from 'lucide-react';
+import { Play, Info } from 'lucide-react';
 import { Link } from 'react-router';
+import { useState, useEffect, useCallback } from 'react';
 import { Course } from '../data/courses';
-import { StaggerItem } from './page-transition';
+import { useAuth } from '../context/auth-context';
+import { getAppT } from '../i18n/app';
 
 interface HeroSectionProps {
-  course: Course;
+  courses: Course[];
+  interval?: number;
 }
 
-export function HeroSection({ course }: HeroSectionProps) {
-  return (
-    <div className="relative h-[90vh] w-full overflow-hidden">
-      <div className="absolute inset-0">
-        <img src={course.thumbnail} alt={course.title} className="w-full h-full object-cover scale-105" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black" />
-      </div>
+export function HeroSection({ courses, interval = 6000 }: HeroSectionProps) {
+  const { language } = useAuth();
+  const t = getAppT(language);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-      <div className="relative h-full flex items-center px-4 md:px-12 lg:px-16">
-        <div className="max-w-3xl space-y-6">
-          <StaggerItem delay={0.1}>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[1.05] tracking-tight drop-shadow-2xl">{course.title}</h1>
-          </StaggerItem>
-          <StaggerItem delay={0.2}>
-            <p className="text-xl md:text-2xl text-white/90 leading-relaxed font-normal drop-shadow-lg max-w-2xl">{course.subtitle}</p>
-          </StaggerItem>
-          <StaggerItem delay={0.35}>
-            <div className="flex flex-wrap items-center gap-4 pt-4">
-              <Link to={`/course/${course.id}`}>
-                <button className="group inline-flex items-center justify-center h-12 px-8 rounded-md bg-white text-black hover:bg-gray-200 gap-3 text-lg font-bold transition-all hover:scale-105 active:scale-95">
-                  <Play className="w-6 h-6 fill-black" />Start
-                </button>
-              </Link>
-              <button className="group inline-flex items-center justify-center h-12 px-8 rounded-md bg-gray-500/70 text-white hover:bg-gray-500/50 gap-3 backdrop-blur-sm text-lg font-bold transition-all hover:scale-105 active:scale-95">
-                <BookmarkPlus className="w-5 h-5" />More Info
+  const goToSlide = useCallback((index: number) => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentIndex(index);
+      setTimeout(() => setIsTransitioning(false), 600);
+    }, 400);
+  }, [isTransitioning]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      goToSlide((currentIndex + 1) % courses.length);
+    }, interval);
+    return () => clearInterval(timer);
+  }, [currentIndex, courses.length, interval, goToSlide]);
+
+  const course = courses[currentIndex];
+
+  return (
+    <div className="relative h-[85vh] w-full overflow-hidden">
+      {/* Background slides */}
+      {courses.map((c, i) => (
+        <div
+          key={c.id}
+          className="absolute inset-0 transition-opacity duration-[800ms] ease-in-out"
+          style={{ opacity: i === currentIndex ? 1 : 0 }}
+        >
+          <img
+            src={c.thumbnail}
+            alt={c.title}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      ))}
+
+      {/* Gradients */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black" />
+
+      {/* Content */}
+      <div className="relative h-full flex items-end pb-8 px-4 md:px-12">
+        <div className="max-w-xl space-y-4">
+          <h1
+            className={`text-4xl md:text-5xl lg:text-6xl font-black text-white leading-[1.05] tracking-tight transition-all duration-500 ${
+              isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+            }`}
+          >
+            {course.title}
+          </h1>
+          <p
+            className={`text-sm md:text-base text-white/70 leading-relaxed max-w-md transition-all duration-500 delay-75 ${
+              isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+            }`}
+          >
+            {course.subtitle}
+          </p>
+          <div
+            className={`flex items-center gap-3 pt-2 transition-all duration-500 delay-150 ${
+              isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+            }`}
+          >
+            <Link to={`/course/${course.id}`}>
+              <button className="inline-flex items-center justify-center h-10 px-6 rounded bg-white text-black gap-2 text-sm font-bold transition-all hover:bg-gray-200 active:scale-95">
+                <Play className="w-4 h-4 fill-black" />{t.heroPlay || 'დაწყება'}
               </button>
-            </div>
-          </StaggerItem>
+            </Link>
+            <Link to={`/course/${course.id}`}>
+              <button className="inline-flex items-center justify-center h-10 px-6 rounded bg-white/20 text-white gap-2 text-sm font-semibold backdrop-blur-sm transition-all hover:bg-white/30 active:scale-95">
+                <Info className="w-4 h-4" />{t.heroMoreInfo || 'დეტალურად'}
+              </button>
+            </Link>
+          </div>
+
+          {/* Slide indicators */}
+          <div className="flex items-center gap-2 pt-4">
+            {courses.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goToSlide(i)}
+                className={`h-[3px] rounded-full transition-all duration-500 ${
+                  i === currentIndex
+                    ? 'w-8 bg-white'
+                    : 'w-4 bg-white/30 hover:bg-white/50'
+                }`}
+                aria-label={`Slide ${i + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black to-transparent pointer-events-none" />
     </div>
   );
 }

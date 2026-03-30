@@ -41,8 +41,8 @@ export function CourseRow({ title, courses }: CourseRowProps) {
   if (courses.length === 0) return null;
 
   return (
-    <div className="space-y-5 px-4 md:px-12">
-      <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white tracking-tight">{title}</h2>
+    <div className="space-y-3 px-4 md:px-12">
+      <h2 className="text-base md:text-lg font-bold text-white">{title}</h2>
       <div className="relative group/row">
         {/* Left Arrow */}
         {showLeftArrow && (
@@ -60,11 +60,11 @@ export function CourseRow({ title, courses }: CourseRowProps) {
         {/* Course Grid */}
         <div
           ref={rowRef}
-          className="flex gap-3 md:gap-4 lg:gap-5 overflow-x-auto scrollbar-hide scroll-smooth pb-2"
+          className="flex gap-2 md:gap-3 overflow-x-auto scrollbar-hide scroll-smooth pb-2"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {courses.map((course) => (
-            <div key={course.id} className="min-w-[260px] md:min-w-[300px] lg:min-w-[340px] xl:min-w-[360px]">
+            <div key={course.id} className="w-[200px] md:w-[240px] lg:w-[260px] xl:w-[280px] flex-shrink-0">
               <CourseCard course={course} />
             </div>
           ))}

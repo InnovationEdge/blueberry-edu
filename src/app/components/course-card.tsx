@@ -1,6 +1,8 @@
 import { Play, Clock, BarChart3, Star, Award, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router';
 import { Course } from '../data/courses';
+import { useAuth } from '../context/auth-context';
+import { getAppT } from '../i18n/app';
 
 interface CourseCardProps {
   course: Course;
@@ -21,6 +23,11 @@ export function CourseCard({
   onContinue,
   onViewCertificate 
 }: CourseCardProps) {
+  const { language } = useAuth();
+  const t = getAppT(language);
+
+  const courseProgress = progress || (course as any).progress || 0;
+
   const handleCardClick = (e: React.MouseEvent) => {
     // If clicked on action buttons, prevent default link behavior
     if ((e.target as HTMLElement).closest('button')) {
@@ -41,13 +48,13 @@ export function CourseCard({
           {/* Badges */}
           <div className="absolute top-3 right-3 flex gap-2 z-10">
             {course.isNew && (
-              <span className="px-3 py-1.5 bg-gradient-to-r from-red-600 to-red-700 text-white text-xs font-bold rounded-md shadow-lg backdrop-blur-sm">
-                NEW
+              <span className="px-3 py-1.5 bg-gradient-to-r from-red-600 to-red-700 text-white text-xs font-bold rounded shadow-lg backdrop-blur-sm">
+                {t.cardNew}
               </span>
             )}
             {course.isCompleted && (
-              <span className="px-3 py-1.5 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs font-bold rounded-md shadow-lg backdrop-blur-sm">
-                ✓ DONE
+              <span className="px-3 py-1.5 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs font-bold rounded shadow-lg backdrop-blur-sm">
+                ✓ {t.cardDone}
               </span>
             )}
           </div>
@@ -56,11 +63,11 @@ export function CourseCard({
           <div className="absolute inset-0 bg-black/85 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-30 p-4">
             <div className="text-center space-y-3 w-full transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
               <p className="text-white text-sm font-bold line-clamp-2">{course.title}</p>
-              <p className="text-gray-400 text-xs">by {course.instructor}</p>
+              <p className="text-gray-400 text-xs">{t.cardBy} {course.instructor}</p>
               
               {showProgress && !isCompleted && (
                 <div className="text-xs text-gray-400 mb-2">
-                  {completedLessons} of {course.lessons} lessons
+                  {completedLessons} {t.cardOf} {course.lessons} {t.cardLessons}
                 </div>
               )}
 
@@ -72,20 +79,20 @@ export function CourseCard({
                         e.preventDefault();
                         if (onContinue) onContinue();
                       }}
-                      className="w-full px-3 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 transition-all font-bold text-xs flex items-center justify-center gap-1.5"
+                      className="w-full px-3 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 transition-all font-bold text-xs flex items-center justify-center gap-1.5"
                     >
                       <Play className="w-3.5 h-3.5" />
-                      Rewatch
+                      {t.cardRewatch}
                     </button>
                     <button
                       onClick={(e) => {
                         e.preventDefault();
                         if (onViewCertificate) onViewCertificate();
                       }}
-                      className="w-full px-3 py-2 bg-[#E50914] text-white rounded-md hover:bg-[#c40812] transition-all font-bold text-xs flex items-center justify-center gap-1.5"
+                      className="w-full px-3 py-2 bg-[#E50914] text-white rounded hover:bg-[#c40812] transition-all font-bold text-xs flex items-center justify-center gap-1.5"
                     >
                       <Award className="w-3.5 h-3.5" />
-                      View Certificate
+                      {t.cardCertificate}
                     </button>
                   </div>
                 ) : (
@@ -94,10 +101,10 @@ export function CourseCard({
                       e.preventDefault();
                       if (onContinue) onContinue();
                     }}
-                    className="w-full px-4 py-2.5 bg-[#E50914] text-white rounded-md hover:bg-[#c40812] transition-all font-bold text-sm flex items-center justify-center gap-2"
+                    className="w-full px-3 py-2 bg-[#E50914] text-white rounded hover:bg-[#c40812] transition-all font-bold text-xs flex items-center justify-center gap-1.5"
                   >
                     <Play className="w-4 h-4" />
-                    Continue
+                    {t.cardContinue}
                   </button>
                 )
               ) : (
@@ -110,6 +117,23 @@ export function CourseCard({
             </div>
           </div>
 
+          {/* Progress bar on thumbnail */}
+          {courseProgress > 0 && courseProgress < 100 && (
+            <div className="absolute bottom-0 inset-x-0 h-[3px] bg-white/10 z-20">
+              <div className="h-full bg-[#E50914]" style={{ width: `${courseProgress}%` }} />
+            </div>
+          )}
+          {courseProgress === 100 && (
+            <div className="absolute bottom-0 inset-x-0 h-[3px] bg-emerald-500 z-20" />
+          )}
+
+          {/* Progress badge */}
+          {courseProgress > 0 && courseProgress < 100 && (
+            <div className="absolute top-3 left-3 z-10 px-2 py-0.5 bg-black/70 backdrop-blur-sm rounded text-[10px] font-bold text-white">
+              {courseProgress}%
+            </div>
+          )}
+
           {/* Bottom gradient for readability */}
           <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/80 to-transparent" />
         </div>
@@ -117,7 +141,7 @@ export function CourseCard({
         {/* Course Info */}
         <div className="space-y-2.5 px-1">
           <div className="flex items-center gap-2 text-xs text-gray-400">
-            <span className="text-red-500 font-semibold uppercase tracking-wide">Class</span>
+            <span className="text-red-500 font-semibold uppercase tracking-wide">{t.cardClass}</span>
             <span className="text-gray-600">•</span>
             <span className="font-medium">{course.duration}</span>
             <span className="text-gray-600">•</span>
@@ -133,7 +157,7 @@ export function CourseCard({
           </p>
 
           <p className="text-gray-500 text-sm">
-            with <span className="text-gray-300 font-medium">{course.instructor}</span>
+            {t.cardWith} <span className="text-gray-300 font-medium">{course.instructor}</span>
           </p>
 
           {/* Stats */}
@@ -144,7 +168,7 @@ export function CourseCard({
             </div>
             <div className="flex items-center gap-1.5 text-gray-400">
               <Clock className="w-4 h-4" />
-              <span className="text-xs font-medium">{course.lessons} lessons</span>
+              <span className="text-xs font-medium">{course.lessons} {t.cardLessons}</span>
             </div>
             <div className="flex items-center gap-1.5 text-gray-400">
               <BarChart3 className="w-4 h-4" />

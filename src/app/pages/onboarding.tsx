@@ -1,9 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, Check, Upload } from 'lucide-react';
+import { Check, Upload, GraduationCap, Mic } from 'lucide-react';
 import { categories } from '../data/courses';
-import { AnimatePresence } from 'motion/react';
-import { StepTransition } from '../components/page-transition';
-import { getAppT } from '../i18n/app';
+import { AnimatePresence, motion } from 'motion/react';
 import { useAuth } from '../context/auth-context';
 
 interface OnboardingProps {
@@ -25,6 +23,15 @@ const INSTRUCTORS = [
   { id: 12, name: 'David Martinez', expertise: 'ფოტოგრაფია', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&h=800&fit=crop&crop=face&q=80', categories: ['arts'] },
 ];
 
+const EXPERTISE_AREAS = [
+  { id: 'business', label: 'ბიზნესი' }, { id: 'tech', label: 'ტექნოლოგია' },
+  { id: 'design', label: 'დიზაინი' }, { id: 'arts', label: 'ხელოვნება' },
+  { id: 'music', label: 'მუსიკა' }, { id: 'food', label: 'კულინარია' },
+  { id: 'writing', label: 'წერა' }, { id: 'sports', label: 'სპორტი' },
+  { id: 'lifestyle', label: 'ცხოვრების წესი' }, { id: 'photography', label: 'ფოტოგრაფია' },
+  { id: 'marketing', label: 'მარკეტინგი' }, { id: 'finance', label: 'ფინანსები' },
+];
+
 const CAT_LABELS: Record<string, string> = {
   food: 'კულინარია', arts: 'ხელოვნება', music: 'მუსიკა', writing: 'წერა',
   sports: 'სპორტი', design: 'დიზაინი', business: 'ბიზნესი', tech: 'ტექნოლოგია',
@@ -33,16 +40,16 @@ const CAT_LABELS: Record<string, string> = {
 
 export function Onboarding({ onComplete }: OnboardingProps) {
   const [step, setStep] = useState(0);
+  const [role, setRole] = useState<'student' | 'instructor'>('student');
   const [name, setName] = useState('');
+  const [bio, setBio] = useState('');
   const [profileImage, setProfileImage] = useState('');
   const [selectedInstructors, setSelectedInstructors] = useState<number[]>([]);
+  const [selectedExpertise, setSelectedExpertise] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState('all');
   const nameInputRef = useRef<HTMLInputElement>(null);
-  const tabsRef = useRef<HTMLDivElement>(null);
-  const instructorRowRef = useRef<HTMLDivElement>(null);
-  const { language } = useAuth();
-  const t = getAppT(language);
-  const totalSteps = 2;
+  const { setUserType } = useAuth();
+  const totalSteps = 3;
 
   const catTabs = [
     { id: 'all', label: 'ყველა', count: INSTRUCTORS.length },
@@ -54,9 +61,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
 
   const filteredInstructors = activeTab === 'all' ? INSTRUCTORS : INSTRUCTORS.filter(i => i.categories.includes(activeTab));
   const goNext = () => setStep(s => s + 1);
-  const goBack = () => step > 0 ? setStep(s => s - 1) : undefined;
-
-  useEffect(() => { if (step === 0) setTimeout(() => nameInputRef.current?.focus(), 300); }, [step]);
+  useEffect(() => { if (step === 1) setTimeout(() => nameInputRef.current?.focus(), 300); }, [step]);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -64,148 +69,219 @@ export function Onboarding({ onComplete }: OnboardingProps) {
   };
 
   const toggleInstructor = (id: number) => setSelectedInstructors(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
-  const canProceed = () => { if (step === 0) return name.trim().length > 0; if (step === 1) return selectedInstructors.length > 0; return true; };
-  const scrollTabs = (dir: 'left' | 'right') => { if (tabsRef.current) tabsRef.current.scrollBy({ left: dir === 'left' ? -200 : 200, behavior: 'smooth' }); };
+  const toggleExpertise = (id: string) => setSelectedExpertise(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+  const canProceed = () => {
+    if (step === 0) return true;
+    if (step === 1) return name.trim().length > 0;
+    if (step === 2) return role === 'student' ? selectedInstructors.length > 0 : selectedExpertise.length > 0;
+    return true;
+  };
   const initial = name.trim() ? name.trim()[0].toUpperCase() : 'B';
+  const handleRoleSelect = (r: 'student' | 'instructor') => { setRole(r); setUserType(r); };
+
+  const buttonLabel = () => {
+    if (step === 0) return 'გაგრძელება';
+    if (step === 1) return 'გაგრძელება';
+    if (step === 2 && role === 'student') return `დასრულება (${selectedInstructors.length})`;
+    if (step === 2 && role === 'instructor') return `დასრულება (${selectedExpertise.length})`;
+    return 'დავიწყოთ';
+  };
+
+  // Step 2 (instructors) needs scroll, others need vertical centering
+  const needsCenter = step === 0 || step === 1 || (step === 2 && role === 'instructor');
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col">
-      {/* Header — BRIGHTMIND + back + step indicator */}
-      {step < 2 && (
-        <header className="px-4 md:px-12 py-5 flex-shrink-0 flex items-center justify-between">
-          <span className="text-2xl md:text-3xl font-black tracking-tight">BRIGHTMIND</span>
-          <span className="text-xs text-white/30">{step + 1} / {totalSteps}</span>
-        </header>
-      )}
+    <div className="h-screen bg-black text-white flex flex-col overflow-hidden">
+      {/* Header */}
+      <header className="px-4 md:px-12 py-5 flex-shrink-0 flex items-center justify-between z-20 relative">
+        <span className="text-2xl md:text-3xl font-black tracking-tight">BRIGHTMIND</span>
+        <div className="flex items-center gap-4">
+          {step < 3 && <span className="text-xs text-white/25">{step + 1}/{totalSteps}</span>}
+          {step === 0 && (
+            <button onClick={onComplete} className="text-sm text-white/40 hover:text-white transition-colors">გაუქმება</button>
+          )}
+        </div>
+      </header>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto">
+      <div className={`flex-1 min-h-0 ${needsCenter ? 'flex items-center justify-center' : 'overflow-y-auto'}`}>
         <AnimatePresence mode="wait">
 
-        {/* Step 0 — Create Profile */}
+        {/* Step 0: Role */}
         {step === 0 && (
-          <StepTransition key="step-0" className="max-w-lg mx-auto px-6 pt-12 pb-20 flex flex-col" style={{ minHeight: 'calc(100vh - 180px)' }}>
-            <h1 className="text-2xl font-bold mb-1">შექმენი პროფილი</h1>
-            <p className="text-sm text-white/40 mb-10">ეს არის შენი ანგარიშის პროფილი.</p>
+          <motion.div key="s0" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }} className="w-full max-w-4xl mx-auto px-6">
+            <h1 className="text-2xl font-bold mb-1">როგორ გინდა გამოიყენო BrightMind?</h1>
+            <p className="text-sm text-white/40 mb-8">ამის შეცვლა მოგვიანებითაც შეგიძლია.</p>
 
-            {/* Avatar + Name side by side */}
-            <div className="flex items-start gap-6">
-              {/* Avatar + Upload below */}
+            <div className="grid grid-cols-2 gap-5">
+              {[
+                { id: 'student' as const, icon: GraduationCap, title: 'ისწავლე', desc: 'ისწავლე ახალი უნარები საუკეთესოებისგან', img: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop&q=80' },
+                { id: 'instructor' as const, icon: Mic, title: 'ასწავლე', desc: 'შექმენი კურსები და გაუზიარე ცოდნა', img: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&h=400&fit=crop&q=80' },
+              ].map((item) => {
+                const selected = role === item.id;
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => handleRoleSelect(item.id)}
+                    className={`relative rounded overflow-hidden text-left transition-all group ${selected ? 'ring-2 ring-[#E50914]' : 'ring-1 ring-white/[0.08] hover:ring-white/15'}`}
+                  >
+                    <div className="aspect-[16/10] relative overflow-hidden">
+                      <img src={item.img} alt="" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                      {selected && <div className="absolute top-3 right-3 w-5 h-5 bg-[#E50914] rounded-full flex items-center justify-center"><Check className="w-3 h-3 text-white" /></div>}
+                    </div>
+                    <div className="p-4">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Icon className="w-4 h-4 text-white/60" strokeWidth={1.5} />
+                        <span className="font-bold text-[15px]">{item.title}</span>
+                      </div>
+                      <p className="text-xs text-white/35 leading-relaxed">{item.desc}</p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Step 1: Profile */}
+        {step === 1 && (
+          <motion.div key="s1" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }} className="w-full max-w-4xl mx-auto px-6">
+            <h1 className="text-2xl font-bold mb-1">შექმენი პროფილი</h1>
+            <p className="text-sm text-white/40 mb-8">შემოიყვანე შენი სახელი</p>
+
+            <div className="flex items-start gap-5 mb-6">
               <div className="flex flex-col items-center flex-shrink-0">
                 {profileImage ? (
-                  <div className="w-20 h-20 rounded-full overflow-hidden mb-2"><img src={profileImage} alt="" className="w-full h-full object-cover" /></div>
+                  <div className="w-20 h-20 rounded-full overflow-hidden ring-2 ring-white/10 mb-2"><img src={profileImage} alt="" className="w-full h-full object-cover" /></div>
                 ) : (
                   <div className="w-20 h-20 rounded-full bg-[#E50914] flex items-center justify-center mb-2"><span className="text-white text-2xl font-bold">{initial}</span></div>
                 )}
-                <label className="flex items-center gap-1.5 text-xs text-white/40 hover:text-white transition-colors cursor-pointer">
+                <label className="text-[11px] text-white/30 hover:text-white/60 transition-colors cursor-pointer flex items-center gap-1">
                   <Upload className="w-3 h-3" />ატვირთვა
                   <input type="file" accept="image/jpeg,image/png" onChange={handleImageUpload} className="hidden" />
                 </label>
               </div>
 
-              {/* Name input */}
-              <div className="flex-1 pt-2">
-                <label className="block text-sm text-white/60 mb-2">სახელი <span className="text-[#E50914]">*</span></label>
-                <input
-                  ref={nameInputRef}
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="შენი სახელი"
-                  className="w-full px-4 py-3 bg-white/[0.04] border-0 border-b border-white/10 rounded-none text-white placeholder-white/20 focus:outline-none focus:border-[#E50914] transition-colors text-sm"
-                />
+              <div className="flex-1 space-y-4 pt-1">
+                <div>
+                  <label className="block text-xs text-white/40 mb-1.5">სახელი <span className="text-[#E50914]">*</span></label>
+                  <input
+                    ref={nameInputRef}
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="შენი სახელი"
+                    className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/20 focus:outline-none focus:border-[#E50914] transition-colors"
+                  />
+                </div>
+
+                {role === 'instructor' && (
+                  <div>
+                    <label className="block text-xs text-white/40 mb-1.5">მოკლე ბიო</label>
+                    <textarea
+                      value={bio}
+                      onChange={(e) => setBio(e.target.value)}
+                      placeholder="რას ასწავლი და რა გამოცდილება გაქვს..."
+                      rows={3}
+                      className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/20 focus:outline-none focus:border-[#E50914] transition-colors resize-none"
+                    />
+                  </div>
+                )}
               </div>
             </div>
-
-            {/* Spacer pushes button to bottom */}
-            <div className="flex-1 min-h-[60px]" />
-
-            {/* Action — only გაგრძელება */}
-            <button onClick={goNext} disabled={!canProceed()} className={`w-full py-3 rounded text-sm font-semibold transition-all ${canProceed() ? 'bg-[#E50914] text-white hover:bg-[#c70812]' : 'bg-white/[0.04] text-white/20 cursor-not-allowed'}`}>გაგრძელება</button>
-          </StepTransition>
+          </motion.div>
         )}
 
-        {/* Step 1 — Select Instructors */}
-        {step === 1 && (
-          <StepTransition key="step-1" className="px-4 md:px-12 pt-10 pb-12">
-            <div className="max-w-4xl mx-auto">
+        {/* Step 2: Student — Instructors */}
+        {step === 2 && role === 'student' && (
+          <motion.div key="s2s" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }} className="w-full px-4 md:px-12 pt-4">
               <h1 className="text-2xl font-bold mb-1">ვისგან გინდა ისწავლო?</h1>
-              <p className="text-sm text-white/40 mb-6">შეარჩიე ინსტრუქტორები შენი ინტერესების მიხედვით</p>
+              <p className="text-sm text-white/40 mb-6">შეარჩიე ინსტრუქტორები</p>
 
-              {/* Category tabs */}
-              <div className="flex items-center gap-2 mb-8">
-                <button onClick={() => scrollTabs('left')} className="flex-shrink-0 w-7 h-7 rounded-full border border-white/10 flex items-center justify-center hover:border-white/20 transition-colors">
-                  <ChevronLeft className="w-3.5 h-3.5 text-white/40" />
-                </button>
-                <div ref={tabsRef} className="flex gap-1.5 overflow-x-auto flex-1" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                  {catTabs.map(tab => (
-                    <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`flex-shrink-0 px-3.5 py-1.5 rounded text-xs transition-all whitespace-nowrap ${activeTab === tab.id ? 'bg-white text-black font-semibold' : 'text-white/40 hover:text-white/60'}`}>
-                      {tab.label}
-                    </button>
-                  ))}
-                </div>
-                <button onClick={() => scrollTabs('right')} className="flex-shrink-0 w-7 h-7 rounded-full border border-white/10 flex items-center justify-center hover:border-white/20 transition-colors">
-                  <ChevronRight className="w-3.5 h-3.5 text-white/40" />
-                </button>
+              {/* Categories — Library style, red active */}
+              <div className="flex gap-2.5 overflow-x-auto mb-6 pb-1" style={{ scrollbarWidth: 'none' }}>
+                {catTabs.map(tab => (
+                  <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`flex-shrink-0 px-4 py-2 rounded border text-sm font-medium transition-all whitespace-nowrap ${activeTab === tab.id ? 'bg-[#E50914] border-[#E50914] text-white' : 'bg-transparent border-white/10 text-white/50 hover:border-white/20 hover:text-white'}`}>
+                    {tab.label}
+                  </button>
+                ))}
               </div>
 
-              {/* Instructor grid */}
-              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 mb-10">
+              {/* Instructors — single horizontal scroll row */}
+              <div className="flex gap-4 overflow-x-auto pb-4" style={{ scrollbarWidth: 'none' }}>
                 {filteredInstructors.map((inst) => {
                   const selected = selectedInstructors.includes(inst.id);
                   return (
-                    <button key={inst.id} onClick={() => toggleInstructor(inst.id)} className="group text-center">
-                      <div className={`relative rounded-lg overflow-hidden aspect-square mb-2 transition-all ${selected ? 'ring-2 ring-[#E50914]' : 'ring-1 ring-white/[0.06]'}`}>
+                    <button key={inst.id} onClick={() => toggleInstructor(inst.id)} className="group text-center flex-shrink-0 w-[140px] md:w-[160px]">
+                      <div className={`relative rounded overflow-hidden aspect-[3/4] mb-1.5 transition-all duration-300 group-hover:scale-[1.03] ${selected ? 'ring-2 ring-[#E50914]' : 'ring-1 ring-white/[0.06] group-hover:ring-white/15'}`}>
                         <img src={inst.image} alt={inst.name} className="w-full h-full object-cover" />
-                        {selected && (
-                          <div className="absolute inset-0 bg-[#E50914]/20 flex items-center justify-center">
-                            <div className="w-6 h-6 bg-[#E50914] rounded-full flex items-center justify-center"><Check className="w-3.5 h-3.5 text-white" /></div>
-                          </div>
-                        )}
+                        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 to-transparent" />
+                        <div className="absolute bottom-2 left-2 right-2">
+                          <p className="text-[11px] font-semibold text-white truncate">{inst.name}</p>
+                          <p className="text-[9px] text-white/50 truncate">{inst.expertise}</p>
+                        </div>
+                        {selected && <div className="absolute top-2 right-2 w-5 h-5 bg-[#E50914] rounded-full flex items-center justify-center"><Check className="w-3 h-3 text-white" /></div>}
                       </div>
-                      <p className="text-xs font-semibold text-white">{inst.name}</p>
-                      <p className="text-[11px] text-white/30">{inst.expertise}</p>
                     </button>
                   );
                 })}
               </div>
-
-              {/* CTA */}
-              <div className="flex justify-center">
-                <button onClick={goNext} disabled={!canProceed()} className={`px-8 py-3 rounded text-sm font-semibold transition-all ${canProceed() ? 'bg-[#E50914] text-white hover:bg-[#c70812]' : 'bg-white/[0.04] text-white/20 cursor-not-allowed'}`}>
-                  არჩევის დასრულება ({selectedInstructors.length})
-                </button>
-              </div>
-            </div>
-          </StepTransition>
+          </motion.div>
         )}
 
-        {/* Step 2 — Welcome */}
-        {step === 2 && (
-          <StepTransition key="step-2" className="min-h-screen flex flex-col items-center justify-center px-6">
-            <span className="text-2xl md:text-3xl font-black tracking-tight mb-16">BRIGHTMIND</span>
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">მზად ხარ.</h1>
-            <p className="text-sm text-white/40 max-w-md text-center mb-10 leading-relaxed">
-              კეთილი იყოს შენი მობრძანება. დროა აღმოაჩინო ახალი უნარები და ისწავლო საუკეთესოებისგან.
-            </p>
-            <button onClick={onComplete} className="px-10 py-3 bg-[#E50914] text-white rounded font-semibold hover:bg-[#c70812] transition-colors text-sm">
+        {/* Step 2: Instructor — Expertise */}
+        {step === 2 && role === 'instructor' && (
+          <motion.div key="s2i" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }} className="w-full max-w-lg mx-auto px-6">
+            <h1 className="text-2xl font-bold mb-1">რას ასწავლი?</h1>
+            <p className="text-sm text-white/40 mb-8">შეარჩიე შენი ექსპერტიზის სფეროები</p>
+
+            <div className="grid grid-cols-3 gap-2.5">
+              {EXPERTISE_AREAS.map((area) => {
+                const selected = selectedExpertise.includes(area.id);
+                return (
+                  <button key={area.id} onClick={() => toggleExpertise(area.id)} className={`py-3 px-4 rounded text-sm transition-all ${selected ? 'bg-[#E50914] text-white font-semibold' : 'bg-white/[0.04] text-white/50 hover:bg-white/[0.08] hover:text-white/70'}`}>
+                    {area.label}
+                  </button>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Step 3: Welcome */}
+        {step === 3 && (
+          <motion.div key="s3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }} className="flex flex-col items-center justify-center px-6" style={{ minHeight: 'calc(100vh - 72px)' }}>
+            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-4xl md:text-5xl font-black mb-3 text-center">
+              {role === 'student' ? 'მზად ხარ.' : 'მოგესალმებით.'}
+            </motion.h1>
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-base text-white/40 max-w-md text-center mb-10 leading-relaxed">
+              {role === 'student' ? 'დროა აღმოაჩინო ახალი უნარები და ისწავლო საუკეთესოებისგან.' : 'დროა გაუზიარო შენი ცოდნა და გამოცდილება ათასობით სტუდენტს.'}
+            </motion.p>
+            <motion.button initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} onClick={onComplete} className="px-10 py-3.5 bg-[#E50914] text-white rounded font-bold text-sm hover:bg-[#c70812] transition-all hover:scale-105 active:scale-95">
               დავიწყოთ
-            </button>
-          </StepTransition>
+            </motion.button>
+          </motion.div>
         )}
 
         </AnimatePresence>
       </div>
 
-      {/* Bottom progress bar — minimal, platform style */}
-      {step < 2 && (
-        <div className="flex-shrink-0 px-4 md:px-12 pb-6 pt-4">
-          <div className="flex gap-2 max-w-md mx-auto">
-            {Array.from({ length: totalSteps }).map((_, i) => (
-              <div key={i} className="flex-1 h-[3px] rounded-full overflow-hidden bg-white/[0.06]">
-                <div className={`h-full rounded-full transition-all duration-500 ease-out ${i <= step ? 'bg-[#E50914] w-full' : 'w-0'}`} />
-              </div>
-            ))}
+      {/* Bottom Bar (steps 0-2) */}
+      {step < 3 && (
+        <div className="flex-shrink-0 px-6 pb-6 pt-4">
+          <div className="max-w-lg mx-auto space-y-3">
+            <button onClick={goNext} disabled={!canProceed()} className={`px-10 py-2.5 rounded text-sm font-bold transition-all mx-auto block ${canProceed() ? 'bg-[#E50914] text-white hover:bg-[#c70812]' : 'bg-white/[0.04] text-white/20 cursor-not-allowed'}`}>
+              {buttonLabel()}
+            </button>
+            <div className="flex gap-2">
+              {Array.from({ length: totalSteps }).map((_, i) => (
+                <div key={i} className="flex-1 h-[3px] rounded-full overflow-hidden bg-white/[0.06]">
+                  <div className={`h-full rounded-full transition-all duration-500 ${i <= step ? 'bg-[#E50914] w-full' : 'w-0'}`} />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
