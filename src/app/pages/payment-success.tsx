@@ -1,172 +1,109 @@
 import { useNavigate, useParams } from 'react-router';
-import { CheckCircle, Download, Calendar, Clock, BarChart3, Award, Sparkles } from 'lucide-react';
+import { CheckCircle, Play, Clock, BarChart3, BookOpen, Award } from 'lucide-react';
 import { getCourseById } from '../data/courses';
-import { ScaleIn, StaggerItem } from '../components/page-transition';
+import { motion } from 'motion/react';
+import { getAppT } from '../i18n/app';
+import { useAuth } from '../context/auth-context';
 
 export function PaymentSuccess() {
   const navigate = useNavigate();
+  const { language } = useAuth();
+  const t = getAppT(language);
   const { id } = useParams();
   const course = getCourseById(id || '');
 
-  if (!course) {
-    return null;
-  }
+  if (!course) return null;
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center px-4 py-12">
-      <div className="max-w-3xl w-full">
-        {/* Success Animation */}
-        <ScaleIn>
-          {/* Success Icon */}
-          <div className="flex justify-center mb-8">
-            <div className="relative">
-              <div className="absolute inset-0 bg-[#E50914] blur-3xl opacity-40 rounded-full animate-pulse"></div>
-              <div className="relative bg-gradient-to-br from-[#E50914] to-[#b8070f] rounded-full p-6">
-                <CheckCircle className="w-16 h-16 text-white" strokeWidth={2.5} />
-              </div>
+      <div className="max-w-2xl w-full">
+        {/* Success icon */}
+        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 200, delay: 0.1 }}
+          className="flex justify-center mb-8">
+          <div className="relative">
+            <div className="absolute inset-0 bg-[#E50914] blur-[60px] opacity-30 rounded-full" />
+            <div className="relative w-20 h-20 bg-[#E50914] rounded-full flex items-center justify-center shadow-lg shadow-red-500/20">
+              <CheckCircle className="w-10 h-10 text-white" strokeWidth={2} />
             </div>
           </div>
+        </motion.div>
 
-          {/* Success Message */}
-          <div className="text-center space-y-3 mb-8">
-            <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight">
-              Welcome to Your Course!
-            </h1>
-            <p className="text-lg text-gray-400">
-              Payment successful • Course unlocked
-            </p>
-          </div>
+        {/* Title */}
+        <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+          className="text-center mb-10">
+          <h1 className="text-3xl md:text-4xl font-black text-white mb-2">{t.paymentWelcome}</h1>
+          <p className="text-sm text-white/40">{t.paymentTitle}</p>
+        </motion.div>
 
-          {/* Course Card */}
-          <div className="bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800 mb-8">
-            <div className="grid md:grid-cols-5 gap-0">
-              {/* Course Thumbnail */}
-              <div className="md:col-span-2 relative h-48 md:h-auto">
-                <img
-                  src={course.thumbnail}
-                  alt={course.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        {/* Course card */}
+        <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+          className="bg-white/[0.03] border border-white/[0.06] rounded overflow-hidden mb-8">
+          <div className="flex flex-col md:flex-row">
+            {/* Thumbnail */}
+            <div className="md:w-2/5 relative">
+              <div className="aspect-video md:aspect-auto md:h-full">
+                <img src={course.thumbnail} alt={course.title} className="w-full h-full object-cover" />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20 hidden md:block" />
+            </div>
+
+            {/* Info */}
+            <div className="flex-1 p-6 space-y-4">
+              <div>
+                <span className="text-[#E50914] text-[10px] font-bold uppercase tracking-widest">{t.paymentNowLearning}</span>
+                <h2 className="text-xl font-black text-white mt-1">{course.title}</h2>
+                <p className="text-sm text-white/40 mt-1">{t.paymentWith} <span className="text-white/70">{course.instructor}</span></p>
               </div>
 
-              {/* Course Details */}
-              <div className="md:col-span-3 p-6 md:p-8 space-y-5">
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <Sparkles className="w-4 h-4 text-[#E50914]" />
-                    <span className="text-xs font-bold text-[#E50914] uppercase tracking-wider">
-                      Now Learning
-                    </span>
-                  </div>
-                  <h2 className="text-2xl font-bold text-white mb-2 leading-tight">
-                    {course.title}
-                  </h2>
-                  <p className="text-gray-400 text-sm mb-3">
-                    with <span className="text-white font-semibold">{course.instructor}</span>
-                  </p>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="flex items-center gap-2.5 text-sm text-white/50">
+                  <Clock className="w-4 h-4 text-white/30" />
+                  <span>{course.duration}</span>
                 </div>
-
-                {/* Course Stats Grid */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center">
-                      <Clock className="w-5 h-5 text-gray-400" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-500 uppercase tracking-wide">Duration</p>
-                      <p className="text-white font-semibold">{course.duration}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center">
-                      <BarChart3 className="w-5 h-5 text-gray-400" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-500 uppercase tracking-wide">Level</p>
-                      <p className="text-white font-semibold">{course.level}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center">
-                      <Download className="w-5 h-5 text-gray-400" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-500 uppercase tracking-wide">Lessons</p>
-                      <p className="text-white font-semibold">{course.lessons} videos</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center">
-                      <Award className="w-5 h-5 text-gray-400" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-500 uppercase tracking-wide">Certificate</p>
-                      <p className="text-white font-semibold">Included</p>
-                    </div>
-                  </div>
+                <div className="flex items-center gap-2.5 text-sm text-white/50">
+                  <BarChart3 className="w-4 h-4 text-white/30" />
+                  <span>{course.level}</span>
+                </div>
+                <div className="flex items-center gap-2.5 text-sm text-white/50">
+                  <BookOpen className="w-4 h-4 text-white/30" />
+                  <span>{course.lessons} {t.cardLessons}</span>
+                </div>
+                <div className="flex items-center gap-2.5 text-sm text-white/50">
+                  <Award className="w-4 h-4 text-white/30" />
+                  <span>{t.paymentCertificate}</span>
                 </div>
               </div>
             </div>
           </div>
+        </motion.div>
 
-          {/* What's Included */}
-          <div className="bg-zinc-900/50 rounded-xl border border-zinc-800 p-6 mb-8">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-              What's Included
-            </h3>
-            <div className="grid md:grid-cols-3 gap-4 text-sm">
-              <div className="flex items-center gap-3">
-                <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                <span className="text-gray-300">Lifetime access</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                <span className="text-gray-300">Mobile & TV access</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                <span className="text-gray-300">Certificate of completion</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                <span className="text-gray-300">Downloadable resources</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                <span className="text-gray-300">Community access</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                <span className="text-gray-300">Instructor Q&A</span>
-              </div>
+        {/* What's included */}
+        <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
+          className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-10">
+          {[t.paymentLifetime, t.paymentMobile, t.paymentCertificate, t.paymentExclusive, t.paymentCommunity, t.paymentFullAccess].map((item, i) => (
+            <div key={i} className="flex items-center gap-2.5 text-sm">
+              <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+              <span className="text-white/60">{item}</span>
             </div>
-          </div>
+          ))}
+        </motion.div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-6">
-            <button
-              onClick={() => navigate(`/course/${course.id}/session`)}
-              className="flex-1 px-8 py-4 bg-[#E50914] text-white text-lg font-bold rounded-md hover:bg-[#c40812] transition-all transform hover:scale-[1.02] shadow-lg shadow-[#E50914]/30"
-            >
-              Start Learning Now
-            </button>
-            <button
-              onClick={() => navigate('/')}
-              className="px-8 py-4 bg-zinc-800 text-white text-lg font-semibold rounded-md hover:bg-zinc-700 transition-all"
-            >
-              Browse More Courses
-            </button>
-          </div>
+        {/* CTA */}
+        <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
+          className="flex flex-col sm:flex-row gap-3">
+          <button onClick={() => navigate(`/course/${course.id}/session`)}
+            className="flex-1 h-11 bg-[#E50914] text-white rounded text-sm font-bold hover:bg-[#c70812] transition-all active:scale-95 flex items-center justify-center gap-2">
+            <Play className="w-4 h-4 fill-white" />{t.paymentStartLearning}
+          </button>
+          <button onClick={() => navigate('/')}
+            className="h-11 px-8 bg-white/[0.06] border border-white/10 text-white rounded text-sm font-semibold hover:bg-white/10 transition-all active:scale-95">
+            {t.paymentBrowseMore}
+          </button>
+        </motion.div>
 
-          {/* Footer Note */}
-          <p className="text-center text-gray-500 text-sm">
-            Your course has been added to <span className="text-white font-semibold">My Progress</span>
-          </p>
-        </ScaleIn>
+        {/* Note */}
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
+          className="text-center text-white/20 text-xs mt-6">{t.paymentNote}</motion.p>
       </div>
     </div>
   );

@@ -18,6 +18,8 @@ import {
   CheckCircle,
 } from 'lucide-react';
 import { getCourseById } from '../data/courses';
+import { useAuth } from '../context/auth-context';
+import { getAppT } from '../i18n/app';
 
 interface Episode {
   id: string;
@@ -33,6 +35,8 @@ export function VideoPlayer() {
   const { id, chapterId, lessonId } = useParams();
   const navigate = useNavigate();
   const course = getCourseById(id || '');
+  const { language } = useAuth();
+  const t = getAppT(language);
   const videoRef = useRef<HTMLDivElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
 
@@ -209,7 +213,7 @@ export function VideoPlayer() {
           
           {/* Subtitle/Caption */}
           <div className="absolute bottom-32 left-0 right-0 flex justify-center px-8">
-            <p className="text-white text-2xl md:text-3xl lg:text-4xl font-bold text-center max-w-4xl leading-relaxed bg-black/60 px-6 py-3 rounded-lg backdrop-blur-sm">
+            <p className="text-white text-2xl md:text-3xl lg:text-4xl font-bold text-center max-w-4xl leading-relaxed bg-black/60 px-6 py-3 rounded backdrop-blur-sm">
               "...was to become a professional ticket taker."
             </p>
           </div>
@@ -225,27 +229,27 @@ export function VideoPlayer() {
             {/* Back Button */}
             <button
               onClick={() => navigate(`/course/${id}/session`)}
-              className="flex items-center gap-3 p-2 pr-4 hover:bg-white/10 rounded-lg transition-all group"
+              className="flex items-center gap-3 p-2 pr-4 hover:bg-white/10 rounded transition-all group"
             >
               <ArrowLeft className="w-6 h-6 text-white" />
-              <span className="text-white font-semibold hidden md:block">Back to Course</span>
+              <span className="text-white font-semibold hidden md:block">{t.playerBack}</span>
             </button>
 
             {/* Course Title */}
             <div className="absolute left-1/2 -translate-x-1/2 text-center hidden lg:block">
               <p className="text-white font-bold text-lg">{course.title}</p>
-              <p className="text-gray-300 text-sm">Season {chapterId} • {currentEpisode?.title}</p>
+              <p className="text-gray-300 text-sm">{t.playerSeason} {chapterId} • {currentEpisode?.title}</p>
             </div>
 
             {/* Right Actions */}
             <div className="flex items-center gap-2">
-              <button className="p-2 hover:bg-white/10 rounded-lg transition-colors" title="Subtitles">
+              <button className="p-2 hover:bg-white/10 rounded transition-colors" title={t.playerSubtitles}>
                 <Subtitles className="w-5 h-5 text-white" />
               </button>
-              <button className="p-2 hover:bg-white/10 rounded-lg transition-colors" title="Comments">
+              <button className="p-2 hover:bg-white/10 rounded transition-colors" title={t.playerComments}>
                 <MessageSquare className="w-5 h-5 text-white" />
               </button>
-              <button className="p-2 hover:bg-white/10 rounded-lg transition-colors" title="Settings">
+              <button className="p-2 hover:bg-white/10 rounded transition-colors" title={t.playerSettings}>
                 <Settings className="w-5 h-5 text-white" />
               </button>
             </div>
@@ -276,15 +280,15 @@ export function VideoPlayer() {
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setShowEpisodes(false)}
-                  className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                  className="p-2 hover:bg-white/10 rounded transition-colors"
                 >
                   <ArrowLeft className="w-5 h-5 text-white" />
                 </button>
-                <h2 className="text-white text-xl font-bold">Season {chapterId}</h2>
+                <h2 className="text-white text-xl font-bold">{t.playerSeason} {chapterId}</h2>
               </div>
               <button
                 onClick={() => setShowEpisodes(false)}
-                className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                className="p-2 hover:bg-white/10 rounded transition-colors"
               >
                 <X className="w-5 h-5 text-white" />
               </button>
@@ -396,7 +400,7 @@ export function VideoPlayer() {
               <button
                 onClick={togglePlayPause}
                 className="p-2 hover:bg-white/10 rounded-full transition-all"
-                title={isPlaying ? 'Pause' : 'Play'}
+                title={isPlaying ? t.playerPause : t.playerPlay}
               >
                 {isPlaying ? (
                   <Pause className="w-8 h-8 text-white" fill="white" />
@@ -476,10 +480,10 @@ export function VideoPlayer() {
                 <button
                   onClick={playNextEpisode}
                   className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded transition-all"
-                  title="Next Episode"
+                  title={t.playerNext}
                 >
                   <SkipForward className="w-5 h-5 text-white" />
-                  <span className="text-white text-sm font-semibold hidden lg:block">Next</span>
+                  <span className="text-white text-sm font-semibold hidden lg:block">{t.playerNext}</span>
                 </button>
               )}
 
@@ -487,7 +491,7 @@ export function VideoPlayer() {
               <button
                 onClick={() => setShowEpisodes(!showEpisodes)}
                 className="p-2 hover:bg-white/10 rounded-full transition-all"
-                title="Episodes"
+                title={t.playerEpisodes}
               >
                 <List className="w-6 h-6 text-white" />
               </button>
@@ -496,7 +500,7 @@ export function VideoPlayer() {
               <button
                 onClick={handleFullscreen}
                 className="p-2 hover:bg-white/10 rounded-full transition-all"
-                title={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+                title={isFullscreen ? t.playerExitFullscreen : t.playerFullscreen}
               >
                 {isFullscreen ? (
                   <Minimize className="w-6 h-6 text-white" />
@@ -508,20 +512,19 @@ export function VideoPlayer() {
           </div>
         </div>
 
-        {/* Netflix Branding (bottom left) */}
+        {/* BrightMind Branding (bottom left) */}
         <div
           className={`absolute bottom-24 left-6 transition-opacity duration-300 ${
             showControls ? 'opacity-100' : 'opacity-0'
           }`}
         >
           <div className="flex flex-col gap-2">
-            <div className="flex items-center gap-2 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-lg">
-              <div className="text-[#E50914] font-black text-lg">N</div>
-              <span className="text-white font-semibold text-sm">Netflix</span>
+            <div className="flex items-center gap-2 bg-black/60 backdrop-blur-sm px-4 py-2 rounded">
+              <span className="text-white font-black text-sm tracking-tight">BRIGHTMIND</span>
             </div>
-            <div className="text-gray-300 text-sm bg-black/60 backdrop-blur-sm px-4 py-2 rounded-lg">
+            <div className="text-white/60 text-sm bg-black/60 backdrop-blur-sm px-4 py-2 rounded">
               <span className="font-semibold text-white">{course.title}</span>
-              <span className="mx-2">•</span>
+              <span className="mx-2 text-white/20">•</span>
               <span>E{currentEpisode?.number} {currentEpisode?.title}</span>
             </div>
           </div>

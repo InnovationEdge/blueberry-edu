@@ -1,27 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Check, Upload, GraduationCap, Mic } from 'lucide-react';
-import { categories } from '../data/courses';
+import { CategoryIcon } from '../components/category-icon';
 import { AnimatePresence, motion } from 'motion/react';
 import { useAuth } from '../context/auth-context';
 
 interface OnboardingProps {
   onComplete: () => void;
 }
-
-const INSTRUCTORS = [
-  { id: 1, name: 'Sarah Chen', expertise: 'ბიზნეს სტრატეგია', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=800&fit=crop&crop=face&q=80', categories: ['business'] },
-  { id: 2, name: 'Chef Marcus', expertise: 'კულინარია', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&h=800&fit=crop&crop=face&q=80', categories: ['food'] },
-  { id: 3, name: 'Elena Rodriguez', expertise: 'ხელოვნება', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&h=800&fit=crop&crop=face&q=80', categories: ['arts'] },
-  { id: 4, name: 'DJ Alex Turner', expertise: 'მუსიკა', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop&crop=face&q=80', categories: ['music'] },
-  { id: 5, name: 'Maya Patel', expertise: 'UX/UI დიზაინი', image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=800&fit=crop&crop=face&q=80', categories: ['design'] },
-  { id: 6, name: 'Alex Thompson', expertise: 'ტექნოლოგია', image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&h=800&fit=crop&crop=face&q=80', categories: ['tech'] },
-  { id: 7, name: 'Nina Williams', expertise: 'წერა', image: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=600&h=800&fit=crop&crop=face&q=80', categories: ['writing'] },
-  { id: 8, name: 'David Kim', expertise: 'სპორტი', image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&h=800&fit=crop&crop=face&q=80', categories: ['sports'] },
-  { id: 9, name: 'Angela Brooks', expertise: 'პრეზენტაცია', image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&h=800&fit=crop&crop=face&q=80', categories: ['business'] },
-  { id: 10, name: 'Chris Anderson', expertise: 'პროგრამირება', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=800&fit=crop&crop=face&q=80', categories: ['tech'] },
-  { id: 11, name: 'Maya Thompson', expertise: 'ცხოვრების წესი', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=600&h=800&fit=crop&crop=face&q=80', categories: ['lifestyle'] },
-  { id: 12, name: 'David Martinez', expertise: 'ფოტოგრაფია', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&h=800&fit=crop&crop=face&q=80', categories: ['arts'] },
-];
 
 const EXPERTISE_AREAS = [
   { id: 'business', label: 'ბიზნესი' }, { id: 'tech', label: 'ტექნოლოგია' },
@@ -32,11 +17,20 @@ const EXPERTISE_AREAS = [
   { id: 'marketing', label: 'მარკეტინგი' }, { id: 'finance', label: 'ფინანსები' },
 ];
 
-const CAT_LABELS: Record<string, string> = {
-  food: 'კულინარია', arts: 'ხელოვნება', music: 'მუსიკა', writing: 'წერა',
-  sports: 'სპორტი', design: 'დიზაინი', business: 'ბიზნესი', tech: 'ტექნოლოგია',
-  lifestyle: 'ცხოვრების წესი',
-};
+const INTEREST_CATEGORIES = [
+  { id: 'business', label: 'ბიზნესი', icon: 'briefcase', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop&q=80' },
+  { id: 'tech', label: 'ტექნოლოგია', icon: 'cpu', img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=300&fit=crop&q=80' },
+  { id: 'design', label: 'დიზაინი', icon: 'layout', img: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=300&fit=crop&q=80' },
+  { id: 'arts', label: 'ხელოვნება', icon: 'palette', img: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=400&h=300&fit=crop&q=80' },
+  { id: 'music', label: 'მუსიკა', icon: 'music', img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&h=300&fit=crop&q=80' },
+  { id: 'food', label: 'კულინარია', icon: 'utensils', img: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400&h=300&fit=crop&q=80' },
+  { id: 'writing', label: 'წერა', icon: 'pen-tool', img: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&h=300&fit=crop&q=80' },
+  { id: 'sports', label: 'სპორტი', icon: 'trophy', img: 'https://images.unsplash.com/photo-1461896836934-bd45ba9b5acb?w=400&h=300&fit=crop&q=80' },
+  { id: 'lifestyle', label: 'ცხოვრება', icon: 'home', img: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=400&h=300&fit=crop&q=80' },
+  { id: 'photography', label: 'ფოტოგრაფია', icon: 'camera', img: 'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=400&h=300&fit=crop&q=80' },
+  { id: 'marketing', label: 'მარკეტინგი', icon: 'trending-up', img: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=400&h=300&fit=crop&q=80' },
+  { id: 'finance', label: 'ფინანსები', icon: 'bar-chart', img: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=300&fit=crop&q=80' },
+];
 
 export function Onboarding({ onComplete }: OnboardingProps) {
   const [step, setStep] = useState(0);
@@ -44,36 +38,34 @@ export function Onboarding({ onComplete }: OnboardingProps) {
   const [name, setName] = useState('');
   const [bio, setBio] = useState('');
   const [profileImage, setProfileImage] = useState('');
-  const [selectedInstructors, setSelectedInstructors] = useState<number[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedExpertise, setSelectedExpertise] = useState<string[]>([]);
-  const [activeTab, setActiveTab] = useState('all');
   const nameInputRef = useRef<HTMLInputElement>(null);
   const { setUserType } = useAuth();
   const totalSteps = 3;
-
-  const catTabs = [
-    { id: 'all', label: 'ყველა', count: INSTRUCTORS.length },
-    ...categories.filter(c => c.id !== 'all').map(c => ({
-      id: c.id, label: CAT_LABELS[c.id] || c.name,
-      count: INSTRUCTORS.filter(i => i.categories.includes(c.id)).length,
-    })).filter(t => t.count > 0),
-  ];
-
-  const filteredInstructors = activeTab === 'all' ? INSTRUCTORS : INSTRUCTORS.filter(i => i.categories.includes(activeTab));
-  const goNext = () => setStep(s => s + 1);
+  const goNext = useCallback(() => setStep(s => s + 1), []);
   useEffect(() => { if (step === 1) setTimeout(() => nameInputRef.current?.focus(), 300); }, [step]);
+
+  // Enter key to proceed
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && canProceed() && step < 3) goNext();
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  });
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) { const reader = new FileReader(); reader.onloadend = () => setProfileImage(reader.result as string); reader.readAsDataURL(file); }
   };
 
-  const toggleInstructor = (id: number) => setSelectedInstructors(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+  const toggleCategory = (id: string) => setSelectedCategories(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
   const toggleExpertise = (id: string) => setSelectedExpertise(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
   const canProceed = () => {
     if (step === 0) return true;
     if (step === 1) return name.trim().length > 0;
-    if (step === 2) return role === 'student' ? selectedInstructors.length > 0 : selectedExpertise.length > 0;
+    if (step === 2) return role === 'student' ? selectedCategories.length > 0 : selectedExpertise.length > 0;
     return true;
   };
   const initial = name.trim() ? name.trim()[0].toUpperCase() : 'B';
@@ -82,184 +74,281 @@ export function Onboarding({ onComplete }: OnboardingProps) {
   const buttonLabel = () => {
     if (step === 0) return 'გაგრძელება';
     if (step === 1) return 'გაგრძელება';
-    if (step === 2 && role === 'student') return `დასრულება (${selectedInstructors.length})`;
+    if (step === 2 && role === 'student') return `დასრულება (${selectedCategories.length})`;
     if (step === 2 && role === 'instructor') return `დასრულება (${selectedExpertise.length})`;
     return 'დავიწყოთ';
   };
 
-  // Step 2 (instructors) needs scroll, others need vertical centering
-  const needsCenter = step === 0 || step === 1 || (step === 2 && role === 'instructor');
-
   return (
     <div className="h-screen bg-black text-white flex flex-col overflow-hidden">
       {/* Header */}
-      <header className="px-4 md:px-12 py-5 flex-shrink-0 flex items-center justify-between z-20 relative">
+      <header className="px-6 md:px-12 py-5 flex-shrink-0 z-20 relative">
         <span className="text-2xl md:text-3xl font-black tracking-tight">BRIGHTMIND</span>
-        <div className="flex items-center gap-4">
-          {step < 3 && <span className="text-xs text-white/25">{step + 1}/{totalSteps}</span>}
-          {step === 0 && (
-            <button onClick={onComplete} className="text-sm text-white/40 hover:text-white transition-colors">გაუქმება</button>
-          )}
-        </div>
       </header>
 
       {/* Content */}
-      <div className={`flex-1 min-h-0 ${needsCenter ? 'flex items-center justify-center' : 'overflow-y-auto'}`}>
+      <div className="flex-1 min-h-0 flex flex-col">
         <AnimatePresence mode="wait">
 
-        {/* Step 0: Role */}
+        {/* ═══ Step 0: Role ═══ */}
         {step === 0 && (
-          <motion.div key="s0" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }} className="w-full max-w-4xl mx-auto px-6">
-            <h1 className="text-2xl font-bold mb-1">როგორ გინდა გამოიყენო BrightMind?</h1>
-            <p className="text-sm text-white/40 mb-8">ამის შეცვლა მოგვიანებითაც შეგიძლია.</p>
+          <motion.div key="s0" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.3 }}
+            className="flex-1 flex flex-col items-center justify-center px-6">
+            <div className="w-full max-w-3xl">
+              <motion.h1 initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+                className="text-3xl md:text-4xl font-black mb-2 text-center">როგორ გინდა გამოიყენო BrightMind?</motion.h1>
+              <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+                className="text-sm text-white/40 mb-10 text-center">ამის შეცვლა მოგვიანებითაც შეგიძლია.</motion.p>
 
-            <div className="grid grid-cols-2 gap-5">
-              {[
-                { id: 'student' as const, icon: GraduationCap, title: 'ისწავლე', desc: 'ისწავლე ახალი უნარები საუკეთესოებისგან', img: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop&q=80' },
-                { id: 'instructor' as const, icon: Mic, title: 'ასწავლე', desc: 'შექმენი კურსები და გაუზიარე ცოდნა', img: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&h=400&fit=crop&q=80' },
-              ].map((item) => {
-                const selected = role === item.id;
-                const Icon = item.icon;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => handleRoleSelect(item.id)}
-                    className={`relative rounded overflow-hidden text-left transition-all group ${selected ? 'ring-2 ring-[#E50914]' : 'ring-1 ring-white/[0.08] hover:ring-white/15'}`}
-                  >
-                    <div className="aspect-[16/10] relative overflow-hidden">
-                      <img src={item.img} alt="" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-                      {selected && <div className="absolute top-3 right-3 w-5 h-5 bg-[#E50914] rounded-full flex items-center justify-center"><Check className="w-3 h-3 text-white" /></div>}
-                    </div>
-                    <div className="p-4">
-                      <div className="flex items-center gap-2 mb-1">
-                        <Icon className="w-4 h-4 text-white/60" strokeWidth={1.5} />
-                        <span className="font-bold text-[15px]">{item.title}</span>
+              <div className="grid grid-cols-2 gap-6">
+                {[
+                  { id: 'student' as const, icon: GraduationCap, title: 'ისწავლე', desc: 'ისწავლე ახალი უნარები საუკეთესოებისგან', img: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=500&fit=crop&q=80' },
+                  { id: 'instructor' as const, icon: Mic, title: 'ასწავლე', desc: 'შექმენი კურსები და გაუზიარე ცოდნა', img: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&h=500&fit=crop&q=80' },
+                ].map((item, idx) => {
+                  const selected = role === item.id;
+                  const Icon = item.icon;
+                  return (
+                    <motion.button
+                      key={item.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 + idx * 0.1 }}
+                      onClick={() => handleRoleSelect(item.id)}
+                      className={`relative rounded overflow-hidden text-left transition-all duration-200 group active:scale-[0.98] ${selected ? 'ring-2 ring-[#E50914] shadow-lg shadow-red-500/10' : 'ring-1 ring-white/10 hover:ring-white/20'}`}
+                    >
+                      <div className="aspect-[16/9] relative overflow-hidden">
+                        <img src={item.img} alt="" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+                        {selected && (
+                          <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 400 }}
+                            className="absolute top-4 right-4 w-6 h-6 bg-[#E50914] rounded-full flex items-center justify-center shadow-lg">
+                            <Check className="w-3.5 h-3.5 text-white" />
+                          </motion.div>
+                        )}
+                        <div className="absolute bottom-4 left-5 right-5">
+                          <div className="flex items-center gap-2.5 mb-1.5">
+                            <Icon className={`w-5 h-5 ${selected ? 'text-[#E50914]' : 'text-white/70'}`} strokeWidth={1.5} />
+                            <span className="font-bold text-lg">{item.title}</span>
+                          </div>
+                          <p className="text-xs text-white/50 leading-relaxed">{item.desc}</p>
+                        </div>
                       </div>
-                      <p className="text-xs text-white/35 leading-relaxed">{item.desc}</p>
-                    </div>
-                  </button>
-                );
-              })}
+                    </motion.button>
+                  );
+                })}
+              </div>
+
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
+                className="mt-8 flex justify-center">
+                <button onClick={goNext} className="px-12 py-3 bg-[#E50914] text-white rounded text-sm font-bold hover:bg-[#c70812] transition-all active:scale-95">
+                  {buttonLabel()}
+                </button>
+              </motion.div>
             </div>
           </motion.div>
         )}
 
-        {/* Step 1: Profile */}
+        {/* ═══ Step 1: Profile ═══ */}
         {step === 1 && (
-          <motion.div key="s1" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }} className="w-full max-w-4xl mx-auto px-6">
-            <h1 className="text-2xl font-bold mb-1">შექმენი პროფილი</h1>
-            <p className="text-sm text-white/40 mb-8">შემოიყვანე შენი სახელი</p>
+          <motion.div key="s1" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.3 }}
+            className="flex-1 flex flex-col items-center justify-center px-6">
+            <div className="w-full max-w-md">
+              {/* Role badge */}
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+                className="flex justify-center mb-6">
+                <span className="px-3 py-1 bg-[#E50914]/10 border border-[#E50914]/20 rounded text-[#E50914] text-xs font-medium">
+                  {role === 'student' ? 'სტუდენტი' : 'ინსტრუქტორი'}
+                </span>
+              </motion.div>
 
-            <div className="flex items-start gap-5 mb-6">
-              <div className="flex flex-col items-center flex-shrink-0">
+              <motion.h1 initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
+                className="text-3xl md:text-4xl font-black mb-2 text-center">შექმენი პროფილი</motion.h1>
+              <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
+                className="text-sm text-white/40 mb-10 text-center">შემოიყვანე შენი სახელი</motion.p>
+
+              {/* Avatar */}
+              <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3, type: 'spring', stiffness: 200 }}
+                className="flex flex-col items-center mb-8">
                 {profileImage ? (
-                  <div className="w-20 h-20 rounded-full overflow-hidden ring-2 ring-white/10 mb-2"><img src={profileImage} alt="" className="w-full h-full object-cover" /></div>
+                  <div className="w-24 h-24 rounded-full overflow-hidden ring-2 ring-white/10 mb-3">
+                    <img src={profileImage} alt="" className="w-full h-full object-cover" />
+                  </div>
                 ) : (
-                  <div className="w-20 h-20 rounded-full bg-[#E50914] flex items-center justify-center mb-2"><span className="text-white text-2xl font-bold">{initial}</span></div>
+                  <div className="w-24 h-24 rounded-full bg-[#E50914] flex items-center justify-center mb-3 shadow-lg shadow-red-500/20">
+                    <span className="text-white text-3xl font-bold">{initial}</span>
+                  </div>
                 )}
-                <label className="text-[11px] text-white/30 hover:text-white/60 transition-colors cursor-pointer flex items-center gap-1">
-                  <Upload className="w-3 h-3" />ატვირთვა
+                <label className="text-xs text-white/40 hover:text-white/70 transition-colors cursor-pointer flex items-center gap-1.5">
+                  <Upload className="w-3.5 h-3.5" />ფოტოს ატვირთვა
                   <input type="file" accept="image/jpeg,image/png" onChange={handleImageUpload} className="hidden" />
                 </label>
-              </div>
+              </motion.div>
 
-              <div className="flex-1 space-y-4 pt-1">
+              {/* Form */}
+              <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
+                className="space-y-5">
                 <div>
-                  <label className="block text-xs text-white/40 mb-1.5">სახელი <span className="text-[#E50914]">*</span></label>
+                  <label className="block text-xs text-white/50 mb-2 font-medium">სახელი <span className="text-[#E50914]">*</span></label>
                   <input
                     ref={nameInputRef}
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="შენი სახელი"
-                    className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/20 focus:outline-none focus:border-[#E50914] transition-colors"
+                    className="w-full px-4 py-3.5 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#E50914] transition-colors"
                   />
                 </div>
 
                 {role === 'instructor' && (
                   <div>
-                    <label className="block text-xs text-white/40 mb-1.5">მოკლე ბიო</label>
+                    <label className="block text-xs text-white/50 mb-2 font-medium">მოკლე ბიო</label>
                     <textarea
                       value={bio}
                       onChange={(e) => setBio(e.target.value)}
                       placeholder="რას ასწავლი და რა გამოცდილება გაქვს..."
                       rows={3}
-                      className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/20 focus:outline-none focus:border-[#E50914] transition-colors resize-none"
+                      className="w-full px-4 py-3.5 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#E50914] transition-colors resize-none"
                     />
                   </div>
                 )}
-              </div>
+              </motion.div>
+
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
+                className="mt-8 flex justify-center">
+                <button
+                  onClick={goNext}
+                  disabled={!canProceed()}
+                  className={`px-12 py-3 rounded text-sm font-bold transition-all active:scale-95 ${canProceed() ? 'bg-[#E50914] text-white hover:bg-[#c70812]' : 'bg-white/[0.04] text-white/20 cursor-not-allowed'}`}
+                >
+                  {buttonLabel()}
+                </button>
+              </motion.div>
             </div>
           </motion.div>
         )}
 
-        {/* Step 2: Student — Instructors */}
+        {/* ═══ Step 2: Student — Categories (same as Library carousel) ═══ */}
         {step === 2 && role === 'student' && (
-          <motion.div key="s2s" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }} className="w-full px-4 md:px-12 pt-4">
-              <h1 className="text-2xl font-bold mb-1">ვისგან გინდა ისწავლო?</h1>
-              <p className="text-sm text-white/40 mb-6">შეარჩიე ინსტრუქტორები</p>
+          <motion.div key="s2s" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.3 }}
+            className="flex-1 flex flex-col items-center justify-center px-6">
+            <div className="w-full max-w-4xl">
+              <motion.h1 initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+                className="text-3xl md:text-4xl font-black mb-2 text-center">რა გაინტერესებს?</motion.h1>
+              <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+                className="text-sm text-white/40 mb-10 text-center">აირჩიე კატეგორიები რომლებიც მოგწონს</motion.p>
 
-              {/* Categories — Library style, red active */}
-              <div className="flex gap-2.5 overflow-x-auto mb-6 pb-1" style={{ scrollbarWidth: 'none' }}>
-                {catTabs.map(tab => (
-                  <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`flex-shrink-0 px-4 py-2 rounded border text-sm font-medium transition-all whitespace-nowrap ${activeTab === tab.id ? 'bg-[#E50914] border-[#E50914] text-white' : 'bg-transparent border-white/10 text-white/50 hover:border-white/20 hover:text-white'}`}>
-                    {tab.label}
-                  </button>
-                ))}
-              </div>
+              {/* Horizontal scroll — exact same style as Library categories */}
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+                <div className="flex gap-3 overflow-x-auto pb-2" style={{ scrollbarWidth: 'none' }}>
+                  {INTEREST_CATEGORIES.map((cat) => {
+                    const selected = selectedCategories.includes(cat.id);
+                    return (
+                      <button
+                        key={cat.id}
+                        onClick={() => toggleCategory(cat.id)}
+                        className={`flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded border transition-all active:scale-[0.97] ${
+                          selected
+                            ? 'bg-[#E50914] border-[#E50914] text-white'
+                            : 'bg-transparent border-white/10 text-white/50 hover:border-white/20 hover:text-white'
+                        }`}
+                      >
+                        <CategoryIcon
+                          iconName={cat.icon}
+                          className={`w-4 h-4 ${selected ? 'text-white' : 'text-white/40'}`}
+                        />
+                        <span className="text-sm font-medium whitespace-nowrap">{cat.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </motion.div>
 
-              {/* Instructors — single horizontal scroll row */}
-              <div className="flex gap-4 overflow-x-auto pb-4" style={{ scrollbarWidth: 'none' }}>
-                {filteredInstructors.map((inst) => {
-                  const selected = selectedInstructors.includes(inst.id);
+              {selectedCategories.length > 0 && (
+                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                  className="text-xs text-[#E50914] mt-4 text-center font-medium">{selectedCategories.length} არჩეული</motion.p>
+              )}
+
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
+                className="mt-8 flex justify-center">
+                <button
+                  onClick={goNext}
+                  disabled={selectedCategories.length === 0}
+                  className={`px-12 py-3 rounded text-sm font-bold transition-all active:scale-95 ${selectedCategories.length > 0 ? 'bg-[#E50914] text-white hover:bg-[#c70812]' : 'bg-white/[0.04] text-white/20 cursor-not-allowed'}`}
+                >
+                  დასრულება ({selectedCategories.length})
+                </button>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* ═══ Step 2: Instructor — Expertise ═══ */}
+        {step === 2 && role === 'instructor' && (
+          <motion.div key="s2i" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.3 }}
+            className="flex-1 flex flex-col items-center justify-center px-6">
+            <div className="w-full max-w-3xl">
+              <motion.h1 initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+                className="text-3xl md:text-4xl font-black mb-2 text-center">რას ასწავლი?</motion.h1>
+              <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+                className="text-sm text-white/40 mb-10 text-center">შეარჩიე შენი ექსპერტიზის სფეროები</motion.p>
+
+              <div className="flex flex-wrap gap-3 justify-center">
+                {EXPERTISE_AREAS.map((area, idx) => {
+                  const selected = selectedExpertise.includes(area.id);
                   return (
-                    <button key={inst.id} onClick={() => toggleInstructor(inst.id)} className="group text-center flex-shrink-0 w-[140px] md:w-[160px]">
-                      <div className={`relative rounded overflow-hidden aspect-[3/4] mb-1.5 transition-all duration-300 group-hover:scale-[1.03] ${selected ? 'ring-2 ring-[#E50914]' : 'ring-1 ring-white/[0.06] group-hover:ring-white/15'}`}>
-                        <img src={inst.image} alt={inst.name} className="w-full h-full object-cover" />
-                        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 to-transparent" />
-                        <div className="absolute bottom-2 left-2 right-2">
-                          <p className="text-[11px] font-semibold text-white truncate">{inst.name}</p>
-                          <p className="text-[9px] text-white/50 truncate">{inst.expertise}</p>
-                        </div>
-                        {selected && <div className="absolute top-2 right-2 w-5 h-5 bg-[#E50914] rounded-full flex items-center justify-center"><Check className="w-3 h-3 text-white" /></div>}
-                      </div>
-                    </button>
+                    <motion.button key={area.id}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.25 + idx * 0.04 }}
+                      onClick={() => toggleExpertise(area.id)}
+                      className={`px-5 py-3 rounded border text-sm font-medium transition-all active:scale-[0.97] ${
+                        selected
+                          ? 'bg-[#E50914] border-[#E50914] text-white'
+                          : 'bg-transparent border-white/15 text-white/60 hover:border-white/30 hover:text-white'
+                      }`}>
+                      {area.label}
+                    </motion.button>
                   );
                 })}
               </div>
-          </motion.div>
-        )}
 
-        {/* Step 2: Instructor — Expertise */}
-        {step === 2 && role === 'instructor' && (
-          <motion.div key="s2i" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }} className="w-full max-w-lg mx-auto px-6">
-            <h1 className="text-2xl font-bold mb-1">რას ასწავლი?</h1>
-            <p className="text-sm text-white/40 mb-8">შეარჩიე შენი ექსპერტიზის სფეროები</p>
-
-            <div className="grid grid-cols-3 gap-2.5">
-              {EXPERTISE_AREAS.map((area) => {
-                const selected = selectedExpertise.includes(area.id);
-                return (
-                  <button key={area.id} onClick={() => toggleExpertise(area.id)} className={`py-3 px-4 rounded text-sm transition-all ${selected ? 'bg-[#E50914] text-white font-semibold' : 'bg-white/[0.04] text-white/50 hover:bg-white/[0.08] hover:text-white/70'}`}>
-                    {area.label}
-                  </button>
-                );
-              })}
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
+                className="mt-10 flex justify-center">
+                <button
+                  onClick={goNext}
+                  disabled={!canProceed()}
+                  className={`px-12 py-3 rounded text-sm font-bold transition-all active:scale-95 ${canProceed() ? 'bg-[#E50914] text-white hover:bg-[#c70812]' : 'bg-white/[0.04] text-white/20 cursor-not-allowed'}`}
+                >
+                  {buttonLabel()}
+                </button>
+              </motion.div>
             </div>
           </motion.div>
         )}
 
-        {/* Step 3: Welcome */}
+        {/* ═══ Step 3: Welcome ═══ */}
         {step === 3 && (
-          <motion.div key="s3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }} className="flex flex-col items-center justify-center px-6" style={{ minHeight: 'calc(100vh - 72px)' }}>
-            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-4xl md:text-5xl font-black mb-3 text-center">
-              {role === 'student' ? 'მზად ხარ.' : 'მოგესალმებით.'}
+          <motion.div key="s3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}
+            className="flex-1 flex flex-col items-center justify-center px-6 relative">
+            {/* Subtle glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#E50914]/5 rounded-full blur-[120px] pointer-events-none" />
+
+            <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1, type: 'spring', stiffness: 150 }}
+              className="w-16 h-16 rounded-full bg-[#E50914] flex items-center justify-center mb-6 shadow-xl shadow-red-500/20">
+              <Check className="w-8 h-8 text-white" />
+            </motion.div>
+
+            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+              className="text-4xl md:text-6xl font-black mb-2 text-center">
+              {name.trim() ? `${name.trim()}, მზად ხარ.` : (role === 'student' ? 'მზად ხარ.' : 'მოგესალმებით.')}
             </motion.h1>
-            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-base text-white/40 max-w-md text-center mb-10 leading-relaxed">
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}
+              className="text-base text-white/40 max-w-md text-center mb-10 leading-relaxed">
               {role === 'student' ? 'დროა აღმოაჩინო ახალი უნარები და ისწავლო საუკეთესოებისგან.' : 'დროა გაუზიარო შენი ცოდნა და გამოცდილება ათასობით სტუდენტს.'}
             </motion.p>
-            <motion.button initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} onClick={onComplete} className="px-10 py-3.5 bg-[#E50914] text-white rounded font-bold text-sm hover:bg-[#c70812] transition-all hover:scale-105 active:scale-95">
+            <motion.button initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
+              onClick={onComplete}
+              className="px-12 py-3.5 bg-[#E50914] text-white rounded font-bold text-sm hover:bg-[#c70812] transition-all active:scale-95 shadow-lg shadow-red-500/20">
               დავიწყოთ
             </motion.button>
           </motion.div>
@@ -268,20 +357,20 @@ export function Onboarding({ onComplete }: OnboardingProps) {
         </AnimatePresence>
       </div>
 
-      {/* Bottom Bar (steps 0-2) */}
+      {/* Progress bar — bottom */}
       {step < 3 && (
-        <div className="flex-shrink-0 px-6 pb-6 pt-4">
-          <div className="max-w-lg mx-auto space-y-3">
-            <button onClick={goNext} disabled={!canProceed()} className={`px-10 py-2.5 rounded text-sm font-bold transition-all mx-auto block ${canProceed() ? 'bg-[#E50914] text-white hover:bg-[#c70812]' : 'bg-white/[0.04] text-white/20 cursor-not-allowed'}`}>
-              {buttonLabel()}
-            </button>
-            <div className="flex gap-2">
-              {Array.from({ length: totalSteps }).map((_, i) => (
-                <div key={i} className="flex-1 h-[3px] rounded-full overflow-hidden bg-white/[0.06]">
-                  <div className={`h-full rounded-full transition-all duration-500 ${i <= step ? 'bg-[#E50914] w-full' : 'w-0'}`} />
-                </div>
-              ))}
-            </div>
+        <div className="flex-shrink-0 px-6 md:px-12 pb-6 pt-4">
+          <div className="max-w-md mx-auto flex gap-2">
+            {Array.from({ length: totalSteps }).map((_, i) => (
+              <div key={i} className="flex-1 h-[3px] rounded-full overflow-hidden bg-white/[0.06]">
+                <motion.div
+                  className="h-full rounded-full bg-[#E50914]"
+                  initial={{ width: '0%' }}
+                  animate={{ width: i <= step ? '100%' : '0%' }}
+                  transition={{ duration: 0.5, ease: 'easeOut' }}
+                />
+              </div>
+            ))}
           </div>
         </div>
       )}

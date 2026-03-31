@@ -71,7 +71,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/course/:id',
-    element: <Layout><CourseDetail /></Layout>,
+    element: <AuthWrapper><CourseDetail /></AuthWrapper>,
   },
   {
     path: '/course/:id/success',
