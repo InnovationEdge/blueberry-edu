@@ -49,18 +49,18 @@ export function Search() {
       {/* Related Searches */}
       {relatedSearches.length > 0 && (
         <div className="mb-8">
-          <p className="text-gray-400 text-sm mb-3">
+          <p className="text-white/40 text-sm mb-3">
             {t.searchExplore}{' '}
             {relatedSearches.map((term, index) => (
               <span key={index}>
                 <Link
                   to={`/search?q=${encodeURIComponent(term)}`}
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-white/40 hover:text-white transition-colors"
                 >
                   {term}
                 </Link>
                 {index < relatedSearches.length - 1 && (
-                  <span className="text-gray-600"> | </span>
+                  <span className="text-white/20"> | </span>
                 )}
               </span>
             ))}
@@ -98,7 +98,7 @@ export function Search() {
                   <h3 className="text-white font-bold text-sm mb-1 line-clamp-2">
                     {course.title}
                   </h3>
-                  <p className="text-gray-300 text-xs">{course.instructor}</p>
+                  <p className="text-white/60 text-xs">{course.instructor}</p>
                 </div>
               </div>
             </Link>
@@ -106,14 +106,14 @@ export function Search() {
         </div>
       ) : query ? (
         <div className="text-center py-20">
-          <p className="text-gray-400 text-lg mb-2">
+          <p className="text-white/40 text-lg mb-2">
             {t.searchNoResults}
           </p>
-          <p className="text-gray-500 text-sm">{t.searchSuggestions}</p>
+          <p className="text-white/30 text-sm">{t.searchSuggestions}</p>
         </div>
       ) : (
         <div className="text-center py-20">
-          <p className="text-gray-400 text-lg">Enter a search term to find courses</p>
+          <p className="text-white/40 text-lg">Enter a search term to find courses</p>
         </div>
       )}
 

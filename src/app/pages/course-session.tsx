@@ -376,7 +376,7 @@ export function CourseSession() {
 
                     {/* Lessons */}
                     {isExpanded && (
-                      <div className="border-t border-white/[0.06] bg-gray-50">
+                      <div className="border-t border-white/[0.06] bg-white/[0.02]">
                         {chapter.lessons.map((lesson, index) => (
                           <div
                             key={lesson.id}
@@ -529,7 +529,7 @@ export function CourseSession() {
                       <h4 className="text-sm font-bold text-white mb-3">{t.sessionCreatePost}</h4>
                       <textarea
                         placeholder={t.sessionPostPlaceholder}
-                        className="w-full px-4 py-3 border border-white/10 rounded text-sm text-white/70 placeholder-gray-400 focus:outline-none focus:border-black resize-none"
+                        className="w-full px-4 py-3 border border-white/10 rounded text-sm text-white/70 placeholder-white/30 focus:outline-none focus:border-black resize-none"
                         rows={3}
                       />
                       <div className="flex items-center justify-between mt-3">
@@ -656,7 +656,7 @@ export function CourseSession() {
                   {/* Comment 3 */}
                   <div className="bg-white/[0.03] rounded border border-white/[0.06] p-6 hover:bg-white/[0.05] transition-shadow">
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-full bg-gray-400 flex items-center justify-center text-white font-bold flex-shrink-0">
+                      <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-white font-bold flex-shrink-0">
                         JD
                       </div>
                       <div className="flex-1">

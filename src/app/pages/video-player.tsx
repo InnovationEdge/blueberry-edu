@@ -238,7 +238,7 @@ export function VideoPlayer() {
             {/* Course Title */}
             <div className="absolute left-1/2 -translate-x-1/2 text-center hidden lg:block">
               <p className="text-white font-bold text-lg">{course.title}</p>
-              <p className="text-gray-300 text-sm">{t.playerSeason} {chapterId} • {currentEpisode?.title}</p>
+              <p className="text-white/60 text-sm">{t.playerSeason} {chapterId} • {currentEpisode?.title}</p>
             </div>
 
             {/* Right Actions */}
@@ -330,7 +330,7 @@ export function VideoPlayer() {
                     {/* Episode Info */}
                     <div className="flex-1 min-w-0">
                       <h3 className="text-white font-semibold mb-2 line-clamp-1">{episode.title}</h3>
-                      <p className="text-gray-400 text-sm line-clamp-2 leading-relaxed">
+                      <p className="text-white/40 text-sm line-clamp-2 leading-relaxed">
                         {episode.description}
                       </p>
                     </div>
@@ -379,7 +379,7 @@ export function VideoPlayer() {
               )}
 
               {/* Track */}
-              <div className="w-full h-1 bg-gray-600/50 rounded-full overflow-hidden group-hover:h-1.5 transition-all">
+              <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden group-hover:h-1.5 transition-all">
                 {/* Played */}
                 <div
                   className="h-full bg-[#E50914] rounded-full transition-all relative"
@@ -460,7 +460,7 @@ export function VideoPlayer() {
                         setVolume(val);
                         setIsMuted(val === 0);
                       }}
-                      className="w-20 h-1 bg-gray-600 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
+                      className="w-20 h-1 bg-white/20 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
                     />
                     <span className="text-white text-sm font-semibold w-8 text-right">{volume}%</span>
                   </div>
