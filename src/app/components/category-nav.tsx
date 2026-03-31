@@ -59,7 +59,7 @@ export function CategoryNav({ selectedCategory, onSelectCategory }: CategoryNavP
           <button
             key={category.id}
             onClick={() => onSelectCategory(category.id)}
-            className={`flex-shrink-0 px-6 py-4 rounded-xl border-2 transition-all shadow-lg hover:shadow-xl ${
+            className={`flex-shrink-0 px-6 py-4 rounded border-2 transition-all shadow-lg hover:shadow-xl ${
               selectedCategory === category.id
                 ? 'bg-gradient-to-br from-red-600 to-red-700 border-red-500 text-white scale-105 shadow-red-500/50'
                 : 'bg-gray-900/60 border-gray-700 text-gray-300 hover:border-gray-500 hover:bg-gray-900/80'

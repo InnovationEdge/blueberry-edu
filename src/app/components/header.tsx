@@ -120,7 +120,7 @@ export function Header() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={t.headerSearch}
-                  className="w-64 md:w-80 pl-10 pr-10 py-2 bg-black/80 border border-gray-700 text-white placeholder-gray-500 rounded focus:outline-none focus:border-white transition-colors"
+                  className="w-64 md:w-80 pl-10 pr-10 py-2 bg-black/80 border border-white/15 text-white placeholder-white/30 rounded focus:outline-none focus:border-white transition-colors"
                 />
                 {searchQuery && (
                   <button
@@ -146,7 +146,7 @@ export function Header() {
           ) : (
             <button
               onClick={() => setShowSearch(true)}
-              className="text-white hover:text-gray-300 transition-colors p-2 hover:bg-white/10 rounded-lg"
+              className="text-white hover:text-gray-300 transition-colors p-2 hover:bg-white/10 rounded"
             >
               <Search className="w-5 h-5 md:w-6 md:h-6" />
             </button>
@@ -154,7 +154,7 @@ export function Header() {
           
           {!showSearch && (
             <>
-              <button className="text-white hover:text-gray-300 transition-colors p-2 hover:bg-white/10 rounded-lg relative">
+              <button className="text-white hover:text-gray-300 transition-colors p-2 hover:bg-white/10 rounded relative">
                 <Bell className="w-5 h-5 md:w-6 md:h-6" />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
               </button>
@@ -163,7 +163,7 @@ export function Header() {
                   className="flex items-center gap-2 cursor-pointer group"
                   onClick={() => setShowDropdown(!showDropdown)}
                 >
-                  <div className="w-8 h-8 md:w-9 md:h-9 rounded-lg bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center text-white text-sm md:text-base font-bold shadow-lg group-hover:shadow-red-500/50 transition-all group-hover:scale-105">
+                  <div className="w-8 h-8 md:w-9 md:h-9 rounded bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center text-white text-sm md:text-base font-bold shadow-lg group-hover:shadow-red-500/50 transition-all group-hover:scale-105">
                     U
                   </div>
                   <ChevronDown className={`w-4 h-4 text-white transition-transform duration-300 ${showDropdown ? 'rotate-180' : ''}`} />
@@ -177,11 +177,11 @@ export function Header() {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: -4 }}
                     transition={{ duration: 0.2, ease: 'easeOut' }}
-                    className="absolute right-0 mt-3 w-56 bg-black/95 backdrop-blur-xl border border-gray-800 rounded-lg shadow-2xl overflow-hidden"
+                    className="absolute right-0 mt-3 w-56 bg-black/95 backdrop-blur-xl border border-white/[0.06] rounded shadow-2xl overflow-hidden"
                   >
-                    <div className="p-4 border-b border-gray-800">
+                    <div className="p-4 border-b border-white/[0.06]">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center text-white font-bold">
+                        <div className="w-10 h-10 rounded bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center text-white font-bold">
                           U
                         </div>
                         <div>
@@ -195,7 +195,7 @@ export function Header() {
                         logout();
                         setShowDropdown(false);
                       }}
-                      className="w-full px-4 py-3 text-left text-white hover:bg-gray-800/50 transition-colors flex items-center gap-3"
+                      className="w-full px-4 py-3 text-left text-white hover:bg-white/[0.04] transition-colors flex items-center gap-3"
                     >
                       <LogOut className="w-4 h-4" />
                       <span className="text-sm">{t.headerSignOut}</span>

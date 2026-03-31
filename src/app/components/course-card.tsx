@@ -38,7 +38,7 @@ export function CourseCard({
   return (
     <Link to={`/course/${course.id}`} onClick={handleCardClick}>
       <div className="group cursor-pointer relative">
-        <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-900 mb-4 shadow-xl transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-red-500/30 group-hover:scale-105">
+        <div className="relative aspect-video rounded overflow-hidden bg-gray-900 mb-4 shadow-xl transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-red-500/30 group-hover:scale-105">
           <img
             src={course.thumbnail}
             alt={course.title}
@@ -79,7 +79,7 @@ export function CourseCard({
                         e.preventDefault();
                         if (onContinue) onContinue();
                       }}
-                      className="w-full px-3 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 transition-all font-bold text-xs flex items-center justify-center gap-1.5"
+                      className="w-full px-3 py-2 bg-white/10 text-white rounded hover:bg-white/20 transition-all font-bold text-xs flex items-center justify-center gap-1.5"
                     >
                       <Play className="w-3.5 h-3.5" />
                       {t.cardRewatch}

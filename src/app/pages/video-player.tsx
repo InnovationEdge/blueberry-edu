@@ -276,7 +276,7 @@ export function VideoPlayer() {
         >
           <div className="h-full flex flex-col">
             {/* Panel Header */}
-            <div className="flex items-center justify-between p-6 border-b border-gray-800">
+            <div className="flex items-center justify-between p-6 border-b border-white/[0.06]">
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setShowEpisodes(false)}
@@ -300,7 +300,7 @@ export function VideoPlayer() {
                 <button
                   key={episode.id}
                   onClick={() => selectEpisode(episode.id)}
-                  className={`w-full p-4 border-b border-gray-800 hover:bg-white/5 transition-colors text-left ${
+                  className={`w-full p-4 border-b border-white/[0.06] hover:bg-white/5 transition-colors text-left ${
                     episode.id === lessonId ? 'bg-white/10' : ''
                   }`}
                 >
@@ -311,7 +311,7 @@ export function VideoPlayer() {
                     </div>
 
                     {/* Episode Thumbnail */}
-                    <div className="relative flex-shrink-0 w-40 h-24 bg-gray-800 rounded overflow-hidden group">
+                    <div className="relative flex-shrink-0 w-40 h-24 bg-white/10 rounded overflow-hidden group">
                       <img
                         src={episode.thumbnail}
                         alt={episode.title}
@@ -364,7 +364,7 @@ export function VideoPlayer() {
                   style={{ left: `${previewPosition}%` }}
                 >
                   <div className="relative">
-                    <div className="w-40 h-24 bg-gray-800 rounded overflow-hidden shadow-2xl border-2 border-white">
+                    <div className="w-40 h-24 bg-white/10 rounded overflow-hidden shadow-2xl border-2 border-white">
                       <img
                         src={course.thumbnail}
                         alt="Preview"

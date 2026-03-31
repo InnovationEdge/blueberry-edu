@@ -129,7 +129,7 @@ export function Landing() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -4 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute right-0 mt-2 w-44 bg-black/95 backdrop-blur-xl border border-white/20 rounded-lg shadow-2xl overflow-hidden z-50"
+                      className="absolute right-0 mt-2 w-44 bg-black/95 backdrop-blur-xl border border-white/20 rounded shadow-2xl overflow-hidden z-50"
                     >
                       {languages.map((lang, index) => (
                         <button
@@ -195,7 +195,7 @@ export function Landing() {
               ...courses.slice(10, 25),
               ...courses.slice(3, 18),
             ].slice(0, 72).map((course, i) => (
-              <div key={i} className="aspect-[16/10] rounded-lg overflow-hidden">
+              <div key={i} className="aspect-[16/10] rounded overflow-hidden">
                 <img
                   src={course.thumbnail}
                   alt=""
@@ -432,7 +432,7 @@ export function Landing() {
               return (
                 <div
                   key={i}
-                  className="bg-[#111111] border border-white/[0.06] rounded-xl p-7 flex flex-col justify-between min-h-[220px] hover:border-white/10 transition-colors"
+                  className="bg-[#111111] border border-white/[0.06] rounded p-7 flex flex-col justify-between min-h-[220px] hover:border-white/10 transition-colors"
                 >
                   <div>
                     <Icon className="w-6 h-6 text-white/60 mb-5" strokeWidth={1.2} />
