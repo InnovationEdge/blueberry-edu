@@ -1,5 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchCourses, fetchCourse, fetchCategories } from '../../lib/api';
+import { fetchCourses, fetchCourse, fetchCategories, apiCourseToCourse } from '../../lib/api';
+import type { Course } from '../../lib/api';
+
+export type { Course };
 
 export function useCourses(params?: {
   category?: string;
@@ -11,35 +14,60 @@ export function useCourses(params?: {
 }) {
   return useQuery({
     queryKey: ['courses', params],
-    queryFn: () => fetchCourses(params),
+    queryFn: async () => {
+      const res = await fetchCourses(params);
+      return { ...res, data: res.data.map(apiCourseToCourse) };
+    },
   });
 }
 
 export function useFeaturedCourses() {
   return useQuery({
     queryKey: ['courses', 'featured'],
-    queryFn: () => fetchCourses({ featured: true }),
+    queryFn: async () => {
+      const res = await fetchCourses({ featured: true, limit: 5 });
+      return res.data.map(apiCourseToCourse);
+    },
   });
 }
 
 export function useNewCourses() {
   return useQuery({
     queryKey: ['courses', 'new'],
-    queryFn: () => fetchCourses({ sort: 'newest', limit: 12 }),
+    queryFn: async () => {
+      const res = await fetchCourses({ sort: 'newest', limit: 12 });
+      return res.data.map(apiCourseToCourse);
+    },
   });
 }
 
 export function usePopularCourses() {
   return useQuery({
     queryKey: ['courses', 'popular'],
-    queryFn: () => fetchCourses({ sort: 'popular', limit: 12 }),
+    queryFn: async () => {
+      const res = await fetchCourses({ sort: 'popular', limit: 12 });
+      return res.data.map(apiCourseToCourse);
+    },
+  });
+}
+
+export function useAllCourses() {
+  return useQuery({
+    queryKey: ['courses', 'all'],
+    queryFn: async () => {
+      const res = await fetchCourses({ limit: 50 });
+      return res.data.map(apiCourseToCourse);
+    },
   });
 }
 
 export function useCourse(idOrSlug: string) {
   return useQuery({
     queryKey: ['course', idOrSlug],
-    queryFn: () => fetchCourse(idOrSlug),
+    queryFn: async () => {
+      const res = await fetchCourse(idOrSlug);
+      return apiCourseToCourse(res.data);
+    },
     enabled: !!idOrSlug,
   });
 }
@@ -47,7 +75,10 @@ export function useCourse(idOrSlug: string) {
 export function useCategories() {
   return useQuery({
     queryKey: ['categories'],
-    queryFn: fetchCategories,
-    staleTime: 30 * 60 * 1000, // categories rarely change
+    queryFn: async () => {
+      const res = await fetchCategories();
+      return res.data;
+    },
+    staleTime: 30 * 60 * 1000,
   });
 }

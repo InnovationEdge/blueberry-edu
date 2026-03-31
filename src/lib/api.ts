@@ -72,6 +72,56 @@ export interface CategoryFromApi {
   sortOrder: number;
 }
 
+// ─── Adapter: API → Frontend Course ───────────────────────────────────
+
+export interface Course {
+  id: string;
+  title: string;
+  subtitle: string;
+  instructor: string;
+  category: string[];
+  thumbnail: string;
+  duration: string;
+  level: 'Beginner' | 'Intermediate' | 'Advanced' | 'All Levels';
+  lessons: number;
+  isNew?: boolean;
+  isCompleted?: boolean;
+  rating: number;
+  students: number;
+}
+
+const LEVEL_MAP: Record<string, Course['level']> = {
+  BEGINNER: 'Beginner',
+  INTERMEDIATE: 'Intermediate',
+  ADVANCED: 'Advanced',
+  ALL_LEVELS: 'All Levels',
+};
+
+function formatDuration(totalMin: number): string {
+  const hours = Math.floor(totalMin / 60);
+  const mins = totalMin % 60;
+  if (hours === 0) return `${mins}m`;
+  if (mins === 0) return `${hours}h`;
+  return `${hours}h ${mins}m`;
+}
+
+export function apiCourseToCourse(c: CourseFromApi): Course {
+  return {
+    id: c.id,
+    title: c.title,
+    subtitle: c.subtitle,
+    instructor: c.instructor.displayName,
+    category: c.courseCategories.map(cc => cc.category.name),
+    thumbnail: c.thumbnailUrl,
+    duration: formatDuration(c.totalDurationMin),
+    level: LEVEL_MAP[c.level] || 'All Levels',
+    lessons: c.lessonCount,
+    isNew: c.isNew,
+    rating: parseFloat(c.avgRating),
+    students: c.totalStudents,
+  };
+}
+
 // ─── API Functions ────────────────────────────────────────────────────
 
 export async function fetchCourses(params?: {
