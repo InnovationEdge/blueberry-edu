@@ -275,6 +275,40 @@ export async function authMe() {
   return res.data;
 }
 
+// ─── Enrollment API ───────────────────────────────────────────────────
+
+export async function fetchMyEnrollments() {
+  const { data } = await api.get<ApiResponse<any[]>>('/enrollments/my');
+  return data;
+}
+
+export async function enrollInCourse(courseId: string) {
+  const { data } = await api.post<ApiResponse<any>>('/enrollments', { courseId });
+  return data;
+}
+
+export async function checkEnrollment(courseId: string) {
+  const { data } = await api.get<ApiResponse<{ enrolled: boolean }>>(`/enrollments/check/${courseId}`);
+  return data;
+}
+
+// ─── Wishlist API ─────────────────────────────────────────────────────
+
+export async function fetchWishlist() {
+  const { data } = await api.get<ApiResponse<any[]>>('/wishlist');
+  return data;
+}
+
+export async function addToWishlist(courseId: string) {
+  const { data } = await api.post<ApiResponse<any>>(`/wishlist/${courseId}`);
+  return data;
+}
+
+export async function removeFromWishlist(courseId: string) {
+  const { data } = await api.delete<ApiResponse<any>>(`/wishlist/${courseId}`);
+  return data;
+}
+
 // Set auth token for subsequent requests
 export function setAuthToken(token: string | null) {
   if (token) {
