@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchCourses, fetchCourse, fetchCategories, apiCourseToCourse } from '../../lib/api';
-import type { Course } from '../../lib/api';
+import { fetchCourses, fetchCourse, fetchCategories, apiCourseToCourse, apiCourseDetailToDetail } from '../../lib/api';
+import type { Course, CourseDetail } from '../../lib/api';
 
-export type { Course };
+export type { Course, CourseDetail };
 
 export function useCourses(params?: {
   category?: string;
@@ -69,6 +69,17 @@ export function useCourse(idOrSlug: string) {
       return apiCourseToCourse(res.data);
     },
     enabled: !!idOrSlug,
+  });
+}
+
+export function useCourseDetail(slug: string) {
+  return useQuery({
+    queryKey: ['courseDetail', slug],
+    queryFn: async () => {
+      const res = await fetchCourse(slug);
+      return apiCourseDetailToDetail(res.data);
+    },
+    enabled: !!slug,
   });
 }
 

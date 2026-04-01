@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import axios from 'axios';
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:4000/api';
@@ -136,8 +137,104 @@ export async function fetchCourses(params?: {
   return data;
 }
 
+export interface SectionFromApi {
+  id: string;
+  title: string;
+  sortOrder: number;
+  lessons: LessonFromApi[];
+}
+
+export interface LessonFromApi {
+  id: string;
+  title: string;
+  durationMin: number;
+  sortOrder: number;
+  isFreePreview: boolean;
+  type: string;
+  videoStatus: string;
+}
+
+export interface CourseDetailFromApi extends CourseFromApi {
+  description: string;
+  shortDescription: string;
+  price: string;
+  currency: string;
+  sections: SectionFromApi[];
+  instructor: CourseFromApi['instructor'] & {
+    title?: string;
+    bio?: string;
+    expertise?: string[];
+  };
+}
+
+export interface CourseDetail {
+  id: string;
+  slug: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  instructor: string;
+  instructorBio: string;
+  instructorTitle: string;
+  category: string[];
+  thumbnail: string;
+  duration: string;
+  level: Course['level'];
+  lessons: number;
+  isNew: boolean;
+  rating: number;
+  students: number;
+  totalReviews: number;
+  price: number;
+  currency: string;
+  sections: Array<{
+    id: string;
+    title: string;
+    lessons: Array<{
+      id: string;
+      title: string;
+      duration: string;
+      preview: boolean;
+    }>;
+  }>;
+}
+
+export function apiCourseDetailToDetail(c: CourseDetailFromApi): CourseDetail {
+  return {
+    id: c.id,
+    slug: c.slug,
+    title: c.title,
+    subtitle: c.subtitle,
+    description: c.description || c.shortDescription,
+    instructor: c.instructor.displayName,
+    instructorBio: c.instructor.bio || '',
+    instructorTitle: c.instructor.title || '',
+    category: c.courseCategories.map(cc => cc.category.name),
+    thumbnail: c.thumbnailUrl,
+    duration: formatDuration(c.totalDurationMin),
+    level: LEVEL_MAP[c.level] || 'All Levels',
+    lessons: c.lessonCount,
+    isNew: c.isNew,
+    rating: parseFloat(c.avgRating),
+    students: c.totalStudents,
+    totalReviews: c.totalReviews,
+    price: parseFloat(c.price),
+    currency: c.currency,
+    sections: (c.sections || []).map(s => ({
+      id: s.id,
+      title: s.title,
+      lessons: s.lessons.map(l => ({
+        id: l.id,
+        title: l.title,
+        duration: `${l.durationMin}min`,
+        preview: l.isFreePreview,
+      })),
+    })),
+  };
+}
+
 export async function fetchCourse(idOrSlug: string) {
-  const { data } = await api.get<ApiResponse<CourseFromApi>>(`/courses/${idOrSlug}`);
+  const { data } = await api.get<ApiResponse<CourseDetailFromApi>>(`/courses/${idOrSlug}`);
   return data;
 }
 

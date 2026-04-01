@@ -1,41 +1,48 @@
 import { useParams, Link, useNavigate } from 'react-router';
-import { getCourseById, courses } from '../data/courses';
 import { Play, Share2, ChevronDown, ChevronUp, Check, Star, Clock, BarChart3, Globe, PlayCircle, FileText, Award, Users, Infinity, Smartphone, ThumbsUp, ArrowLeft } from 'lucide-react';
 import { CourseRow } from '../components/course-row';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-
 import { getAppT } from '../i18n/app';
 import { useAuth } from '../context/auth-context';
+import { useCourseDetail, useCourses } from '../hooks/use-courses';
 
 export function CourseDetail() {
   const { language } = useAuth();
   const t = getAppT(language);
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const course = id ? getCourseById(id) : null;
+  const { data: course, isLoading, error } = useCourseDetail(id || '');
   const [expandedSections, setExpandedSections] = useState<number[]>([0]);
 
-  if (!course) {
+  // Fetch related courses (same category)
+  const categorySlug = course?.category[0] || '';
+  const { data: relatedData } = useCourses({ category: categorySlug, limit: 8 });
+  const relatedCourses = (relatedData?.data || []).filter(c => c.id !== course?.id);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#E50914] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (error || !course) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center space-y-4">
-          <h1 className="text-2xl text-white">Course not found</h1>
-          <Link to="/" className="text-red-600 hover:underline">
-            Return to Home
+          <h1 className="text-2xl text-white">{t.detailNotFound}</h1>
+          <Link to="/" className="text-[#E50914] hover:underline">
+            {t.detailReturnHome}
           </Link>
         </div>
       </div>
     );
   }
 
-  const relatedCourses = courses.filter(
-    (c) => c.id !== course.id && c.category.some((cat) => course.category.includes(cat))
-  ).slice(0, 8);
-
-  // Mock price
-  const originalPrice = 89.99;
-  const discountedPrice = 14.99;
+  const discountedPrice = course.price;
+  const originalPrice = Math.round(course.price * 1.8);
   const discount = Math.round(((originalPrice - discountedPrice) / originalPrice) * 100);
 
   // Mock LinkedIn URL
@@ -53,66 +60,16 @@ export function CourseDetail() {
     'Get lifetime access to course materials and updates'
   ];
 
-  const courseSections = [
-    {
-      title: 'Getting Started',
-      lectures: 8,
-      duration: '45min',
-      lessons: [
-        { title: 'Welcome to the Course', duration: '5min', preview: true },
-        { title: 'Course Overview and Structure', duration: '8min', preview: true },
-        { title: 'Required Tools and Setup', duration: '12min', preview: false },
-        { title: 'Understanding the Basics', duration: '10min', preview: false },
-        { title: 'Your First Project', duration: '10min', preview: false }
-      ]
-    },
-    {
-      title: 'Core Concepts',
-      lectures: 15,
-      duration: '2hr 30min',
-      lessons: [
-        { title: 'Foundation Principles', duration: '18min', preview: false },
-        { title: 'Advanced Techniques Part 1', duration: '22min', preview: false },
-        { title: 'Advanced Techniques Part 2', duration: '20min', preview: false },
-        { title: 'Practical Applications', duration: '25min', preview: false },
-        { title: 'Common Mistakes to Avoid', duration: '15min', preview: false }
-      ]
-    },
-    {
-      title: 'Hands-On Projects',
-      lectures: 12,
-      duration: '3hr 15min',
-      lessons: [
-        { title: 'Project 1: Beginner Level', duration: '35min', preview: false },
-        { title: 'Project 2: Intermediate Level', duration: '45min', preview: false },
-        { title: 'Project 3: Advanced Level', duration: '55min', preview: false },
-        { title: 'Best Practices and Optimization', duration: '30min', preview: false }
-      ]
-    },
-    {
-      title: 'Advanced Topics',
-      lectures: 10,
-      duration: '2hr 45min',
-      lessons: [
-        { title: 'Expert-Level Strategies', duration: '28min', preview: false },
-        { title: 'Industry Secrets', duration: '32min', preview: false },
-        { title: 'Professional Workflow', duration: '25min', preview: false },
-        { title: 'Case Studies', duration: '40min', preview: false }
-      ]
-    },
-    {
-      title: 'Final Project and Next Steps',
-      lectures: 6,
-      duration: '1hr 30min',
-      lessons: [
-        { title: 'Capstone Project Brief', duration: '10min', preview: false },
-        { title: 'Building Your Portfolio', duration: '25min', preview: false },
-        { title: 'Course Summary and Key Takeaways', duration: '15min', preview: false },
-        { title: 'Bonus Resources and Materials', duration: '20min', preview: false },
-        { title: 'Next Steps in Your Journey', duration: '20min', preview: false }
-      ]
-    }
-  ];
+  // Real sections from API
+  const courseSections = course.sections.map(s => ({
+    title: s.title,
+    lectures: s.lessons.length,
+    duration: s.lessons.reduce((sum, l) => {
+      const mins = parseInt(l.duration) || 0;
+      return sum + mins;
+    }, 0) + 'min',
+    lessons: s.lessons,
+  }));
 
   const requirements = [
     'No prior experience required - we start from the basics',
@@ -178,9 +135,9 @@ export function CourseDetail() {
     );
   };
 
-  const totalLectures = courseSections.reduce((sum, section) => sum + section.lectures, 0);
+  const totalLectures = course.lessons;
   const averageRating = course.rating;
-  const totalReviews = Math.floor(course.students / 10);
+  const totalReviews = course.totalReviews;
 
   return (
     <div className="min-h-screen bg-black">
@@ -354,19 +311,7 @@ export function CourseDetail() {
               <div>
                 <h2 className="text-2xl font-bold text-white mb-4">Description</h2>
                 <div className="text-white/60 space-y-4 text-sm leading-relaxed">
-                  <p>
-                    {course.subtitle} This comprehensive course is designed to take you from beginner to advanced level,
-                    covering everything you need to know to succeed in this field.
-                  </p>
-                  <p>
-                    Throughout this course, you'll work on real-world projects that will help you build a strong portfolio
-                    and gain practical experience. You'll learn industry-standard techniques and best practices used by
-                    top professionals.
-                  </p>
-                  <p>
-                    Whether you're looking to start a new career, enhance your current skills, or pursue a passion project,
-                    this course provides you with the knowledge and tools you need to achieve your goals.
-                  </p>
+                  <p>{course.description}</p>
                 </div>
               </div>
 
@@ -389,7 +334,7 @@ export function CourseDetail() {
                         პროფილი
                       </a>
                     </div>
-                    <p className="text-white/40 text-sm">Expert Instructor & Industry Professional</p>
+                    <p className="text-white/40 text-sm">{course.instructorTitle || 'Expert Instructor'}</p>
                     <div className="flex items-center gap-6 text-sm text-white/40">
                       <div className="flex items-center gap-2">
                         <Star className="w-4 h-4" />
@@ -405,8 +350,7 @@ export function CourseDetail() {
                       </div>
                     </div>
                     <p className="text-white/60 text-sm leading-relaxed pt-2">
-                      {course.instructor} is a renowned expert in the field with over 10 years of industry experience.
-                      They have worked with leading companies and have helped thousands of students achieve their learning goals.
+                      {course.instructorBio || `${course.instructor} is a renowned expert in the field.`}
                     </p>
                   </div>
                 </div>
