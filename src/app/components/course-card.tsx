@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 import { Course } from '../data/courses';
 import { useAuth } from '../context/auth-context';
 import { getAppT } from '../i18n/app';
+import { useQueryClient } from '@tanstack/react-query';
+import { fetchCourse, apiCourseDetailToDetail } from '../../lib/api';
 
 interface CourseCardProps {
   course: Course;
@@ -27,6 +29,18 @@ export function CourseCard({
   const t = getAppT(language);
 
   const courseProgress = progress || (course as any).progress || 0;
+  const queryClient = useQueryClient();
+
+  const prefetchCourse = () => {
+    queryClient.prefetchQuery({
+      queryKey: ['courseDetail', course.id],
+      queryFn: async () => {
+        const res = await fetchCourse(course.id);
+        return apiCourseDetailToDetail(res.data);
+      },
+      staleTime: 5 * 60 * 1000,
+    });
+  };
 
   const handleCardClick = (e: React.MouseEvent) => {
     // If clicked on action buttons, prevent default link behavior
@@ -36,7 +50,7 @@ export function CourseCard({
   };
 
   return (
-    <Link to={`/course/${course.id}`} onClick={handleCardClick}>
+    <Link to={`/course/${course.id}`} onClick={handleCardClick} onMouseEnter={prefetchCourse}>
       <div className="group cursor-pointer relative">
         <div className="relative aspect-video rounded overflow-hidden bg-gray-900 mb-4 shadow-xl transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-red-500/30 group-hover:scale-105">
           <img
