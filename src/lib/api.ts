@@ -275,6 +275,36 @@ export async function authMe() {
   return res.data;
 }
 
+// ─── Billing API (Flitt) ──────────────────────────────────────────────
+
+export interface CreateOrderResponse {
+  purchaseId?: string;
+  checkoutUrl: string | null;
+  amount?: number;
+  currency?: string;
+  enrolled?: boolean;
+}
+
+export async function createOrder(data: {
+  courseId: string;
+  couponCode?: string;
+  returnUrl: string;
+  cancelUrl: string;
+}) {
+  const res = await api.post<ApiResponse<CreateOrderResponse>>('/billing/create-order', data);
+  return res.data;
+}
+
+export async function fetchOrderStatus(orderId: string) {
+  const { data } = await api.get<ApiResponse<any>>(`/billing/order/${orderId}`);
+  return data;
+}
+
+export async function fetchPurchaseHistory(page = 1) {
+  const { data } = await api.get<ApiResponse<any[]>>('/billing/purchases', { params: { page } });
+  return data;
+}
+
 // ─── Enrollment API ───────────────────────────────────────────────────
 
 export async function fetchMyEnrollments() {
