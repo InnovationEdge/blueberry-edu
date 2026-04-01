@@ -7,6 +7,8 @@ import { PaymentSuccess } from './pages/payment-success';
 import { CourseSession } from './pages/course-session';
 import { VideoPlayer } from './pages/video-player';
 import { Search } from './pages/search';
+import { InstructorDashboard } from './pages/instructor/dashboard';
+import { CreateCourse } from './pages/instructor/create-course';
 import { Header } from './components/header';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
@@ -92,6 +94,14 @@ export const router = createBrowserRouter([
   {
     path: '/my-progress',
     element: <Layout><MyProgress /></Layout>,
+  },
+  {
+    path: '/instructor',
+    element: <Layout><InstructorDashboard /></Layout>,
+  },
+  {
+    path: '/instructor/create',
+    element: <Layout><CreateCourse /></Layout>,
   },
   {
     path: '*',
