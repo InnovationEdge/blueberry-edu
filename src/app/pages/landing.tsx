@@ -12,7 +12,21 @@ export function Landing() {
   const [testimonialPaused, setTestimonialPaused] = useState(false);
   const { openLogin, language, setLanguage } = useAuth();
   const t = getAppT(language);
-  const { data: courses = [] } = usePopularCourses();
+  const { data: apiCourses = [] } = usePopularCourses();
+
+  // Fallback thumbnails for mosaic while API loads
+  const fallbackThumbnails = [
+    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop',
+    'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&h=250&fit=crop',
+    'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=250&fit=crop',
+    'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=400&h=250&fit=crop',
+    'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&h=250&fit=crop',
+    'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400&h=250&fit=crop',
+    'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=250&fit=crop',
+    'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=400&h=250&fit=crop',
+  ].map((thumbnail, i) => ({ id: String(i), title: '', subtitle: '', instructor: '', category: [] as string[], thumbnail, duration: '', level: 'All Levels' as const, lessons: 0, rating: 0, students: 0 }));
+
+  const courses = apiCourses.length > 0 ? apiCourses : fallbackThumbnails;
 
   const languages = ['ქართული', 'English', 'Русский'];
 
