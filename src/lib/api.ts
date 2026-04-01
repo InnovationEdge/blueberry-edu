@@ -339,6 +339,59 @@ export async function removeFromWishlist(courseId: string) {
   return data;
 }
 
+// ─── Reviews API ──────────────────────────────────────────────────────
+
+export async function fetchCourseReviews(courseId: string) {
+  const { data } = await api.get<ApiResponse<any[]>>(`/reviews/${courseId}`);
+  return data;
+}
+
+export async function submitReview(data: { courseId: string; rating: number; comment: string }) {
+  const res = await api.post<ApiResponse<any>>('/reviews', data);
+  return res.data;
+}
+
+// ─── Certificates API ─────────────────────────────────────────────────
+
+export async function fetchMyCertificates() {
+  const { data } = await api.get<ApiResponse<any[]>>('/certificates');
+  return data;
+}
+
+export async function requestCertificate(courseId: string) {
+  const { data } = await api.post<ApiResponse<any>>('/certificates', { courseId });
+  return data;
+}
+
+// ─── Notifications API ────────────────────────────────────────────────
+
+export async function fetchNotifications() {
+  const { data } = await api.get<ApiResponse<any[]>>('/notifications');
+  return data;
+}
+
+export async function markNotificationRead(id: string) {
+  const { data } = await api.patch<ApiResponse<any>>(`/notifications/${id}/read`);
+  return data;
+}
+
+// ─── Q&A API ──────────────────────────────────────────────────────────
+
+export async function fetchLessonQA(lessonId: string) {
+  const { data } = await api.get<ApiResponse<any[]>>(`/qa/${lessonId}`);
+  return data;
+}
+
+export async function postQuestion(data: { lessonId: string; content: string }) {
+  const res = await api.post<ApiResponse<any>>('/qa', data);
+  return res.data;
+}
+
+export async function postAnswer(data: { questionId: string; content: string }) {
+  const res = await api.post<ApiResponse<any>>('/qa/answer', data);
+  return res.data;
+}
+
 // Set auth token for subsequent requests
 export function setAuthToken(token: string | null) {
   if (token) {
