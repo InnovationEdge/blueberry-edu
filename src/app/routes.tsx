@@ -9,6 +9,9 @@ import { VideoPlayer } from './pages/video-player';
 import { Search } from './pages/search';
 import { InstructorDashboard } from './pages/instructor/dashboard';
 import { CreateCourse } from './pages/instructor/create-course';
+import { CourseEditor } from './pages/instructor/course-editor';
+import { QuizBuilder } from './pages/instructor/quiz-builder';
+import { InstructorAnalytics } from './pages/instructor/analytics';
 import { Header } from './components/header';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
@@ -102,6 +105,18 @@ export const router = createBrowserRouter([
   {
     path: '/instructor/create',
     element: <Layout><CreateCourse /></Layout>,
+  },
+  {
+    path: '/instructor/course/:id',
+    element: <Layout><CourseEditor /></Layout>,
+  },
+  {
+    path: '/instructor/course/:id/quiz/:lessonId',
+    element: <Layout><QuizBuilder /></Layout>,
+  },
+  {
+    path: '/instructor/analytics',
+    element: <Layout><InstructorAnalytics /></Layout>,
   },
   {
     path: '*',

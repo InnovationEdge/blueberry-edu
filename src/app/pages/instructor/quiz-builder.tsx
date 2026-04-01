@@ -1,0 +1,155 @@
+import { useState } from 'react';
+import { useParams, useNavigate } from 'react-router';
+import { ArrowLeft, Plus, Trash2, Check, X } from 'lucide-react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { api } from '../../../lib/api';
+
+interface QuizQuestion {
+  id: string;
+  text: string;
+  type: 'multiple_choice' | 'true_false';
+  options: string[];
+  correctIndex: number;
+}
+
+export function QuizBuilder() {
+  const { id: courseId, lessonId } = useParams();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const [questions, setQuestions] = useState<QuizQuestion[]>([]);
+  const [passThreshold, setPassThreshold] = useState(80);
+
+  const addQuestion = (type: 'multiple_choice' | 'true_false') => {
+    const newQ: QuizQuestion = {
+      id: crypto.randomUUID(),
+      text: '',
+      type,
+      options: type === 'true_false' ? ['სწორია', 'არასწორია'] : ['', '', '', ''],
+      correctIndex: 0,
+    };
+    setQuestions(prev => [...prev, newQ]);
+  };
+
+  const updateQuestion = (id: string, field: string, value: unknown) => {
+    setQuestions(prev => prev.map(q => q.id === id ? { ...q, [field]: value } : q));
+  };
+
+  const updateOption = (qId: string, optIndex: number, value: string) => {
+    setQuestions(prev => prev.map(q =>
+      q.id === qId ? { ...q, options: q.options.map((o, i) => i === optIndex ? value : o) } : q
+    ));
+  };
+
+  const removeQuestion = (id: string) => {
+    setQuestions(prev => prev.filter(q => q.id !== id));
+  };
+
+  const saveQuiz = useMutation({
+    mutationFn: async () => {
+      await api.post(`/instructor/courses/${courseId}/quizzes`, {
+        lessonId,
+        passThreshold,
+        questions: questions.map(q => ({
+          text: q.text,
+          type: q.type,
+          options: q.options,
+          correctIndex: q.correctIndex,
+        })),
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['courseDetail', courseId] });
+      navigate(`/instructor/course/${courseId}`);
+    },
+  });
+
+  return (
+    <div className="min-h-screen bg-black pt-32 pb-20 px-4 md:px-12">
+      <div className="max-w-3xl mx-auto">
+        {/* Header */}
+        <div className="flex items-center gap-4 mb-8">
+          <button onClick={() => navigate(-1)}
+            className="w-9 h-9 rounded flex items-center justify-center bg-white/[0.06] hover:bg-white/10 transition-all">
+            <ArrowLeft className="w-4 h-4 text-white" />
+          </button>
+          <div>
+            <h1 className="text-2xl font-black text-white">ქვიზის შექმნა</h1>
+            <p className="text-white/40 text-xs mt-0.5">{questions.length} შეკითხვა</p>
+          </div>
+        </div>
+
+        {/* Pass threshold */}
+        <div className="mb-8 bg-white/[0.03] border border-white/[0.06] rounded p-4 flex items-center justify-between">
+          <span className="text-white text-sm font-medium">ჩაბარების ზღვარი</span>
+          <div className="flex items-center gap-2">
+            <input type="number" value={passThreshold} onChange={e => setPassThreshold(Number(e.target.value))}
+              min={50} max={100} step={5}
+              className="w-16 px-2 py-1.5 bg-white/[0.05] border border-white/10 rounded text-white text-sm text-center focus:outline-none focus:border-[#E50914]" />
+            <span className="text-white/40 text-sm">%</span>
+          </div>
+        </div>
+
+        {/* Questions */}
+        <div className="space-y-4">
+          {questions.map((q, qi) => (
+            <div key={q.id} className="bg-white/[0.03] border border-white/[0.06] rounded p-5">
+              <div className="flex items-start gap-3 mb-4">
+                <span className="text-white/20 text-lg font-black mt-1">{qi + 1}</span>
+                <div className="flex-1">
+                  <input type="text" value={q.text} onChange={e => updateQuestion(q.id, 'text', e.target.value)}
+                    placeholder="შეკითხვა..."
+                    className="w-full px-3 py-2.5 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#E50914]" />
+                </div>
+                <button onClick={() => removeQuestion(q.id)}
+                  className="p-2 hover:bg-white/10 rounded transition-colors">
+                  <Trash2 className="w-4 h-4 text-white/30 hover:text-[#E50914]" />
+                </button>
+              </div>
+
+              <div className="space-y-2 ml-8">
+                {q.options.map((opt, oi) => (
+                  <div key={oi} className="flex items-center gap-2">
+                    <button onClick={() => updateQuestion(q.id, 'correctIndex', oi)}
+                      className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
+                        q.correctIndex === oi ? 'border-emerald-500 bg-emerald-500' : 'border-white/20 hover:border-white/40'
+                      }`}>
+                      {q.correctIndex === oi && <Check className="w-3 h-3 text-white" />}
+                    </button>
+                    {q.type === 'true_false' ? (
+                      <span className="text-white/70 text-sm">{opt}</span>
+                    ) : (
+                      <input type="text" value={opt} onChange={e => updateOption(q.id, oi, e.target.value)}
+                        placeholder={`ვარიანტი ${oi + 1}`}
+                        className="flex-1 px-3 py-2 bg-white/[0.03] border border-white/[0.06] rounded text-white text-sm placeholder-white/20 focus:outline-none focus:border-white/20" />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Add question buttons */}
+        <div className="flex gap-3 mt-6">
+          <button onClick={() => addQuestion('multiple_choice')}
+            className="flex items-center gap-2 px-5 py-2.5 border border-dashed border-white/10 rounded text-white/40 text-sm hover:border-white/25 hover:text-white/60 transition-colors">
+            <Plus className="w-4 h-4" />არჩევითი
+          </button>
+          <button onClick={() => addQuestion('true_false')}
+            className="flex items-center gap-2 px-5 py-2.5 border border-dashed border-white/10 rounded text-white/40 text-sm hover:border-white/25 hover:text-white/60 transition-colors">
+            <Plus className="w-4 h-4" />სწორი/არასწორი
+          </button>
+        </div>
+
+        {/* Save */}
+        <div className="flex justify-end mt-8">
+          <button onClick={() => saveQuiz.mutate()} disabled={questions.length === 0 || saveQuiz.isPending}
+            className="px-8 py-2.5 bg-[#E50914] text-white rounded text-sm font-bold hover:bg-[#c70812] transition-all active:scale-95 disabled:opacity-50">
+            {saveQuiz.isPending ? 'ინახება...' : 'ქვიზის შენახვა'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
