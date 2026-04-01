@@ -243,3 +243,51 @@ export async function fetchCategories() {
   const { data } = await api.get<ApiResponse<CategoryFromApi[]>>('/categories');
   return data;
 }
+
+// ─── Auth API ─────────────────────────────────────────────────────────
+
+export interface AuthUser {
+  id: string;
+  email: string;
+  name: string;
+  role: 'STUDENT' | 'INSTRUCTOR' | 'ADMIN';
+  avatarUrl?: string;
+  preferredLanguage: string;
+  onboardingCompleted: boolean;
+}
+
+export async function authRegister(data: { email: string; password: string; name: string }) {
+  const res = await api.post<ApiResponse<{ user: AuthUser; token: string }>>('/auth/register', data);
+  return res.data;
+}
+
+export async function authLogin(data: { email: string; password: string }) {
+  const res = await api.post<ApiResponse<{ user: AuthUser; token: string }>>('/auth/login', data);
+  return res.data;
+}
+
+export async function authLogout() {
+  await api.post('/auth/logout');
+}
+
+export async function authMe() {
+  const res = await api.get<ApiResponse<{ user: AuthUser }>>('/auth/me');
+  return res.data;
+}
+
+// Set auth token for subsequent requests
+export function setAuthToken(token: string | null) {
+  if (token) {
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    localStorage.setItem('bm_token', token);
+  } else {
+    delete api.defaults.headers.common['Authorization'];
+    localStorage.removeItem('bm_token');
+  }
+}
+
+// Restore token from localStorage on load
+const savedToken = typeof window !== 'undefined' ? localStorage.getItem('bm_token') : null;
+if (savedToken) {
+  api.defaults.headers.common['Authorization'] = `Bearer ${savedToken}`;
+}
