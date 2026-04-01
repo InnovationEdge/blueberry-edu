@@ -17,7 +17,7 @@ import {
   X,
   CheckCircle,
 } from 'lucide-react';
-import { getCourseById } from '../data/courses';
+import { useCourseDetail } from '../hooks/use-courses';
 import { useAuth } from '../context/auth-context';
 import { getAppT } from '../i18n/app';
 
@@ -34,7 +34,7 @@ interface Episode {
 export function VideoPlayer() {
   const { id, chapterId, lessonId } = useParams();
   const navigate = useNavigate();
-  const course = getCourseById(id || '');
+  const { data: course } = useCourseDetail(id || '');
   const { language } = useAuth();
   const t = getAppT(language);
   const videoRef = useRef<HTMLDivElement>(null);
@@ -107,7 +107,7 @@ export function VideoPlayer() {
   const nextEpisode = episodes[currentEpisodeIndex + 1];
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
+    let timeout: ReturnType<typeof setTimeout>;
     if (isPlaying && showControls) {
       timeout = setTimeout(() => setShowControls(false), 3000);
     }

@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { ChevronRight, ChevronLeft, ChevronDown, Tv, Download, Smartphone, Users, Award, CheckCircle, Infinity, Plus, Star } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useAuth } from '../context/auth-context';
-import { courses } from '../data/courses';
 import { getAppT } from '../i18n/app';
+import { usePopularCourses } from '../hooks/use-courses';
 
 export function Landing() {
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
@@ -12,6 +12,7 @@ export function Landing() {
   const [testimonialPaused, setTestimonialPaused] = useState(false);
   const { openLogin, language, setLanguage } = useAuth();
   const t = getAppT(language);
+  const { data: courses = [] } = usePopularCourses();
 
   const languages = ['ქართული', 'English', 'Русский'];
 
@@ -187,13 +188,14 @@ export function Landing() {
           >
             {[
               ...courses,
-              ...courses.slice(12, 25),
-              ...courses.slice(0, 12),
-              ...courses.slice(6, 20),
-              ...courses.slice(18, 25),
-              ...courses.slice(0, 6),
-              ...courses.slice(10, 25),
-              ...courses.slice(3, 18),
+              ...courses,
+              ...courses,
+              ...courses,
+              ...courses,
+              ...courses,
+              ...courses,
+              ...courses,
+              ...courses,
             ].slice(0, 72).map((course, i) => (
               <div key={i} className="aspect-[16/10] rounded overflow-hidden">
                 <img

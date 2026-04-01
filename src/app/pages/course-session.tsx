@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { ChevronDown, ChevronUp, Play, Lock, CheckCircle, Bell, X } from 'lucide-react';
-import { getCourseById } from '../data/courses';
 import { useAuth } from '../context/auth-context';
 import { getAppT } from '../i18n/app';
+import { useCourseDetail } from '../hooks/use-courses';
 
 interface Lesson {
   id: string;
@@ -26,7 +26,7 @@ interface Chapter {
 export function CourseSession() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const course = getCourseById(id || '');
+  const { data: course } = useCourseDetail(id || '');
   const { language } = useAuth();
   const t = getAppT(language);
   const [expandedChapter, setExpandedChapter] = useState<string>('1');

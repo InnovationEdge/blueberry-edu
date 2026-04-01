@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router';
 import { CheckCircle, Play, Clock, BarChart3, BookOpen, Award } from 'lucide-react';
-import { getCourseById } from '../data/courses';
+import { useCourseDetail } from '../hooks/use-courses';
 import { motion } from 'motion/react';
 import { getAppT } from '../i18n/app';
 import { useAuth } from '../context/auth-context';
@@ -10,7 +10,7 @@ export function PaymentSuccess() {
   const { language } = useAuth();
   const t = getAppT(language);
   const { id } = useParams();
-  const course = getCourseById(id || '');
+  const { data: course } = useCourseDetail(id || '');
 
   if (!course) return null;
 
