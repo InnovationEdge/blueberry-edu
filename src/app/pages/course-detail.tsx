@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { getAppT } from '../i18n/app';
 import { useAuth } from '../context/auth-context';
 import { useCourseDetail, useCourses } from '../hooks/use-courses';
+import { CourseDetailSkeleton } from '../components/skeletons';
 
 export function CourseDetail() {
   const { language } = useAuth();
@@ -21,11 +22,7 @@ export function CourseDetail() {
   const relatedCourses = (relatedData?.data || []).filter(c => c.id !== course?.id);
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[#E50914] border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
+    return <CourseDetailSkeleton />;
   }
 
   if (error || !course) {

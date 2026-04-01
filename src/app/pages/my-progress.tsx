@@ -1,11 +1,15 @@
-import { courses } from '../data/courses';
 import { CourseRow } from '../components/course-row';
+import { CourseRowSkeleton } from '../components/skeletons';
 import { getAppT } from '../i18n/app';
 import { useAuth } from '../context/auth-context';
+import { useAllCourses } from '../hooks/use-courses';
 
 export function MyProgress() {
   const { language } = useAuth();
   const t = getAppT(language);
+
+  // TODO: Replace with useEnrollments() when enrollment API is wired (Step 9)
+  const { data: courses = [], isLoading } = useAllCourses();
 
   const enrolledCourses = courses.map((course, index) => ({
     ...course,
@@ -22,6 +26,24 @@ export function MyProgress() {
     return sum + (match ? parseInt(match[1]) : 0);
   }, 0);
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black pt-32 pb-20">
+        <div className="px-4 md:px-12 mb-12">
+          <div className="flex items-center gap-10 animate-pulse">
+            <div className="w-20 h-20 rounded-full bg-white/[0.06]" />
+            <div className="space-y-2"><div className="h-4 bg-white/[0.06] rounded w-24" /><div className="h-3 bg-white/[0.04] rounded w-16" /></div>
+            <div className="space-y-2"><div className="h-4 bg-white/[0.06] rounded w-24" /><div className="h-3 bg-white/[0.04] rounded w-16" /></div>
+          </div>
+        </div>
+        <div className="space-y-10">
+          <CourseRowSkeleton />
+          <CourseRowSkeleton />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-black pt-32 pb-20">
       {/* Overview */}
@@ -30,7 +52,6 @@ export function MyProgress() {
         const doneLessons = enrolledCourses.reduce((s, c) => s + c.completedLessons, 0);
         const lessonPct = Math.round((doneLessons / totalLessons) * 100);
         const totalMinutes = totalHours * 60;
-        const circ = 2 * Math.PI * 40;
         return (
           <div className="px-4 md:px-12 mb-12">
             <div className="flex items-center gap-10 md:gap-14">
