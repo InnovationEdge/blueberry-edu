@@ -9,6 +9,7 @@ export function useCourses(params?: {
   level?: string;
   featured?: boolean;
   sort?: string;
+  q?: string;
   page?: number;
   limit?: number;
 }) {

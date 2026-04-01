@@ -130,6 +130,7 @@ export async function fetchCourses(params?: {
   level?: string;
   featured?: boolean;
   sort?: string;
+  q?: string;
   page?: number;
   limit?: number;
 }) {

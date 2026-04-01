@@ -1,12 +1,17 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Search, X, SlidersHorizontal } from 'lucide-react';
 import { CourseCard } from '../components/course-card';
 import { CategoryIcon } from '../components/category-icon';
-import { courses, categories } from '../data/courses';
 import { getAppT } from '../i18n/app';
 import { useAuth } from '../context/auth-context';
+import { useCourses, useCategories } from '../hooks/use-courses';
 
 const LEVELS = ['All Levels', 'Beginner', 'Intermediate', 'Advanced'] as const;
+const LEVEL_API_MAP: Record<string, string> = {
+  'Beginner': 'BEGINNER',
+  'Intermediate': 'INTERMEDIATE',
+  'Advanced': 'ADVANCED',
+};
 const DURATIONS = [
   { id: 'all', label: 'ყველა' },
   { id: 'short', label: '< 3 საათი' },
@@ -23,39 +28,49 @@ export function Library() {
   const [selectedDuration, setSelectedDuration] = useState('all');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
-  const categoryMap: Record<string, string> = {
-    food: 'Food', arts: 'Arts & Entertainment', music: 'Music', writing: 'Writing',
-    sports: 'Sports & Gaming', design: 'Design & Style', business: 'Business',
-    tech: 'Science & Tech', lifestyle: 'Home & Lifestyle',
-  };
+  // Fetch categories from API
+  const { data: apiCategories = [] } = useCategories();
+  const categories = useMemo(() => [
+    { id: 'all', name: 'All Categories', slug: 'all', icon: 'layers' },
+    ...apiCategories.map(c => ({ ...c, icon: c.slug === 'business' ? 'briefcase' : c.slug === 'technology' ? 'cpu' : c.slug === 'design' ? 'layout' : c.slug === 'marketing' ? 'trending-up' : c.slug === 'photography' ? 'camera' : c.slug === 'music' ? 'music' : c.slug === 'food' ? 'utensils' : c.slug === 'arts-design' ? 'palette' : c.slug === 'data-science' ? 'bar-chart' : c.slug === 'writing' ? 'pen-tool' : 'layers' })),
+  ], [apiCategories]);
 
-  let filtered = selectedCategory === 'all'
-    ? courses
-    : courses.filter(c => c.category.some(cat => cat.includes(categoryMap[selectedCategory])));
+  // Fetch courses from API with filters
+  const apiParams = useMemo(() => ({
+    category: selectedCategory !== 'all' ? selectedCategory : undefined,
+    level: selectedLevel !== 'All Levels' ? LEVEL_API_MAP[selectedLevel] : undefined,
+    limit: 50,
+  }), [selectedCategory, selectedLevel]);
 
-  if (selectedLevel !== 'All Levels') {
-    filtered = filtered.filter(c => c.level === selectedLevel);
-  }
+  const { data: coursesData, isLoading } = useCourses(apiParams);
+  const allCourses = coursesData?.data || [];
 
-  if (selectedDuration !== 'all') {
-    filtered = filtered.filter(c => {
-      const match = c.duration?.match(/(\d+)h/);
-      const hours = match ? parseInt(match[1]) : 0;
-      if (selectedDuration === 'short') return hours < 3;
-      if (selectedDuration === 'medium') return hours >= 3 && hours <= 6;
-      if (selectedDuration === 'long') return hours > 6;
-      return true;
-    });
-  }
+  // Client-side filtering for search and duration (API doesn't support these)
+  const filtered = useMemo(() => {
+    let result = allCourses;
 
-  if (searchQuery) {
-    const q = searchQuery.toLowerCase();
-    filtered = filtered.filter(c =>
-      c.title.toLowerCase().includes(q) ||
-      c.instructor.toLowerCase().includes(q) ||
-      c.category.some(cat => cat.toLowerCase().includes(q))
-    );
-  }
+    if (selectedDuration !== 'all') {
+      result = result.filter(c => {
+        const match = c.duration?.match(/(\d+)h/);
+        const hours = match ? parseInt(match[1]) : 0;
+        if (selectedDuration === 'short') return hours < 3;
+        if (selectedDuration === 'medium') return hours >= 3 && hours <= 6;
+        if (selectedDuration === 'long') return hours > 6;
+        return true;
+      });
+    }
+
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(c =>
+        c.title.toLowerCase().includes(q) ||
+        c.instructor.toLowerCase().includes(q) ||
+        c.category.some(cat => cat.toLowerCase().includes(q))
+      );
+    }
+
+    return result;
+  }, [allCourses, selectedDuration, searchQuery]);
 
   const activeFilters = (selectedLevel !== 'All Levels' ? 1 : 0) + (selectedDuration !== 'all' ? 1 : 0);
 
@@ -68,22 +83,22 @@ export function Library() {
 
   return (
     <div className="min-h-screen bg-black pt-32 pb-20">
-      {/* Categories — red active, like my-progress style */}
+      {/* Categories */}
       <div className="px-4 md:px-12 mb-6">
         <div className="flex gap-3 overflow-x-auto pb-2" style={{ scrollbarWidth: 'none' }}>
           {categories.map((cat) => (
             <button
-              key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
-              className={`flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded border transition-all ${
-                selectedCategory === cat.id
+              key={cat.id || cat.slug}
+              onClick={() => setSelectedCategory(cat.slug)}
+              className={`flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded border transition-all active:scale-[0.97] ${
+                selectedCategory === cat.slug
                   ? 'bg-[#E50914] border-[#E50914] text-white'
                   : 'bg-transparent border-white/10 text-white/50 hover:border-white/20 hover:text-white'
               }`}
             >
               <CategoryIcon
                 iconName={cat.icon}
-                className={`w-4 h-4 ${selectedCategory === cat.id ? 'text-white' : 'text-white/40'}`}
+                className={`w-4 h-4 ${selectedCategory === cat.slug ? 'text-white' : 'text-white/40'}`}
               />
               <span className="text-sm font-medium whitespace-nowrap">{cat.name}</span>
             </button>
@@ -97,7 +112,6 @@ export function Library() {
           {/* Desktop Sidebar */}
           <div className="hidden lg:block w-52 flex-shrink-0">
             <div className="sticky top-28 space-y-8">
-              {/* Level */}
               <div>
                 <p className="text-white text-sm font-bold mb-3">დონე</p>
                 <div className="space-y-0.5">
@@ -117,7 +131,6 @@ export function Library() {
                 </div>
               </div>
 
-              {/* Duration */}
               <div>
                 <p className="text-white text-sm font-bold mb-3">ხანგრძლივობა</p>
                 <div className="space-y-0.5">
@@ -147,7 +160,6 @@ export function Library() {
 
           {/* Content */}
           <div className="flex-1 min-w-0">
-            {/* Search + mobile filter — above grid */}
             <div className="flex items-center gap-3 mb-6">
               <div className="relative flex-1 max-w-md">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
@@ -168,7 +180,6 @@ export function Library() {
               </button>
             </div>
 
-            {/* Mobile filters */}
             {showMobileFilters && (
               <div className="lg:hidden mb-6 p-4 bg-white/[0.02] border border-white/[0.06] rounded space-y-6">
                 <div>
@@ -196,7 +207,6 @@ export function Library() {
               </div>
             )}
 
-            {/* Active filter tags */}
             {activeFilters > 0 && (
               <div className="flex items-center gap-2 mb-4 flex-wrap">
                 {selectedLevel !== 'All Levels' && (
@@ -214,10 +224,21 @@ export function Library() {
               </div>
             )}
 
-            {/* Results */}
-            <p className="text-white/40 text-xs mb-4">{filtered.length} კურსი</p>
+            <p className="text-white/40 text-xs mb-4">
+              {isLoading ? '...' : `${filtered.length} კურსი`}
+            </p>
 
-            {filtered.length > 0 ? (
+            {isLoading ? (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                {Array.from({ length: 8 }).map((_, i) => (
+                  <div key={i} className="animate-pulse">
+                    <div className="aspect-video bg-white/[0.06] rounded mb-4" />
+                    <div className="h-3 bg-white/[0.06] rounded w-3/4 mb-2" />
+                    <div className="h-3 bg-white/[0.04] rounded w-1/2" />
+                  </div>
+                ))}
+              </div>
+            ) : filtered.length > 0 ? (
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {filtered.map((course) => (
                   <CourseCard key={course.id} course={course} />
