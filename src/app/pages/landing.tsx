@@ -279,7 +279,7 @@ export function Landing() {
       {/* Trusted by employees from top companies */}
       <section style={{ padding: '40px 16px 32px', background: '#000' }}>
         <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.35)', fontSize: '13px', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '24px' }}>
-          Trusted by employees from
+          ჩვენს სტუდენტებს ენდობიან
         </p>
         <div style={{ overflow: 'hidden', position: 'relative', maxWidth: '900px', margin: '0 auto' }}>
           {/* Edge fades */}

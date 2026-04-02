@@ -125,7 +125,7 @@ export function Login({ onLogin, onBack }: LoginProps) {
 
           {/* Test credentials hint */}
           <div className="bg-white/[0.03] border border-white/[0.06] rounded p-3">
-            <p className="text-white/20 text-[10px]">ტესტი: tiko@brightmind.ge / Test1234!</p>
+            <p className="text-white/10 text-[9px] select-all">tiko@brightmind.ge / Test1234!</p>
           </div>
         </div>
       </div>
