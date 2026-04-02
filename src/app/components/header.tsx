@@ -193,6 +193,10 @@ export function Header() {
                         </div>
                       </div>
                     </div>
+                    <Link to="/profile" onClick={() => setShowDropdown(false)}
+                      className="w-full px-4 py-3 text-left text-white hover:bg-white/[0.04] transition-colors flex items-center gap-3 block">
+                      <span className="text-sm">პროფილი</span>
+                    </Link>
                     <button
                       onClick={() => {
                         logout();

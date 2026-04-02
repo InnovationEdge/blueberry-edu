@@ -5,6 +5,7 @@ import { Landing } from './pages/landing';
 import { Login } from './pages/login';
 import { Onboarding } from './pages/onboarding';
 import { useAuth } from './context/auth-context';
+import { ProtectedRoute } from './components/protected-route';
 import { AnimatePresence } from 'motion/react';
 import { PageTransition, FadeUp } from './components/page-transition';
 import { useLocation } from 'react-router';
@@ -24,6 +25,8 @@ const CourseEditor = lazy(() => import('./pages/instructor/course-editor').then(
 const QuizBuilder = lazy(() => import('./pages/instructor/quiz-builder').then(m => ({ default: m.QuizBuilder })));
 const InstructorAnalytics = lazy(() => import('./pages/instructor/analytics').then(m => ({ default: m.InstructorAnalytics })));
 const Assignments = lazy(() => import('./pages/instructor/assignments').then(m => ({ default: m.Assignments })));
+const Profile = lazy(() => import('./pages/profile').then(m => ({ default: m.Profile })));
+const CertificatePage = lazy(() => import('./pages/certificate').then(m => ({ default: m.Certificate })));
 
 function PageLoader() {
   return (
@@ -112,31 +115,39 @@ export const router = createBrowserRouter([
   },
   {
     path: '/my-progress',
-    element: <Layout><LazyPage><MyProgress /></LazyPage></Layout>,
+    element: <Layout><ProtectedRoute><LazyPage><MyProgress /></LazyPage></ProtectedRoute></Layout>,
+  },
+  {
+    path: '/profile',
+    element: <Layout><ProtectedRoute><LazyPage><Profile /></LazyPage></ProtectedRoute></Layout>,
+  },
+  {
+    path: '/certificate/:id',
+    element: <Layout><ProtectedRoute><LazyPage><CertificatePage /></LazyPage></ProtectedRoute></Layout>,
   },
   {
     path: '/instructor',
-    element: <Layout><LazyPage><InstructorDashboard /></LazyPage></Layout>,
+    element: <Layout><ProtectedRoute requiredRole="INSTRUCTOR"><LazyPage><InstructorDashboard /></LazyPage></ProtectedRoute></Layout>,
   },
   {
     path: '/instructor/create',
-    element: <Layout><LazyPage><CreateCourse /></LazyPage></Layout>,
+    element: <Layout><ProtectedRoute requiredRole="INSTRUCTOR"><LazyPage><CreateCourse /></LazyPage></ProtectedRoute></Layout>,
   },
   {
     path: '/instructor/course/:id',
-    element: <Layout><LazyPage><CourseEditor /></LazyPage></Layout>,
+    element: <Layout><ProtectedRoute requiredRole="INSTRUCTOR"><LazyPage><CourseEditor /></LazyPage></ProtectedRoute></Layout>,
   },
   {
     path: '/instructor/course/:id/quiz/:lessonId',
-    element: <Layout><LazyPage><QuizBuilder /></LazyPage></Layout>,
+    element: <Layout><ProtectedRoute requiredRole="INSTRUCTOR"><LazyPage><QuizBuilder /></LazyPage></ProtectedRoute></Layout>,
   },
   {
     path: '/instructor/analytics',
-    element: <Layout><LazyPage><InstructorAnalytics /></LazyPage></Layout>,
+    element: <Layout><ProtectedRoute requiredRole="INSTRUCTOR"><LazyPage><InstructorAnalytics /></LazyPage></ProtectedRoute></Layout>,
   },
   {
     path: '/instructor/course/:id/assignments',
-    element: <Layout><LazyPage><Assignments /></LazyPage></Layout>,
+    element: <Layout><ProtectedRoute requiredRole="INSTRUCTOR"><LazyPage><Assignments /></LazyPage></ProtectedRoute></Layout>,
   },
   {
     path: '*',
