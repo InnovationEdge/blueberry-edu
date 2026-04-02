@@ -97,7 +97,7 @@ export function Header() {
                   className={`text-sm lg:text-base transition-all relative group ${
                     location.pathname === item.path
                       ? 'text-white font-semibold'
-                      : 'text-gray-300 hover:text-white font-medium'
+                      : 'text-white/60 hover:text-white font-medium'
                   }`}
                 >
                   {item.name}
@@ -116,7 +116,7 @@ export function Header() {
           {showSearch ? (
             <form onSubmit={handleSearch} className="flex items-center gap-2">
               <div className="relative flex items-center">
-                <Search className="absolute left-3 w-5 h-5 text-gray-400" />
+                <Search className="absolute left-3 w-5 h-5 text-white/40" />
                 <input
                   ref={searchInputRef}
                   type="text"
@@ -129,7 +129,7 @@ export function Header() {
                   <button
                     type="button"
                     onClick={clearSearch}
-                    className="absolute right-3 text-gray-400 hover:text-white"
+                    className="absolute right-3 text-white/40 hover:text-white"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -141,7 +141,7 @@ export function Header() {
                   setShowSearch(false);
                   setSearchQuery('');
                 }}
-                className="text-white hover:text-gray-300 transition-colors"
+                className="text-white hover:text-white/60 transition-colors"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -149,7 +149,7 @@ export function Header() {
           ) : (
             <button
               onClick={() => setShowSearch(true)}
-              className="text-white hover:text-gray-300 transition-colors p-2 hover:bg-white/10 rounded"
+              className="text-white hover:text-white/60 transition-colors p-2 hover:bg-white/10 rounded"
             >
               <Search className="w-5 h-5 md:w-6 md:h-6" />
             </button>
@@ -157,7 +157,7 @@ export function Header() {
           
           {!showSearch && (
             <>
-              <button className="text-white hover:text-gray-300 transition-colors p-2 hover:bg-white/10 rounded relative">
+              <button className="text-white hover:text-white/60 transition-colors p-2 hover:bg-white/10 rounded relative">
                 <Bell className="w-5 h-5 md:w-6 md:h-6" />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
               </button>

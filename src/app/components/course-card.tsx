@@ -52,7 +52,7 @@ export function CourseCard({
   return (
     <Link to={`/course/${course.id}`} onClick={handleCardClick} onMouseEnter={prefetchCourse}>
       <div className="group cursor-pointer relative">
-        <div className="relative aspect-video rounded overflow-hidden bg-gray-900 mb-4 shadow-xl transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-red-500/30 group-hover:scale-105">
+        <div className="relative aspect-video rounded overflow-hidden bg-white/[0.03] mb-4 shadow-xl transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-red-500/30 group-hover:scale-105">
           <img
             src={course.thumbnail}
             alt={course.title}
@@ -77,10 +77,10 @@ export function CourseCard({
           <div className="absolute inset-0 bg-black/85 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-30 p-4">
             <div className="text-center space-y-3 w-full transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
               <p className="text-white text-sm font-bold line-clamp-2">{course.title}</p>
-              <p className="text-gray-400 text-xs">{t.cardBy} {course.instructor}</p>
+              <p className="text-white/40 text-xs">{t.cardBy} {course.instructor}</p>
               
               {showProgress && !isCompleted && (
-                <div className="text-xs text-gray-400 mb-2">
+                <div className="text-xs text-white/40 mb-2">
                   {completedLessons} {t.cardOf} {course.lessons} {t.cardLessons}
                 </div>
               )}
@@ -154,24 +154,24 @@ export function CourseCard({
 
         {/* Course Info */}
         <div className="space-y-2.5 px-1">
-          <div className="flex items-center gap-2 text-xs text-gray-400">
+          <div className="flex items-center gap-2 text-xs text-white/40">
             <span className="text-red-500 font-semibold uppercase tracking-wide">{t.cardClass}</span>
-            <span className="text-gray-600">•</span>
+            <span className="text-white/20">•</span>
             <span className="font-medium">{course.duration}</span>
-            <span className="text-gray-600">•</span>
-            <span className="text-gray-400">{course.category[0]}</span>
+            <span className="text-white/20">•</span>
+            <span className="text-white/40">{course.category[0]}</span>
           </div>
 
           <h3 className="text-white font-bold text-base leading-snug group-hover:text-red-400 transition-colors line-clamp-2">
             {course.title}
           </h3>
 
-          <p className="text-gray-400 text-sm line-clamp-2 leading-relaxed">
+          <p className="text-white/40 text-sm line-clamp-2 leading-relaxed">
             {course.subtitle}
           </p>
 
-          <p className="text-gray-500 text-sm">
-            {t.cardWith} <span className="text-gray-300 font-medium">{course.instructor}</span>
+          <p className="text-white/30 text-sm">
+            {t.cardWith} <span className="text-white/60 font-medium">{course.instructor}</span>
           </p>
 
           {/* Stats */}
@@ -180,11 +180,11 @@ export function CourseCard({
               <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
               <span className="text-sm font-bold text-white">{course.rating}</span>
             </div>
-            <div className="flex items-center gap-1.5 text-gray-400">
+            <div className="flex items-center gap-1.5 text-white/40">
               <Clock className="w-4 h-4" />
               <span className="text-xs font-medium">{course.lessons} {t.cardLessons}</span>
             </div>
-            <div className="flex items-center gap-1.5 text-gray-400">
+            <div className="flex items-center gap-1.5 text-white/40">
               <BarChart3 className="w-4 h-4" />
               <span className="text-xs font-medium">{course.level}</span>
             </div>
