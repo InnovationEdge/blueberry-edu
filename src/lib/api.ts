@@ -308,7 +308,7 @@ export async function fetchPurchaseHistory(page = 1) {
 // ─── Enrollment API ───────────────────────────────────────────────────
 
 export async function fetchMyEnrollments() {
-  const { data } = await api.get<ApiResponse<any[]>>('/enrollments/my');
+  const { data } = await api.get<ApiResponse<any[]>>('/enrollments');
   return data;
 }
 

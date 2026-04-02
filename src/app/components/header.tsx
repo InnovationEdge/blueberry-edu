@@ -1,4 +1,4 @@
-import { Search, Bell, ChevronDown, BookOpen, LogOut, User, X } from 'lucide-react';
+import { Search, Bell, ChevronDown, LogOut, X } from 'lucide-react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router';
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/auth-context';
@@ -15,7 +15,7 @@ export function Header() {
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
   const dropdownRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const { logout, language } = useAuth();
+  const { logout, language, user } = useAuth();
   const t = getAppT(language);
 
   useEffect(() => {
@@ -63,10 +63,13 @@ export function Header() {
     }
   };
 
+  const isInstructor = user?.role === 'INSTRUCTOR';
+
   const navItems = [
     { name: t.headerHome, path: '/' },
     { name: t.headerProgress, path: '/my-progress' },
     { name: t.headerLibrary, path: '/library' },
+    ...(isInstructor ? [{ name: 'ინსტრუქტორი', path: '/instructor' }] : []),
   ];
 
   return (
