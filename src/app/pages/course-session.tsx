@@ -544,7 +544,7 @@ export function CourseSession() {
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-3">
-                          <h4 className="font-bold text-white">John Doe</h4>
+                          <h4 className="font-bold text-white">ლუკა ჩხეიძე</h4>
                           <button className="text-white/30 hover:text-white/50">
                             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                               <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
