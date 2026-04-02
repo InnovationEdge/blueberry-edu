@@ -62,8 +62,25 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     if (file) { const reader = new FileReader(); reader.onloadend = () => setProfileImage(reader.result as string); reader.readAsDataURL(file); }
   };
 
-  const toggleCategory = (id: string) => setSelectedCategories(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
-  const toggleExpertise = (id: string) => setSelectedExpertise(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+  const toggleCategory = (id: string) => {
+    setSelectedCategories(prev => {
+      const next = prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id];
+      // Auto-advance after 3+ selections (Lovable-style)
+      if (next.length >= 3 && !prev.includes(id)) {
+        setTimeout(() => goNext(), 800);
+      }
+      return next;
+    });
+  };
+  const toggleExpertise = (id: string) => {
+    setSelectedExpertise(prev => {
+      const next = prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id];
+      if (next.length >= 3 && !prev.includes(id)) {
+        setTimeout(() => goNext(), 800);
+      }
+      return next;
+    });
+  };
   const canProceed = () => {
     if (step === 0) return true;
     if (step === 1) return name.trim().length > 0;
@@ -71,7 +88,12 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     return true;
   };
   const initial = name.trim() ? name.trim()[0].toUpperCase() : 'B';
-  const handleRoleSelect = (r: 'student' | 'instructor') => { setRole(r); setUserType(r); };
+  const handleRoleSelect = (r: 'student' | 'instructor') => {
+    setRole(r);
+    setUserType(r);
+    // Auto-advance after selection (Lovable-style)
+    setTimeout(() => goNext(), 600);
+  };
 
   const buttonLabel = () => {
     if (step === 0) return 'გაგრძელება';
@@ -140,12 +162,8 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                 })}
               </div>
 
-              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-                className="mt-8 flex justify-center">
-                <button onClick={goNext} className="px-12 py-3 bg-[#E50914] text-white rounded text-sm font-bold hover:bg-[#c70812] transition-all active:scale-95">
-                  {buttonLabel()}
-                </button>
-              </motion.div>
+              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
+                className="mt-8 text-center text-white/20 text-xs">აირჩიე და ავტომატურად გადახვალ შემდეგ ნაბიჯზე</motion.p>
             </div>
           </motion.div>
         )}
