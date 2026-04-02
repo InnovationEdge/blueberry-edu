@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useNavigate } from 'react-router';
 import { Check, Upload, GraduationCap, Mic } from 'lucide-react';
 import { CategoryIcon } from '../components/category-icon';
 import { AnimatePresence, motion } from 'motion/react';
@@ -42,6 +43,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
   const [selectedExpertise, setSelectedExpertise] = useState<string[]>([]);
   const nameInputRef = useRef<HTMLInputElement>(null);
   const { setUserType } = useAuth();
+  const navigate = useNavigate();
   const totalSteps = 3;
   const goNext = useCallback(() => setStep(s => s + 1), []);
   useEffect(() => { if (step === 1) setTimeout(() => nameInputRef.current?.focus(), 300); }, [step]);
@@ -162,9 +164,13 @@ export function Onboarding({ onComplete }: OnboardingProps) {
               </motion.div>
 
               <motion.h1 initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-                className="text-3xl md:text-4xl font-black mb-2 text-center">შექმენი პროფილი</motion.h1>
+                className="text-3xl md:text-4xl font-black mb-2 text-center">
+                {role === 'student' ? 'შექმენი პროფილი' : 'ინსტრუქტორის პროფილი'}
+              </motion.h1>
               <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
-                className="text-sm text-white/40 mb-10 text-center">შემოიყვანე შენი სახელი</motion.p>
+                className="text-sm text-white/40 mb-10 text-center">
+                {role === 'student' ? 'შემოიყვანე შენი სახელი' : 'შემოიყვანე შენი სახელი და მოკლე ბიო'}
+              </motion.p>
 
               {/* Avatar */}
               <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3, type: 'spring', stiffness: 200 }}
@@ -347,9 +353,16 @@ export function Onboarding({ onComplete }: OnboardingProps) {
               {role === 'student' ? 'დროა აღმოაჩინო ახალი უნარები და ისწავლო საუკეთესოებისგან.' : 'დროა გაუზიარო შენი ცოდნა და გამოცდილება ათასობით სტუდენტს.'}
             </motion.p>
             <motion.button initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-              onClick={onComplete}
+              onClick={() => {
+                onComplete();
+                if (role === 'instructor') {
+                  navigate('/instructor');
+                } else {
+                  navigate('/');
+                }
+              }}
               className="px-12 py-3.5 bg-[#E50914] text-white rounded font-bold text-sm hover:bg-[#c70812] transition-all active:scale-95 shadow-lg shadow-red-500/20">
-              დავიწყოთ
+              {role === 'instructor' ? 'პანელზე გადასვლა' : 'კურსების ნახვა'}
             </motion.button>
           </motion.div>
         )}
