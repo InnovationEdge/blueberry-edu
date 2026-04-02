@@ -155,8 +155,11 @@ export const router = createBrowserRouter([
       <Layout>
         <div className="min-h-screen flex items-center justify-center pt-20">
           <div className="text-center space-y-4">
-            <h1 className="text-4xl font-bold text-white">404</h1>
-            <p className="text-xl text-white/40">გვერდი ვერ მოიძებნა</p>
+            <h1 className="text-6xl font-black text-white">404</h1>
+            <p className="text-base text-white/40">გვერდი ვერ მოიძებნა</p>
+            <a href="/" className="inline-block mt-4 px-6 py-2.5 bg-[#E50914] text-white rounded text-sm font-bold hover:bg-[#c70812] transition-colors active:scale-95">
+              მთავარზე დაბრუნება
+            </a>
           </div>
         </div>
       </Layout>
