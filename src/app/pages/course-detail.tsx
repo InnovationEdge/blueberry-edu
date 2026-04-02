@@ -7,6 +7,7 @@ import { getAppT } from '../i18n/app';
 import { useAuth } from '../context/auth-context';
 import { useCourseDetail, useCourses } from '../hooks/use-courses';
 import { useCheckout } from '../hooks/use-checkout';
+import { useCheckEnrollment } from '../hooks/use-enrollment';
 import { CourseDetailSkeleton } from '../components/skeletons';
 
 export function CourseDetail() {
@@ -17,10 +18,15 @@ export function CourseDetail() {
   const { data: course, isLoading, error } = useCourseDetail(id || '');
   const [expandedSections, setExpandedSections] = useState<number[]>([0]);
   const checkout = useCheckout();
+  const { data: isEnrolled } = useCheckEnrollment(id || '');
 
   const handleEnroll = () => {
     if (!isAuthenticated) {
       openLogin();
+      return;
+    }
+    if (isEnrolled) {
+      navigate(`/course/${id}/session`);
       return;
     }
     if (course) checkout.mutate(course.id);
@@ -82,53 +88,13 @@ export function CourseDetail() {
     'კვირაში დაახლოებით 4-6 საათი პრაქტიკისთვის',
   ];
 
-  // Mock reviews
+  // Georgian reviews (fallback if API returns empty)
   const reviews = [
-    {
-      id: 1,
-      author: 'Sarah Johnson',
-      avatar: 'S',
-      rating: 5,
-      date: '2 weeks ago',
-      comment: 'This course exceeded my expectations! The instructor explains complex concepts in a clear and engaging way. I went from complete beginner to building real projects. Highly recommend!',
-      helpful: 45
-    },
-    {
-      id: 2,
-      author: 'Michael Chen',
-      avatar: 'M',
-      rating: 5,
-      date: '1 month ago',
-      comment: 'Absolutely brilliant course! The hands-on projects really helped solidify my understanding. The content is well-structured and easy to follow. Worth every penny.',
-      helpful: 38
-    },
-    {
-      id: 3,
-      author: 'Emma Williams',
-      avatar: 'E',
-      rating: 4,
-      date: '3 weeks ago',
-      comment: 'Great course with comprehensive content. The instructor is knowledgeable and the pace is perfect for learning. Only minor suggestion would be to add more advanced examples.',
-      helpful: 29
-    },
-    {
-      id: 4,
-      author: 'David Martinez',
-      avatar: 'D',
-      rating: 5,
-      date: '1 week ago',
-      comment: 'One of the best online courses I\'ve taken. The practical approach and real-world examples make it easy to apply what you learn immediately. Highly professional production quality.',
-      helpful: 52
-    },
-    {
-      id: 5,
-      author: 'Lisa Anderson',
-      avatar: 'L',
-      rating: 5,
-      date: '2 months ago',
-      comment: 'This course changed my career! I was able to land a new job just 3 months after completing it. The skills I learned are directly applicable to real work scenarios.',
-      helpful: 67
-    }
+    { id: 1, author: 'ლუკა ჩხეიძე', avatar: 'ლ', rating: 5, date: '2 კვირის წინ', comment: 'საუკეთესო კურსია! ინსტრუქტორი ძალიან გასაგებად ხსნის რთულ თემებს. რეკომენდაცია 100%.', helpful: 45 },
+    { id: 2, author: 'მარიამ ქუთათელაძე', avatar: 'მ', rating: 5, date: '1 თვის წინ', comment: 'პრაქტიკული მაგალითები ძალიან დამეხმარა. კონტენტი კარგად სტრუქტურირებულია.', helpful: 38 },
+    { id: 3, author: 'დავით გელაშვილი', avatar: 'დ', rating: 4, date: '3 კვირის წინ', comment: 'კარგი კურსია, თუმცა მოწინავე თემებზე მეტი ყურადღება მინდოდა.', helpful: 29 },
+    { id: 4, author: 'ანა დვალიშვილი', avatar: 'ა', rating: 5, date: '1 კვირის წინ', comment: 'ამ კურსმა ჩემი კარიერა შეცვალა. ინსტრუქტორი ნამდვილი პროფესიონალია.', helpful: 52 },
+    { id: 5, author: 'ნიკა ხარაიშვილი', avatar: 'ნ', rating: 5, date: '2 თვის წინ', comment: 'ყველაზე კარგი ონლაინ კურსი ქართულად! შესანიშნავი კონტენტი.', helpful: 67 },
   ];
 
   const toggleSection = (index: number) => {
@@ -354,7 +320,7 @@ export function CourseDetail() {
                       </div>
                     </div>
                     <p className="text-white/60 text-sm leading-relaxed pt-2">
-                      {course.instructorBio || `${course.instructor} is a renowned expert in the field.`}
+                      {course.instructorBio || `${course.instructor} — გამოცდილი ინსტრუქტორი ამ სფეროში.`}
                     </p>
                   </div>
                 </div>
@@ -400,9 +366,9 @@ export function CourseDetail() {
                           <div className="flex items-center gap-4 text-xs text-white/30">
                             <button className="flex items-center gap-1 hover:text-white/60 transition-colors">
                               <ThumbsUp className="w-3 h-3" />
-                              Helpful ({review.helpful})
+                              სასარგებლო ({review.helpful})
                             </button>
-                            <button className="hover:text-white/60 transition-colors">Report</button>
+                            <button className="hover:text-white/60 transition-colors">რეპორტი</button>
                           </div>
                         </div>
                       </div>
@@ -440,7 +406,7 @@ export function CourseDetail() {
                       disabled={checkout.isPending}
                       className="w-full h-10 rounded bg-[#E50914] hover:bg-[#c70812] text-white font-bold text-sm transition-all active:scale-95 disabled:opacity-50"
                     >
-                      {checkout.isPending ? '...' : t.detailEnroll}
+                      {checkout.isPending ? '...' : isEnrolled ? 'გაგრძელება' : t.detailEnroll}
                     </button>
                     <button className="w-full h-12 rounded border border-white/15 hover:bg-white/[0.06] text-white font-semibold transition-all">
                       {t.detailWishlist}
