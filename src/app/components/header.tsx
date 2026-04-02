@@ -167,7 +167,7 @@ export function Header() {
                   onClick={() => setShowDropdown(!showDropdown)}
                 >
                   <div className="w-8 h-8 md:w-9 md:h-9 rounded bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center text-white text-sm md:text-base font-bold shadow-lg group-hover:shadow-red-500/50 transition-all group-hover:scale-105">
-                    U
+                    {user?.name?.charAt(0)?.toUpperCase() || 'U'}
                   </div>
                   <ChevronDown className={`w-4 h-4 text-white transition-transform duration-300 ${showDropdown ? 'rotate-180' : ''}`} />
                 </div>
@@ -185,11 +185,11 @@ export function Header() {
                     <div className="p-4 border-b border-white/[0.06]">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center text-white font-bold">
-                          U
+                          {user?.name?.charAt(0)?.toUpperCase() || 'U'}
                         </div>
                         <div>
-                          <p className="text-white font-semibold text-sm">User</p>
-                          <p className="text-gray-400 text-xs">user@example.com</p>
+                          <p className="text-white font-semibold text-sm">{user?.name || 'მომხმარებელი'}</p>
+                          <p className="text-white/40 text-xs">{user?.email || ''}</p>
                         </div>
                       </div>
                     </div>

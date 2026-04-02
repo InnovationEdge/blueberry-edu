@@ -10,7 +10,15 @@ export function PaymentSuccess() {
   const { language } = useAuth();
   const t = getAppT(language);
   const { id } = useParams();
-  const { data: course } = useCourseDetail(id || '');
+  const { data: course, isLoading } = useCourseDetail(id || '');
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#E50914] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   if (!course) return null;
 

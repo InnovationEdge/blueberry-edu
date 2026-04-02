@@ -34,7 +34,7 @@ interface Episode {
 export function VideoPlayer() {
   const { id, chapterId, lessonId } = useParams();
   const navigate = useNavigate();
-  const { data: course } = useCourseDetail(id || '');
+  const { data: course, isLoading, error } = useCourseDetail(id || '');
   const { language } = useAuth();
   const t = getAppT(language);
   const videoRef = useRef<HTMLDivElement>(null);
@@ -44,8 +44,8 @@ export function VideoPlayer() {
   const [isMuted, setIsMuted] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [volume, setVolume] = useState(100);
-  const [progress, setProgress] = useState(23); // Mock progress at 23%
-  const [currentTime, setCurrentTime] = useState('5:12');
+  const [progress, setProgress] = useState(0);
+  const [currentTime, setCurrentTime] = useState('0:00');
   const [duration] = useState('20:52');
   const [showControls, setShowControls] = useState(true);
   const [showVolumeSlider, setShowVolumeSlider] = useState(false);
@@ -53,58 +53,22 @@ export function VideoPlayer() {
   const [previewTime, setPreviewTime] = useState<string | null>(null);
   const [previewPosition, setPreviewPosition] = useState(0);
 
-  // Mock episodes data
-  const episodes: Episode[] = [
-    {
-      id: '1',
-      number: 1,
-      title: 'Pilot',
-      description: 'Nine-year-old Sheldon starts high school, where his brilliant mind is met with strong reactions.',
-      duration: '20:52',
+  // Build episodes from real API sections
+  const episodes: Episode[] = (course?.sections || []).flatMap((section, si) =>
+    section.lessons.map((lesson, li) => ({
+      id: lesson.id,
+      number: si * 10 + li + 1,
+      title: lesson.title,
+      description: section.title,
+      duration: lesson.duration,
       thumbnail: course?.thumbnail || '',
       completed: false,
-    },
-    {
-      id: '2',
-      number: 2,
-      title: 'Rockets, Communists, and the Dewey Decimal System',
-      description: 'Learn advanced techniques and methodologies from the expert.',
-      duration: '21:15',
-      thumbnail: course?.thumbnail || '',
-      completed: false,
-    },
-    {
-      id: '3',
-      number: 3,
-      title: 'Poker, Faith, and Eggs',
-      description: 'Dive deeper into the core concepts with practical examples.',
-      duration: '19:45',
-      thumbnail: course?.thumbnail || '',
-      completed: false,
-    },
-    {
-      id: '4',
-      number: 4,
-      title: 'A Therapist, a Comic Book, and a Breakfast Sausage',
-      description: 'Apply what you\'ve learned to real-world scenarios.',
-      duration: '22:30',
-      thumbnail: course?.thumbnail || '',
-      completed: false,
-    },
-    {
-      id: '5',
-      number: 5,
-      title: 'A Solar Calculator, a Game Ball, and a Cheerleader\'s Bosom',
-      description: 'Master the advanced strategies used by professionals.',
-      duration: '20:15',
-      thumbnail: course?.thumbnail || '',
-      completed: false,
-    },
-  ];
+    }))
+  );
 
   const currentEpisodeIndex = episodes.findIndex(ep => ep.id === lessonId);
-  const currentEpisode = episodes[currentEpisodeIndex];
-  const nextEpisode = episodes[currentEpisodeIndex + 1];
+  const currentEpisode = episodes[currentEpisodeIndex >= 0 ? currentEpisodeIndex : 0];
+  const nextEpisode = episodes[(currentEpisodeIndex >= 0 ? currentEpisodeIndex : 0) + 1];
 
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
@@ -187,8 +151,20 @@ export function VideoPlayer() {
     setCurrentTime('0:00');
   };
 
-  if (!course) {
-    return null;
+  if (isLoading) {
+    return (
+      <div className="h-screen bg-black flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#E50914] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (error || !course) {
+    return (
+      <div className="h-screen bg-black flex items-center justify-center">
+        <p className="text-white/40 text-sm">ვიდეო ვერ მოიძებნა</p>
+      </div>
+    );
   }
 
   return (

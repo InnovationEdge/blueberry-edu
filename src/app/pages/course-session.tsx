@@ -26,161 +26,44 @@ interface Chapter {
 export function CourseSession() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data: course } = useCourseDetail(id || '');
+  const { data: course, isLoading, error } = useCourseDetail(id || '');
   const { language } = useAuth();
   const t = getAppT(language);
-  const [expandedChapter, setExpandedChapter] = useState<string>('1');
+  const [expandedChapter, setExpandedChapter] = useState<string>('0');
   const [activeTab, setActiveTab] = useState<'activities' | 'community'>('activities');
   const [showCompleted, setShowCompleted] = useState(false);
 
-  if (!course) {
-    return null;
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#E50914] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
   }
 
-  // Mock course structure with more detailed data
-  const chapters: Chapter[] = [
-    {
-      id: '1',
-      number: 1,
-      title: 'Introduction',
-      description: `${course.instructor} introduces themselves and provides an overview of what you'll do.`,
-      lessons: [
-        {
-          id: '1-1',
-          title: `Meet Your Instructor: ${course.instructor}`,
-          duration: '5:23',
-          description: `Meet ${course.instructor}—the thought leader on a mission to share transformational knowledge.`,
-          completed: false,
-        },
-        {
-          id: '1-2',
-          title: 'Course Overview & What You\'ll Learn',
-          duration: '8:15',
-          description: 'A comprehensive overview of what this course covers and the skills you\'ll master.',
-          locked: true,
-        },
-      ],
-    },
-    {
-      id: '2',
-      number: 2,
-      title: 'Understanding the Fundamentals',
-      description: 'Build your foundation with core concepts',
-      lessons: [
-        {
-          id: '2-1',
-          title: 'Core Principles & Foundations',
-          duration: '12:45',
-          description: 'Learn the core principles that will guide your journey through this course.',
-          locked: true,
-        },
-        {
-          id: '2-2',
-          title: 'Setting Your Goals',
-          duration: '8:30',
-          description: 'Define what success looks like for you and create a personalized learning path.',
-          locked: true,
-        },
-      ],
-    },
-    {
-      id: '3',
-      number: 3,
-      title: 'Advanced Techniques',
-      description: 'Master advanced concepts and strategies',
-      lessons: [
-        {
-          id: '3-1',
-          title: 'Advanced Methods & Strategies',
-          duration: '15:20',
-          description: 'Explore advanced strategies used by top professionals in the field.',
-          locked: true,
-        },
-        {
-          id: '3-2',
-          title: 'Practical Application Workshop',
-          duration: '20:45',
-          description: 'Put your knowledge into practice with hands-on exercises.',
-          locked: true,
-        },
-      ],
-    },
-    {
-      id: '4',
-      number: 4,
-      title: 'Real-World Application',
-      description: 'Apply your knowledge to real scenarios',
-      lessons: [
-        {
-          id: '4-1',
-          title: 'Real-World Case Studies',
-          duration: '18:10',
-          description: 'Learn from real-world examples and success stories.',
-          locked: true,
-        },
-      ],
-    },
-    {
-      id: '5',
-      number: 5,
-      title: 'Mastering the Craft',
-      description: 'Reach expert level',
-      lessons: [
-        {
-          id: '5-1',
-          title: 'Achieving Excellence',
-          duration: '14:25',
-          description: 'Reach the peak of your potential with expert-level insights.',
-          locked: true,
-        },
-      ],
-    },
-    {
-      id: '6',
-      number: 6,
-      title: 'Building Your Portfolio',
-      description: 'Showcase your expertise',
-      lessons: [
-        {
-          id: '6-1',
-          title: 'Creating a Professional Portfolio',
-          duration: '16:50',
-          description: 'Create a showcase of your work that demonstrates your expertise.',
-          locked: true,
-        },
-      ],
-    },
-    {
-      id: '7',
-      number: 7,
-      title: 'Avoiding Common Mistakes',
-      description: 'Learn from pitfalls',
-      lessons: [
-        {
-          id: '7-1',
-          title: 'Common Mistakes to Avoid',
-          duration: '11:35',
-          description: 'Learn from common pitfalls and how to avoid them.',
-          locked: true,
-        },
-      ],
-    },
-    {
-      id: '8',
-      number: 8,
-      title: 'Final Thoughts',
-      description: 'Your path forward',
-      lessons: [
-        {
-          id: '8-1',
-          title: 'Final Thoughts & Next Steps',
-          duration: '10:40',
-          description: 'Concluding insights and your path forward after completing this course.',
-          locked: true,
-        },
-      ],
-    },
-  ];
+  if (error || !course) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <p className="text-white/40 text-sm">კურსი ვერ მოიძებნა</p>
+      </div>
+    );
+  }
+
+  // Build chapters from API sections
+  const chapters: Chapter[] = (course.sections || []).map((section, i) => ({
+    id: String(i),
+    number: i + 1,
+    title: section.title,
+    description: `${section.lessons.length} გაკვეთილი`,
+    lessons: section.lessons.map((lesson, li) => ({
+      id: lesson.id,
+      title: lesson.title,
+      duration: lesson.duration,
+      description: '',
+      completed: false,
+      locked: i > 0 && li > 0,
+    })),
+  }));
 
   const totalLessons = chapters.reduce((acc, chapter) => acc + chapter.lessons.length, 0);
   const completedLessons = chapters.reduce(
