@@ -10,13 +10,21 @@ import { useCheckout } from '../hooks/use-checkout';
 import { CourseDetailSkeleton } from '../components/skeletons';
 
 export function CourseDetail() {
-  const { language } = useAuth();
+  const { language, isAuthenticated, openLogin } = useAuth();
   const t = getAppT(language);
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { data: course, isLoading, error } = useCourseDetail(id || '');
   const [expandedSections, setExpandedSections] = useState<number[]>([0]);
   const checkout = useCheckout();
+
+  const handleEnroll = () => {
+    if (!isAuthenticated) {
+      openLogin();
+      return;
+    }
+    if (course) checkout.mutate(course.id);
+  };
 
   // Fetch related courses (same category)
   const categorySlug = course?.category[0] || '';
@@ -431,7 +439,7 @@ export function CourseDetail() {
 
                   <div className="pt-4 space-y-3">
                     <button
-                      onClick={() => checkout.mutate(course.id)}
+                      onClick={handleEnroll}
                       disabled={checkout.isPending}
                       className="w-full h-10 rounded bg-[#E50914] hover:bg-[#c70812] text-white font-bold text-sm transition-all active:scale-95 disabled:opacity-50"
                     >
