@@ -73,7 +73,7 @@ export function MyProgress() {
         return (
           <div className="px-4 md:px-12 mb-12">
             <div className="flex items-center gap-10 md:gap-14">
-              {/* Completion Rate */}
+              {/* დასრულების მაჩვენებელი */}
               <div className="flex items-center gap-4">
                 <div className="relative w-20 h-20 flex-shrink-0">
                   <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
@@ -86,12 +86,12 @@ export function MyProgress() {
                   </div>
                 </div>
                 <div>
-                  <p className="text-white text-sm font-bold">Completion Rate</p>
+                  <p className="text-white text-sm font-bold">დასრულების მაჩვენებელი</p>
                   <p className="text-white/70 text-xs">{completedCourses.length}/{enrolledCourses.length} {t.progressCourses.toLowerCase()}</p>
                 </div>
               </div>
 
-              {/* Total Lessons */}
+              {/* სულ გაკვეთილები */}
               <div className="flex items-center gap-4">
                 <div className="relative w-20 h-20 flex-shrink-0">
                   <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
@@ -104,20 +104,20 @@ export function MyProgress() {
                   </div>
                 </div>
                 <div>
-                  <p className="text-white text-sm font-bold">Total Lessons</p>
+                  <p className="text-white text-sm font-bold">სულ გაკვეთილები</p>
                   <p className="text-white/70 text-xs">{doneLessons}/{totalLessons}</p>
                 </div>
               </div>
 
-              {/* Total Learning Minutes */}
+              {/* სწავლის წუთები */}
               <div>
-                <p className="text-white text-sm font-bold">Total Learning Minutes</p>
+                <p className="text-white text-sm font-bold">სწავლის წუთები</p>
                 <p className="text-white text-lg font-black mt-1">{totalMinutes}<span className="text-white/70"> წთ</span></p>
               </div>
 
               {/* Avg Learning Minutes / Day */}
               <div className="hidden md:block">
-                <p className="text-white text-sm font-bold">Average Minutes / Day</p>
+                <p className="text-white text-sm font-bold">საშუალო / დღეში</p>
                 <p className="text-white text-lg font-black mt-1">{totalMinutes > 0 ? Math.round(totalMinutes / 7) : 0}<span className="text-white/70"> წთ</span></p>
               </div>
             </div>

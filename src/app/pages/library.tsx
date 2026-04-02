@@ -6,11 +6,11 @@ import { getAppT } from '../i18n/app';
 import { useAuth } from '../context/auth-context';
 import { useCourses, useCategories } from '../hooks/use-courses';
 
-const LEVELS = ['All Levels', 'Beginner', 'Intermediate', 'Advanced'] as const;
+const LEVELS = ['ყველა დონე', 'დამწყები', 'საშუალო', 'მოწინავე'] as const;
 const LEVEL_API_MAP: Record<string, string> = {
-  'Beginner': 'BEGINNER',
-  'Intermediate': 'INTERMEDIATE',
-  'Advanced': 'ADVANCED',
+  'დამწყები': 'BEGINNER',
+  'საშუალო': 'INTERMEDIATE',
+  'მოწინავე': 'ADVANCED',
 };
 const DURATIONS = [
   { id: 'all', label: 'ყველა' },
@@ -24,21 +24,21 @@ export function Library() {
   const t = getAppT(language);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedLevel, setSelectedLevel] = useState('All Levels');
+  const [selectedLevel, setSelectedLevel] = useState('ყველა დონე');
   const [selectedDuration, setSelectedDuration] = useState('all');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   // Fetch categories from API
   const { data: apiCategories = [] } = useCategories();
   const categories = useMemo(() => [
-    { id: 'all', name: 'All Categories', slug: 'all', icon: 'layers' },
+    { id: 'all', name: 'ყველა კატეგორია', slug: 'all', icon: 'layers' },
     ...apiCategories.map(c => ({ ...c, icon: c.slug === 'business' ? 'briefcase' : c.slug === 'technology' ? 'cpu' : c.slug === 'design' ? 'layout' : c.slug === 'marketing' ? 'trending-up' : c.slug === 'photography' ? 'camera' : c.slug === 'music' ? 'music' : c.slug === 'food' ? 'utensils' : c.slug === 'arts-design' ? 'palette' : c.slug === 'data-science' ? 'bar-chart' : c.slug === 'writing' ? 'pen-tool' : 'layers' })),
   ], [apiCategories]);
 
   // Fetch courses from API with filters
   const apiParams = useMemo(() => ({
     category: selectedCategory !== 'all' ? selectedCategory : undefined,
-    level: selectedLevel !== 'All Levels' ? LEVEL_API_MAP[selectedLevel] : undefined,
+    level: selectedLevel !== 'ყველა დონე' ? LEVEL_API_MAP[selectedLevel] : undefined,
     limit: 50,
   }), [selectedCategory, selectedLevel]);
 
@@ -72,11 +72,11 @@ export function Library() {
     return result;
   }, [allCourses, selectedDuration, searchQuery]);
 
-  const activeFilters = (selectedLevel !== 'All Levels' ? 1 : 0) + (selectedDuration !== 'all' ? 1 : 0);
+  const activeFilters = (selectedLevel !== 'ყველა დონე' ? 1 : 0) + (selectedDuration !== 'all' ? 1 : 0);
 
   const clearAll = () => {
     setSelectedCategory('all');
-    setSelectedLevel('All Levels');
+    setSelectedLevel('ყველა დონე');
     setSelectedDuration('all');
     setSearchQuery('');
   };
@@ -209,10 +209,10 @@ export function Library() {
 
             {activeFilters > 0 && (
               <div className="flex items-center gap-2 mb-4 flex-wrap">
-                {selectedLevel !== 'All Levels' && (
+                {selectedLevel !== 'ყველა დონე' && (
                   <span className="flex items-center gap-1.5 px-3 py-1 bg-white/[0.06] rounded text-white text-xs">
                     {selectedLevel}
-                    <X className="w-3 h-3 cursor-pointer hover:text-[#E50914]" onClick={() => setSelectedLevel('All Levels')} />
+                    <X className="w-3 h-3 cursor-pointer hover:text-[#E50914]" onClick={() => setSelectedLevel('ყველა დონე')} />
                   </span>
                 )}
                 {selectedDuration !== 'all' && (

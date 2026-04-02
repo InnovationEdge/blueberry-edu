@@ -29,7 +29,7 @@ export function CourseDetail() {
   // Fetch related courses (same category)
   const categorySlug = course?.category[0] || '';
   const { data: relatedData } = useCourses({ category: categorySlug, limit: 8 });
-  const relatedCourses = (relatedData?.data || []).filter(c => c.id !== course?.id);
+  const relatedCourses = (relatedData?.data || []).filter((c: any) => c.id !== course?.id);
 
   if (isLoading) {
     return <CourseDetailSkeleton />;
@@ -55,16 +55,13 @@ export function CourseDetail() {
   // Mock LinkedIn URL
   const instructorLinkedIn = `https://www.linkedin.com/in/${course.instructor.toLowerCase().replace(/\s+/g, '-')}`;
 
-  // Mock comprehensive course data
   const learningOutcomes = [
-    'Master the fundamental concepts and advanced techniques',
-    'Build real-world projects from scratch',
-    'Understand industry best practices and workflows',
-    'Gain hands-on experience with modern tools and technologies',
-    'Learn strategies used by top professionals in the field',
-    'Develop a complete portfolio project',
-    'Access downloadable resources and templates',
-    'Get lifetime access to course materials and updates'
+    'დაეუფლე ძირითად კონცეფციებს და მოწინავე ტექნიკებს',
+    'შექმენი რეალური პროექტები ნულიდან',
+    'ისწავლე ინდუსტრიის საუკეთესო პრაქტიკები',
+    'მიიღე პრაქტიკული გამოცდილება თანამედროვე ინსტრუმენტებით',
+    'ისწავლე ტოპ პროფესიონალების სტრატეგიები',
+    'შექმენი სრული პორტფოლიო პროექტი',
   ];
 
   // Real sections from API
@@ -79,10 +76,10 @@ export function CourseDetail() {
   }));
 
   const requirements = [
-    'No prior experience required - we start from the basics',
-    'A computer with internet connection',
-    'Willingness to learn and practice',
-    'Approximately 4-6 hours per week for hands-on practice'
+    'წინასწარი გამოცდილება არ არის საჭირო — საფუძვლებიდან ვიწყებთ',
+    'კომპიუტერი ინტერნეტ კავშირით',
+    'სწავლის სურვილი და პრაქტიკისთვის დრო',
+    'კვირაში დაახლოებით 4-6 საათი პრაქტიკისთვის',
   ];
 
   // Mock reviews
@@ -209,7 +206,7 @@ export function CourseDetail() {
               <span>•</span>
               <div className="flex items-center gap-2">
                 <Globe className="w-5 h-5 text-white/40" />
-                <span>English</span>
+                <span>ქართული</span>
               </div>
             </div>
           </div>
@@ -226,7 +223,7 @@ export function CourseDetail() {
               
               {/* What You'll Learn */}
               <div className="bg-white/[0.03] rounded p-8">
-                <h2 className="text-2xl font-bold text-white mb-6">What you'll learn</h2>
+                <h2 className="text-2xl font-bold text-white mb-6">{t.detailWhatLearn}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {learningOutcomes.map((outcome, index) => (
                     <div key={index} className="flex gap-3">
@@ -239,9 +236,9 @@ export function CourseDetail() {
 
               {/* Course Content */}
               <div>
-                <h2 className="text-2xl font-bold text-white mb-4">Course content</h2>
+                <h2 className="text-2xl font-bold text-white mb-4">{ t.detailCourseContent}</h2>
                 <div className="text-sm text-white/40 mb-6">
-                  {courseSections.length} sections • {totalLectures} lectures • {course.duration} total length
+                  {courseSections.length} სექცია • {totalLectures} გაკვეთილი • {course.duration} სულ
                 </div>
                 <div className="space-y-2">
                   {courseSections.map((section, sectionIndex) => (
@@ -259,7 +256,7 @@ export function CourseDetail() {
                           <span className="text-white font-semibold">{section.title}</span>
                         </div>
                         <div className="text-sm text-white/40">
-                          {section.lectures} lectures • {section.duration}
+                          {section.lectures} გაკვეთილი • {section.duration}
                         </div>
                       </button>
                       
@@ -286,7 +283,7 @@ export function CourseDetail() {
                                 </div>
                                 <div className="flex items-center gap-3">
                                   {lesson.preview && (
-                                    <span className="text-xs text-red-500 font-semibold">Preview</span>
+                                    <span className="text-xs text-red-500 font-semibold">{ t.detailPreview}</span>
                                   )}
                                   <span className="text-sm text-white/40">{lesson.duration}</span>
                                 </div>
@@ -303,7 +300,7 @@ export function CourseDetail() {
 
               {/* Requirements */}
               <div>
-                <h2 className="text-2xl font-bold text-white mb-4">Requirements</h2>
+                <h2 className="text-2xl font-bold text-white mb-4">{ t.detailRequirements}</h2>
                 <ul className="space-y-2">
                   {requirements.map((req, index) => (
                     <li key={index} className="flex gap-2 text-white/60 text-sm">
@@ -316,7 +313,7 @@ export function CourseDetail() {
 
               {/* Description */}
               <div>
-                <h2 className="text-2xl font-bold text-white mb-4">Description</h2>
+                <h2 className="text-2xl font-bold text-white mb-4">{ t.detailDescription}</h2>
                 <div className="text-white/60 space-y-4 text-sm leading-relaxed">
                   <p>{course.description}</p>
                 </div>
@@ -324,7 +321,7 @@ export function CourseDetail() {
 
               {/* Instructor */}
               <div>
-                <h2 className="text-2xl font-bold text-white mb-6">Instructor</h2>
+                <h2 className="text-2xl font-bold text-white mb-6">{ t.detailInstructor}</h2>
                 <div className="flex gap-6">
                   <div className="w-32 h-32 rounded-full bg-white/[0.06] flex items-center justify-center flex-shrink-0">
                     <span className="text-4xl font-bold text-white">{course.instructor.charAt(0)}</span>
@@ -341,19 +338,19 @@ export function CourseDetail() {
                         პროფილი
                       </a>
                     </div>
-                    <p className="text-white/40 text-sm">{course.instructorTitle || 'Expert Instructor'}</p>
+                    <p className="text-white/40 text-sm">{course.instructorTitle || 'ექსპერტი ინსტრუქტორი'}</p>
                     <div className="flex items-center gap-6 text-sm text-white/40">
                       <div className="flex items-center gap-2">
                         <Star className="w-4 h-4" />
-                        <span>{course.rating} Instructor Rating</span>
+                        <span>{course.rating} ინსტრუქტორის რეიტინგი</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <Users className="w-4 h-4" />
-                        <span>{course.students.toLocaleString()} Students</span>
+                        <span>{course.students.toLocaleString()} {t.detailStudents}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <PlayCircle className="w-4 h-4" />
-                        <span>{Math.floor(Math.random() * 10) + 5} Courses</span>
+                        <span>{Math.floor(Math.random() * 10) + 5} {t.detailCourses}</span>
                       </div>
                     </div>
                     <p className="text-white/60 text-sm leading-relaxed pt-2">
@@ -365,7 +362,7 @@ export function CourseDetail() {
 
               {/* Student Reviews */}
               <div>
-                <h2 className="text-2xl font-bold text-white mb-6">Student feedback</h2>
+                <h2 className="text-2xl font-bold text-white mb-6">{ t.detailFeedback}</h2>
                 <div className="mb-8">
                   <div className="flex items-center gap-3 mb-2">
                     <span className="text-5xl font-bold text-yellow-500">{averageRating}</span>
@@ -375,7 +372,7 @@ export function CourseDetail() {
                           <Star key={i} className={`w-5 h-5 ${i < Math.floor(averageRating) ? 'text-yellow-500 fill-yellow-500' : 'text-white/20'}`} />
                         ))}
                       </div>
-                      <p className="text-sm text-white/40">Course Rating</p>
+                      <p className="text-sm text-white/40">კურსის რეიტინგი</p>
                     </div>
                   </div>
                 </div>
@@ -446,33 +443,33 @@ export function CourseDetail() {
                       {checkout.isPending ? '...' : t.detailEnroll}
                     </button>
                     <button className="w-full h-12 rounded border border-white/15 hover:bg-white/[0.06] text-white font-semibold transition-all">
-                      Add to Wishlist
+                      {t.detailWishlist}
                     </button>
                   </div>
 
-                  <p className="text-center text-xs text-white/40 pt-2">30-Day Money-Back Guarantee</p>
+                  <p className="text-center text-xs text-white/40 pt-2">{t.detailGuarantee}</p>
                   
                   <div className="border-t border-white/[0.06] pt-4 space-y-3 text-sm">
                     <h3 className="font-bold text-white mb-3">This course includes:</h3>
                     <div className="flex items-center gap-3 text-white/60">
                       <Clock className="w-4 h-4 text-white/40 flex-shrink-0" />
-                      <span>{course.duration} on-demand video</span>
+                      <span>{course.duration} ვიდეო მოთხოვნით</span>
                     </div>
                     <div className="flex items-center gap-3 text-white/60">
                       <FileText className="w-4 h-4 text-white/40 flex-shrink-0" />
-                      <span>Downloadable resources</span>
+                      <span>ჩამოტვირთვადი რესურსები</span>
                     </div>
                     <div className="flex items-center gap-3 text-white/60">
                       <Infinity className="w-4 h-4 text-white/40 flex-shrink-0" />
-                      <span>Full lifetime access</span>
+                      <span>სრული უვადო წვდომა</span>
                     </div>
                     <div className="flex items-center gap-3 text-white/60">
                       <Smartphone className="w-4 h-4 text-white/40 flex-shrink-0" />
-                      <span>Access on mobile and TV</span>
+                      <span>მობილურსა და TV-ზე წვდომა</span>
                     </div>
                     <div className="flex items-center gap-3 text-white/60">
                       <Award className="w-4 h-4 text-white/40 flex-shrink-0" />
-                      <span>Certificate of completion</span>
+                      <span>დასრულების სერტიფიკატი</span>
                     </div>
                   </div>
 
@@ -489,7 +486,7 @@ export function CourseDetail() {
           {/* More Like This */}
           {relatedCourses.length > 0 && (
             <div className="mt-20 mb-12">
-              <CourseRow title="More Like This" courses={relatedCourses} />
+              <CourseRow title={t.detailMoreLikeThis} courses={relatedCourses} />
             </div>
           )}
         </div>
