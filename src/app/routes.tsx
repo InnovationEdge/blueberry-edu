@@ -12,6 +12,7 @@ import { CreateCourse } from './pages/instructor/create-course';
 import { CourseEditor } from './pages/instructor/course-editor';
 import { QuizBuilder } from './pages/instructor/quiz-builder';
 import { InstructorAnalytics } from './pages/instructor/analytics';
+import { Assignments } from './pages/instructor/assignments';
 import { Header } from './components/header';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
@@ -117,6 +118,10 @@ export const router = createBrowserRouter([
   {
     path: '/instructor/analytics',
     element: <Layout><InstructorAnalytics /></Layout>,
+  },
+  {
+    path: '/instructor/course/:id/assignments',
+    element: <Layout><Assignments /></Layout>,
   },
   {
     path: '*',
