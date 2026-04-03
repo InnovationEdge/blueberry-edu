@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { ChevronRight, ChevronLeft, ChevronDown, Tv, Download, Smartphone, Users, Award, CheckCircle, Infinity, Plus, Star } from 'lucide-react';
+import { ChevronRight, ChevronLeft, ChevronDown, Tv, Download, Smartphone, Users, Award, CheckCircle, Infinity, Plus, Star, Sun, Moon } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useAuth } from '../context/auth-context';
+import { useTheme } from 'next-themes';
 import { getAppT } from '../i18n/app';
 import { Logo } from '../components/logo';
 import { usePopularCourses } from '../hooks/use-courses';
@@ -12,6 +13,7 @@ export function Landing() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [testimonialPaused, setTestimonialPaused] = useState(false);
   const { openLogin, language, setLanguage } = useAuth();
+  const { theme, setTheme } = useTheme();
   const t = getAppT(language);
   const { data: apiCourses = [] } = usePopularCourses();
 
@@ -167,7 +169,15 @@ export function Landing() {
               </AnimatePresence>
             </div>
 
-            {/* Sign In — Netflix exact red button */}
+            {/* Theme Toggle */}
+            <button
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="p-2 text-foreground hover:text-foreground-secondary transition-colors hover:bg-surface-hover rounded"
+            >
+              {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
+
+            {/* Sign In */}
             <button
               onClick={handleSignIn}
               className="px-4 py-1.5 bg-brand text-white rounded font-semibold text-sm hover:bg-brand-hover transition-colors"
