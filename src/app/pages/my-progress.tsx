@@ -79,7 +79,7 @@ export function MyProgress() {
                 <div className="relative w-20 h-20 flex-shrink-0">
                   <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
                     <circle cx="50" cy="50" r="42" fill="none" className="stroke-foreground-ghost" strokeWidth="5" />
-                    <circle cx="50" cy="50" r="42" fill="none" stroke="#1a4fd8" strokeWidth="5" strokeLinecap="round"
+                    <circle cx="50" cy="50" r="42" fill="none" className="stroke-brand" strokeWidth="5" strokeLinecap="round"
                       strokeDasharray={`${(completedCourses.length / Math.max(enrolledCourses.length, 1)) * 2 * Math.PI * 42} ${2 * Math.PI * 42}`} />
                   </svg>
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -96,7 +96,7 @@ export function MyProgress() {
                 <div className="relative w-20 h-20 flex-shrink-0">
                   <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
                     <circle cx="50" cy="50" r="42" fill="none" className="stroke-foreground-ghost" strokeWidth="5" />
-                    <circle cx="50" cy="50" r="42" fill="none" stroke="#1a4fd8" strokeWidth="5" strokeLinecap="round"
+                    <circle cx="50" cy="50" r="42" fill="none" className="stroke-brand" strokeWidth="5" strokeLinecap="round"
                       strokeDasharray={`${(lessonPct / 100) * 2 * Math.PI * 42} ${2 * Math.PI * 42}`} />
                   </svg>
                   <div className="absolute inset-0 flex items-center justify-center">

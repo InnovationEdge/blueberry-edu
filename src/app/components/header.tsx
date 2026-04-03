@@ -77,14 +77,17 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled ? 'bg-background shadow-xl shadow-overlay/20' : ''
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? 'bg-background/80 backdrop-blur-md border-b border-border-subtle shadow-sm'
+          : ''
       }`}
     >
-      {/* Top gradient overlay */}
+      {/* Soft gradient overlay when not scrolled */}
       {!isScrolled && (
-        <div className="absolute inset-x-0 top-0 h-[250%] bg-gradient-to-b from-background from-40% via-background/50 via-70% to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 top-0 h-[200%] bg-gradient-to-b from-background via-background/60 to-transparent pointer-events-none" />
       )}
+
       <div className="relative flex items-center justify-between px-4 md:px-12 py-4 md:py-5">
         {/* Logo and Navigation */}
         <div className="flex items-center gap-6 md:gap-10">
@@ -105,7 +108,7 @@ export function Header() {
                 >
                   {item.name}
                   {location.pathname === item.path && (
-                    <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-brand rounded-full" />
+                    <span className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-brand rounded-full" />
                   )}
                 </Link>
               ))}
@@ -114,19 +117,19 @@ export function Header() {
         </div>
 
         {/* Right Side Actions */}
-        <div className="flex items-center gap-3 md:gap-5">
+        <div className="flex items-center gap-2 md:gap-3">
           {/* Search */}
           {showSearch ? (
             <form onSubmit={handleSearch} className="flex items-center gap-2">
               <div className="relative flex items-center">
-                <Search className="absolute left-3 w-5 h-5 text-foreground-subtle" />
+                <Search className="absolute left-3.5 w-4 h-4 text-foreground-subtle" />
                 <input
                   ref={searchInputRef}
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={t.headerSearch}
-                  className="w-64 md:w-80 pl-10 pr-10 py-2 bg-background/80 border border-border-muted text-foreground placeholder-foreground-faint rounded focus:outline-none focus:border-brand transition-colors"
+                  className="w-64 md:w-80 pl-10 pr-10 py-2.5 bg-surface border border-border rounded-full text-foreground text-sm placeholder-foreground-faint focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand/20 transition-all"
                 />
                 {searchQuery && (
                   <button
@@ -134,7 +137,7 @@ export function Header() {
                     onClick={clearSearch}
                     className="absolute right-3 text-foreground-subtle hover:text-foreground"
                   >
-                    <X className="w-5 h-5" />
+                    <X className="w-4 h-4" />
                   </button>
                 )}
               </div>
@@ -144,17 +147,17 @@ export function Header() {
                   setShowSearch(false);
                   setSearchQuery('');
                 }}
-                className="text-foreground hover:text-foreground-secondary transition-colors"
+                className="p-2 rounded-full hover:bg-surface-hover transition-colors text-foreground-secondary hover:text-foreground"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5" />
               </button>
             </form>
           ) : (
             <button
               onClick={() => setShowSearch(true)}
-              className="text-foreground hover:text-foreground-secondary transition-colors p-2 hover:bg-surface-hover rounded"
+              className="p-2.5 rounded-full hover:bg-surface-hover transition-colors text-foreground-secondary hover:text-foreground"
             >
-              <Search className="w-5 h-5 md:w-6 md:h-6" />
+              <Search className="w-5 h-5" />
             </button>
           )}
 
@@ -163,24 +166,27 @@ export function Header() {
               {/* Theme Toggle */}
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="text-foreground hover:text-foreground-secondary transition-colors p-2 hover:bg-surface-hover rounded"
+                className="p-2.5 rounded-full hover:bg-surface-hover transition-colors text-foreground-secondary hover:text-foreground"
               >
                 {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </button>
 
-              <button className="text-foreground hover:text-foreground-secondary transition-colors p-2 hover:bg-surface-hover rounded relative">
-                <Bell className="w-5 h-5 md:w-6 md:h-6" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
+              {/* Notification bell */}
+              <button className="p-2.5 rounded-full hover:bg-surface-hover transition-colors text-foreground-secondary hover:text-foreground relative">
+                <Bell className="w-5 h-5" />
+                <span className="absolute top-2 right-2 w-2 h-2 bg-brand rounded-full" />
               </button>
+
+              {/* Avatar & dropdown */}
               <div className="relative" ref={dropdownRef}>
                 <div
                   className="flex items-center gap-2 cursor-pointer group"
                   onClick={() => setShowDropdown(!showDropdown)}
                 >
-                  <div className="w-8 h-8 md:w-9 md:h-9 rounded bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white text-sm md:text-base font-bold shadow-lg group-hover:shadow-blue-500/50 transition-all group-hover:scale-105">
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-brand to-brand-hover flex items-center justify-center text-white text-sm font-semibold shadow-sm group-hover:shadow-md transition-all group-hover:scale-105">
                     {user?.name?.charAt(0)?.toUpperCase() || 'U'}
                   </div>
-                  <ChevronDown className={`w-4 h-4 text-foreground transition-transform duration-300 ${showDropdown ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 text-foreground-secondary transition-transform duration-300 ${showDropdown ? 'rotate-180' : ''}`} />
                 </div>
 
                 {/* Dropdown Menu */}
@@ -190,22 +196,26 @@ export function Header() {
                     initial={{ opacity: 0, scale: 0.95, y: -4 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: -4 }}
-                    transition={{ duration: 0.2, ease: 'easeOut' }}
-                    className="absolute right-0 mt-3 w-56 bg-background/95 backdrop-blur-xl border border-border-subtle rounded shadow-2xl overflow-hidden"
+                    transition={{ duration: 0.15, ease: 'easeOut' }}
+                    className="absolute right-0 mt-3 w-60 bg-card border border-border-subtle rounded-xl shadow-lg overflow-hidden"
                   >
                     <div className="p-4 border-b border-border-subtle">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white font-bold">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand to-brand-hover flex items-center justify-center text-white font-semibold">
                           {user?.name?.charAt(0)?.toUpperCase() || 'U'}
                         </div>
-                        <div>
-                          <p className="text-foreground font-semibold text-sm">{user?.name || 'მომხმარებელი'}</p>
-                          <p className="text-foreground-subtle text-xs">{user?.email || ''}</p>
+                        <div className="min-w-0">
+                          <p className="text-foreground font-semibold text-sm truncate">{user?.name || 'მომხმარებელი'}</p>
+                          <p className="text-foreground-subtle text-xs truncate">{user?.email || ''}</p>
                         </div>
                       </div>
                     </div>
-                    <Link to="/profile" onClick={() => setShowDropdown(false)}
-                      className="w-full px-4 py-3 text-left text-foreground hover:bg-surface transition-colors flex items-center gap-3 block">
+                    <Link
+                      to="/profile"
+                      onClick={() => setShowDropdown(false)}
+                      className="w-full px-4 py-3 text-left text-foreground-secondary hover:text-foreground hover:bg-surface-hover transition-colors flex items-center gap-3 rounded-lg mx-1 my-0.5 block"
+                      style={{ width: 'calc(100% - 0.5rem)' }}
+                    >
                       <span className="text-sm">პროფილი</span>
                     </Link>
                     <button
@@ -213,7 +223,8 @@ export function Header() {
                         logout();
                         setShowDropdown(false);
                       }}
-                      className="w-full px-4 py-3 text-left text-foreground hover:bg-surface transition-colors flex items-center gap-3"
+                      className="w-full px-4 py-3 text-left text-foreground-secondary hover:text-foreground hover:bg-surface-hover transition-colors flex items-center gap-3 rounded-lg mx-1 my-0.5"
+                      style={{ width: 'calc(100% - 0.5rem)' }}
                     >
                       <LogOut className="w-4 h-4" />
                       <span className="text-sm">{t.headerSignOut}</span>

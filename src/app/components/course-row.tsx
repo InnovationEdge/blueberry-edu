@@ -51,7 +51,7 @@ export function CourseRow({ title, courses }: CourseRowProps) {
             className="absolute left-0 top-0 bottom-0 z-20 w-14 md:w-20 bg-gradient-to-r from-background via-background/95 to-transparent flex items-center justify-start pl-2 md:pl-3 opacity-0 group-hover/row:opacity-100 transition-opacity duration-300"
             aria-label="Scroll left"
           >
-            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-background/90 border-2 border-foreground-faint flex items-center justify-center hover:bg-background hover:border-foreground-subtle hover:scale-110 transition-all shadow-xl">
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-card border border-border-subtle flex items-center justify-center hover:bg-card hover:border-border-subtle hover:scale-110 transition-all shadow-sm">
               <ChevronRight className="w-6 h-6 md:w-7 md:h-7 text-foreground rotate-180" />
             </div>
           </button>
@@ -77,7 +77,7 @@ export function CourseRow({ title, courses }: CourseRowProps) {
             className="absolute right-0 top-0 bottom-0 z-20 w-14 md:w-20 bg-gradient-to-l from-background via-background/95 to-transparent flex items-center justify-end pr-2 md:pr-3 opacity-0 group-hover/row:opacity-100 transition-opacity duration-300"
             aria-label="Scroll right"
           >
-            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-background/90 border-2 border-foreground-faint flex items-center justify-center hover:bg-background hover:border-foreground-subtle hover:scale-110 transition-all shadow-xl">
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-card border border-border-subtle flex items-center justify-center hover:bg-card hover:border-border-subtle hover:scale-110 transition-all shadow-sm">
               <ChevronRight className="w-6 h-6 md:w-7 md:h-7 text-foreground" />
             </div>
           </button>

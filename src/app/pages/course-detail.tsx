@@ -117,7 +117,7 @@ export function CourseDetail() {
           onClick={() => navigate(-1)}
           className="flex items-center gap-2 text-foreground hover:text-foreground-secondary transition-colors group"
         >
-          <div className="w-10 h-10 rounded-full bg-surface/90 hover:bg-surface-raised flex items-center justify-center backdrop-blur-sm transition-all group-hover:scale-110 shadow-lg">
+          <div className="w-10 h-10 rounded-full bg-card border border-border-subtle hover:bg-surface-raised flex items-center justify-center backdrop-blur-sm transition-all group-hover:scale-110 shadow-sm">
             <ArrowLeft className="w-5 h-5" />
           </div>
         </button>
@@ -188,7 +188,7 @@ export function CourseDetail() {
             <div className="lg:col-span-2 space-y-12">
               
               {/* What You'll Learn */}
-              <div className="bg-surface rounded p-8">
+              <div className="bg-surface rounded-xl p-8">
                 <h2 className="text-2xl font-bold text-foreground mb-6">{t.detailWhatLearn}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {learningOutcomes.map((outcome, index) => (
@@ -208,7 +208,7 @@ export function CourseDetail() {
                 </div>
                 <div className="space-y-2">
                   {courseSections.map((section, sectionIndex) => (
-                    <div key={sectionIndex} className="bg-surface rounded overflow-hidden">
+                    <div key={sectionIndex} className="bg-surface rounded-xl overflow-hidden">
                       <button
                         onClick={() => toggleSection(sectionIndex)}
                         className="w-full flex items-center justify-between p-4 hover:bg-surface-raised transition-colors"
@@ -382,7 +382,7 @@ export function CourseDetail() {
             <div className="lg:col-span-1">
               <div className="sticky top-24 space-y-6">
                 {/* Course Info Card */}
-                <div className="bg-surface rounded p-6 space-y-4 shadow-2xl">
+                <div className="bg-card rounded-xl border border-border-subtle p-6 space-y-4 shadow-lg">
                   <div className="aspect-video w-full rounded overflow-hidden mb-4 relative group cursor-pointer">
                     <img src={course.thumbnail} alt={course.title} className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-overlay/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
@@ -404,11 +404,11 @@ export function CourseDetail() {
                     <button
                       onClick={handleEnroll}
                       disabled={checkout.isPending}
-                      className="w-full h-10 rounded bg-brand hover:bg-brand-hover text-white font-bold text-sm transition-all active:scale-95 disabled:opacity-50"
+                      className="w-full h-10 rounded-full bg-brand hover:bg-brand-hover text-white font-bold text-sm transition-all active:scale-95 disabled:opacity-50"
                     >
                       {checkout.isPending ? '...' : isEnrolled ? 'გაგრძელება' : t.detailEnroll}
                     </button>
-                    <button className="w-full h-12 rounded border border-border-muted hover:bg-surface-raised text-white font-semibold transition-all">
+                    <button className="w-full h-12 rounded-full border border-border-muted hover:bg-surface-raised text-white font-semibold transition-all">
                       {t.detailWishlist}
                     </button>
                   </div>

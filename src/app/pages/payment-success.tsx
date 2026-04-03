@@ -45,7 +45,7 @@ export function PaymentSuccess() {
 
         {/* Course card */}
         <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-          className="bg-surface border border-border-subtle rounded overflow-hidden mb-8">
+          className="bg-surface border border-border-subtle rounded-xl overflow-hidden mb-8">
           <div className="flex flex-col md:flex-row">
             {/* Thumbnail */}
             <div className="md:w-2/5 relative">

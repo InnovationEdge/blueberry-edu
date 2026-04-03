@@ -79,12 +79,12 @@ export function HeroSection({ courses, interval = 6000 }: HeroSectionProps) {
             }`}
           >
             <Link to={`/course/${course.id}`}>
-              <button className="inline-flex items-center justify-center h-10 px-6 rounded bg-white text-black gap-2 text-sm font-bold transition-all hover:bg-gray-200 active:scale-95">
-                <Play className="w-4 h-4 fill-black" />{t.heroPlay || 'დაწყება'}
+              <button className="inline-flex items-center justify-center h-10 px-6 rounded-full bg-brand text-white gap-2 text-sm font-bold transition-all hover:bg-brand-hover active:scale-95">
+                <Play className="w-4 h-4 fill-white" />{t.heroPlay || 'დაწყება'}
               </button>
             </Link>
             <Link to={`/course/${course.id}`}>
-              <button className="inline-flex items-center justify-center h-10 px-6 rounded bg-white/20 text-white gap-2 text-sm font-semibold backdrop-blur-sm transition-all hover:bg-white/30 active:scale-95">
+              <button className="inline-flex items-center justify-center h-10 px-6 rounded-full bg-card/80 text-foreground gap-2 text-sm font-semibold backdrop-blur transition-all hover:bg-card active:scale-95">
                 <Info className="w-4 h-4" />{t.heroMoreInfo || 'დეტალურად'}
               </button>
             </Link>

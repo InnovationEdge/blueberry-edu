@@ -87,7 +87,7 @@ export function Library() {
             <button
               key={cat.id || cat.slug}
               onClick={() => setSelectedCategory(cat.slug)}
-              className={`flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded border transition-all active:scale-[0.97] ${
+              className={`flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-full border transition-all active:scale-[0.97] ${
                 selectedCategory === cat.slug
                   ? 'bg-brand border-brand text-white'
                   : 'bg-transparent border-border-muted text-foreground-subtle hover:border-foreground-faint hover:text-foreground'
@@ -116,7 +116,7 @@ export function Library() {
                     <button
                       key={level}
                       onClick={() => setSelectedLevel(level)}
-                      className={`w-full text-left px-3 py-2 rounded text-sm transition-all ${
+                      className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all ${
                         selectedLevel === level
                           ? 'bg-surface-hover text-foreground font-semibold'
                           : 'text-foreground-subtle hover:text-foreground hover:bg-surface'
@@ -135,7 +135,7 @@ export function Library() {
                     <button
                       key={dur.id}
                       onClick={() => setSelectedDuration(dur.id)}
-                      className={`w-full text-left px-3 py-2 rounded text-sm transition-all ${
+                      className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all ${
                         selectedDuration === dur.id
                           ? 'bg-surface-hover text-foreground font-semibold'
                           : 'text-foreground-subtle hover:text-foreground hover:bg-surface'
@@ -165,7 +165,7 @@ export function Library() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="კურსის ძებნა..."
-                  className="w-full pl-9 pr-3 py-2 bg-surface border border-border-muted rounded text-foreground placeholder-foreground-faint focus:outline-none focus:border-foreground-subtle text-sm"
+                  className="w-full pl-9 pr-3 py-2 bg-surface border border-border-muted rounded-full text-foreground placeholder-foreground-faint focus:outline-none focus:border-foreground-subtle text-sm"
                 />
               </div>
               <button
@@ -178,13 +178,13 @@ export function Library() {
             </div>
 
             {showMobileFilters && (
-              <div className="lg:hidden mb-6 p-4 bg-surface border border-border-subtle rounded space-y-6">
+              <div className="lg:hidden mb-6 p-4 bg-card border border-border-subtle rounded-xl shadow-md space-y-6">
                 <div>
                   <p className="text-foreground text-sm font-bold mb-2">დონე</p>
                   <div className="flex flex-wrap gap-2">
                     {LEVELS.map((level) => (
                       <button key={level} onClick={() => setSelectedLevel(level)}
-                        className={`px-3 py-1.5 rounded text-xs transition-all ${selectedLevel === level ? 'bg-foreground text-background font-semibold' : 'border border-border-muted text-foreground-subtle'}`}>
+                        className={`px-3 py-1.5 rounded-full text-xs transition-all ${selectedLevel === level ? 'bg-foreground text-background font-semibold' : 'border border-border-muted text-foreground-subtle'}`}>
                         {level}
                       </button>
                     ))}
@@ -195,7 +195,7 @@ export function Library() {
                   <div className="flex flex-wrap gap-2">
                     {DURATIONS.map((dur) => (
                       <button key={dur.id} onClick={() => setSelectedDuration(dur.id)}
-                        className={`px-3 py-1.5 rounded text-xs transition-all ${selectedDuration === dur.id ? 'bg-foreground text-background font-semibold' : 'border border-border-muted text-foreground-subtle'}`}>
+                        className={`px-3 py-1.5 rounded-full text-xs transition-all ${selectedDuration === dur.id ? 'bg-foreground text-background font-semibold' : 'border border-border-muted text-foreground-subtle'}`}>
                         {dur.label}
                       </button>
                     ))}
@@ -207,13 +207,13 @@ export function Library() {
             {activeFilters > 0 && (
               <div className="flex items-center gap-2 mb-4 flex-wrap">
                 {selectedLevel !== 'ყველა დონე' && (
-                  <span className="flex items-center gap-1.5 px-3 py-1 bg-surface-raised rounded text-foreground text-xs">
+                  <span className="flex items-center gap-1.5 px-3 py-1 bg-surface-raised rounded-full text-foreground text-xs">
                     {selectedLevel}
                     <X className="w-3 h-3 cursor-pointer hover:text-brand" onClick={() => setSelectedLevel('ყველა დონე')} />
                   </span>
                 )}
                 {selectedDuration !== 'all' && (
-                  <span className="flex items-center gap-1.5 px-3 py-1 bg-surface-raised rounded text-foreground text-xs">
+                  <span className="flex items-center gap-1.5 px-3 py-1 bg-surface-raised rounded-full text-foreground text-xs">
                     {DURATIONS.find(d => d.id === selectedDuration)?.label}
                     <X className="w-3 h-3 cursor-pointer hover:text-brand" onClick={() => setSelectedDuration('all')} />
                   </span>

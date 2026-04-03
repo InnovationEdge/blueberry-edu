@@ -51,7 +51,7 @@ export function CourseCard({
   return (
     <Link to={`/course/${course.id}`} onClick={handleCardClick} onMouseEnter={prefetchCourse}>
       <div className="group cursor-pointer relative">
-        <div className="relative aspect-video rounded overflow-hidden bg-surface mb-4 shadow-xl transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-blue-500/30 group-hover:scale-105">
+        <div className="relative aspect-video rounded-xl overflow-hidden bg-surface mb-4 shadow-sm transition-all duration-300 group-hover:shadow-lg group-hover:scale-105">
           <img
             src={course.thumbnail}
             alt={course.title}
@@ -92,7 +92,7 @@ export function CourseCard({
                         e.preventDefault();
                         if (onContinue) onContinue();
                       }}
-                      className="w-full px-3 py-2 bg-white/10 text-white rounded hover:bg-white/20 transition-all font-bold text-xs flex items-center justify-center gap-1.5"
+                      className="w-full px-3 py-2 bg-white/10 text-white rounded-full hover:bg-white/20 transition-all font-bold text-xs flex items-center justify-center gap-1.5"
                     >
                       <Play className="w-3.5 h-3.5" />
                       {t.cardRewatch}
@@ -102,7 +102,7 @@ export function CourseCard({
                         e.preventDefault();
                         if (onViewCertificate) onViewCertificate();
                       }}
-                      className="w-full px-3 py-2 bg-brand text-white rounded hover:bg-brand-hover transition-all font-bold text-xs flex items-center justify-center gap-1.5"
+                      className="w-full px-3 py-2 bg-brand text-white rounded-full hover:bg-brand-hover transition-all font-bold text-xs flex items-center justify-center gap-1.5"
                     >
                       <Award className="w-3.5 h-3.5" />
                       {t.cardCertificate}
@@ -114,7 +114,7 @@ export function CourseCard({
                       e.preventDefault();
                       if (onContinue) onContinue();
                     }}
-                    className="w-full px-3 py-2 bg-brand text-white rounded hover:bg-brand-hover transition-all font-bold text-xs flex items-center justify-center gap-1.5"
+                    className="w-full px-3 py-2 bg-brand text-white rounded-full hover:bg-brand-hover transition-all font-bold text-xs flex items-center justify-center gap-1.5"
                   >
                     <Play className="w-4 h-4" />
                     {t.cardContinue}

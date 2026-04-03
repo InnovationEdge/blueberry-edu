@@ -38,7 +38,7 @@ export function Search() {
               <div className="absolute top-0 left-0 w-full h-12 bg-gradient-to-b from-overlay/80 to-transparent" />
               {course.isNew && (
                 <div className="absolute bottom-2 left-2 flex gap-1">
-                  <span className="px-2 py-0.5 bg-brand text-white text-xs font-bold rounded">
+                  <span className="px-2 py-0.5 bg-brand text-white text-xs font-bold rounded-full">
                     {t.searchNewSeason}
                   </span>
                 </div>
