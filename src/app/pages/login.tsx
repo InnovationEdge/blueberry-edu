@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
+import { Logo } from '../components/logo';
 import { getAppT } from '../i18n/app';
 import { useAuth } from '../context/auth-context';
 
@@ -43,7 +44,7 @@ export function Login({ onLogin, onBack }: LoginProps) {
 
       <header className="relative z-10 px-4 md:px-12 py-5">
         <div className="flex items-center justify-between max-w-[1400px] mx-auto">
-          <img src="/images/logo-simple.png" alt="Blueberry" className="h-7 md:h-8 w-auto" />
+          <Logo className="h-7 md:h-8 w-auto" />
           <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-surface-hover transition-colors" aria-label="Back">
             <X className="w-5 h-5 text-foreground-secondary" />
           </button>

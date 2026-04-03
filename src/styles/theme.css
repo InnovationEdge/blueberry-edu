@@ -2,7 +2,7 @@
 
 :root {
   --font-size: 16px;
-  --background: #ffffff;
+  --background: #fafafa;
   --foreground: oklch(0.145 0 0);
   --foreground-secondary: rgba(0, 0, 0, 0.65);
   --foreground-subtle: rgba(0, 0, 0, 0.40);
@@ -50,14 +50,14 @@
   --brand-subtle: rgba(26, 79, 216, 0.10);
 
   /* Surface tiers */
-  --surface: rgba(0, 0, 0, 0.02);
-  --surface-raised: rgba(0, 0, 0, 0.05);
-  --surface-hover: rgba(0, 0, 0, 0.08);
-  --surface-active: rgba(0, 0, 0, 0.12);
+  --surface: rgba(0, 0, 0, 0.03);
+  --surface-raised: rgba(0, 0, 0, 0.06);
+  --surface-hover: rgba(0, 0, 0, 0.09);
+  --surface-active: rgba(0, 0, 0, 0.14);
 
   /* Border tiers */
-  --border-subtle: rgba(0, 0, 0, 0.06);
-  --border-muted: rgba(0, 0, 0, 0.10);
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-muted: rgba(0, 0, 0, 0.12);
 
   /* Overlay — always dark (image/video readability) */
   --overlay: #000000;

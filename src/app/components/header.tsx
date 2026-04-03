@@ -1,5 +1,6 @@
 import { Search, Bell, ChevronDown, LogOut, X, Sun, Moon } from 'lucide-react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router';
+import { Logo } from './logo';
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/auth-context';
 import { useTheme } from 'next-themes';
@@ -88,7 +89,7 @@ export function Header() {
         {/* Logo and Navigation */}
         <div className="flex items-center gap-6 md:gap-10">
           <Link to="/" className="group hover:opacity-80 transition-opacity">
-            <img src="/images/logo-simple.png" alt="Blueberry Academy" className="h-7 md:h-8 w-auto" />
+            <Logo className="h-7 md:h-8 w-auto" />
           </Link>
           {!showSearch && (
             <nav className="hidden md:flex items-center gap-6 lg:gap-8">

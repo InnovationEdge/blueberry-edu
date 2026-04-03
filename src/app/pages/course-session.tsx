@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router';
 import { ChevronDown, ChevronUp, Play, Lock, CheckCircle, Bell, X } from 'lucide-react';
 import { useAuth } from '../context/auth-context';
 import { getAppT } from '../i18n/app';
+import { Logo } from '../components/logo';
 import { useCourseDetail } from '../hooks/use-courses';
 
 interface Lesson {
@@ -645,7 +646,7 @@ export function CourseSession() {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="text-brand font-black text-2xl">BM</div>
-            <img src="/images/logo-simple.png" alt="Blueberry" className="h-5 w-auto" />
+            <Logo className="h-5 w-auto" />
           </div>
           <div className="flex items-center gap-3 text-foreground-subtle text-sm">
             <span>curated by</span>

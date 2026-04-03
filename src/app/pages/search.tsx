@@ -1,4 +1,5 @@
 import { useSearchParams, Link } from 'react-router';
+import { Logo } from '../components/logo';
 import { getAppT } from '../i18n/app';
 import { useAuth } from '../context/auth-context';
 import { useCourses } from '../hooks/use-courses';
@@ -63,7 +64,7 @@ export function Search() {
       )}
 
       <div className="mt-20 mb-10 pt-8 border-t border-border-subtle">
-        <img src="/images/logo-simple.png" alt="Blueberry" className="h-6 w-auto" />
+        <Logo className="h-6 w-auto" />
       </div>
     </div>
   );

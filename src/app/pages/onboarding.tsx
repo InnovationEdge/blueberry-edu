@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import { Check, GraduationCap, Mic } from 'lucide-react';
 import { CategoryIcon } from '../components/category-icon';
+import { Logo } from '../components/logo';
 import { AnimatePresence, motion } from 'motion/react';
 import { useAuth } from '../context/auth-context';
 
@@ -67,7 +68,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     <div className="h-screen bg-background text-foreground flex flex-col">
       {/* Header */}
       <header className="px-6 md:px-12 py-5 flex-shrink-0 flex items-center justify-between">
-        <img src="/images/logo-simple.png" alt="Blueberry" className="h-7 w-auto" />
+        <Logo className="h-7 w-auto" />
         {step < 3 && <span className="text-foreground-ghost text-xs">{step + 1}/{totalSteps}</span>}
       </header>
 

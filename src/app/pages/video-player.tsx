@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
+import { Logo } from '../components/logo';
 import {
   Play,
   Pause,
@@ -496,7 +497,7 @@ export function VideoPlayer() {
         >
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2 bg-overlay/60 backdrop-blur-sm px-4 py-2 rounded">
-              <img src="/images/logo-simple.png" alt="Blueberry" className="h-4 w-auto" />
+              <Logo className="h-4 w-auto" forceDark />
             </div>
             <div className="text-foreground-secondary text-sm bg-overlay/60 backdrop-blur-sm px-4 py-2 rounded">
               <span className="font-semibold text-white">{course.title}</span>
