@@ -37,7 +37,7 @@ export function Search() {
               <div className="absolute top-0 left-0 w-full h-12 bg-gradient-to-b from-black/80 to-transparent" />
               {course.isNew && (
                 <div className="absolute bottom-2 left-2 flex gap-1">
-                  <span className="px-2 py-0.5 bg-[#E50914] text-white text-xs font-bold rounded">
+                  <span className="px-2 py-0.5 bg-[#1a4fd8] text-white text-xs font-bold rounded">
                     {t.searchNewSeason}
                   </span>
                 </div>
@@ -63,7 +63,7 @@ export function Search() {
       )}
 
       <div className="mt-20 mb-10 pt-8 border-t border-white/[0.06]">
-        <span className="text-white font-black text-lg tracking-tight">BRIGHTMIND</span>
+        <span className="text-white font-black text-lg tracking-tight">Blueberry</span>
       </div>
     </div>
   );

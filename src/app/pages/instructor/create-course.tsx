@@ -60,19 +60,19 @@ export function CreateCourse() {
         <label className="block text-xs text-white/50 mb-2 font-medium">კურსის სახელი *</label>
         <input type="text" value={form.title} onChange={e => updateForm('title', e.target.value)}
           placeholder="მაგ: ბიზნესის საფუძვლები ნულიდან"
-          className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#E50914]" />
+          className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#1a4fd8]" />
       </div>
       <div>
         <label className="block text-xs text-white/50 mb-2 font-medium">ქვესათაური</label>
         <input type="text" value={form.subtitle} onChange={e => updateForm('subtitle', e.target.value)}
           placeholder="მოკლე აღწერა"
-          className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#E50914]" />
+          className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#1a4fd8]" />
       </div>
       <div>
         <label className="block text-xs text-white/50 mb-2 font-medium">აღწერა</label>
         <textarea value={form.description} onChange={e => updateForm('description', e.target.value)}
           rows={4} placeholder="დეტალური აღწერა..."
-          className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#E50914] resize-none" />
+          className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#1a4fd8] resize-none" />
       </div>
     </div>,
 
@@ -85,7 +85,7 @@ export function CreateCourse() {
             <button key={cat.id} onClick={() => toggleCategory(cat.id)}
               className={`px-4 py-2 rounded border text-sm transition-all active:scale-[0.97] ${
                 form.categoryIds.includes(cat.id)
-                  ? 'bg-[#E50914] border-[#E50914] text-white'
+                  ? 'bg-[#1a4fd8] border-[#1a4fd8] text-white'
                   : 'bg-transparent border-white/10 text-white/50 hover:border-white/20'
               }`}>
               {cat.name}
@@ -97,7 +97,7 @@ export function CreateCourse() {
         <div>
           <label className="block text-xs text-white/50 mb-2 font-medium">დონე</label>
           <select value={form.level} onChange={e => updateForm('level', e.target.value)}
-            className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm focus:outline-none focus:border-[#E50914]">
+            className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm focus:outline-none focus:border-[#1a4fd8]">
             <option value="BEGINNER">დამწყები</option>
             <option value="INTERMEDIATE">საშუალო</option>
             <option value="ADVANCED">მოწინავე</option>
@@ -108,7 +108,7 @@ export function CreateCourse() {
           <label className="block text-xs text-white/50 mb-2 font-medium">ფასი (₾) *</label>
           <input type="number" value={form.price} onChange={e => updateForm('price', e.target.value)}
             min={0} step={0.01} placeholder="0.00"
-            className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm focus:outline-none focus:border-[#E50914]" />
+            className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm focus:outline-none focus:border-[#1a4fd8]" />
         </div>
       </div>
     </div>,
@@ -119,7 +119,7 @@ export function CreateCourse() {
         <label className="block text-xs text-white/50 mb-2 font-medium">თამბნეილი (URL)</label>
         <input type="url" value={form.thumbnailUrl} onChange={e => updateForm('thumbnailUrl', e.target.value)}
           placeholder="https://images.unsplash.com/..."
-          className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#E50914]" />
+          className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#1a4fd8]" />
         {form.thumbnailUrl && (
           <div className="mt-4 aspect-video rounded overflow-hidden">
             <img src={form.thumbnailUrl} alt="Preview" className="w-full h-full object-cover" />
@@ -167,7 +167,7 @@ export function CreateCourse() {
         <div className="flex gap-2 mb-8">
           {[0, 1, 2].map(i => (
             <div key={i} className="flex-1 h-[3px] rounded-full overflow-hidden bg-white/[0.06]">
-              <div className={`h-full rounded-full transition-all duration-500 ${i <= step ? 'bg-[#E50914] w-full' : 'w-0'}`} />
+              <div className={`h-full rounded-full transition-all duration-500 ${i <= step ? 'bg-[#1a4fd8] w-full' : 'w-0'}`} />
             </div>
           ))}
         </div>
@@ -183,14 +183,14 @@ export function CreateCourse() {
           </button>
           {step < 2 ? (
             <button onClick={() => setStep(step + 1)} disabled={!canProceed}
-              className={`px-8 py-2.5 rounded text-sm font-bold transition-all active:scale-95 ${
-                canProceed ? 'bg-[#E50914] text-white hover:bg-[#c70812]' : 'bg-white/[0.04] text-white/20 cursor-not-allowed'
+              className={`px-8 py-2.5 rounded-full text-sm font-bold transition-all active:scale-95 ${
+                canProceed ? 'bg-[#1a4fd8] text-white hover:bg-[#1540b0]' : 'bg-white/[0.04] text-white/20 cursor-not-allowed'
               }`}>
               შემდეგი
             </button>
           ) : (
             <button onClick={handleSubmit} disabled={createCourse.isPending || !form.title}
-              className="px-8 py-2.5 bg-[#E50914] text-white rounded text-sm font-bold hover:bg-[#c70812] transition-all active:scale-95 disabled:opacity-50">
+              className="px-8 py-2.5 bg-[#1a4fd8] text-white rounded-full text-sm font-bold hover:bg-[#1540b0] transition-all active:scale-95 disabled:opacity-50">
               {createCourse.isPending ? 'იქმნება...' : 'კურსის შექმნა'}
             </button>
           )}

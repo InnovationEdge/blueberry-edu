@@ -31,7 +31,7 @@ const CertificatePage = lazy(() => import('./pages/certificate').then(m => ({ de
 function PageLoader() {
   return (
     <div className="min-h-screen bg-black flex items-center justify-center">
-      <div className="w-6 h-6 border-2 border-[#E50914] border-t-transparent rounded-full animate-spin" />
+      <div className="w-6 h-6 border-2 border-[#1a4fd8] border-t-transparent rounded-full animate-spin" />
     </div>
   );
 }
@@ -157,7 +157,7 @@ export const router = createBrowserRouter([
           <div className="text-center space-y-4">
             <h1 className="text-6xl font-black text-white">404</h1>
             <p className="text-base text-white/40">გვერდი ვერ მოიძებნა</p>
-            <a href="/" className="inline-block mt-4 px-6 py-2.5 bg-[#E50914] text-white rounded text-sm font-bold hover:bg-[#c70812] transition-colors active:scale-95">
+            <a href="/" className="inline-block mt-4 px-6 py-2.5 bg-[#1a4fd8] text-white rounded-full text-sm font-bold hover:bg-[#1540b0] transition-colors active:scale-95">
               მთავარზე დაბრუნება
             </a>
           </div>

@@ -36,7 +36,7 @@ export function CourseSession() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[#E50914] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[#1a4fd8] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -92,15 +92,15 @@ export function CourseSession() {
           background: #000000;
         }
         ::-webkit-scrollbar-thumb {
-          background: #E50914;
+          background: #1a4fd8;
           border-radius: 6px;
         }
         ::-webkit-scrollbar-thumb:hover {
-          background: #c40812;
+          background: #1540b0;
         }
         * {
           scrollbar-width: thin;
-          scrollbar-color: #E50914 #000000;
+          scrollbar-color: #1a4fd8 #000000;
         }
       `}</style>
 
@@ -113,7 +113,7 @@ export function CourseSession() {
             className="flex items-center gap-3 text-white hover:text-white/60 transition-colors group"
           >
             <div className="flex items-center gap-2">
-              <div className="text-[#E50914] font-black text-xl">BM</div>
+              <div className="text-[#1a4fd8] font-black text-xl">BM</div>
               <span className="text-sm font-semibold">{t.sessionExit}</span>
             </div>
           </button>
@@ -146,9 +146,9 @@ export function CourseSession() {
           <div className="flex items-center gap-4">
             <button className="relative p-2 text-white hover:text-white/60 transition-colors">
               <Bell className="w-5 h-5" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-[#E50914] rounded-full"></span>
+              <span className="absolute top-1 right-1 w-2 h-2 bg-[#1a4fd8] rounded-full"></span>
             </button>
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#E50914] to-[#b8070f] flex items-center justify-center text-white text-sm font-bold">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#1a4fd8] to-[#b8070f] flex items-center justify-center text-white text-sm font-bold">
               U
             </div>
           </div>
@@ -190,7 +190,7 @@ export function CourseSession() {
                       onChange={(e) => setShowCompleted(e.target.checked)}
                       className="sr-only peer"
                     />
-                    <div className="w-11 h-6 bg-white/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#E50914]"></div>
+                    <div className="w-11 h-6 bg-white/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#1a4fd8]"></div>
                   </div>
                   <span className="text-sm text-white/40">{t.sessionCompleted}</span>
                 </label>
@@ -208,7 +208,7 @@ export function CourseSession() {
                         isCompleted
                           ? 'bg-green-500 text-white'
                           : hasProgress
-                          ? 'bg-[#E50914] text-white'
+                          ? 'bg-[#1a4fd8] text-white'
                           : 'bg-white/20 text-white/50'
                       }`}
                     >
@@ -340,10 +340,10 @@ export function CourseSession() {
                                         handleStartLesson(chapter.id, lesson.id, lesson.locked || false)
                                       }
                                       disabled={lesson.locked}
-                                      className={`px-8 py-3 rounded text-sm font-bold transition-all ${
+                                      className={`px-8 py-3 rounded-full text-sm font-bold transition-all ${
                                         lesson.locked
                                           ? 'bg-white/10 text-white/30 cursor-not-allowed'
-                                          : 'bg-[#E50914] text-white hover:bg-[#c40812] transform hover:scale-105 shadow-lg hover:shadow-xl'
+                                          : 'bg-[#1a4fd8] text-white hover:bg-[#1540b0] transform hover:scale-105 shadow-lg hover:shadow-xl'
                                       }`}
                                     >
                                       {lesson.completed ? t.sessionReplay : t.sessionStart}
@@ -405,7 +405,7 @@ export function CourseSession() {
                 {/* Create Post Box */}
                 <div className="bg-white/[0.03] rounded border border-white/[0.06] p-6 mb-6 ">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#E50914] to-[#b8070f] flex items-center justify-center text-white font-bold flex-shrink-0">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#1a4fd8] to-[#b8070f] flex items-center justify-center text-white font-bold flex-shrink-0">
                       U
                     </div>
                     <div className="flex-1">
@@ -416,10 +416,10 @@ export function CourseSession() {
                         rows={3}
                       />
                       <div className="flex items-center justify-between mt-3">
-                        <button className="px-4 py-2 border border-white/10 rounded text-sm font-semibold text-white/70 hover:bg-white/[0.04] transition-colors">
+                        <button className="px-4 py-2 border border-white/10 rounded-full text-sm font-semibold text-white/70 hover:bg-white/[0.04] transition-colors">
                           {t.sessionAddPhoto}
                         </button>
-                        <button className="px-6 py-2 bg-[#E50914] text-white rounded text-sm font-bold hover:bg-[#c40812] transition-colors">
+                        <button className="px-6 py-2 bg-[#1a4fd8] text-white rounded-full text-sm font-bold hover:bg-[#1540b0] transition-colors">
                           {t.sessionPost}
                         </button>
                       </div>
@@ -457,7 +457,7 @@ export function CourseSession() {
                           face within the current disruption of AI.
                         </p>
                         <div className="flex items-center gap-6 text-sm text-white/40">
-                          <button className="flex items-center gap-2 hover:text-[#E50914] transition-colors group">
+                          <button className="flex items-center gap-2 hover:text-[#1a4fd8] transition-colors group">
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path
                                 strokeLinecap="round"
@@ -468,7 +468,7 @@ export function CourseSession() {
                             </svg>
                             <span className="font-semibold">1</span>
                           </button>
-                          <button className="flex items-center gap-2 hover:text-[#E50914] transition-colors">
+                          <button className="flex items-center gap-2 hover:text-[#1a4fd8] transition-colors">
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path
                                 strokeLinecap="round"
@@ -508,7 +508,7 @@ export function CourseSession() {
                           community guidelines. Again, super frustrating.
                         </p>
                         <div className="flex items-center gap-6 text-sm text-white/40">
-                          <button className="flex items-center gap-2 hover:text-[#E50914] transition-colors group">
+                          <button className="flex items-center gap-2 hover:text-[#1a4fd8] transition-colors group">
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path
                                 strokeLinecap="round"
@@ -519,7 +519,7 @@ export function CourseSession() {
                             </svg>
                             <span className="font-semibold">0</span>
                           </button>
-                          <button className="flex items-center gap-2 hover:text-[#E50914] transition-colors">
+                          <button className="flex items-center gap-2 hover:text-[#1a4fd8] transition-colors">
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path
                                 strokeLinecap="round"
@@ -557,7 +557,7 @@ export function CourseSession() {
                           my workplace and seeing positive results.
                         </p>
                         <div className="flex items-center gap-6 text-sm text-white/40">
-                          <button className="flex items-center gap-2 hover:text-[#E50914] transition-colors group">
+                          <button className="flex items-center gap-2 hover:text-[#1a4fd8] transition-colors group">
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path
                                 strokeLinecap="round"
@@ -568,7 +568,7 @@ export function CourseSession() {
                             </svg>
                             <span className="font-semibold">3</span>
                           </button>
-                          <button className="flex items-center gap-2 hover:text-[#E50914] transition-colors">
+                          <button className="flex items-center gap-2 hover:text-[#1a4fd8] transition-colors">
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path
                                 strokeLinecap="round"
@@ -606,7 +606,7 @@ export function CourseSession() {
                           comprehensive course!
                         </p>
                         <div className="flex items-center gap-6 text-sm text-white/40">
-                          <button className="flex items-center gap-2 hover:text-[#E50914] transition-colors group">
+                          <button className="flex items-center gap-2 hover:text-[#1a4fd8] transition-colors group">
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path
                                 strokeLinecap="round"
@@ -617,7 +617,7 @@ export function CourseSession() {
                             </svg>
                             <span className="font-semibold">5</span>
                           </button>
-                          <button className="flex items-center gap-2 hover:text-[#E50914] transition-colors">
+                          <button className="flex items-center gap-2 hover:text-[#1a4fd8] transition-colors">
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path
                                 strokeLinecap="round"
@@ -644,8 +644,8 @@ export function CourseSession() {
       <div className="bg-[#000000] border-t border-white/[0.06] py-6 px-6 md:px-12">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="text-[#E50914] font-black text-2xl">BM</div>
-            <span className="text-white font-bold text-lg">BrightMind</span>
+            <div className="text-[#1a4fd8] font-black text-2xl">BM</div>
+            <span className="text-white font-bold text-lg">Blueberry</span>
           </div>
           <div className="flex items-center gap-3 text-white/40 text-sm">
             <span>curated by</span>

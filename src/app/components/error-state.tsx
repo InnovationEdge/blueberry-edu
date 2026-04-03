@@ -8,7 +8,7 @@ interface ErrorStateProps {
 export function ErrorState({ message = 'დაფიქსირდა შეცდომა', onRetry }: ErrorStateProps) {
   return (
     <div className="flex flex-col items-center justify-center py-20 px-4">
-      <AlertCircle className="w-10 h-10 text-[#E50914] mb-4" />
+      <AlertCircle className="w-10 h-10 text-[#1a4fd8] mb-4" />
       <p className="text-white/60 text-sm mb-4 text-center">{message}</p>
       {onRetry && (
         <button

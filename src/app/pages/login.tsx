@@ -43,7 +43,7 @@ export function Login({ onLogin, onBack }: LoginProps) {
 
       <header className="relative z-10 px-4 md:px-12 py-5">
         <div className="flex items-center justify-between max-w-[1400px] mx-auto">
-          <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight">BRIGHTMIND</h1>
+          <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight">Blueberry</h1>
           <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors" aria-label="Back">
             <X className="w-5 h-5 text-white/60" />
           </button>
@@ -65,7 +65,7 @@ export function Login({ onLogin, onBack }: LoginProps) {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="ელ-ფოსტა"
-                className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#E50914]"
+                className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#1a4fd8]"
               />
             </div>
             <div>
@@ -74,12 +74,12 @@ export function Login({ onLogin, onBack }: LoginProps) {
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 placeholder="პაროლი"
-                className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#E50914]"
+                className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#1a4fd8]"
               />
             </div>
-            {error && <p className="text-[#E50914] text-xs">{error}</p>}
+            {error && <p className="text-[#1a4fd8] text-xs">{error}</p>}
             <button type="submit" disabled={loading || !email || !password}
-              className="w-full py-3 bg-[#E50914] text-white rounded text-sm font-bold hover:bg-[#c70812] transition-all active:scale-95 disabled:opacity-50">
+              className="w-full py-3 bg-[#1a4fd8] text-white rounded-full text-sm font-bold hover:bg-[#1540b0] transition-all active:scale-95 disabled:opacity-50">
               {loading ? 'შესვლა...' : 'შესვლა'}
             </button>
           </form>

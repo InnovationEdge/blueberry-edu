@@ -54,7 +54,7 @@ export function InstructorAnalytics() {
                 <p className="text-white/40 text-xs mt-1">საშუალო რეიტინგი</p>
               </div>
               <div className="bg-white/[0.03] border border-white/[0.06] rounded p-5">
-                <TrendingUp className="w-5 h-5 text-[#E50914] mb-2" />
+                <TrendingUp className="w-5 h-5 text-[#1a4fd8] mb-2" />
                 <p className="text-white text-2xl font-black">{stats?.recentEnrollments ?? 0}</p>
                 <p className="text-white/40 text-xs mt-1">ბოლო 30 დღე</p>
               </div>

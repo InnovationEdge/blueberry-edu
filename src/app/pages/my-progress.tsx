@@ -3,12 +3,14 @@ import { CourseRowSkeleton } from '../components/skeletons';
 import { getAppT } from '../i18n/app';
 import { useAuth } from '../context/auth-context';
 import { useMyEnrollments } from '../hooks/use-enrollment';
+import { useWishlist } from '../hooks/use-wishlist';
 import { apiCourseToCourse } from '../../lib/api';
 
 export function MyProgress() {
   const { language, isAuthenticated } = useAuth();
   const t = getAppT(language);
   const { data: enrollments = [], isLoading } = useMyEnrollments();
+  const { data: wishlistItems = [] } = useWishlist();
 
   const enrolledCourses = enrollments.map((e: any) => ({
     ...apiCourseToCourse(e.course),
@@ -55,7 +57,7 @@ export function MyProgress() {
     return (
       <div className="min-h-screen bg-black pt-32 pb-20 flex flex-col items-center justify-center">
         <p className="text-white/40 text-sm mb-4">ჯერ კურსებზე არ ხარ ჩარიცხული</p>
-        <a href="/library" className="px-6 py-2.5 bg-[#E50914] text-white rounded text-sm font-bold hover:bg-[#c70812] transition-all active:scale-95">
+        <a href="/library" className="px-6 py-2.5 bg-[#1a4fd8] text-white rounded-full text-sm font-bold hover:bg-[#1540b0] transition-all active:scale-95">
           კურსების ნახვა
         </a>
       </div>
@@ -78,7 +80,7 @@ export function MyProgress() {
                 <div className="relative w-20 h-20 flex-shrink-0">
                   <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
                     <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="5" />
-                    <circle cx="50" cy="50" r="42" fill="none" stroke="#E50914" strokeWidth="5" strokeLinecap="round"
+                    <circle cx="50" cy="50" r="42" fill="none" stroke="#1a4fd8" strokeWidth="5" strokeLinecap="round"
                       strokeDasharray={`${(completedCourses.length / Math.max(enrolledCourses.length, 1)) * 2 * Math.PI * 42} ${2 * Math.PI * 42}`} />
                   </svg>
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -96,7 +98,7 @@ export function MyProgress() {
                 <div className="relative w-20 h-20 flex-shrink-0">
                   <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
                     <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="5" />
-                    <circle cx="50" cy="50" r="42" fill="none" stroke="#E50914" strokeWidth="5" strokeLinecap="round"
+                    <circle cx="50" cy="50" r="42" fill="none" stroke="#1a4fd8" strokeWidth="5" strokeLinecap="round"
                       strokeDasharray={`${(lessonPct / 100) * 2 * Math.PI * 42} ${2 * Math.PI * 42}`} />
                   </svg>
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -131,7 +133,7 @@ export function MyProgress() {
           <div>
             <div className="px-4 md:px-12 mb-1">
               <div className="flex items-center gap-2.5">
-                <span className="w-2 h-2 rounded-full bg-[#E50914]" />
+                <span className="w-2 h-2 rounded-full bg-[#1a4fd8]" />
                 <h2 className="text-base md:text-lg font-bold text-white">{t.progressInProgress}</h2>
                 <span className="text-white/20 text-sm">{inProgressCourses.length}</span>
               </div>
@@ -157,9 +159,13 @@ export function MyProgress() {
           <div className="flex items-center gap-2.5 mb-4">
             <span className="w-2 h-2 rounded-full bg-amber-400" />
             <h2 className="text-base md:text-lg font-bold text-white">{t.progressWishlist}</h2>
-            <span className="text-white/20 text-sm">0</span>
+            <span className="text-white/20 text-sm">{wishlistItems.length}</span>
           </div>
-          <p className="text-white/30 text-sm">სანიშნეში კურსები არ გაქვს</p>
+          {wishlistItems.length === 0 ? (
+            <p className="text-white/30 text-sm">სანიშნეში კურსები არ გაქვს</p>
+          ) : (
+            <CourseRow title="" courses={wishlistItems.map((w: any) => apiCourseToCourse(w.course))} />
+          )}
         </div>
       </div>
     </div>

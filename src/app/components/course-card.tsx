@@ -52,7 +52,7 @@ export function CourseCard({
   return (
     <Link to={`/course/${course.id}`} onClick={handleCardClick} onMouseEnter={prefetchCourse}>
       <div className="group cursor-pointer relative">
-        <div className="relative aspect-video rounded overflow-hidden bg-white/[0.03] mb-4 shadow-xl transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-red-500/30 group-hover:scale-105">
+        <div className="relative aspect-video rounded overflow-hidden bg-white/[0.03] mb-4 shadow-xl transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-blue-500/30 group-hover:scale-105">
           <img
             src={course.thumbnail}
             alt={course.title}
@@ -62,7 +62,7 @@ export function CourseCard({
           {/* Badges */}
           <div className="absolute top-3 right-3 flex gap-2 z-10">
             {course.isNew && (
-              <span className="px-3 py-1.5 bg-gradient-to-r from-red-600 to-red-700 text-white text-xs font-bold rounded shadow-lg backdrop-blur-sm">
+              <span className="px-3 py-1.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-xs font-bold rounded shadow-lg backdrop-blur-sm">
                 {t.cardNew}
               </span>
             )}
@@ -103,7 +103,7 @@ export function CourseCard({
                         e.preventDefault();
                         if (onViewCertificate) onViewCertificate();
                       }}
-                      className="w-full px-3 py-2 bg-[#E50914] text-white rounded hover:bg-[#c40812] transition-all font-bold text-xs flex items-center justify-center gap-1.5"
+                      className="w-full px-3 py-2 bg-[#1a4fd8] text-white rounded hover:bg-[#1540b0] transition-all font-bold text-xs flex items-center justify-center gap-1.5"
                     >
                       <Award className="w-3.5 h-3.5" />
                       {t.cardCertificate}
@@ -115,7 +115,7 @@ export function CourseCard({
                       e.preventDefault();
                       if (onContinue) onContinue();
                     }}
-                    className="w-full px-3 py-2 bg-[#E50914] text-white rounded hover:bg-[#c40812] transition-all font-bold text-xs flex items-center justify-center gap-1.5"
+                    className="w-full px-3 py-2 bg-[#1a4fd8] text-white rounded hover:bg-[#1540b0] transition-all font-bold text-xs flex items-center justify-center gap-1.5"
                   >
                     <Play className="w-4 h-4" />
                     {t.cardContinue}
@@ -134,7 +134,7 @@ export function CourseCard({
           {/* Progress bar on thumbnail */}
           {courseProgress > 0 && courseProgress < 100 && (
             <div className="absolute bottom-0 inset-x-0 h-[3px] bg-white/10 z-20">
-              <div className="h-full bg-[#E50914]" style={{ width: `${courseProgress}%` }} />
+              <div className="h-full bg-[#1a4fd8]" style={{ width: `${courseProgress}%` }} />
             </div>
           )}
           {courseProgress === 100 && (

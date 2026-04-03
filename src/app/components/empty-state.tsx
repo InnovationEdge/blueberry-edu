@@ -19,7 +19,7 @@ export function EmptyState({
       {actionLabel && (
         <Link
           to={actionHref}
-          className="px-5 py-2.5 bg-[#E50914] text-white rounded text-sm font-bold hover:bg-[#c70812] transition-all active:scale-95"
+          className="px-5 py-2.5 bg-[#1a4fd8] text-white rounded-full text-sm font-bold hover:bg-[#1540b0] transition-all active:scale-95"
         >
           {actionLabel}
         </Link>

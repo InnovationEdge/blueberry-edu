@@ -46,7 +46,7 @@ export function CourseDetail() {
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center space-y-4">
           <h1 className="text-2xl text-white">{t.detailNotFound}</h1>
-          <Link to="/" className="text-[#E50914] hover:underline">
+          <Link to="/" className="text-[#1a4fd8] hover:underline">
             {t.detailReturnHome}
           </Link>
         </div>
@@ -404,7 +404,7 @@ export function CourseDetail() {
                     <button
                       onClick={handleEnroll}
                       disabled={checkout.isPending}
-                      className="w-full h-10 rounded bg-[#E50914] hover:bg-[#c70812] text-white font-bold text-sm transition-all active:scale-95 disabled:opacity-50"
+                      className="w-full h-10 rounded bg-[#1a4fd8] hover:bg-[#1540b0] text-white font-bold text-sm transition-all active:scale-95 disabled:opacity-50"
                     >
                       {checkout.isPending ? '...' : isEnrolled ? 'გაგრძელება' : t.detailEnroll}
                     </button>

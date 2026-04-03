@@ -15,7 +15,7 @@ export function PaymentSuccess() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[#E50914] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[#1a4fd8] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -26,11 +26,11 @@ export function PaymentSuccess() {
     <div className="min-h-screen bg-black flex items-center justify-center px-4 py-12">
       <div className="max-w-2xl w-full">
         {/* Success icon */}
-        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 200, delay: 0.1 }}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.1 }}
           className="flex justify-center mb-8">
           <div className="relative">
-            <div className="absolute inset-0 bg-[#E50914] blur-[60px] opacity-30 rounded-full" />
-            <div className="relative w-20 h-20 bg-[#E50914] rounded-full flex items-center justify-center shadow-lg shadow-red-500/20">
+            <div className="absolute inset-0 bg-[#1a4fd8] blur-[60px] opacity-30 rounded-full" />
+            <div className="relative w-20 h-20 bg-[#1a4fd8] rounded-full flex items-center justify-center shadow-lg shadow-blue-500/20">
               <CheckCircle className="w-10 h-10 text-white" strokeWidth={2} />
             </div>
           </div>
@@ -58,7 +58,7 @@ export function PaymentSuccess() {
             {/* Info */}
             <div className="flex-1 p-6 space-y-4">
               <div>
-                <span className="text-[#E50914] text-[10px] font-bold uppercase tracking-widest">{t.paymentNowLearning}</span>
+                <span className="text-[#1a4fd8] text-[10px] font-bold uppercase tracking-widest">{t.paymentNowLearning}</span>
                 <h2 className="text-xl font-black text-white mt-1">{course.title}</h2>
                 <p className="text-sm text-white/40 mt-1">{t.paymentWith} <span className="text-white/70">{course.instructor}</span></p>
               </div>
@@ -100,11 +100,11 @@ export function PaymentSuccess() {
         <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
           className="flex flex-col sm:flex-row gap-3">
           <button onClick={() => navigate(`/course/${course.id}/session`)}
-            className="flex-1 h-11 bg-[#E50914] text-white rounded text-sm font-bold hover:bg-[#c70812] transition-all active:scale-95 flex items-center justify-center gap-2">
+            className="flex-1 h-11 bg-[#1a4fd8] text-white rounded-full text-sm font-bold hover:bg-[#1540b0] transition-all active:scale-95 flex items-center justify-center gap-2">
             <Play className="w-4 h-4 fill-white" />{t.paymentStartLearning}
           </button>
           <button onClick={() => navigate('/')}
-            className="h-11 px-8 bg-white/[0.06] border border-white/10 text-white rounded text-sm font-semibold hover:bg-white/10 transition-all active:scale-95">
+            className="h-11 px-8 bg-white/[0.06] border border-white/10 text-white rounded-full text-sm font-semibold hover:bg-white/10 transition-all active:scale-95">
             {t.paymentBrowseMore}
           </button>
         </motion.div>

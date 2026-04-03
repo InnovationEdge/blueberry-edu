@@ -154,7 +154,7 @@ export function VideoPlayer() {
   if (isLoading) {
     return (
       <div className="h-screen bg-black flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[#E50914] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[#1a4fd8] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -358,11 +358,11 @@ export function VideoPlayer() {
               <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden group-hover:h-1.5 transition-all">
                 {/* Played */}
                 <div
-                  className="h-full bg-[#E50914] rounded-full transition-all relative"
+                  className="h-full bg-[#1a4fd8] rounded-full transition-all relative"
                   style={{ width: `${progress}%` }}
                 >
                   {/* Thumb */}
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-[#E50914] rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"></div>
+                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-[#1a4fd8] rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"></div>
                 </div>
               </div>
             </div>
@@ -488,7 +488,7 @@ export function VideoPlayer() {
           </div>
         </div>
 
-        {/* BrightMind Branding (bottom left) */}
+        {/* Blueberry Branding (bottom left) */}
         <div
           className={`absolute bottom-24 left-6 transition-opacity duration-300 ${
             showControls ? 'opacity-100' : 'opacity-0'
@@ -496,7 +496,7 @@ export function VideoPlayer() {
         >
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2 bg-black/60 backdrop-blur-sm px-4 py-2 rounded">
-              <span className="text-white font-black text-sm tracking-tight">BRIGHTMIND</span>
+              <span className="text-white font-black text-sm tracking-tight">Blueberry</span>
             </div>
             <div className="text-white/60 text-sm bg-black/60 backdrop-blur-sm px-4 py-2 rounded">
               <span className="font-semibold text-white">{course.title}</span>

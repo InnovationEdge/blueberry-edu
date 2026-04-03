@@ -15,7 +15,7 @@ export function InstructorDashboard() {
   const statCards = [
     { label: 'სულ სტუდენტები', value: stats?.totalStudents ?? 0, icon: Users, color: 'text-blue-400' },
     { label: 'შემოსავალი', value: `${stats?.totalRevenue ?? 0} ₾`, icon: DollarSign, color: 'text-emerald-400' },
-    { label: 'კურსები', value: stats?.totalCourses ?? 0, icon: BookOpen, color: 'text-[#E50914]' },
+    { label: 'კურსები', value: stats?.totalCourses ?? 0, icon: BookOpen, color: 'text-[#1a4fd8]' },
     { label: 'საშუალო რეიტინგი', value: stats?.avgRating?.toFixed(1) ?? '0.0', icon: Star, color: 'text-yellow-400' },
   ];
 
@@ -28,7 +28,7 @@ export function InstructorDashboard() {
           <p className="text-white/40 text-sm mt-1">{user?.name || 'ინსტრუქტორი'}</p>
         </div>
         <Link to="/instructor/create"
-          className="flex items-center gap-2 px-6 py-2.5 bg-[#E50914] text-white rounded text-sm font-bold hover:bg-[#c70812] transition-all active:scale-95">
+          className="flex items-center gap-2 px-6 py-2.5 bg-[#1a4fd8] text-white rounded-full text-sm font-bold hover:bg-[#1540b0] transition-all active:scale-95">
           <Plus className="w-4 h-4" />კურსის შექმნა
         </Link>
       </div>
@@ -104,7 +104,7 @@ export function InstructorDashboard() {
           <BookOpen className="w-10 h-10 text-white/20 mx-auto mb-4" />
           <p className="text-white/40 text-sm mb-4">ჯერ კურსი არ შეგიქმნია</p>
           <Link to="/instructor/create"
-            className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#E50914] text-white rounded text-sm font-bold hover:bg-[#c70812] transition-all active:scale-95">
+            className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#1a4fd8] text-white rounded-full text-sm font-bold hover:bg-[#1540b0] transition-all active:scale-95">
             <Plus className="w-4 h-4" />პირველი კურსის შექმნა
           </Link>
         </div>

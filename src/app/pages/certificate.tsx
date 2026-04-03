@@ -28,7 +28,7 @@ export function Certificate() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[#E50914] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[#1a4fd8] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -38,7 +38,7 @@ export function Certificate() {
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center space-y-4">
           <p className="text-white/40 text-sm">სერტიფიკატი ვერ მოიძებნა</p>
-          <Link to="/my-progress" className="text-[#E50914] text-sm hover:underline">ჩემი პროგრესი</Link>
+          <Link to="/my-progress" className="text-[#1a4fd8] text-sm hover:underline">ჩემი პროგრესი</Link>
         </div>
       </div>
     );
@@ -53,18 +53,18 @@ export function Certificate() {
 
         {/* Certificate card */}
         <div className="bg-white/[0.03] border border-white/[0.06] rounded p-8 text-center">
-          <div className="w-16 h-16 bg-[#E50914] rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-16 h-16 bg-[#1a4fd8] rounded-full flex items-center justify-center mx-auto mb-6">
             <Award className="w-8 h-8 text-white" />
           </div>
 
           <h1 className="text-2xl font-black text-white mb-2">დასრულების სერტიფიკატი</h1>
-          <p className="text-white/30 text-sm mb-8">BrightMind Academy</p>
+          <p className="text-white/30 text-sm mb-8">Blueberry Academy</p>
 
           <div className="border-t border-b border-white/[0.06] py-6 my-6 space-y-3">
             <p className="text-white/40 text-xs">ამით ვადასტურებთ, რომ</p>
             <p className="text-white text-xl font-black">{cert.user.name}</p>
             <p className="text-white/40 text-xs">წარმატებით დაასრულა კურსი</p>
-            <p className="text-[#E50914] text-lg font-bold">{cert.course.title}</p>
+            <p className="text-[#1a4fd8] text-lg font-bold">{cert.course.title}</p>
             <p className="text-white/30 text-xs">ინსტრუქტორი: {cert.course.instructor.displayName}</p>
           </div>
 
@@ -80,7 +80,7 @@ export function Certificate() {
           <div className="flex gap-3 justify-center">
             {cert.pdfUrl && (
               <a href={cert.pdfUrl} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-2.5 bg-[#E50914] text-white rounded text-sm font-bold hover:bg-[#c70812] transition-colors active:scale-95">
+                className="flex items-center gap-2 px-6 py-2.5 bg-[#1a4fd8] text-white rounded-full text-sm font-bold hover:bg-[#1540b0] transition-colors active:scale-95">
                 <Download className="w-4 h-4" />PDF ჩამოტვირთვა
               </a>
             )}

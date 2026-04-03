@@ -58,7 +58,7 @@ export function Assignments() {
             <h1 className="text-2xl font-black text-white">დავალებები</h1>
           </div>
           <button onClick={() => setShowCreate(true)}
-            className="flex items-center gap-2 px-5 py-2.5 bg-[#E50914] text-white rounded text-sm font-bold hover:bg-[#c70812] transition-all active:scale-95">
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#1a4fd8] text-white rounded-full text-sm font-bold hover:bg-[#1540b0] transition-all active:scale-95">
             <Plus className="w-4 h-4" />დავალების შექმნა
           </button>
         </div>
@@ -68,17 +68,17 @@ export function Assignments() {
           <div className="bg-white/[0.03] border border-white/[0.06] rounded p-5 mb-6 space-y-4">
             <input type="text" value={newTitle} onChange={e => setNewTitle(e.target.value)}
               placeholder="დავალების სახელი"
-              className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#E50914]" />
+              className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#1a4fd8]" />
             <textarea value={newDescription} onChange={e => setNewDescription(e.target.value)}
               placeholder="აღწერა და ინსტრუქციები..."
               rows={4}
-              className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#E50914] resize-none" />
+              className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#1a4fd8] resize-none" />
             <div className="flex gap-3 justify-end">
               <button onClick={() => setShowCreate(false)}
                 className="px-4 py-2 text-white/50 text-sm hover:text-white transition-colors">გაუქმება</button>
               <button onClick={() => createAssignment.mutate()}
                 disabled={!newTitle || createAssignment.isPending}
-                className="px-6 py-2 bg-[#E50914] text-white rounded text-sm font-bold hover:bg-[#c70812] disabled:opacity-50 active:scale-95">
+                className="px-6 py-2 bg-[#1a4fd8] text-white rounded-full text-sm font-bold hover:bg-[#1540b0] disabled:opacity-50 active:scale-95">
                 {createAssignment.isPending ? '...' : 'შექმნა'}
               </button>
             </div>

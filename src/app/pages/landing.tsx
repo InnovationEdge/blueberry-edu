@@ -33,7 +33,7 @@ export function Landing() {
   // Testimonials — 7 students
   const testimonials = [
     {
-      quote: "BrightMind-ზე ბიზნეს კურსის შემდეგ საკუთარი სტარტაპი წამოვიწყე. რეალური ქეისები ვისწავლე.",
+      quote: "Blueberry-ზე ბიზნეს კურსის შემდეგ საკუთარი სტარტაპი წამოვიწყე. რეალური ქეისები ვისწავლე.",
       name: "ნინო კვარაცხელია",
       role: "სტარტაპის დამფუძნებელი",
       image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800&h=600&fit=crop&q=80"
@@ -45,7 +45,7 @@ export function Landing() {
       image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=800&h=600&fit=crop&q=80"
     },
     {
-      quote: "დიზაინის კურსმა კარიერა შემიცვალა. ფრილანსერად ვმუშაობ და საერთაშორისო კლიენტები მყავს. BrightMind-მა მომცა ის საფუძველი, რაც მჭირდებოდა.",
+      quote: "დიზაინის კურსმა კარიერა შემიცვალა. ფრილანსერად ვმუშაობ და საერთაშორისო კლიენტები მყავს. Blueberry-მა მომცა ის საფუძველი, რაც მჭირდებოდა.",
       name: "მარიამ ჯავახიშვილი",
       role: "UX/UI დიზაინერი, საქართველო",
       image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=800&h=600&fit=crop&q=80"
@@ -120,7 +120,7 @@ export function Landing() {
         <div className="flex items-center justify-between max-w-[1400px] mx-auto">
           {/* Logo */}
           <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight">
-            BRIGHTMIND
+            Blueberry
           </h1>
 
           <div className="flex items-center gap-3">
@@ -171,7 +171,7 @@ export function Landing() {
             {/* Sign In — Netflix exact red button */}
             <button
               onClick={handleSignIn}
-              className="px-4 py-1.5 bg-[#E50914] text-white rounded font-semibold text-sm hover:bg-[#c70812] transition-colors"
+              className="px-4 py-1.5 bg-[#1a4fd8] text-white rounded font-semibold text-sm hover:bg-[#1540b0] transition-colors"
             >
               {t.landingSignIn}
             </button>
@@ -240,7 +240,7 @@ export function Landing() {
             <p className="text-sm md:text-base text-white/60">{t.landingHeroSubtitle}</p>
             <button
               onClick={handleSignIn}
-              className="px-7 py-3 bg-[#E50914] text-white rounded hover:bg-[#c70812] transition-all font-bold text-sm flex items-center gap-2 group flex-shrink-0"
+              className="px-7 py-3 bg-[#1a4fd8] text-white rounded hover:bg-[#1540b0] transition-all font-bold text-sm flex items-center gap-2 group flex-shrink-0"
             >
               {t.landingGetStarted}
               <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -323,7 +323,7 @@ export function Landing() {
         }
       `}</style>
 
-      {/* What's in every BrightMind course? — MasterClass exact layout */}
+      {/* What's in every Blueberry course? — MasterClass exact layout */}
       <section className="py-24 md:py-32 px-4 md:px-12 lg:px-16 bg-black">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-20 items-start">
           {/* Left Side — Heading + CTA buttons */}
@@ -335,7 +335,7 @@ export function Landing() {
             <div className="flex flex-row gap-3">
               <button
                 onClick={handleSignIn}
-                className="px-10 py-4 bg-[#E50914] text-white rounded hover:bg-[#c70812] transition-all font-bold text-base"
+                className="px-10 py-4 bg-[#1a4fd8] text-white rounded hover:bg-[#1540b0] transition-all font-bold text-base"
               >
                 {t.landingGetStarted}
               </button>
@@ -349,7 +349,7 @@ export function Landing() {
             </div>
           </div>
 
-          {/* Right Side — BrightMind features (MasterClass icon style) */}
+          {/* Right Side — Blueberry features (MasterClass icon style) */}
           <div className="space-y-8 pt-2">
             {[
               { icon: Star, text: t.landingAllClasses },
@@ -429,7 +429,7 @@ export function Landing() {
             <span className="text-white/40 text-sm">{t.landingPayPerCourse}</span>
             <button
               onClick={handleSignIn}
-              className="px-8 py-3.5 bg-[#E50914] text-white rounded hover:bg-[#c70812] transition-all font-bold hover:scale-105 active:scale-95"
+              className="px-8 py-3.5 bg-[#1a4fd8] text-white rounded hover:bg-[#1540b0] transition-all font-bold hover:scale-105 active:scale-95"
             >
               {t.landingGetStarted}
             </button>
@@ -437,10 +437,10 @@ export function Landing() {
         </div>
       </section>
 
-      {/* Why BrightMind — Premium minimalist cards */}
+      {/* Why Blueberry — Premium minimalist cards */}
       <section className="py-16 md:py-24 px-4 md:px-12 lg:px-16 bg-black">
         <div className="max-w-7xl mx-auto">
-          <h3 className="text-2xl md:text-3xl font-bold mb-10">რატომ BrightMind</h3>
+          <h3 className="text-2xl md:text-3xl font-bold mb-10">რატომ Blueberry</h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {features.map((feature, i) => {
@@ -474,7 +474,7 @@ export function Landing() {
 
           <div className="divide-y divide-white/[0.06]">
             {[
-              { q: 'რა არის BrightMind?', a: 'BrightMind არის ონლაინ სასწავლო პლატფორმა, სადაც შეგიძლია შეიძინო კურსები საუკეთესო ქართველი და საერთაშორისო ინსტრუქტორებისგან. გადაიხადე ერთხელ და კურსი შენია სამუდამოდ.' },
+              { q: 'რა არის Blueberry?', a: 'Blueberry არის ონლაინ სასწავლო პლატფორმა, სადაც შეგიძლია შეიძინო კურსები საუკეთესო ქართველი და საერთაშორისო ინსტრუქტორებისგან. გადაიხადე ერთხელ და კურსი შენია სამუდამოდ.' },
               { q: 'როგორ მუშაობს გადახდა?', a: 'შეარჩიე კურსი, გადაიხადე ერთჯერადი თანხა და მიიღე უვადო წვდომა. არანაირი გამოწერა ან ყოველთვიური გადასახადი.' },
               { q: 'სად შემიძლია ვუყურო?', a: 'ნებისმიერ მოწყობილობაზე — კომპიუტერზე, ტელეფონზე, ტაბლეტზე ან Smart TV-ზე. პროგრესი სინქრონიზდება ყველგან.' },
               { q: 'შემიძლია თანხის დაბრუნება?', a: '30-დღიანი თანხის დაბრუნების გარანტია. თუ კურსი არ მოგეწონა, სრულ თანხას დაგიბრუნებთ.' },
@@ -509,7 +509,7 @@ export function Landing() {
       </section>
 
       {/* Divider */}
-      <div className="h-[2px] bg-gradient-to-r from-transparent via-[#E50914]/30 to-transparent" />
+      <div className="h-[2px] bg-gradient-to-r from-transparent via-[#1a4fd8]/30 to-transparent" />
 
       {/* Certificate Section */}
       <section className="py-16 md:py-24 px-4 md:px-12 lg:px-16 bg-black">
@@ -534,11 +534,11 @@ export function Landing() {
                 fontSize: '40px', fontFamily: 'Georgia, serif', fontWeight: 700,
                 color: 'rgba(255,255,255,0.02)', letterSpacing: '0.08em', pointerEvents: 'none',
                 whiteSpace: 'nowrap',
-              }}>BrightMind</div>
+              }}>Blueberry</div>
 
               {/* Institution */}
-              <p style={{ color: '#E50914', fontSize: '13px', fontWeight: 900, letterSpacing: '0.2em', marginBottom: '2px' }}>
-                BRIGHTMIND
+              <p style={{ color: '#1a4fd8', fontSize: '13px', fontWeight: 900, letterSpacing: '0.2em', marginBottom: '2px' }}>
+                Blueberry
               </p>
               <p style={{ fontFamily: 'Georgia, serif', color: 'rgba(255,255,255,0.5)', fontSize: '13px', marginBottom: '28px' }}>
                 Academy of Professional Development
@@ -572,7 +572,7 @@ export function Landing() {
                   </svg>
                   <div style={{ width: '90px', height: '1px', background: 'rgba(255,255,255,0.1)' }} />
                   <p style={{ fontSize: '9px', color: 'rgba(255,255,255,0.6)', fontWeight: 600, marginTop: '4px' }}>გიორგი ჩხეიძე</p>
-                  <p style={{ fontSize: '8px', color: 'rgba(255,255,255,0.3)' }}>CEO, BrightMind Academy</p>
+                  <p style={{ fontSize: '8px', color: 'rgba(255,255,255,0.3)' }}>CEO, Blueberry Academy</p>
                 </div>
                 <div>
                   <svg viewBox="0 0 160 40" style={{ width: '90px', height: '24px', display: 'block', marginBottom: '2px' }}>
@@ -594,27 +594,27 @@ export function Landing() {
           {/* Right — Benefits */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', flexShrink: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-              <CheckCircle style={{ width: '22px', height: '22px', color: '#E50914', flexShrink: 0 }} strokeWidth={1.5} />
+              <CheckCircle style={{ width: '22px', height: '22px', color: '#1a4fd8', flexShrink: 0 }} strokeWidth={1.5} />
               <span style={{ fontSize: '16px', color: 'white' }}>{t.landingVerifiedCompletion}</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-              <CheckCircle style={{ width: '22px', height: '22px', color: '#E50914', flexShrink: 0 }} strokeWidth={1.5} />
+              <CheckCircle style={{ width: '22px', height: '22px', color: '#1a4fd8', flexShrink: 0 }} strokeWidth={1.5} />
               <span style={{ fontSize: '16px', color: 'white' }}>{t.landingShareableCredentials}</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-              <CheckCircle style={{ width: '22px', height: '22px', color: '#E50914', flexShrink: 0 }} strokeWidth={1.5} />
+              <CheckCircle style={{ width: '22px', height: '22px', color: '#1a4fd8', flexShrink: 0 }} strokeWidth={1.5} />
               <span style={{ fontSize: '16px', color: 'white' }}>{t.landingLifetimeAccess}</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-              <Award style={{ width: '22px', height: '22px', color: '#E50914', flexShrink: 0 }} strokeWidth={1.5} />
+              <Award style={{ width: '22px', height: '22px', color: '#1a4fd8', flexShrink: 0 }} strokeWidth={1.5} />
               <span style={{ fontSize: '16px', color: 'white' }}>პროფესიონალური აკრედიტაცია</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-              <Infinity style={{ width: '22px', height: '22px', color: '#E50914', flexShrink: 0 }} strokeWidth={1.5} />
+              <Infinity style={{ width: '22px', height: '22px', color: '#1a4fd8', flexShrink: 0 }} strokeWidth={1.5} />
               <span style={{ fontSize: '16px', color: 'white' }}>უვადო წვდომა სერტიფიკატზე</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-              <Star style={{ width: '22px', height: '22px', color: '#E50914', flexShrink: 0 }} strokeWidth={1.5} />
+              <Star style={{ width: '22px', height: '22px', color: '#1a4fd8', flexShrink: 0 }} strokeWidth={1.5} />
               <span style={{ fontSize: '16px', color: 'white' }}>ავტომატურად კურსის დასრულებისას</span>
             </div>
           </div>
@@ -622,7 +622,7 @@ export function Landing() {
       </section>
 
       {/* Divider */}
-      <div className="h-[2px] bg-gradient-to-r from-transparent via-[#E50914]/30 to-transparent" />
+      <div className="h-[2px] bg-gradient-to-r from-transparent via-[#1a4fd8]/30 to-transparent" />
 
       {/* Testimonials — Cinematic MasterClass style */}
       <section
@@ -750,7 +750,7 @@ export function Landing() {
         <div className="max-w-7xl mx-auto">
           {/* Top — Logo + Social icons */}
           <div className="flex items-center justify-between mb-12">
-            <span className="text-2xl md:text-3xl font-black text-white tracking-tight">BRIGHTMIND</span>
+            <span className="text-2xl md:text-3xl font-black text-white tracking-tight">Blueberry</span>
             <div className="flex items-center gap-5">
               {/* Instagram */}
               <a href="#" className="text-white/30 hover:text-white transition-colors" aria-label="Instagram">

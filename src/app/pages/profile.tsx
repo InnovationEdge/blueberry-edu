@@ -28,13 +28,13 @@ export function Profile() {
 
         {/* Avatar */}
         <div className="flex flex-col items-center mb-10">
-          <div className="w-20 h-20 rounded-full bg-[#E50914] flex items-center justify-center mb-3">
+          <div className="w-20 h-20 rounded-full bg-[#1a4fd8] flex items-center justify-center mb-3">
             <span className="text-white text-3xl font-black">{user?.name?.charAt(0)?.toUpperCase() || 'U'}</span>
           </div>
           <p className="text-white font-bold">{user?.name}</p>
           <p className="text-white/40 text-xs">{user?.email}</p>
           <span className={`mt-2 px-3 py-1 rounded text-[10px] font-medium ${
-            user?.role === 'INSTRUCTOR' ? 'bg-[#E50914]/10 text-[#E50914] border border-[#E50914]/20' : 'bg-white/[0.06] text-white/50'
+            user?.role === 'INSTRUCTOR' ? 'bg-[#1a4fd8]/10 text-[#1a4fd8] border border-[#1a4fd8]/20' : 'bg-white/[0.06] text-white/50'
           }`}>
             {user?.role === 'INSTRUCTOR' ? 'ინსტრუქტორი' : 'სტუდენტი'}
           </span>
@@ -47,7 +47,7 @@ export function Profile() {
               <User className="w-3.5 h-3.5" />სახელი
             </label>
             <input type="text" value={name} onChange={e => setName(e.target.value)}
-              className="w-full px-4 py-3 bg-white/[0.04] border border-white/10 rounded text-white text-sm focus:outline-none focus:border-[#E50914] transition-colors" />
+              className="w-full px-4 py-3 bg-white/[0.04] border border-white/10 rounded text-white text-sm focus:outline-none focus:border-[#1a4fd8] transition-colors" />
           </div>
 
           <div>
@@ -66,7 +66,7 @@ export function Profile() {
               {['ქართული', 'English', 'Русский'].map(lang => (
                 <button key={lang} onClick={() => setLanguage(lang)}
                   className={`px-4 py-2 rounded text-sm transition-colors ${
-                    language === lang ? 'bg-[#E50914] text-white' : 'bg-white/[0.04] border border-white/10 text-white/50 hover:border-white/20'
+                    language === lang ? 'bg-[#1a4fd8] text-white' : 'bg-white/[0.04] border border-white/10 text-white/50 hover:border-white/20'
                   }`}>
                   {lang}
                 </button>
@@ -77,7 +77,7 @@ export function Profile() {
 
         <div className="mt-8">
           <button onClick={handleSave}
-            className="flex items-center gap-2 px-8 py-3 bg-[#E50914] text-white rounded text-sm font-bold hover:bg-[#c70812] transition-colors active:scale-95">
+            className="flex items-center gap-2 px-8 py-3 bg-[#1a4fd8] text-white rounded-full text-sm font-bold hover:bg-[#1540b0] transition-colors active:scale-95">
             <Save className="w-4 h-4" />
             {saved ? 'შენახულია!' : 'შენახვა'}
           </button>

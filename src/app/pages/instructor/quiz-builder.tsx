@@ -85,7 +85,7 @@ export function QuizBuilder() {
           <div className="flex items-center gap-2">
             <input type="number" value={passThreshold} onChange={e => setPassThreshold(Number(e.target.value))}
               min={50} max={100} step={5}
-              className="w-16 px-2 py-1.5 bg-white/[0.05] border border-white/10 rounded text-white text-sm text-center focus:outline-none focus:border-[#E50914]" />
+              className="w-16 px-2 py-1.5 bg-white/[0.05] border border-white/10 rounded text-white text-sm text-center focus:outline-none focus:border-[#1a4fd8]" />
             <span className="text-white/40 text-sm">%</span>
           </div>
         </div>
@@ -99,11 +99,11 @@ export function QuizBuilder() {
                 <div className="flex-1">
                   <input type="text" value={q.text} onChange={e => updateQuestion(q.id, 'text', e.target.value)}
                     placeholder="შეკითხვა..."
-                    className="w-full px-3 py-2.5 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#E50914]" />
+                    className="w-full px-3 py-2.5 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#1a4fd8]" />
                 </div>
                 <button onClick={() => removeQuestion(q.id)}
                   className="p-2 hover:bg-white/10 rounded transition-colors">
-                  <Trash2 className="w-4 h-4 text-white/30 hover:text-[#E50914]" />
+                  <Trash2 className="w-4 h-4 text-white/30 hover:text-[#1a4fd8]" />
                 </button>
               </div>
 
@@ -145,7 +145,7 @@ export function QuizBuilder() {
         {/* Save */}
         <div className="flex justify-end mt-8">
           <button onClick={() => saveQuiz.mutate()} disabled={questions.length === 0 || saveQuiz.isPending}
-            className="px-8 py-2.5 bg-[#E50914] text-white rounded text-sm font-bold hover:bg-[#c70812] transition-all active:scale-95 disabled:opacity-50">
+            className="px-8 py-2.5 bg-[#1a4fd8] text-white rounded-full text-sm font-bold hover:bg-[#1540b0] transition-all active:scale-95 disabled:opacity-50">
             {saveQuiz.isPending ? 'ინახება...' : 'ქვიზის შენახვა'}
           </button>
         </div>

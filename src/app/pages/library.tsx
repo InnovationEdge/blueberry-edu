@@ -92,7 +92,7 @@ export function Library() {
               onClick={() => setSelectedCategory(cat.slug)}
               className={`flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded border transition-all active:scale-[0.97] ${
                 selectedCategory === cat.slug
-                  ? 'bg-[#E50914] border-[#E50914] text-white'
+                  ? 'bg-[#1a4fd8] border-[#1a4fd8] text-white'
                   : 'bg-transparent border-white/10 text-white/50 hover:border-white/20 hover:text-white'
               }`}
             >
@@ -151,7 +151,7 @@ export function Library() {
               </div>
 
               {activeFilters > 0 && (
-                <button onClick={clearAll} className="text-[#E50914] text-xs font-semibold hover:underline">
+                <button onClick={clearAll} className="text-[#1a4fd8] text-xs font-semibold hover:underline">
                   ფილტრების გასუფთავება
                 </button>
               )}
@@ -176,7 +176,7 @@ export function Library() {
                 className="lg:hidden flex items-center gap-1.5 px-3 py-2 border border-white/10 rounded text-white/70 text-sm hover:bg-white/[0.04]"
               >
                 <SlidersHorizontal className="w-4 h-4" />
-                {activeFilters > 0 && <span className="text-[#E50914] font-bold">{activeFilters}</span>}
+                {activeFilters > 0 && <span className="text-[#1a4fd8] font-bold">{activeFilters}</span>}
               </button>
             </div>
 
@@ -212,13 +212,13 @@ export function Library() {
                 {selectedLevel !== 'ყველა დონე' && (
                   <span className="flex items-center gap-1.5 px-3 py-1 bg-white/[0.06] rounded text-white text-xs">
                     {selectedLevel}
-                    <X className="w-3 h-3 cursor-pointer hover:text-[#E50914]" onClick={() => setSelectedLevel('ყველა დონე')} />
+                    <X className="w-3 h-3 cursor-pointer hover:text-[#1a4fd8]" onClick={() => setSelectedLevel('ყველა დონე')} />
                   </span>
                 )}
                 {selectedDuration !== 'all' && (
                   <span className="flex items-center gap-1.5 px-3 py-1 bg-white/[0.06] rounded text-white text-xs">
                     {DURATIONS.find(d => d.id === selectedDuration)?.label}
-                    <X className="w-3 h-3 cursor-pointer hover:text-[#E50914]" onClick={() => setSelectedDuration('all')} />
+                    <X className="w-3 h-3 cursor-pointer hover:text-[#1a4fd8]" onClick={() => setSelectedDuration('all')} />
                   </span>
                 )}
               </div>
@@ -247,7 +247,7 @@ export function Library() {
             ) : (
               <div className="text-center py-24">
                 <p className="text-white/70 text-sm mb-2">{t.libNoResults}</p>
-                <button onClick={clearAll} className="text-[#E50914] text-sm font-semibold hover:underline">
+                <button onClick={clearAll} className="text-[#1a4fd8] text-sm font-semibold hover:underline">
                   ფილტრების გასუფთავება
                 </button>
               </div>

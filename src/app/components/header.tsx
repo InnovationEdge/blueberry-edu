@@ -86,7 +86,7 @@ export function Header() {
         {/* Logo and Navigation */}
         <div className="flex items-center gap-6 md:gap-10">
           <Link to="/" className="group">
-            <span className="text-white text-2xl md:text-3xl font-black tracking-tight hover:text-white/80 transition-colors">BRIGHTMIND</span>
+            <span className="text-2xl md:text-3xl font-black tracking-tight hover:opacity-80 transition-opacity"><span className="text-[#1a4fd8]">&lt;</span><span className="text-white">Blueberry</span><span className="text-[#1a4fd8]">&gt;</span></span>
           </Link>
           {!showSearch && (
             <nav className="hidden md:flex items-center gap-6 lg:gap-8">
@@ -166,7 +166,7 @@ export function Header() {
                   className="flex items-center gap-2 cursor-pointer group"
                   onClick={() => setShowDropdown(!showDropdown)}
                 >
-                  <div className="w-8 h-8 md:w-9 md:h-9 rounded bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center text-white text-sm md:text-base font-bold shadow-lg group-hover:shadow-red-500/50 transition-all group-hover:scale-105">
+                  <div className="w-8 h-8 md:w-9 md:h-9 rounded bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white text-sm md:text-base font-bold shadow-lg group-hover:shadow-blue-500/50 transition-all group-hover:scale-105">
                     {user?.name?.charAt(0)?.toUpperCase() || 'U'}
                   </div>
                   <ChevronDown className={`w-4 h-4 text-white transition-transform duration-300 ${showDropdown ? 'rotate-180' : ''}`} />
@@ -184,7 +184,7 @@ export function Header() {
                   >
                     <div className="p-4 border-b border-white/[0.06]">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center text-white font-bold">
+                        <div className="w-10 h-10 rounded bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white font-bold">
                           {user?.name?.charAt(0)?.toUpperCase() || 'U'}
                         </div>
                         <div>

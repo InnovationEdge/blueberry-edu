@@ -110,7 +110,7 @@ export function CourseEditor() {
                 </button>
                 <button onClick={() => deleteSection.mutate(section.id)}
                   className="p-1.5 hover:bg-white/10 rounded transition-colors">
-                  <Trash2 className="w-3.5 h-3.5 text-white/30 hover:text-[#E50914]" />
+                  <Trash2 className="w-3.5 h-3.5 text-white/30 hover:text-[#1a4fd8]" />
                 </button>
                 {expandedSection === section.id
                   ? <ChevronUp className="w-4 h-4 text-white/30" />
@@ -133,7 +133,7 @@ export function CourseEditor() {
                       )}
                       <button onClick={() => deleteLesson.mutate({ sectionId: section.id, lessonId: lesson.id })}
                         className="p-1 opacity-0 group-hover:opacity-100 hover:bg-white/10 rounded transition-all">
-                        <Trash2 className="w-3 h-3 text-white/30 hover:text-[#E50914]" />
+                        <Trash2 className="w-3 h-3 text-white/30 hover:text-[#1a4fd8]" />
                       </button>
                     </div>
                   ))}
@@ -143,11 +143,11 @@ export function CourseEditor() {
                     <div className="flex items-center gap-2 px-4 py-3 pl-10 border-t border-white/[0.04]">
                       <input type="text" value={newLessonTitle} onChange={e => setNewLessonTitle(e.target.value)}
                         placeholder="გაკვეთილის სახელი..."
-                        className="flex-1 px-3 py-2 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#E50914]"
+                        className="flex-1 px-3 py-2 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#1a4fd8]"
                         onKeyDown={e => e.key === 'Enter' && newLessonTitle && addLesson.mutate({ sectionId: section.id, title: newLessonTitle })} />
                       <button onClick={() => newLessonTitle && addLesson.mutate({ sectionId: section.id, title: newLessonTitle })}
                         disabled={!newLessonTitle || addLesson.isPending}
-                        className="px-4 py-2 bg-[#E50914] text-white rounded text-xs font-bold hover:bg-[#c70812] disabled:opacity-50 active:scale-95">
+                        className="px-4 py-2 bg-[#1a4fd8] text-white rounded-full text-xs font-bold hover:bg-[#1540b0] disabled:opacity-50 active:scale-95">
                         {addLesson.isPending ? '...' : 'დამატება'}
                       </button>
                       <button onClick={() => { setShowAddLesson(null); setNewLessonTitle(''); }}
@@ -170,11 +170,11 @@ export function CourseEditor() {
           <div className="flex items-center gap-2 mt-4">
             <input type="text" value={newSectionTitle} onChange={e => setNewSectionTitle(e.target.value)}
               placeholder="სექციის სახელი..."
-              className="flex-1 px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#E50914]"
+              className="flex-1 px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#1a4fd8]"
               onKeyDown={e => e.key === 'Enter' && newSectionTitle && addSection.mutate(newSectionTitle)} />
             <button onClick={() => newSectionTitle && addSection.mutate(newSectionTitle)}
               disabled={!newSectionTitle || addSection.isPending}
-              className="px-6 py-3 bg-[#E50914] text-white rounded text-sm font-bold hover:bg-[#c70812] disabled:opacity-50 active:scale-95">
+              className="px-6 py-3 bg-[#1a4fd8] text-white rounded-full text-sm font-bold hover:bg-[#1540b0] disabled:opacity-50 active:scale-95">
               {addSection.isPending ? '...' : 'დამატება'}
             </button>
             <button onClick={() => { setShowAddSection(false); setNewSectionTitle(''); }}
