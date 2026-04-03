@@ -63,7 +63,7 @@ export function Search() {
       )}
 
       <div className="mt-20 mb-10 pt-8 border-t border-white/[0.06]">
-        <span className="text-white font-black text-lg tracking-tight">Blueberry</span>
+        <img src="/images/logo-simple.png" alt="Blueberry" className="h-6 w-auto" />
       </div>
     </div>
   );

@@ -645,7 +645,7 @@ export function CourseSession() {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="text-[#1a4fd8] font-black text-2xl">BM</div>
-            <span className="text-white font-bold text-lg">Blueberry</span>
+            <img src="/images/logo-simple.png" alt="Blueberry" className="h-5 w-auto" />
           </div>
           <div className="flex items-center gap-3 text-white/40 text-sm">
             <span>curated by</span>

@@ -496,7 +496,7 @@ export function VideoPlayer() {
         >
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2 bg-black/60 backdrop-blur-sm px-4 py-2 rounded">
-              <span className="text-white font-black text-sm tracking-tight">Blueberry</span>
+              <img src="/images/logo-simple.png" alt="Blueberry" className="h-4 w-auto" />
             </div>
             <div className="text-white/60 text-sm bg-black/60 backdrop-blur-sm px-4 py-2 rounded">
               <span className="font-semibold text-white">{course.title}</span>

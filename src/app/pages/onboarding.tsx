@@ -68,7 +68,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     <div className="h-screen bg-black text-white flex flex-col">
       {/* Header */}
       <header className="px-6 md:px-12 py-5 flex-shrink-0 flex items-center justify-between">
-        <span className="text-2xl font-black tracking-tight">Blueberry</span>
+        <img src="/images/logo-simple.png" alt="Blueberry" className="h-7 w-auto" />
         {step < 3 && <span className="text-white/15 text-xs">{step + 1}/{totalSteps}</span>}
       </header>
 
@@ -79,7 +79,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
         {/* Step 0: Role */}
         {step === 0 && (
           <motion.div key="s0" {...fade} className="w-full max-w-md px-6 text-center">
-            <h1 className="text-2xl font-black mb-2">როგორ გინდა გამოიყენო Blueberry?</h1>
+            <h1 className="text-2xl font-black mb-2">როგორ გინდა გამოიყენო Blueberry Academy?</h1>
             <p className="text-white/30 text-sm mb-10">აირჩიე ერთი</p>
 
             <div className="grid grid-cols-2 gap-4">

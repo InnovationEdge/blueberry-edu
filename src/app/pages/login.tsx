@@ -43,7 +43,7 @@ export function Login({ onLogin, onBack }: LoginProps) {
 
       <header className="relative z-10 px-4 md:px-12 py-5">
         <div className="flex items-center justify-between max-w-[1400px] mx-auto">
-          <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight">Blueberry</h1>
+          <img src="/images/logo-simple.png" alt="Blueberry" className="h-7 md:h-8 w-auto" />
           <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors" aria-label="Back">
             <X className="w-5 h-5 text-white/60" />
           </button>
