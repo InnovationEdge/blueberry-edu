@@ -117,7 +117,7 @@ export function Landing() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Header — Netflix exact style */}
-      <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-12 py-5 bg-gradient-to-b from-overlay/80 to-transparent">
+      <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-12 py-5 bg-gradient-to-b from-background/80 to-transparent backdrop-blur-sm">
         <div className="flex items-center justify-between max-w-[1400px] mx-auto">
           {/* Logo */}
           <Logo className="h-7 md:h-8 w-auto" />
@@ -127,7 +127,7 @@ export function Landing() {
             <div className="relative">
               <button
                 onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
-                className="flex items-center gap-2 px-3 py-1.5 border border-border text-foreground rounded hover:border-foreground transition-colors text-sm bg-overlay/40"
+                className="flex items-center gap-2 px-3 py-1.5 border border-border text-foreground rounded hover:border-foreground transition-colors text-sm bg-surface-raised backdrop-blur-sm"
               >
                 <span className="text-base font-bold">文A</span>
                 <span>{language}</span>
@@ -143,7 +143,7 @@ export function Landing() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -4 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute right-0 mt-2 w-44 bg-overlay/95 backdrop-blur-xl border border-border rounded shadow-2xl overflow-hidden z-50"
+                      className="absolute right-0 mt-2 w-44 bg-background/95 backdrop-blur-xl border border-border rounded shadow-2xl overflow-hidden z-50"
                     >
                       {languages.map((lang, index) => (
                         <button
@@ -222,11 +222,11 @@ export function Landing() {
           </div>
         </div>
 
-        {/* Overlays — Netflix-style: center readable, edges dark */}
-        <div className="absolute inset-0 bg-overlay/25" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-overlay/40 to-overlay/20" />
-        <div className="absolute inset-0 bg-gradient-to-b from-overlay/50 via-transparent to-transparent" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.15)_0%,rgba(0,0,0,0.55)_100%)]" />
+        {/* Overlays — theme-aware: readable text on mosaic */}
+        <div className="absolute inset-0 bg-background/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background/30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--background)_80%)] opacity-60" />
 
         {/* Content — left aligned */}
         <div className="relative z-10 px-4 md:px-12 lg:px-16 max-w-3xl">

@@ -11,7 +11,7 @@ export function Logo({ className = 'h-7 w-auto', variant = 'simple', forceDark =
     <img
       src={src}
       alt="Blueberry Academy"
-      className={`${className} ${forceDark ? '' : 'dark:invert-0 invert'}`}
+      className={className}
     />
   );
 }
