@@ -1,7 +1,8 @@
-import { Search, Bell, ChevronDown, LogOut, X } from 'lucide-react';
+import { Search, Bell, ChevronDown, LogOut, X, Sun, Moon } from 'lucide-react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router';
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/auth-context';
+import { useTheme } from 'next-themes';
 import { AnimatePresence, motion } from 'motion/react';
 import { getAppT } from '../i18n/app';
 
@@ -16,6 +17,7 @@ export function Header() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const { logout, language, user } = useAuth();
+  const { theme, setTheme } = useTheme();
   const t = getAppT(language);
 
   useEffect(() => {
@@ -75,12 +77,12 @@ export function Header() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled ? 'bg-black shadow-xl shadow-black/50' : ''
+        isScrolled ? 'bg-background shadow-xl shadow-overlay/20' : ''
       }`}
     >
-      {/* Top gradient overlay — fades from black */}
+      {/* Top gradient overlay */}
       {!isScrolled && (
-        <div className="absolute inset-x-0 top-0 h-[250%] bg-gradient-to-b from-black from-40% via-black/50 via-70% to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 top-0 h-[250%] bg-gradient-to-b from-background from-40% via-background/50 via-70% to-transparent pointer-events-none" />
       )}
       <div className="relative flex items-center justify-between px-4 md:px-12 py-4 md:py-5">
         {/* Logo and Navigation */}
@@ -96,13 +98,13 @@ export function Header() {
                   to={item.path}
                   className={`text-sm lg:text-base transition-all relative group ${
                     location.pathname === item.path
-                      ? 'text-white font-semibold'
-                      : 'text-white/60 hover:text-white font-medium'
+                      ? 'text-foreground font-semibold'
+                      : 'text-foreground-secondary hover:text-foreground font-medium'
                   }`}
                 >
                   {item.name}
                   {location.pathname === item.path && (
-                    <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-red-600 rounded-full" />
+                    <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-brand rounded-full" />
                   )}
                 </Link>
               ))}
@@ -111,25 +113,25 @@ export function Header() {
         </div>
 
         {/* Right Side Actions */}
-        <div className="flex items-center gap-4 md:gap-6">
+        <div className="flex items-center gap-3 md:gap-5">
           {/* Search */}
           {showSearch ? (
             <form onSubmit={handleSearch} className="flex items-center gap-2">
               <div className="relative flex items-center">
-                <Search className="absolute left-3 w-5 h-5 text-white/40" />
+                <Search className="absolute left-3 w-5 h-5 text-foreground-subtle" />
                 <input
                   ref={searchInputRef}
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={t.headerSearch}
-                  className="w-64 md:w-80 pl-10 pr-10 py-2 bg-black/80 border border-white/15 text-white placeholder-white/30 rounded focus:outline-none focus:border-white transition-colors"
+                  className="w-64 md:w-80 pl-10 pr-10 py-2 bg-background/80 border border-border-muted text-foreground placeholder-foreground-faint rounded focus:outline-none focus:border-brand transition-colors"
                 />
                 {searchQuery && (
                   <button
                     type="button"
                     onClick={clearSearch}
-                    className="absolute right-3 text-white/40 hover:text-white"
+                    className="absolute right-3 text-foreground-subtle hover:text-foreground"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -141,7 +143,7 @@ export function Header() {
                   setShowSearch(false);
                   setSearchQuery('');
                 }}
-                className="text-white hover:text-white/60 transition-colors"
+                className="text-foreground hover:text-foreground-secondary transition-colors"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -149,29 +151,37 @@ export function Header() {
           ) : (
             <button
               onClick={() => setShowSearch(true)}
-              className="text-white hover:text-white/60 transition-colors p-2 hover:bg-white/10 rounded"
+              className="text-foreground hover:text-foreground-secondary transition-colors p-2 hover:bg-surface-hover rounded"
             >
               <Search className="w-5 h-5 md:w-6 md:h-6" />
             </button>
           )}
-          
+
           {!showSearch && (
             <>
-              <button className="text-white hover:text-white/60 transition-colors p-2 hover:bg-white/10 rounded relative">
+              {/* Theme Toggle */}
+              <button
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className="text-foreground hover:text-foreground-secondary transition-colors p-2 hover:bg-surface-hover rounded"
+              >
+                {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </button>
+
+              <button className="text-foreground hover:text-foreground-secondary transition-colors p-2 hover:bg-surface-hover rounded relative">
                 <Bell className="w-5 h-5 md:w-6 md:h-6" />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
               </button>
               <div className="relative" ref={dropdownRef}>
-                <div 
+                <div
                   className="flex items-center gap-2 cursor-pointer group"
                   onClick={() => setShowDropdown(!showDropdown)}
                 >
                   <div className="w-8 h-8 md:w-9 md:h-9 rounded bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white text-sm md:text-base font-bold shadow-lg group-hover:shadow-blue-500/50 transition-all group-hover:scale-105">
                     {user?.name?.charAt(0)?.toUpperCase() || 'U'}
                   </div>
-                  <ChevronDown className={`w-4 h-4 text-white transition-transform duration-300 ${showDropdown ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 text-foreground transition-transform duration-300 ${showDropdown ? 'rotate-180' : ''}`} />
                 </div>
-                
+
                 {/* Dropdown Menu */}
                 <AnimatePresence>
                 {showDropdown && (
@@ -180,21 +190,21 @@ export function Header() {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: -4 }}
                     transition={{ duration: 0.2, ease: 'easeOut' }}
-                    className="absolute right-0 mt-3 w-56 bg-black/95 backdrop-blur-xl border border-white/[0.06] rounded shadow-2xl overflow-hidden"
+                    className="absolute right-0 mt-3 w-56 bg-background/95 backdrop-blur-xl border border-border-subtle rounded shadow-2xl overflow-hidden"
                   >
-                    <div className="p-4 border-b border-white/[0.06]">
+                    <div className="p-4 border-b border-border-subtle">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white font-bold">
                           {user?.name?.charAt(0)?.toUpperCase() || 'U'}
                         </div>
                         <div>
-                          <p className="text-white font-semibold text-sm">{user?.name || 'მომხმარებელი'}</p>
-                          <p className="text-white/40 text-xs">{user?.email || ''}</p>
+                          <p className="text-foreground font-semibold text-sm">{user?.name || 'მომხმარებელი'}</p>
+                          <p className="text-foreground-subtle text-xs">{user?.email || ''}</p>
                         </div>
                       </div>
                     </div>
                     <Link to="/profile" onClick={() => setShowDropdown(false)}
-                      className="w-full px-4 py-3 text-left text-white hover:bg-white/[0.04] transition-colors flex items-center gap-3 block">
+                      className="w-full px-4 py-3 text-left text-foreground hover:bg-surface transition-colors flex items-center gap-3 block">
                       <span className="text-sm">პროფილი</span>
                     </Link>
                     <button
@@ -202,7 +212,7 @@ export function Header() {
                         logout();
                         setShowDropdown(false);
                       }}
-                      className="w-full px-4 py-3 text-left text-white hover:bg-white/[0.04] transition-colors flex items-center gap-3"
+                      className="w-full px-4 py-3 text-left text-foreground hover:bg-surface transition-colors flex items-center gap-3"
                     >
                       <LogOut className="w-4 h-4" />
                       <span className="text-sm">{t.headerSignOut}</span>

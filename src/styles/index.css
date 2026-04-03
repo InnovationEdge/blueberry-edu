@@ -2,10 +2,12 @@
 @import './tailwind.css';
 @import './theme.css';
 
-/* Smooth scroll + black background */
+/* Smooth scroll + theme transition */
 html, body {
   scroll-behavior: smooth;
-  background-color: #000;
+}
+html {
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* Custom scrollbar styles for Netflix-like experience */

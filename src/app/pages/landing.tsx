@@ -114,9 +114,9 @@ export function Landing() {
   }, [testimonialPaused, testimonials.length]);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Header — Netflix exact style */}
-      <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-12 py-5 bg-gradient-to-b from-black/80 to-transparent">
+      <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-12 py-5 bg-gradient-to-b from-overlay/80 to-transparent">
         <div className="flex items-center justify-between max-w-[1400px] mx-auto">
           {/* Logo */}
           <img src="/images/logo-simple.png" alt="Blueberry Academy" className="h-7 md:h-8 w-auto" />
@@ -126,7 +126,7 @@ export function Landing() {
             <div className="relative">
               <button
                 onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
-                className="flex items-center gap-2 px-3 py-1.5 border border-white/50 text-white rounded hover:border-white transition-colors text-sm bg-black/40"
+                className="flex items-center gap-2 px-3 py-1.5 border border-border text-foreground rounded hover:border-foreground transition-colors text-sm bg-overlay/40"
               >
                 <span className="text-base font-bold">文A</span>
                 <span>{language}</span>
@@ -142,7 +142,7 @@ export function Landing() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -4 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute right-0 mt-2 w-44 bg-black/95 backdrop-blur-xl border border-white/20 rounded shadow-2xl overflow-hidden z-50"
+                      className="absolute right-0 mt-2 w-44 bg-overlay/95 backdrop-blur-xl border border-border rounded shadow-2xl overflow-hidden z-50"
                     >
                       {languages.map((lang, index) => (
                         <button
@@ -153,8 +153,8 @@ export function Landing() {
                           }}
                           className={`block w-full px-4 py-2.5 text-sm text-left transition-colors ${
                             language === lang
-                              ? 'bg-white/15 text-white font-medium'
-                              : 'text-white/60 hover:bg-white/10 hover:text-white'
+                              ? 'bg-surface-hover text-foreground font-medium'
+                              : 'text-foreground-secondary hover:bg-surface-hover hover:text-foreground'
                           }`}
                         >
                           {lang}
@@ -169,7 +169,7 @@ export function Landing() {
             {/* Sign In — Netflix exact red button */}
             <button
               onClick={handleSignIn}
-              className="px-4 py-1.5 bg-[#1a4fd8] text-white rounded font-semibold text-sm hover:bg-[#1540b0] transition-colors"
+              className="px-4 py-1.5 bg-brand text-white rounded font-semibold text-sm hover:bg-brand-hover transition-colors"
             >
               {t.landingSignIn}
             </button>
@@ -222,9 +222,9 @@ export function Landing() {
         </div>
 
         {/* Overlays — Netflix-style: center readable, edges dark */}
-        <div className="absolute inset-0 bg-black/25" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/20" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-overlay/25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-overlay/40 to-overlay/20" />
+        <div className="absolute inset-0 bg-gradient-to-b from-overlay/50 via-transparent to-transparent" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.15)_0%,rgba(0,0,0,0.55)_100%)]" />
 
         {/* Content — left aligned */}
@@ -235,10 +235,10 @@ export function Landing() {
           </h2>
 
           <div className="flex items-center gap-4">
-            <p className="text-sm md:text-base text-white/60">{t.landingHeroSubtitle}</p>
+            <p className="text-sm md:text-base text-foreground-secondary">{t.landingHeroSubtitle}</p>
             <button
               onClick={handleSignIn}
-              className="px-7 py-3 bg-[#1a4fd8] text-white rounded hover:bg-[#1540b0] transition-all font-bold text-sm flex items-center gap-2 group flex-shrink-0"
+              className="px-7 py-3 bg-brand text-white rounded hover:bg-brand-hover transition-all font-bold text-sm flex items-center gap-2 group flex-shrink-0"
             >
               {t.landingGetStarted}
               <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -322,7 +322,7 @@ export function Landing() {
       `}</style>
 
       {/* What's in every Blueberry course? — MasterClass exact layout */}
-      <section className="py-24 md:py-32 px-4 md:px-12 lg:px-16 bg-black">
+      <section className="py-24 md:py-32 px-4 md:px-12 lg:px-16 bg-background">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-20 items-start">
           {/* Left Side — Heading + CTA buttons */}
           <div className="space-y-10">
@@ -333,13 +333,13 @@ export function Landing() {
             <div className="flex flex-row gap-3">
               <button
                 onClick={handleSignIn}
-                className="px-10 py-4 bg-[#1a4fd8] text-white rounded hover:bg-[#1540b0] transition-all font-bold text-base"
+                className="px-10 py-4 bg-brand text-white rounded hover:bg-brand-hover transition-all font-bold text-base"
               >
                 {t.landingGetStarted}
               </button>
               <button
                 onClick={handleSignIn}
-                className="px-10 py-4 border border-white/30 text-white rounded hover:border-white transition-colors font-semibold flex items-center gap-2"
+                className="px-10 py-4 border border-foreground-faint text-foreground rounded hover:border-foreground transition-colors font-semibold flex items-center gap-2"
               >
                 <Award className="w-5 h-5" strokeWidth={1.5} />
                 {t.landingGift}
@@ -360,8 +360,8 @@ export function Landing() {
               const Icon = item.icon;
               return (
                 <div key={i} className="flex items-center gap-4">
-                  <Icon className="w-5 h-5 text-white/40 flex-shrink-0" strokeWidth={1.2} />
-                  <span className="text-[15px] text-white/80">{item.text}</span>
+                  <Icon className="w-5 h-5 text-foreground-subtle flex-shrink-0" strokeWidth={1.2} />
+                  <span className="text-[15px] text-foreground-secondary">{item.text}</span>
                 </div>
               );
             })}
@@ -370,15 +370,15 @@ export function Landing() {
       </section>
 
       {/* Trending Now — 4 visible, auto-slides like carousel */}
-      <section className="pt-8 pb-16 bg-black overflow-hidden">
+      <section className="pt-8 pb-16 bg-background overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 md:px-12 lg:px-16 mb-6">
           <h3 className="text-2xl md:text-3xl font-bold">{t.landingTrendingNow}</h3>
         </div>
 
         <div className="relative overflow-hidden mx-4 md:mx-12 lg:mx-16">
           {/* Left/Right edge fades */}
-          <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
           <div className="flex gap-3 trending-carousel">
             {[...courses, ...courses].map((course, i) => (
@@ -395,7 +395,7 @@ export function Landing() {
                 </div>
                 <div className="mt-2">
                   <h4 className="font-semibold text-xs line-clamp-1">{course.title}</h4>
-                  <p className="text-[11px] text-white/40 line-clamp-1">{course.instructor}</p>
+                  <p className="text-[11px] text-foreground-subtle line-clamp-1">{course.instructor}</p>
                 </div>
               </div>
             ))}
@@ -417,17 +417,17 @@ export function Landing() {
       `}</style>
 
       {/* Work changed. It's time learning did too. */}
-      <section className="py-24 md:py-32 px-4 md:px-12 lg:px-16 bg-black">
+      <section className="py-24 md:py-32 px-4 md:px-12 lg:px-16 bg-background">
         <div className="max-w-4xl mx-auto text-center space-y-8">
           <div>
             <h4 className="text-4xl md:text-5xl font-bold">{t.landingWorkChanged}</h4>
             <h4 className="text-4xl md:text-5xl font-bold">{t.landingTimeLearning}</h4>
           </div>
           <div className="flex items-center justify-center gap-6 flex-wrap">
-            <span className="text-white/40 text-sm">{t.landingPayPerCourse}</span>
+            <span className="text-foreground-subtle text-sm">{t.landingPayPerCourse}</span>
             <button
               onClick={handleSignIn}
-              className="px-8 py-3.5 bg-[#1a4fd8] text-white rounded hover:bg-[#1540b0] transition-all font-bold hover:scale-105 active:scale-95"
+              className="px-8 py-3.5 bg-brand text-white rounded hover:bg-brand-hover transition-all font-bold hover:scale-105 active:scale-95"
             >
               {t.landingGetStarted}
             </button>
@@ -436,7 +436,7 @@ export function Landing() {
       </section>
 
       {/* Why Blueberry — Premium minimalist cards */}
-      <section className="py-16 md:py-24 px-4 md:px-12 lg:px-16 bg-black">
+      <section className="py-16 md:py-24 px-4 md:px-12 lg:px-16 bg-background">
         <div className="max-w-7xl mx-auto">
           <h3 className="text-2xl md:text-3xl font-bold mb-10">რატომ Blueberry</h3>
 
@@ -446,12 +446,12 @@ export function Landing() {
               return (
                 <div
                   key={i}
-                  className="bg-[#111111] border border-white/[0.06] rounded p-7 flex flex-col justify-between min-h-[220px] hover:border-white/10 transition-colors"
+                  className="bg-[#111111] border border-border-subtle rounded p-7 flex flex-col justify-between min-h-[220px] hover:border-foreground/10 transition-colors"
                 >
                   <div>
-                    <Icon className="w-6 h-6 text-white/60 mb-5" strokeWidth={1.2} />
+                    <Icon className="w-6 h-6 text-foreground-secondary mb-5" strokeWidth={1.2} />
                     <h4 className="text-base font-bold mb-2 leading-snug">{feature.title}</h4>
-                    <p className="text-sm text-white/30 leading-relaxed">{feature.description}</p>
+                    <p className="text-sm text-foreground-faint leading-relaxed">{feature.description}</p>
                   </div>
                 </div>
               );
@@ -461,16 +461,16 @@ export function Landing() {
       </section>
 
       {/* Divider */}
-      <div className="h-px bg-white/[0.06]" />
+      <div className="h-px bg-surface-raised" />
 
       {/* FAQ — Minimalist */}
-      <section className="py-16 md:py-24 px-4 md:px-12 lg:px-16 bg-black">
+      <section className="py-16 md:py-24 px-4 md:px-12 lg:px-16 bg-background">
         <div className="max-w-7xl mx-auto mb-10">
           <h3 className="text-2xl md:text-3xl font-bold">ხშირად დასმული კითხვები</h3>
         </div>
         <div className="max-w-7xl mx-auto">
 
-          <div className="divide-y divide-white/[0.06]">
+          <div className="divide-y divide-border-subtle">
             {[
               { q: 'რა არის Blueberry?', a: 'Blueberry არის ონლაინ სასწავლო პლატფორმა, სადაც შეგიძლია შეიძინო კურსები საუკეთესო ქართველი და საერთაშორისო ინსტრუქტორებისგან. გადაიხადე ერთხელ და კურსი შენია სამუდამოდ.' },
               { q: 'როგორ მუშაობს გადახდა?', a: 'შეარჩიე კურსი, გადაიხადე ერთჯერადი თანხა და მიიღე უვადო წვდომა. არანაირი გამოწერა ან ყოველთვიური გადასახადი.' },
@@ -484,8 +484,8 @@ export function Landing() {
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   className="w-full flex items-center justify-between py-6 text-left group"
                 >
-                  <span className="text-base font-medium pr-4 group-hover:text-white transition-colors">{item.q}</span>
-                  <Plus className={`w-5 h-5 text-white/30 flex-shrink-0 transition-transform duration-300 ${openFaq === i ? 'rotate-45' : ''}`} />
+                  <span className="text-base font-medium pr-4 group-hover:text-foreground transition-colors">{item.q}</span>
+                  <Plus className={`w-5 h-5 text-foreground-faint flex-shrink-0 transition-transform duration-300 ${openFaq === i ? 'rotate-45' : ''}`} />
                 </button>
                 <AnimatePresence>
                   {openFaq === i && (
@@ -496,7 +496,7 @@ export function Landing() {
                       transition={{ duration: 0.25 }}
                       className="overflow-hidden"
                     >
-                      <p className="text-sm text-white/40 leading-relaxed pb-6">{item.a}</p>
+                      <p className="text-sm text-foreground-subtle leading-relaxed pb-6">{item.a}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -507,10 +507,10 @@ export function Landing() {
       </section>
 
       {/* Divider */}
-      <div className="h-[2px] bg-gradient-to-r from-transparent via-[#1a4fd8]/30 to-transparent" />
+      <div className="h-[2px] bg-gradient-to-r from-transparent via-brand/30 to-transparent" />
 
       {/* Certificate Section */}
-      <section className="py-16 md:py-24 px-4 md:px-12 lg:px-16 bg-black">
+      <section className="py-16 md:py-24 px-4 md:px-12 lg:px-16 bg-background">
         <div className="max-w-7xl mx-auto">
           <h3 className="text-2xl md:text-3xl font-bold mb-10">სერტიფიკატი</h3>
         </div>
@@ -620,7 +620,7 @@ export function Landing() {
       </section>
 
       {/* Divider */}
-      <div className="h-[2px] bg-gradient-to-r from-transparent via-[#1a4fd8]/30 to-transparent" />
+      <div className="h-[2px] bg-gradient-to-r from-transparent via-brand/30 to-transparent" />
 
       {/* Testimonials — Cinematic MasterClass style */}
       <section
@@ -630,7 +630,7 @@ export function Landing() {
       >
         {/* Header */}
         <div className="max-w-7xl mx-auto px-4 md:px-12 lg:px-16">
-          <h3 className="text-2xl md:text-3xl font-bold text-white mb-14">
+          <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-14">
             რას ამბობენ ჩვენი სტუდენტები
           </h3>
         </div>
@@ -744,26 +744,26 @@ export function Landing() {
       </section>
 
       {/* Footer */}
-      <footer className="pt-16 pb-10 px-4 md:px-12 lg:px-16 bg-black border-t border-white/[0.06]">
+      <footer className="pt-16 pb-10 px-4 md:px-12 lg:px-16 bg-background border-t border-border-subtle">
         <div className="max-w-7xl mx-auto">
           {/* Top — Logo + Social icons */}
           <div className="flex items-center justify-between mb-12">
             <img src="/images/logo-academy.png" alt="Blueberry Academy" className="h-8 w-auto" />
             <div className="flex items-center gap-5">
               {/* Instagram */}
-              <a href="#" className="text-white/30 hover:text-white transition-colors" aria-label="Instagram">
+              <a href="#" className="text-foreground-faint hover:text-foreground transition-colors" aria-label="Instagram">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
               </a>
               {/* Facebook */}
-              <a href="#" className="text-white/30 hover:text-white transition-colors" aria-label="Facebook">
+              <a href="#" className="text-foreground-faint hover:text-foreground transition-colors" aria-label="Facebook">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
               </a>
               {/* X/Twitter */}
-              <a href="#" className="text-white/30 hover:text-white transition-colors" aria-label="X">
+              <a href="#" className="text-foreground-faint hover:text-foreground transition-colors" aria-label="X">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
               </a>
               {/* LinkedIn */}
-              <a href="#" className="text-white/30 hover:text-white transition-colors" aria-label="LinkedIn">
+              <a href="#" className="text-foreground-faint hover:text-foreground transition-colors" aria-label="LinkedIn">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
               </a>
             </div>
@@ -772,41 +772,41 @@ export function Landing() {
           {/* Links — 3 columns */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mb-12">
             <div>
-              <h4 className="text-xs text-white/30 uppercase tracking-wider mb-4">{t.landingFooterAbout}</h4>
+              <h4 className="text-xs text-foreground-faint uppercase tracking-wider mb-4">{t.landingFooterAbout}</h4>
               <ul className="space-y-2.5">
-                <li><a href="#" className="text-white/40 hover:text-white transition-colors text-sm">{t.landingFooterAboutUs}</a></li>
-                <li><a href="#" className="text-white/40 hover:text-white transition-colors text-sm">{t.landingFooterCareers}</a></li>
-                <li><a href="#" className="text-white/40 hover:text-white transition-colors text-sm">{t.landingFooterPress}</a></li>
-                <li><a href="#" className="text-white/40 hover:text-white transition-colors text-sm">{t.landingFooterBlog}</a></li>
+                <li><a href="#" className="text-foreground-subtle hover:text-foreground transition-colors text-sm">{t.landingFooterAboutUs}</a></li>
+                <li><a href="#" className="text-foreground-subtle hover:text-foreground transition-colors text-sm">{t.landingFooterCareers}</a></li>
+                <li><a href="#" className="text-foreground-subtle hover:text-foreground transition-colors text-sm">{t.landingFooterPress}</a></li>
+                <li><a href="#" className="text-foreground-subtle hover:text-foreground transition-colors text-sm">{t.landingFooterBlog}</a></li>
               </ul>
             </div>
 
             <div>
-              <h4 className="text-xs text-white/30 uppercase tracking-wider mb-4">{t.landingFooterSupport}</h4>
+              <h4 className="text-xs text-foreground-faint uppercase tracking-wider mb-4">{t.landingFooterSupport}</h4>
               <ul className="space-y-2.5">
-                <li><a href="#" className="text-white/40 hover:text-white transition-colors text-sm">{t.landingFooterHelpCenter}</a></li>
-                <li><a href="#" className="text-white/40 hover:text-white transition-colors text-sm">{t.landingFooterContactUs}</a></li>
-                <li><a href="#" className="text-white/40 hover:text-white transition-colors text-sm">{t.landingFooterFAQ}</a></li>
-                <li><a href="#" className="text-white/40 hover:text-white transition-colors text-sm">{t.landingFooterAccount}</a></li>
+                <li><a href="#" className="text-foreground-subtle hover:text-foreground transition-colors text-sm">{t.landingFooterHelpCenter}</a></li>
+                <li><a href="#" className="text-foreground-subtle hover:text-foreground transition-colors text-sm">{t.landingFooterContactUs}</a></li>
+                <li><a href="#" className="text-foreground-subtle hover:text-foreground transition-colors text-sm">{t.landingFooterFAQ}</a></li>
+                <li><a href="#" className="text-foreground-subtle hover:text-foreground transition-colors text-sm">{t.landingFooterAccount}</a></li>
               </ul>
             </div>
 
             <div>
-              <h4 className="text-xs text-white/30 uppercase tracking-wider mb-4">{t.landingFooterLegal}</h4>
+              <h4 className="text-xs text-foreground-faint uppercase tracking-wider mb-4">{t.landingFooterLegal}</h4>
               <ul className="space-y-2.5">
-                <li><a href="#" className="text-white/40 hover:text-white transition-colors text-sm">{t.landingFooterTermsOfUse}</a></li>
-                <li><a href="#" className="text-white/40 hover:text-white transition-colors text-sm">{t.landingFooterPrivacyPolicy}</a></li>
-                <li><a href="#" className="text-white/40 hover:text-white transition-colors text-sm">{t.landingFooterCookiePreferences}</a></li>
-                <li><a href="#" className="text-white/40 hover:text-white transition-colors text-sm">{t.landingFooterCorporateInfo}</a></li>
+                <li><a href="#" className="text-foreground-subtle hover:text-foreground transition-colors text-sm">{t.landingFooterTermsOfUse}</a></li>
+                <li><a href="#" className="text-foreground-subtle hover:text-foreground transition-colors text-sm">{t.landingFooterPrivacyPolicy}</a></li>
+                <li><a href="#" className="text-foreground-subtle hover:text-foreground transition-colors text-sm">{t.landingFooterCookiePreferences}</a></li>
+                <li><a href="#" className="text-foreground-subtle hover:text-foreground transition-colors text-sm">{t.landingFooterCorporateInfo}</a></li>
               </ul>
             </div>
           </div>
 
           {/* Bottom — Copyright + Language */}
-          <div className="pt-8 border-t border-white/[0.06] flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-white/20 text-xs">{t.landingFooterRights}</p>
+          <div className="pt-8 border-t border-border-subtle flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-foreground-faint text-xs">{t.landingFooterRights}</p>
             <div className="flex items-center gap-4">
-              <span className="text-white/30 text-xs flex items-center gap-1.5"><span className="text-sm font-bold">文A</span>{language}</span>
+              <span className="text-foreground-faint text-xs flex items-center gap-1.5"><span className="text-sm font-bold">文A</span>{language}</span>
             </div>
           </div>
         </div>

@@ -65,45 +65,45 @@ export function QuizBuilder() {
   });
 
   return (
-    <div className="min-h-screen bg-black pt-32 pb-20 px-4 md:px-12">
+    <div className="min-h-screen bg-background pt-32 pb-20 px-4 md:px-12">
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
           <button onClick={() => navigate(-1)}
-            className="w-9 h-9 rounded flex items-center justify-center bg-white/[0.06] hover:bg-white/10 transition-all">
-            <ArrowLeft className="w-4 h-4 text-white" />
+            className="w-9 h-9 rounded flex items-center justify-center bg-surface-raised hover:bg-surface-hover transition-all">
+            <ArrowLeft className="w-4 h-4 text-foreground" />
           </button>
           <div>
-            <h1 className="text-2xl font-black text-white">ქვიზის შექმნა</h1>
-            <p className="text-white/40 text-xs mt-0.5">{questions.length} შეკითხვა</p>
+            <h1 className="text-2xl font-black text-foreground">ქვიზის შექმნა</h1>
+            <p className="text-foreground-subtle text-xs mt-0.5">{questions.length} შეკითხვა</p>
           </div>
         </div>
 
         {/* Pass threshold */}
-        <div className="mb-8 bg-white/[0.03] border border-white/[0.06] rounded p-4 flex items-center justify-between">
-          <span className="text-white text-sm font-medium">ჩაბარების ზღვარი</span>
+        <div className="mb-8 bg-surface border border-border-subtle rounded p-4 flex items-center justify-between">
+          <span className="text-foreground text-sm font-medium">ჩაბარების ზღვარი</span>
           <div className="flex items-center gap-2">
             <input type="number" value={passThreshold} onChange={e => setPassThreshold(Number(e.target.value))}
               min={50} max={100} step={5}
-              className="w-16 px-2 py-1.5 bg-white/[0.05] border border-white/10 rounded text-white text-sm text-center focus:outline-none focus:border-[#1a4fd8]" />
-            <span className="text-white/40 text-sm">%</span>
+              className="w-16 px-2 py-1.5 bg-surface-raised border border-border-muted rounded text-foreground text-sm text-center focus:outline-none focus:border-brand" />
+            <span className="text-foreground-subtle text-sm">%</span>
           </div>
         </div>
 
         {/* Questions */}
         <div className="space-y-4">
           {questions.map((q, qi) => (
-            <div key={q.id} className="bg-white/[0.03] border border-white/[0.06] rounded p-5">
+            <div key={q.id} className="bg-surface border border-border-subtle rounded p-5">
               <div className="flex items-start gap-3 mb-4">
-                <span className="text-white/20 text-lg font-black mt-1">{qi + 1}</span>
+                <span className="text-foreground-faint text-lg font-black mt-1">{qi + 1}</span>
                 <div className="flex-1">
                   <input type="text" value={q.text} onChange={e => updateQuestion(q.id, 'text', e.target.value)}
                     placeholder="შეკითხვა..."
-                    className="w-full px-3 py-2.5 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#1a4fd8]" />
+                    className="w-full px-3 py-2.5 bg-surface-raised border border-border-muted rounded text-foreground text-sm placeholder-foreground-faint focus:outline-none focus:border-brand" />
                 </div>
                 <button onClick={() => removeQuestion(q.id)}
-                  className="p-2 hover:bg-white/10 rounded transition-colors">
-                  <Trash2 className="w-4 h-4 text-white/30 hover:text-[#1a4fd8]" />
+                  className="p-2 hover:bg-surface-hover rounded transition-colors">
+                  <Trash2 className="w-4 h-4 text-foreground-faint hover:text-brand" />
                 </button>
               </div>
 
@@ -112,16 +112,16 @@ export function QuizBuilder() {
                   <div key={oi} className="flex items-center gap-2">
                     <button onClick={() => updateQuestion(q.id, 'correctIndex', oi)}
                       className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
-                        q.correctIndex === oi ? 'border-emerald-500 bg-emerald-500' : 'border-white/20 hover:border-white/40'
+                        q.correctIndex === oi ? 'border-emerald-500 bg-emerald-500' : 'border-border hover:border-foreground-subtle'
                       }`}>
                       {q.correctIndex === oi && <Check className="w-3 h-3 text-white" />}
                     </button>
                     {q.type === 'true_false' ? (
-                      <span className="text-white/70 text-sm">{opt}</span>
+                      <span className="text-foreground-secondary text-sm">{opt}</span>
                     ) : (
                       <input type="text" value={opt} onChange={e => updateOption(q.id, oi, e.target.value)}
                         placeholder={`ვარიანტი ${oi + 1}`}
-                        className="flex-1 px-3 py-2 bg-white/[0.03] border border-white/[0.06] rounded text-white text-sm placeholder-white/20 focus:outline-none focus:border-white/20" />
+                        className="flex-1 px-3 py-2 bg-surface border border-border-subtle rounded text-foreground text-sm placeholder-foreground-faint focus:outline-none focus:border-border" />
                     )}
                   </div>
                 ))}
@@ -133,11 +133,11 @@ export function QuizBuilder() {
         {/* Add question buttons */}
         <div className="flex gap-3 mt-6">
           <button onClick={() => addQuestion('multiple_choice')}
-            className="flex items-center gap-2 px-5 py-2.5 border border-dashed border-white/10 rounded text-white/40 text-sm hover:border-white/25 hover:text-white/60 transition-colors">
+            className="flex items-center gap-2 px-5 py-2.5 border border-dashed border-border-muted rounded text-foreground-subtle text-sm hover:border-border hover:text-foreground-secondary transition-colors">
             <Plus className="w-4 h-4" />არჩევითი
           </button>
           <button onClick={() => addQuestion('true_false')}
-            className="flex items-center gap-2 px-5 py-2.5 border border-dashed border-white/10 rounded text-white/40 text-sm hover:border-white/25 hover:text-white/60 transition-colors">
+            className="flex items-center gap-2 px-5 py-2.5 border border-dashed border-border-muted rounded text-foreground-subtle text-sm hover:border-border hover:text-foreground-secondary transition-colors">
             <Plus className="w-4 h-4" />სწორი/არასწორი
           </button>
         </div>
@@ -145,7 +145,7 @@ export function QuizBuilder() {
         {/* Save */}
         <div className="flex justify-end mt-8">
           <button onClick={() => saveQuiz.mutate()} disabled={questions.length === 0 || saveQuiz.isPending}
-            className="px-8 py-2.5 bg-[#1a4fd8] text-white rounded-full text-sm font-bold hover:bg-[#1540b0] transition-all active:scale-95 disabled:opacity-50">
+            className="px-8 py-2.5 bg-brand text-white rounded-full text-sm font-bold hover:bg-brand-hover transition-all active:scale-95 disabled:opacity-50">
             {saveQuiz.isPending ? 'ინახება...' : 'ქვიზის შენახვა'}
           </button>
         </div>

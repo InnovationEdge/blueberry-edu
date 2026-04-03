@@ -18,7 +18,7 @@ export function Home() {
   const isLoading = heroLoading || newLoading || popLoading || allLoading;
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-background">
       {heroLoading ? <HeroSkeleton /> : featuredCourses.length > 0 && <HeroSection courses={featuredCourses} />}
       <div className="space-y-10 md:space-y-14 pb-20 mt-6 relative z-10">
         {isLoading ? (

@@ -43,10 +43,10 @@ export function CourseDetail() {
 
   if (error || !course) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center space-y-4">
-          <h1 className="text-2xl text-white">{t.detailNotFound}</h1>
-          <Link to="/" className="text-[#1a4fd8] hover:underline">
+          <h1 className="text-2xl text-foreground">{t.detailNotFound}</h1>
+          <Link to="/" className="text-brand hover:underline">
             {t.detailReturnHome}
           </Link>
         </div>
@@ -110,14 +110,14 @@ export function CourseDetail() {
   const totalReviews = course.totalReviews;
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-background">
       {/* Back Navigation */}
       <div className="fixed top-6 left-4 md:left-12 lg:left-16 z-30">
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-white hover:text-white/60 transition-colors group"
+          className="flex items-center gap-2 text-foreground hover:text-foreground-secondary transition-colors group"
         >
-          <div className="w-10 h-10 rounded-full bg-white/[0.03]/90 hover:bg-white/[0.06] flex items-center justify-center backdrop-blur-sm transition-all group-hover:scale-110 shadow-lg">
+          <div className="w-10 h-10 rounded-full bg-surface/90 hover:bg-surface-raised flex items-center justify-center backdrop-blur-sm transition-all group-hover:scale-110 shadow-lg">
             <ArrowLeft className="w-5 h-5" />
           </div>
         </button>
@@ -131,47 +131,47 @@ export function CourseDetail() {
             alt={course.title}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[black] via-[black]/90 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[black] via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-overlay via-[black]/90 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-overlay via-transparent to-transparent" />
         </div>
 
         <div className="relative h-full flex items-center px-4 md:px-12 lg:px-16">
           <div className="max-w-3xl space-y-7">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight">
               {course.title}
             </h1>
 
-            <p className="text-xl md:text-2xl text-white/60 leading-relaxed">
+            <p className="text-xl md:text-2xl text-foreground-secondary leading-relaxed">
               {course.subtitle}
             </p>
 
-            <div className="flex items-center gap-5 text-base text-white/60">
+            <div className="flex items-center gap-5 text-base text-foreground-secondary">
               <div className="flex items-center gap-1.5">
                 <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-                <span className="font-semibold text-white">{course.rating}</span>
-                <span className="text-white/40">({totalReviews.toLocaleString()} ratings)</span>
+                <span className="font-semibold text-foreground">{course.rating}</span>
+                <span className="text-foreground-subtle">({totalReviews.toLocaleString()} ratings)</span>
               </div>
               <span>•</span>
               <span>{course.students.toLocaleString()} students</span>
             </div>
 
-            <div className="text-base text-white/40">
-              Created by <span className="text-white/80 font-medium">{course.instructor}</span>
+            <div className="text-base text-foreground-subtle">
+              Created by <span className="text-foreground-secondary font-medium">{course.instructor}</span>
             </div>
 
-            <div className="flex items-center gap-5 text-base text-white/60">
+            <div className="flex items-center gap-5 text-base text-foreground-secondary">
               <div className="flex items-center gap-2">
-                <Clock className="w-5 h-5 text-white/40" />
+                <Clock className="w-5 h-5 text-foreground-subtle" />
                 <span>{course.duration}</span>
               </div>
               <span>•</span>
               <div className="flex items-center gap-2">
-                <BarChart3 className="w-5 h-5 text-white/40" />
+                <BarChart3 className="w-5 h-5 text-foreground-subtle" />
                 <span>{course.level}</span>
               </div>
               <span>•</span>
               <div className="flex items-center gap-2">
-                <Globe className="w-5 h-5 text-white/40" />
+                <Globe className="w-5 h-5 text-foreground-subtle" />
                 <span>ქართული</span>
               </div>
             </div>
@@ -188,13 +188,13 @@ export function CourseDetail() {
             <div className="lg:col-span-2 space-y-12">
               
               {/* What You'll Learn */}
-              <div className="bg-white/[0.03] rounded p-8">
-                <h2 className="text-2xl font-bold text-white mb-6">{t.detailWhatLearn}</h2>
+              <div className="bg-surface rounded p-8">
+                <h2 className="text-2xl font-bold text-foreground mb-6">{t.detailWhatLearn}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {learningOutcomes.map((outcome, index) => (
                     <div key={index} className="flex gap-3">
                       <Check className="w-5 h-5 text-white flex-shrink-0 mt-0.5" />
-                      <span className="text-white/60 text-sm">{outcome}</span>
+                      <span className="text-foreground-secondary text-sm">{outcome}</span>
                     </div>
                   ))}
                 </div>
@@ -202,26 +202,26 @@ export function CourseDetail() {
 
               {/* Course Content */}
               <div>
-                <h2 className="text-2xl font-bold text-white mb-4">{ t.detailCourseContent}</h2>
-                <div className="text-sm text-white/40 mb-6">
+                <h2 className="text-2xl font-bold text-foreground mb-4">{ t.detailCourseContent}</h2>
+                <div className="text-sm text-foreground-subtle mb-6">
                   {courseSections.length} სექცია • {totalLectures} გაკვეთილი • {course.duration} სულ
                 </div>
                 <div className="space-y-2">
                   {courseSections.map((section, sectionIndex) => (
-                    <div key={sectionIndex} className="bg-white/[0.03] rounded overflow-hidden">
+                    <div key={sectionIndex} className="bg-surface rounded overflow-hidden">
                       <button
                         onClick={() => toggleSection(sectionIndex)}
-                        className="w-full flex items-center justify-between p-4 hover:bg-white/[0.06] transition-colors"
+                        className="w-full flex items-center justify-between p-4 hover:bg-surface-raised transition-colors"
                       >
                         <div className="flex items-center gap-3">
                           {expandedSections.includes(sectionIndex) ? (
-                            <ChevronUp className="w-5 h-5 text-white/40" />
+                            <ChevronUp className="w-5 h-5 text-foreground-subtle" />
                           ) : (
-                            <ChevronDown className="w-5 h-5 text-white/40" />
+                            <ChevronDown className="w-5 h-5 text-foreground-subtle" />
                           )}
                           <span className="text-white font-semibold">{section.title}</span>
                         </div>
-                        <div className="text-sm text-white/40">
+                        <div className="text-sm text-foreground-subtle">
                           {section.lectures} გაკვეთილი • {section.duration}
                         </div>
                       </button>
@@ -235,15 +235,15 @@ export function CourseDetail() {
                           transition={{ duration: 0.3, ease: 'easeOut' }}
                           className="overflow-hidden"
                         >
-                          <div className="border-t border-white/[0.06]">
+                          <div className="border-t border-border-subtle">
                             {section.lessons.map((lesson, lessonIndex) => (
                               <div
                                 key={lessonIndex}
-                                className="flex items-center justify-between p-4 pl-12 hover:bg-white/[0.06] transition-colors cursor-pointer group"
+                                className="flex items-center justify-between p-4 pl-12 hover:bg-surface-raised transition-colors cursor-pointer group"
                               >
                                 <div className="flex items-center gap-3">
-                                  <PlayCircle className="w-4 h-4 text-white/40 group-hover:text-white transition-colors" />
-                                  <span className="text-white/60 text-sm group-hover:text-white transition-colors">
+                                  <PlayCircle className="w-4 h-4 text-foreground-subtle group-hover:text-white transition-colors" />
+                                  <span className="text-foreground-secondary text-sm group-hover:text-white transition-colors">
                                     {lesson.title}
                                   </span>
                                 </div>
@@ -251,7 +251,7 @@ export function CourseDetail() {
                                   {lesson.preview && (
                                     <span className="text-xs text-red-500 font-semibold">{ t.detailPreview}</span>
                                   )}
-                                  <span className="text-sm text-white/40">{lesson.duration}</span>
+                                  <span className="text-sm text-foreground-subtle">{lesson.duration}</span>
                                 </div>
                               </div>
                             ))}
@@ -266,11 +266,11 @@ export function CourseDetail() {
 
               {/* Requirements */}
               <div>
-                <h2 className="text-2xl font-bold text-white mb-4">{ t.detailRequirements}</h2>
+                <h2 className="text-2xl font-bold text-foreground mb-4">{ t.detailRequirements}</h2>
                 <ul className="space-y-2">
                   {requirements.map((req, index) => (
-                    <li key={index} className="flex gap-2 text-white/60 text-sm">
-                      <span className="text-white/30 mt-1">•</span>
+                    <li key={index} className="flex gap-2 text-foreground-secondary text-sm">
+                      <span className="text-foreground-faint mt-1">•</span>
                       <span>{req}</span>
                     </li>
                   ))}
@@ -279,33 +279,33 @@ export function CourseDetail() {
 
               {/* Description */}
               <div>
-                <h2 className="text-2xl font-bold text-white mb-4">{ t.detailDescription}</h2>
-                <div className="text-white/60 space-y-4 text-sm leading-relaxed">
+                <h2 className="text-2xl font-bold text-foreground mb-4">{ t.detailDescription}</h2>
+                <div className="text-foreground-secondary space-y-4 text-sm leading-relaxed">
                   <p>{course.description}</p>
                 </div>
               </div>
 
               {/* Instructor */}
               <div>
-                <h2 className="text-2xl font-bold text-white mb-6">{ t.detailInstructor}</h2>
+                <h2 className="text-2xl font-bold text-foreground mb-6">{ t.detailInstructor}</h2>
                 <div className="flex gap-6">
-                  <div className="w-32 h-32 rounded-full bg-white/[0.06] flex items-center justify-center flex-shrink-0">
-                    <span className="text-4xl font-bold text-white">{course.instructor.charAt(0)}</span>
+                  <div className="w-32 h-32 rounded-full bg-surface-raised flex items-center justify-center flex-shrink-0">
+                    <span className="text-4xl font-bold text-foreground">{course.instructor.charAt(0)}</span>
                   </div>
                   <div className="space-y-3 flex-1">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-bold text-white">{course.instructor}</h3>
+                      <h3 className="text-xl font-bold text-foreground">{course.instructor}</h3>
                       <a
                         href={instructorLinkedIn}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-4 py-2 bg-white/[0.06] border border-white/10 hover:bg-white/10 text-white rounded transition-all text-sm font-medium"
+                        className="px-4 py-2 bg-surface-raised border border-border-muted hover:bg-surface-hover text-white rounded transition-all text-sm font-medium"
                       >
                         პროფილი
                       </a>
                     </div>
-                    <p className="text-white/40 text-sm">{course.instructorTitle || 'ექსპერტი ინსტრუქტორი'}</p>
-                    <div className="flex items-center gap-6 text-sm text-white/40">
+                    <p className="text-foreground-subtle text-sm">{course.instructorTitle || 'ექსპერტი ინსტრუქტორი'}</p>
+                    <div className="flex items-center gap-6 text-sm text-foreground-subtle">
                       <div className="flex items-center gap-2">
                         <Star className="w-4 h-4" />
                         <span>{course.rating} ინსტრუქტორის რეიტინგი</span>
@@ -319,7 +319,7 @@ export function CourseDetail() {
                         <span>{Math.floor(Math.random() * 10) + 5} {t.detailCourses}</span>
                       </div>
                     </div>
-                    <p className="text-white/60 text-sm leading-relaxed pt-2">
+                    <p className="text-foreground-secondary text-sm leading-relaxed pt-2">
                       {course.instructorBio || `${course.instructor} — გამოცდილი ინსტრუქტორი ამ სფეროში.`}
                     </p>
                   </div>
@@ -328,47 +328,47 @@ export function CourseDetail() {
 
               {/* Student Reviews */}
               <div>
-                <h2 className="text-2xl font-bold text-white mb-6">{ t.detailFeedback}</h2>
+                <h2 className="text-2xl font-bold text-foreground mb-6">{ t.detailFeedback}</h2>
                 <div className="mb-8">
                   <div className="flex items-center gap-3 mb-2">
                     <span className="text-5xl font-bold text-yellow-500">{averageRating}</span>
                     <div>
                       <div className="flex items-center gap-1 mb-1">
                         {[...Array(5)].map((_, i) => (
-                          <Star key={i} className={`w-5 h-5 ${i < Math.floor(averageRating) ? 'text-yellow-500 fill-yellow-500' : 'text-white/20'}`} />
+                          <Star key={i} className={`w-5 h-5 ${i < Math.floor(averageRating) ? 'text-yellow-500 fill-yellow-500' : 'text-foreground-faint'}`} />
                         ))}
                       </div>
-                      <p className="text-sm text-white/40">კურსის რეიტინგი</p>
+                      <p className="text-sm text-foreground-subtle">კურსის რეიტინგი</p>
                     </div>
                   </div>
                 </div>
 
                 <div className="space-y-6">
                   {reviews.map((review) => (
-                    <div key={review.id} className="pb-6 border-b border-white/[0.06] last:border-0">
+                    <div key={review.id} className="pb-6 border-b border-border-subtle last:border-0">
                       <div className="flex gap-4">
-                        <div className="w-12 h-12 rounded-full bg-white/[0.06] flex items-center justify-center flex-shrink-0">
-                          <span className="text-lg font-bold text-white">{review.avatar}</span>
+                        <div className="w-12 h-12 rounded-full bg-surface-raised flex items-center justify-center flex-shrink-0">
+                          <span className="text-lg font-bold text-foreground">{review.avatar}</span>
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center justify-between mb-2">
-                            <h4 className="font-semibold text-white">{review.author}</h4>
-                            <span className="text-xs text-white/30">{review.date}</span>
+                            <h4 className="font-semibold text-foreground">{review.author}</h4>
+                            <span className="text-xs text-foreground-faint">{review.date}</span>
                           </div>
                           <div className="flex items-center gap-1 mb-3">
                             {[...Array(5)].map((_, i) => (
-                              <Star key={i} className={`w-4 h-4 ${i < review.rating ? 'text-yellow-500 fill-yellow-500' : 'text-white/20'}`} />
+                              <Star key={i} className={`w-4 h-4 ${i < review.rating ? 'text-yellow-500 fill-yellow-500' : 'text-foreground-faint'}`} />
                             ))}
                           </div>
-                          <p className="text-white/60 text-sm leading-relaxed mb-3">
+                          <p className="text-foreground-secondary text-sm leading-relaxed mb-3">
                             {review.comment}
                           </p>
-                          <div className="flex items-center gap-4 text-xs text-white/30">
-                            <button className="flex items-center gap-1 hover:text-white/60 transition-colors">
+                          <div className="flex items-center gap-4 text-xs text-foreground-faint">
+                            <button className="flex items-center gap-1 hover:text-foreground-secondary transition-colors">
                               <ThumbsUp className="w-3 h-3" />
                               სასარგებლო ({review.helpful})
                             </button>
-                            <button className="hover:text-white/60 transition-colors">რეპორტი</button>
+                            <button className="hover:text-foreground-secondary transition-colors">რეპორტი</button>
                           </div>
                         </div>
                       </div>
@@ -382,10 +382,10 @@ export function CourseDetail() {
             <div className="lg:col-span-1">
               <div className="sticky top-24 space-y-6">
                 {/* Course Info Card */}
-                <div className="bg-white/[0.03] rounded p-6 space-y-4 shadow-2xl">
+                <div className="bg-surface rounded p-6 space-y-4 shadow-2xl">
                   <div className="aspect-video w-full rounded overflow-hidden mb-4 relative group cursor-pointer">
                     <img src={course.thumbnail} alt={course.title} className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="absolute inset-0 bg-overlay/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                       <Play className="w-16 h-16 text-white fill-white" />
                     </div>
                   </div>
@@ -393,9 +393,9 @@ export function CourseDetail() {
                   {/* Price */}
                   <div className="space-y-2">
                     <div className="flex items-baseline gap-3">
-                      <span className="text-3xl font-bold text-white">${discountedPrice}</span>
-                      <span className="text-lg text-white/30 line-through">${originalPrice}</span>
-                      <span className="text-sm font-semibold text-white bg-yellow-600 px-2 py-1 rounded">{discount}% off</span>
+                      <span className="text-3xl font-bold text-foreground">${discountedPrice}</span>
+                      <span className="text-lg text-foreground-faint line-through">${originalPrice}</span>
+                      <span className="text-sm font-semibold text-foreground bg-yellow-600 px-2 py-1 rounded">{discount}% off</span>
                     </div>
                     <p className="text-xs text-red-400 font-semibold">2 days left at this price!</p>
                   </div>
@@ -404,43 +404,43 @@ export function CourseDetail() {
                     <button
                       onClick={handleEnroll}
                       disabled={checkout.isPending}
-                      className="w-full h-10 rounded bg-[#1a4fd8] hover:bg-[#1540b0] text-white font-bold text-sm transition-all active:scale-95 disabled:opacity-50"
+                      className="w-full h-10 rounded bg-brand hover:bg-brand-hover text-white font-bold text-sm transition-all active:scale-95 disabled:opacity-50"
                     >
                       {checkout.isPending ? '...' : isEnrolled ? 'გაგრძელება' : t.detailEnroll}
                     </button>
-                    <button className="w-full h-12 rounded border border-white/15 hover:bg-white/[0.06] text-white font-semibold transition-all">
+                    <button className="w-full h-12 rounded border border-border-muted hover:bg-surface-raised text-white font-semibold transition-all">
                       {t.detailWishlist}
                     </button>
                   </div>
 
-                  <p className="text-center text-xs text-white/40 pt-2">{t.detailGuarantee}</p>
+                  <p className="text-center text-xs text-foreground-subtle pt-2">{t.detailGuarantee}</p>
                   
-                  <div className="border-t border-white/[0.06] pt-4 space-y-3 text-sm">
-                    <h3 className="font-bold text-white mb-3">This course includes:</h3>
-                    <div className="flex items-center gap-3 text-white/60">
-                      <Clock className="w-4 h-4 text-white/40 flex-shrink-0" />
+                  <div className="border-t border-border-subtle pt-4 space-y-3 text-sm">
+                    <h3 className="font-bold text-foreground mb-3">This course includes:</h3>
+                    <div className="flex items-center gap-3 text-foreground-secondary">
+                      <Clock className="w-4 h-4 text-foreground-subtle flex-shrink-0" />
                       <span>{course.duration} ვიდეო მოთხოვნით</span>
                     </div>
-                    <div className="flex items-center gap-3 text-white/60">
-                      <FileText className="w-4 h-4 text-white/40 flex-shrink-0" />
+                    <div className="flex items-center gap-3 text-foreground-secondary">
+                      <FileText className="w-4 h-4 text-foreground-subtle flex-shrink-0" />
                       <span>ჩამოტვირთვადი რესურსები</span>
                     </div>
-                    <div className="flex items-center gap-3 text-white/60">
-                      <Infinity className="w-4 h-4 text-white/40 flex-shrink-0" />
+                    <div className="flex items-center gap-3 text-foreground-secondary">
+                      <Infinity className="w-4 h-4 text-foreground-subtle flex-shrink-0" />
                       <span>სრული უვადო წვდომა</span>
                     </div>
-                    <div className="flex items-center gap-3 text-white/60">
-                      <Smartphone className="w-4 h-4 text-white/40 flex-shrink-0" />
+                    <div className="flex items-center gap-3 text-foreground-secondary">
+                      <Smartphone className="w-4 h-4 text-foreground-subtle flex-shrink-0" />
                       <span>მობილურსა და TV-ზე წვდომა</span>
                     </div>
-                    <div className="flex items-center gap-3 text-white/60">
-                      <Award className="w-4 h-4 text-white/40 flex-shrink-0" />
+                    <div className="flex items-center gap-3 text-foreground-secondary">
+                      <Award className="w-4 h-4 text-foreground-subtle flex-shrink-0" />
                       <span>დასრულების სერტიფიკატი</span>
                     </div>
                   </div>
 
-                  <div className="border-t border-white/[0.06] pt-4">
-                    <button className="w-full text-center text-sm text-white/40 hover:text-white transition-colors">
+                  <div className="border-t border-border-subtle pt-4">
+                    <button className="w-full text-center text-sm text-foreground-subtle hover:text-white transition-colors">
                       Share <Share2 className="w-4 h-4 inline ml-1" />
                     </button>
                   </div>

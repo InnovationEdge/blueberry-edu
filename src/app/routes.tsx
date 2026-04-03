@@ -30,8 +30,8 @@ const CertificatePage = lazy(() => import('./pages/certificate').then(m => ({ de
 
 function PageLoader() {
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center">
-      <div className="w-6 h-6 border-2 border-[#1a4fd8] border-t-transparent rounded-full animate-spin" />
+    <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="w-6 h-6 border-2 border-brand border-t-transparent rounded-full animate-spin" />
     </div>
   );
 }
@@ -59,7 +59,7 @@ function AuthWrapper({ children }: { children: React.ReactNode }) {
 
   return (
     <AnimatePresence mode="wait">
-      <PageTransition key={pageKey} className="min-h-screen bg-black">
+      <PageTransition key={pageKey} className="min-h-screen bg-background">
         {content}
       </PageTransition>
     </AnimatePresence>
@@ -77,7 +77,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 function LayoutInner({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-background">
       <Header />
       <FadeUp key={location.pathname}>{children}</FadeUp>
     </div>
@@ -155,9 +155,9 @@ export const router = createBrowserRouter([
       <Layout>
         <div className="min-h-screen flex items-center justify-center pt-20">
           <div className="text-center space-y-4">
-            <h1 className="text-6xl font-black text-white">404</h1>
-            <p className="text-base text-white/40">გვერდი ვერ მოიძებნა</p>
-            <a href="/" className="inline-block mt-4 px-6 py-2.5 bg-[#1a4fd8] text-white rounded-full text-sm font-bold hover:bg-[#1540b0] transition-colors active:scale-95">
+            <h1 className="text-6xl font-black text-foreground">404</h1>
+            <p className="text-base text-foreground-subtle">გვერდი ვერ მოიძებნა</p>
+            <a href="/" className="inline-block mt-4 px-6 py-2.5 bg-brand text-white rounded-full text-sm font-bold hover:bg-brand-hover transition-colors active:scale-95">
               მთავარზე დაბრუნება
             </a>
           </div>

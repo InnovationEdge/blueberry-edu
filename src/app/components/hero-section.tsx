@@ -51,10 +51,10 @@ export function HeroSection({ courses, interval = 6000 }: HeroSectionProps) {
         </div>
       ))}
 
-      {/* Gradients */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black" />
+      {/* Gradients — always dark for image readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-overlay/90 via-overlay/50 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-overlay via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-overlay/40 via-transparent to-overlay" />
 
       {/* Content */}
       <div className="relative h-full flex items-end pb-8 px-4 md:px-12">
@@ -108,7 +108,7 @@ export function HeroSection({ courses, interval = 6000 }: HeroSectionProps) {
         </div>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
     </div>
   );
 }

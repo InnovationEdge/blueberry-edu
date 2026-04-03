@@ -28,14 +28,12 @@ export function Library() {
   const [selectedDuration, setSelectedDuration] = useState('all');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
-  // Fetch categories from API
   const { data: apiCategories = [] } = useCategories();
   const categories = useMemo(() => [
     { id: 'all', name: 'ყველა კატეგორია', slug: 'all', icon: 'layers' },
     ...apiCategories.map(c => ({ ...c, icon: c.slug === 'business' ? 'briefcase' : c.slug === 'technology' ? 'cpu' : c.slug === 'design' ? 'layout' : c.slug === 'marketing' ? 'trending-up' : c.slug === 'photography' ? 'camera' : c.slug === 'music' ? 'music' : c.slug === 'food' ? 'utensils' : c.slug === 'arts-design' ? 'palette' : c.slug === 'data-science' ? 'bar-chart' : c.slug === 'writing' ? 'pen-tool' : 'layers' })),
   ], [apiCategories]);
 
-  // Fetch courses from API with filters
   const apiParams = useMemo(() => ({
     category: selectedCategory !== 'all' ? selectedCategory : undefined,
     level: selectedLevel !== 'ყველა დონე' ? LEVEL_API_MAP[selectedLevel] : undefined,
@@ -45,7 +43,6 @@ export function Library() {
   const { data: coursesData, isLoading } = useCourses(apiParams);
   const allCourses = coursesData?.data || [];
 
-  // Client-side filtering for search and duration (API doesn't support these)
   const filtered = useMemo(() => {
     let result = allCourses;
 
@@ -82,7 +79,7 @@ export function Library() {
   };
 
   return (
-    <div className="min-h-screen bg-black pt-32 pb-20">
+    <div className="min-h-screen bg-background pt-32 pb-20">
       {/* Categories */}
       <div className="px-4 md:px-12 mb-6">
         <div className="flex gap-3 overflow-x-auto pb-2" style={{ scrollbarWidth: 'none' }}>
@@ -92,13 +89,13 @@ export function Library() {
               onClick={() => setSelectedCategory(cat.slug)}
               className={`flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded border transition-all active:scale-[0.97] ${
                 selectedCategory === cat.slug
-                  ? 'bg-[#1a4fd8] border-[#1a4fd8] text-white'
-                  : 'bg-transparent border-white/10 text-white/50 hover:border-white/20 hover:text-white'
+                  ? 'bg-brand border-brand text-white'
+                  : 'bg-transparent border-border-muted text-foreground-subtle hover:border-foreground-faint hover:text-foreground'
               }`}
             >
               <CategoryIcon
                 iconName={cat.icon}
-                className={`w-4 h-4 ${selectedCategory === cat.slug ? 'text-white' : 'text-white/40'}`}
+                className={`w-4 h-4 ${selectedCategory === cat.slug ? 'text-white' : 'text-foreground-subtle'}`}
               />
               <span className="text-sm font-medium whitespace-nowrap">{cat.name}</span>
             </button>
@@ -113,7 +110,7 @@ export function Library() {
           <div className="hidden lg:block w-52 flex-shrink-0">
             <div className="sticky top-28 space-y-8">
               <div>
-                <p className="text-white text-sm font-bold mb-3">დონე</p>
+                <p className="text-foreground text-sm font-bold mb-3">დონე</p>
                 <div className="space-y-0.5">
                   {LEVELS.map((level) => (
                     <button
@@ -121,8 +118,8 @@ export function Library() {
                       onClick={() => setSelectedLevel(level)}
                       className={`w-full text-left px-3 py-2 rounded text-sm transition-all ${
                         selectedLevel === level
-                          ? 'bg-white/[0.08] text-white font-semibold'
-                          : 'text-white/50 hover:text-white hover:bg-white/[0.04]'
+                          ? 'bg-surface-hover text-foreground font-semibold'
+                          : 'text-foreground-subtle hover:text-foreground hover:bg-surface'
                       }`}
                     >
                       {level}
@@ -132,7 +129,7 @@ export function Library() {
               </div>
 
               <div>
-                <p className="text-white text-sm font-bold mb-3">ხანგრძლივობა</p>
+                <p className="text-foreground text-sm font-bold mb-3">ხანგრძლივობა</p>
                 <div className="space-y-0.5">
                   {DURATIONS.map((dur) => (
                     <button
@@ -140,8 +137,8 @@ export function Library() {
                       onClick={() => setSelectedDuration(dur.id)}
                       className={`w-full text-left px-3 py-2 rounded text-sm transition-all ${
                         selectedDuration === dur.id
-                          ? 'bg-white/[0.08] text-white font-semibold'
-                          : 'text-white/50 hover:text-white hover:bg-white/[0.04]'
+                          ? 'bg-surface-hover text-foreground font-semibold'
+                          : 'text-foreground-subtle hover:text-foreground hover:bg-surface'
                       }`}
                     >
                       {dur.label}
@@ -151,7 +148,7 @@ export function Library() {
               </div>
 
               {activeFilters > 0 && (
-                <button onClick={clearAll} className="text-[#1a4fd8] text-xs font-semibold hover:underline">
+                <button onClick={clearAll} className="text-brand text-xs font-semibold hover:underline">
                   ფილტრების გასუფთავება
                 </button>
               )}
@@ -162,43 +159,43 @@ export function Library() {
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-3 mb-6">
               <div className="relative flex-1 max-w-md">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-subtle" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="კურსის ძებნა..."
-                  className="w-full pl-9 pr-3 py-2 bg-white/[0.04] border border-white/10 rounded text-white placeholder-white/30 focus:outline-none focus:border-white/25 text-sm"
+                  className="w-full pl-9 pr-3 py-2 bg-surface border border-border-muted rounded text-foreground placeholder-foreground-faint focus:outline-none focus:border-foreground-subtle text-sm"
                 />
               </div>
               <button
                 onClick={() => setShowMobileFilters(!showMobileFilters)}
-                className="lg:hidden flex items-center gap-1.5 px-3 py-2 border border-white/10 rounded text-white/70 text-sm hover:bg-white/[0.04]"
+                className="lg:hidden flex items-center gap-1.5 px-3 py-2 border border-border-muted rounded text-foreground-secondary text-sm hover:bg-surface"
               >
                 <SlidersHorizontal className="w-4 h-4" />
-                {activeFilters > 0 && <span className="text-[#1a4fd8] font-bold">{activeFilters}</span>}
+                {activeFilters > 0 && <span className="text-brand font-bold">{activeFilters}</span>}
               </button>
             </div>
 
             {showMobileFilters && (
-              <div className="lg:hidden mb-6 p-4 bg-white/[0.02] border border-white/[0.06] rounded space-y-6">
+              <div className="lg:hidden mb-6 p-4 bg-surface border border-border-subtle rounded space-y-6">
                 <div>
-                  <p className="text-white text-sm font-bold mb-2">დონე</p>
+                  <p className="text-foreground text-sm font-bold mb-2">დონე</p>
                   <div className="flex flex-wrap gap-2">
                     {LEVELS.map((level) => (
                       <button key={level} onClick={() => setSelectedLevel(level)}
-                        className={`px-3 py-1.5 rounded text-xs transition-all ${selectedLevel === level ? 'bg-white text-black font-semibold' : 'border border-white/10 text-white/50'}`}>
+                        className={`px-3 py-1.5 rounded text-xs transition-all ${selectedLevel === level ? 'bg-foreground text-background font-semibold' : 'border border-border-muted text-foreground-subtle'}`}>
                         {level}
                       </button>
                     ))}
                   </div>
                 </div>
                 <div>
-                  <p className="text-white text-sm font-bold mb-2">ხანგრძლივობა</p>
+                  <p className="text-foreground text-sm font-bold mb-2">ხანგრძლივობა</p>
                   <div className="flex flex-wrap gap-2">
                     {DURATIONS.map((dur) => (
                       <button key={dur.id} onClick={() => setSelectedDuration(dur.id)}
-                        className={`px-3 py-1.5 rounded text-xs transition-all ${selectedDuration === dur.id ? 'bg-white text-black font-semibold' : 'border border-white/10 text-white/50'}`}>
+                        className={`px-3 py-1.5 rounded text-xs transition-all ${selectedDuration === dur.id ? 'bg-foreground text-background font-semibold' : 'border border-border-muted text-foreground-subtle'}`}>
                         {dur.label}
                       </button>
                     ))}
@@ -210,21 +207,21 @@ export function Library() {
             {activeFilters > 0 && (
               <div className="flex items-center gap-2 mb-4 flex-wrap">
                 {selectedLevel !== 'ყველა დონე' && (
-                  <span className="flex items-center gap-1.5 px-3 py-1 bg-white/[0.06] rounded text-white text-xs">
+                  <span className="flex items-center gap-1.5 px-3 py-1 bg-surface-raised rounded text-foreground text-xs">
                     {selectedLevel}
-                    <X className="w-3 h-3 cursor-pointer hover:text-[#1a4fd8]" onClick={() => setSelectedLevel('ყველა დონე')} />
+                    <X className="w-3 h-3 cursor-pointer hover:text-brand" onClick={() => setSelectedLevel('ყველა დონე')} />
                   </span>
                 )}
                 {selectedDuration !== 'all' && (
-                  <span className="flex items-center gap-1.5 px-3 py-1 bg-white/[0.06] rounded text-white text-xs">
+                  <span className="flex items-center gap-1.5 px-3 py-1 bg-surface-raised rounded text-foreground text-xs">
                     {DURATIONS.find(d => d.id === selectedDuration)?.label}
-                    <X className="w-3 h-3 cursor-pointer hover:text-[#1a4fd8]" onClick={() => setSelectedDuration('all')} />
+                    <X className="w-3 h-3 cursor-pointer hover:text-brand" onClick={() => setSelectedDuration('all')} />
                   </span>
                 )}
               </div>
             )}
 
-            <p className="text-white/40 text-xs mb-4">
+            <p className="text-foreground-subtle text-xs mb-4">
               {isLoading ? '...' : `${filtered.length} კურსი`}
             </p>
 
@@ -232,9 +229,9 @@ export function Library() {
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {Array.from({ length: 8 }).map((_, i) => (
                   <div key={i} className="animate-pulse">
-                    <div className="aspect-video bg-white/[0.06] rounded mb-4" />
-                    <div className="h-3 bg-white/[0.06] rounded w-3/4 mb-2" />
-                    <div className="h-3 bg-white/[0.04] rounded w-1/2" />
+                    <div className="aspect-video bg-surface-raised rounded mb-4" />
+                    <div className="h-3 bg-surface-raised rounded w-3/4 mb-2" />
+                    <div className="h-3 bg-surface rounded w-1/2" />
                   </div>
                 ))}
               </div>
@@ -246,8 +243,8 @@ export function Library() {
               </div>
             ) : (
               <div className="text-center py-24">
-                <p className="text-white/70 text-sm mb-2">{t.libNoResults}</p>
-                <button onClick={clearAll} className="text-[#1a4fd8] text-sm font-semibold hover:underline">
+                <p className="text-foreground-secondary text-sm mb-2">{t.libNoResults}</p>
+                <button onClick={clearAll} className="text-brand text-sm font-semibold hover:underline">
                   ფილტრების გასუფთავება
                 </button>
               </div>

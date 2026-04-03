@@ -46,39 +46,39 @@ export function Assignments() {
   });
 
   return (
-    <div className="min-h-screen bg-black pt-32 pb-20 px-4 md:px-12">
+    <div className="min-h-screen bg-background pt-32 pb-20 px-4 md:px-12">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
             <button onClick={() => navigate(`/instructor/course/${courseId}`)}
-              className="w-9 h-9 rounded flex items-center justify-center bg-white/[0.06] hover:bg-white/10 transition-all">
-              <ArrowLeft className="w-4 h-4 text-white" />
+              className="w-9 h-9 rounded flex items-center justify-center bg-surface-raised hover:bg-surface-hover transition-all">
+              <ArrowLeft className="w-4 h-4 text-foreground" />
             </button>
-            <h1 className="text-2xl font-black text-white">დავალებები</h1>
+            <h1 className="text-2xl font-black text-foreground">დავალებები</h1>
           </div>
           <button onClick={() => setShowCreate(true)}
-            className="flex items-center gap-2 px-5 py-2.5 bg-[#1a4fd8] text-white rounded-full text-sm font-bold hover:bg-[#1540b0] transition-all active:scale-95">
+            className="flex items-center gap-2 px-5 py-2.5 bg-brand text-white rounded-full text-sm font-bold hover:bg-brand-hover transition-all active:scale-95">
             <Plus className="w-4 h-4" />დავალების შექმნა
           </button>
         </div>
 
         {/* Create form */}
         {showCreate && (
-          <div className="bg-white/[0.03] border border-white/[0.06] rounded p-5 mb-6 space-y-4">
+          <div className="bg-surface border border-border-subtle rounded p-5 mb-6 space-y-4">
             <input type="text" value={newTitle} onChange={e => setNewTitle(e.target.value)}
               placeholder="დავალების სახელი"
-              className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#1a4fd8]" />
+              className="w-full px-4 py-3 bg-surface-raised border border-border-muted rounded text-foreground text-sm placeholder-foreground-faint focus:outline-none focus:border-brand" />
             <textarea value={newDescription} onChange={e => setNewDescription(e.target.value)}
               placeholder="აღწერა და ინსტრუქციები..."
               rows={4}
-              className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded text-white text-sm placeholder-white/25 focus:outline-none focus:border-[#1a4fd8] resize-none" />
+              className="w-full px-4 py-3 bg-surface-raised border border-border-muted rounded text-foreground text-sm placeholder-foreground-faint focus:outline-none focus:border-brand resize-none" />
             <div className="flex gap-3 justify-end">
               <button onClick={() => setShowCreate(false)}
-                className="px-4 py-2 text-white/50 text-sm hover:text-white transition-colors">გაუქმება</button>
+                className="px-4 py-2 text-foreground-subtle text-sm hover:text-foreground transition-colors">გაუქმება</button>
               <button onClick={() => createAssignment.mutate()}
                 disabled={!newTitle || createAssignment.isPending}
-                className="px-6 py-2 bg-[#1a4fd8] text-white rounded-full text-sm font-bold hover:bg-[#1540b0] disabled:opacity-50 active:scale-95">
+                className="px-6 py-2 bg-brand text-white rounded-full text-sm font-bold hover:bg-brand-hover disabled:opacity-50 active:scale-95">
                 {createAssignment.isPending ? '...' : 'შექმნა'}
               </button>
             </div>
@@ -89,22 +89,22 @@ export function Assignments() {
         {isLoading ? (
           <div className="space-y-3 animate-pulse">
             {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="h-20 bg-white/[0.03] rounded" />
+              <div key={i} className="h-20 bg-surface rounded" />
             ))}
           </div>
         ) : assignments.length > 0 ? (
           <div className="space-y-3">
             {assignments.map((a) => (
-              <div key={a.id} className="bg-white/[0.03] border border-white/[0.06] rounded p-5 hover:bg-white/[0.04] transition-colors">
+              <div key={a.id} className="bg-surface border border-border-subtle rounded p-5 hover:bg-surface-raised transition-colors">
                 <div className="flex items-start justify-between">
                   <div className="flex items-start gap-3">
-                    <FileText className="w-5 h-5 text-white/30 mt-0.5" />
+                    <FileText className="w-5 h-5 text-foreground-faint mt-0.5" />
                     <div>
-                      <h3 className="text-white font-bold text-sm">{a.title}</h3>
-                      <p className="text-white/40 text-xs mt-1 line-clamp-2">{a.description}</p>
+                      <h3 className="text-foreground font-bold text-sm">{a.title}</h3>
+                      <p className="text-foreground-subtle text-xs mt-1 line-clamp-2">{a.description}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4 text-xs text-white/30 flex-shrink-0">
+                  <div className="flex items-center gap-4 text-xs text-foreground-faint flex-shrink-0">
                     {a.dueDate && (
                       <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{new Date(a.dueDate).toLocaleDateString('ka')}</span>
                     )}
@@ -116,9 +116,9 @@ export function Assignments() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-20 bg-white/[0.02] border border-white/[0.06] rounded">
-            <FileText className="w-10 h-10 text-white/20 mx-auto mb-4" />
-            <p className="text-white/40 text-sm">ჯერ დავალება არ შეგიქმნია</p>
+          <div className="text-center py-20 bg-surface border border-border-subtle rounded">
+            <FileText className="w-10 h-10 text-foreground-faint mx-auto mb-4" />
+            <p className="text-foreground-subtle text-sm">ჯერ დავალება არ შეგიქმნია</p>
           </div>
         )}
       </div>

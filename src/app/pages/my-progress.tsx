@@ -29,20 +29,20 @@ export function MyProgress() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-black pt-32 pb-20 flex items-center justify-center">
-        <p className="text-white/40 text-sm">შესვლა საჭიროა პროგრესის სანახავად</p>
+      <div className="min-h-screen bg-background pt-32 pb-20 flex items-center justify-center">
+        <p className="text-foreground-subtle text-sm">შესვლა საჭიროა პროგრესის სანახავად</p>
       </div>
     );
   }
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-black pt-32 pb-20">
+      <div className="min-h-screen bg-background pt-32 pb-20">
         <div className="px-4 md:px-12 mb-12">
           <div className="flex items-center gap-10 animate-pulse">
-            <div className="w-20 h-20 rounded-full bg-white/[0.06]" />
-            <div className="space-y-2"><div className="h-4 bg-white/[0.06] rounded w-24" /><div className="h-3 bg-white/[0.04] rounded w-16" /></div>
-            <div className="space-y-2"><div className="h-4 bg-white/[0.06] rounded w-24" /><div className="h-3 bg-white/[0.04] rounded w-16" /></div>
+            <div className="w-20 h-20 rounded-full bg-surface-raised" />
+            <div className="space-y-2"><div className="h-4 bg-surface-raised rounded w-24" /><div className="h-3 bg-surface rounded w-16" /></div>
+            <div className="space-y-2"><div className="h-4 bg-surface-raised rounded w-24" /><div className="h-3 bg-surface rounded w-16" /></div>
           </div>
         </div>
         <div className="space-y-10">
@@ -55,9 +55,9 @@ export function MyProgress() {
 
   if (enrolledCourses.length === 0) {
     return (
-      <div className="min-h-screen bg-black pt-32 pb-20 flex flex-col items-center justify-center">
-        <p className="text-white/40 text-sm mb-4">ჯერ კურსებზე არ ხარ ჩარიცხული</p>
-        <a href="/library" className="px-6 py-2.5 bg-[#1a4fd8] text-white rounded-full text-sm font-bold hover:bg-[#1540b0] transition-all active:scale-95">
+      <div className="min-h-screen bg-background pt-32 pb-20 flex flex-col items-center justify-center">
+        <p className="text-foreground-subtle text-sm mb-4">ჯერ კურსებზე არ ხარ ჩარიცხული</p>
+        <a href="/library" className="px-6 py-2.5 bg-brand text-white rounded-full text-sm font-bold hover:bg-brand-hover transition-all active:scale-95">
           კურსების ნახვა
         </a>
       </div>
@@ -65,7 +65,7 @@ export function MyProgress() {
   }
 
   return (
-    <div className="min-h-screen bg-black pt-32 pb-20">
+    <div className="min-h-screen bg-background pt-32 pb-20">
       {/* Overview */}
       {(() => {
         const totalLessons = enrolledCourses.reduce((s: number, c: any) => s + c.lessons, 0);
@@ -75,52 +75,48 @@ export function MyProgress() {
         return (
           <div className="px-4 md:px-12 mb-12">
             <div className="flex items-center gap-10 md:gap-14">
-              {/* დასრულების მაჩვენებელი */}
               <div className="flex items-center gap-4">
                 <div className="relative w-20 h-20 flex-shrink-0">
                   <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="5" />
+                    <circle cx="50" cy="50" r="42" fill="none" className="stroke-foreground-ghost" strokeWidth="5" />
                     <circle cx="50" cy="50" r="42" fill="none" stroke="#1a4fd8" strokeWidth="5" strokeLinecap="round"
                       strokeDasharray={`${(completedCourses.length / Math.max(enrolledCourses.length, 1)) * 2 * Math.PI * 42} ${2 * Math.PI * 42}`} />
                   </svg>
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-white text-lg font-black">{Math.round((completedCourses.length / Math.max(enrolledCourses.length, 1)) * 100)}<span className="text-white/70 text-sm">%</span></span>
+                    <span className="text-foreground text-lg font-black">{Math.round((completedCourses.length / Math.max(enrolledCourses.length, 1)) * 100)}<span className="text-foreground-secondary text-sm">%</span></span>
                   </div>
                 </div>
                 <div>
-                  <p className="text-white text-sm font-bold">დასრულების მაჩვენებელი</p>
-                  <p className="text-white/70 text-xs">{completedCourses.length}/{enrolledCourses.length} {t.progressCourses.toLowerCase()}</p>
+                  <p className="text-foreground text-sm font-bold">დასრულების მაჩვენებელი</p>
+                  <p className="text-foreground-secondary text-xs">{completedCourses.length}/{enrolledCourses.length} {t.progressCourses.toLowerCase()}</p>
                 </div>
               </div>
 
-              {/* სულ გაკვეთილები */}
               <div className="flex items-center gap-4">
                 <div className="relative w-20 h-20 flex-shrink-0">
                   <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="5" />
+                    <circle cx="50" cy="50" r="42" fill="none" className="stroke-foreground-ghost" strokeWidth="5" />
                     <circle cx="50" cy="50" r="42" fill="none" stroke="#1a4fd8" strokeWidth="5" strokeLinecap="round"
                       strokeDasharray={`${(lessonPct / 100) * 2 * Math.PI * 42} ${2 * Math.PI * 42}`} />
                   </svg>
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-white text-lg font-black">{lessonPct}<span className="text-white/70 text-sm">%</span></span>
+                    <span className="text-foreground text-lg font-black">{lessonPct}<span className="text-foreground-secondary text-sm">%</span></span>
                   </div>
                 </div>
                 <div>
-                  <p className="text-white text-sm font-bold">სულ გაკვეთილები</p>
-                  <p className="text-white/70 text-xs">{doneLessons}/{totalLessons}</p>
+                  <p className="text-foreground text-sm font-bold">სულ გაკვეთილები</p>
+                  <p className="text-foreground-secondary text-xs">{doneLessons}/{totalLessons}</p>
                 </div>
               </div>
 
-              {/* სწავლის წუთები */}
               <div>
-                <p className="text-white text-sm font-bold">სწავლის წუთები</p>
-                <p className="text-white text-lg font-black mt-1">{totalMinutes}<span className="text-white/70"> წთ</span></p>
+                <p className="text-foreground text-sm font-bold">სწავლის წუთები</p>
+                <p className="text-foreground text-lg font-black mt-1">{totalMinutes}<span className="text-foreground-secondary"> წთ</span></p>
               </div>
 
-              {/* Avg Learning Minutes / Day */}
               <div className="hidden md:block">
-                <p className="text-white text-sm font-bold">საშუალო / დღეში</p>
-                <p className="text-white text-lg font-black mt-1">{totalMinutes > 0 ? Math.round(totalMinutes / 7) : 0}<span className="text-white/70"> წთ</span></p>
+                <p className="text-foreground text-sm font-bold">საშუალო / დღეში</p>
+                <p className="text-foreground text-lg font-black mt-1">{totalMinutes > 0 ? Math.round(totalMinutes / 7) : 0}<span className="text-foreground-secondary"> წთ</span></p>
               </div>
             </div>
           </div>
@@ -133,9 +129,9 @@ export function MyProgress() {
           <div>
             <div className="px-4 md:px-12 mb-1">
               <div className="flex items-center gap-2.5">
-                <span className="w-2 h-2 rounded-full bg-[#1a4fd8]" />
-                <h2 className="text-base md:text-lg font-bold text-white">{t.progressInProgress}</h2>
-                <span className="text-white/20 text-sm">{inProgressCourses.length}</span>
+                <span className="w-2 h-2 rounded-full bg-brand" />
+                <h2 className="text-base md:text-lg font-bold text-foreground">{t.progressInProgress}</h2>
+                <span className="text-foreground-faint text-sm">{inProgressCourses.length}</span>
               </div>
             </div>
             <CourseRow title="" courses={inProgressCourses} />
@@ -147,8 +143,8 @@ export function MyProgress() {
             <div className="px-4 md:px-12 mb-1">
               <div className="flex items-center gap-2.5">
                 <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                <h2 className="text-base md:text-lg font-bold text-white">{t.progressCompleted}</h2>
-                <span className="text-white/20 text-sm">{completedCourses.length}</span>
+                <h2 className="text-base md:text-lg font-bold text-foreground">{t.progressCompleted}</h2>
+                <span className="text-foreground-faint text-sm">{completedCourses.length}</span>
               </div>
             </div>
             <CourseRow title="" courses={completedCourses} />
@@ -158,11 +154,11 @@ export function MyProgress() {
         <div className="px-4 md:px-12">
           <div className="flex items-center gap-2.5 mb-4">
             <span className="w-2 h-2 rounded-full bg-amber-400" />
-            <h2 className="text-base md:text-lg font-bold text-white">{t.progressWishlist}</h2>
-            <span className="text-white/20 text-sm">{wishlistItems.length}</span>
+            <h2 className="text-base md:text-lg font-bold text-foreground">{t.progressWishlist}</h2>
+            <span className="text-foreground-faint text-sm">{wishlistItems.length}</span>
           </div>
           {wishlistItems.length === 0 ? (
-            <p className="text-white/30 text-sm">სანიშნეში კურსები არ გაქვს</p>
+            <p className="text-foreground-faint text-sm">სანიშნეში კურსები არ გაქვს</p>
           ) : (
             <CourseRow title="" courses={wishlistItems.map((w: any) => apiCourseToCourse(w.course))} />
           )}

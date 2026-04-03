@@ -153,26 +153,26 @@ export function VideoPlayer() {
 
   if (isLoading) {
     return (
-      <div className="h-screen bg-black flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[#1a4fd8] border-t-transparent rounded-full animate-spin" />
+      <div className="h-screen bg-background flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-brand border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   if (error || !course) {
     return (
-      <div className="h-screen bg-black flex items-center justify-center">
-        <p className="text-white/40 text-sm">ვიდეო ვერ მოიძებნა</p>
+      <div className="h-screen bg-background flex items-center justify-center">
+        <p className="text-foreground-subtle text-sm">ვიდეო ვერ მოიძებნა</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-background">
       {/* Video Player Container */}
       <div
         ref={videoRef}
-        className="relative w-full h-screen bg-black overflow-hidden"
+        className="relative w-full h-screen bg-overlay overflow-hidden"
         onMouseMove={handleMouseMove}
         onMouseLeave={() => isPlaying && setShowControls(false)}
       >
@@ -185,11 +185,11 @@ export function VideoPlayer() {
           />
           
           {/* Dark overlay for better text readability */}
-          <div className="absolute inset-0 bg-black/30"></div>
+          <div className="absolute inset-0 bg-overlay/30"></div>
           
           {/* Subtitle/Caption */}
           <div className="absolute bottom-32 left-0 right-0 flex justify-center px-8">
-            <p className="text-white text-2xl md:text-3xl lg:text-4xl font-bold text-center max-w-4xl leading-relaxed bg-black/60 px-6 py-3 rounded backdrop-blur-sm">
+            <p className="text-white text-2xl md:text-3xl lg:text-4xl font-bold text-center max-w-4xl leading-relaxed bg-overlay/60 px-6 py-3 rounded backdrop-blur-sm">
               "...was to become a professional ticket taker."
             </p>
           </div>
@@ -197,7 +197,7 @@ export function VideoPlayer() {
 
         {/* Top Gradient & Back Button */}
         <div
-          className={`absolute top-0 left-0 right-0 bg-gradient-to-b from-black/90 via-black/50 to-transparent h-32 transition-opacity duration-300 ${
+          className={`absolute top-0 left-0 right-0 bg-gradient-to-b from-overlay/90 via-overlay/50 to-transparent h-32 transition-opacity duration-300 ${
             showControls ? 'opacity-100' : 'opacity-0'
           }`}
         >
@@ -205,7 +205,7 @@ export function VideoPlayer() {
             {/* Back Button */}
             <button
               onClick={() => navigate(`/course/${id}/session`)}
-              className="flex items-center gap-3 p-2 pr-4 hover:bg-white/10 rounded transition-all group"
+              className="flex items-center gap-3 p-2 pr-4 hover:bg-surface-hover rounded transition-all group"
             >
               <ArrowLeft className="w-6 h-6 text-white" />
               <span className="text-white font-semibold hidden md:block">{t.playerBack}</span>
@@ -214,18 +214,18 @@ export function VideoPlayer() {
             {/* Course Title */}
             <div className="absolute left-1/2 -translate-x-1/2 text-center hidden lg:block">
               <p className="text-white font-bold text-lg">{course.title}</p>
-              <p className="text-white/60 text-sm">{t.playerSeason} {chapterId} • {currentEpisode?.title}</p>
+              <p className="text-foreground-secondary text-sm">{t.playerSeason} {chapterId} • {currentEpisode?.title}</p>
             </div>
 
             {/* Right Actions */}
             <div className="flex items-center gap-2">
-              <button className="p-2 hover:bg-white/10 rounded transition-colors" title={t.playerSubtitles}>
+              <button className="p-2 hover:bg-surface-hover rounded transition-colors" title={t.playerSubtitles}>
                 <Subtitles className="w-5 h-5 text-white" />
               </button>
-              <button className="p-2 hover:bg-white/10 rounded transition-colors" title={t.playerComments}>
+              <button className="p-2 hover:bg-surface-hover rounded transition-colors" title={t.playerComments}>
                 <MessageSquare className="w-5 h-5 text-white" />
               </button>
-              <button className="p-2 hover:bg-white/10 rounded transition-colors" title={t.playerSettings}>
+              <button className="p-2 hover:bg-surface-hover rounded transition-colors" title={t.playerSettings}>
                 <Settings className="w-5 h-5 text-white" />
               </button>
             </div>
@@ -239,24 +239,24 @@ export function VideoPlayer() {
             isPlaying ? 'opacity-0 pointer-events-none' : 'opacity-100'
           }`}
         >
-          <div className="w-20 h-20 md:w-24 md:h-24 bg-black/40 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/60 hover:scale-110 transition-all">
+          <div className="w-20 h-20 md:w-24 md:h-24 bg-overlay/40 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-overlay/60 hover:scale-110 transition-all">
             <Play className="w-10 h-10 md:w-12 md:h-12 text-white ml-1" fill="white" />
           </div>
         </div>
 
         {/* Episodes Side Panel */}
         <div
-          className={`absolute top-0 right-0 h-full w-full md:w-[500px] bg-black/95 backdrop-blur-xl transition-transform duration-300 ${
+          className={`absolute top-0 right-0 h-full w-full md:w-[500px] bg-overlay/95 backdrop-blur-xl transition-transform duration-300 ${
             showEpisodes ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
           <div className="h-full flex flex-col">
             {/* Panel Header */}
-            <div className="flex items-center justify-between p-6 border-b border-white/[0.06]">
+            <div className="flex items-center justify-between p-6 border-b border-border-subtle">
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setShowEpisodes(false)}
-                  className="p-2 hover:bg-white/10 rounded transition-colors"
+                  className="p-2 hover:bg-surface-hover rounded transition-colors"
                 >
                   <ArrowLeft className="w-5 h-5 text-white" />
                 </button>
@@ -264,7 +264,7 @@ export function VideoPlayer() {
               </div>
               <button
                 onClick={() => setShowEpisodes(false)}
-                className="p-2 hover:bg-white/10 rounded transition-colors"
+                className="p-2 hover:bg-surface-hover rounded transition-colors"
               >
                 <X className="w-5 h-5 text-white" />
               </button>
@@ -276,8 +276,8 @@ export function VideoPlayer() {
                 <button
                   key={episode.id}
                   onClick={() => selectEpisode(episode.id)}
-                  className={`w-full p-4 border-b border-white/[0.06] hover:bg-white/5 transition-colors text-left ${
-                    episode.id === lessonId ? 'bg-white/10' : ''
+                  className={`w-full p-4 border-b border-border-subtle hover:bg-surface-raised transition-colors text-left ${
+                    episode.id === lessonId ? 'bg-surface-hover' : ''
                   }`}
                 >
                   <div className="flex gap-4">
@@ -287,13 +287,13 @@ export function VideoPlayer() {
                     </div>
 
                     {/* Episode Thumbnail */}
-                    <div className="relative flex-shrink-0 w-40 h-24 bg-white/10 rounded overflow-hidden group">
+                    <div className="relative flex-shrink-0 w-40 h-24 bg-surface-hover rounded overflow-hidden group">
                       <img
                         src={episode.thumbnail}
                         alt={episode.title}
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="absolute inset-0 bg-overlay/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                         <Play className="w-8 h-8 text-white" fill="white" />
                       </div>
                       {episode.completed && (
@@ -306,7 +306,7 @@ export function VideoPlayer() {
                     {/* Episode Info */}
                     <div className="flex-1 min-w-0">
                       <h3 className="text-white font-semibold mb-2 line-clamp-1">{episode.title}</h3>
-                      <p className="text-white/40 text-sm line-clamp-2 leading-relaxed">
+                      <p className="text-foreground-subtle text-sm line-clamp-2 leading-relaxed">
                         {episode.description}
                       </p>
                     </div>
@@ -319,7 +319,7 @@ export function VideoPlayer() {
 
         {/* Bottom Controls */}
         <div
-          className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/80 to-transparent transition-opacity duration-300 ${
+          className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-overlay/95 via-overlay/80 to-transparent transition-opacity duration-300 ${
             showControls ? 'opacity-100' : 'opacity-0'
           }`}
           style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
@@ -340,13 +340,13 @@ export function VideoPlayer() {
                   style={{ left: `${previewPosition}%` }}
                 >
                   <div className="relative">
-                    <div className="w-40 h-24 bg-white/10 rounded overflow-hidden shadow-2xl border-2 border-white">
+                    <div className="w-40 h-24 bg-surface-hover rounded overflow-hidden shadow-2xl border-2 border-white">
                       <img
                         src={course.thumbnail}
                         alt="Preview"
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute bottom-1 right-1 px-2 py-0.5 bg-black/90 text-white text-xs font-semibold rounded">
+                      <div className="absolute bottom-1 right-1 px-2 py-0.5 bg-overlay/90 text-white text-xs font-semibold rounded">
                         {previewTime}
                       </div>
                     </div>
@@ -355,14 +355,14 @@ export function VideoPlayer() {
               )}
 
               {/* Track */}
-              <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden group-hover:h-1.5 transition-all">
+              <div className="w-full h-1 bg-surface-hover rounded-full overflow-hidden group-hover:h-1.5 transition-all">
                 {/* Played */}
                 <div
-                  className="h-full bg-[#1a4fd8] rounded-full transition-all relative"
+                  className="h-full bg-brand rounded-full transition-all relative"
                   style={{ width: `${progress}%` }}
                 >
                   {/* Thumb */}
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-[#1a4fd8] rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"></div>
+                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-brand rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"></div>
                 </div>
               </div>
             </div>
@@ -375,7 +375,7 @@ export function VideoPlayer() {
               {/* Play/Pause */}
               <button
                 onClick={togglePlayPause}
-                className="p-2 hover:bg-white/10 rounded-full transition-all"
+                className="p-2 hover:bg-surface-hover rounded-full transition-all"
                 title={isPlaying ? t.playerPause : t.playerPlay}
               >
                 {isPlaying ? (
@@ -388,7 +388,7 @@ export function VideoPlayer() {
               {/* Skip Backward */}
               <button
                 onClick={skipBackward}
-                className="p-2 hover:bg-white/10 rounded-full transition-all hidden md:block"
+                className="p-2 hover:bg-surface-hover rounded-full transition-all hidden md:block"
                 title="Rewind 10s"
               >
                 <SkipBack className="w-6 h-6 text-white" />
@@ -397,7 +397,7 @@ export function VideoPlayer() {
               {/* Skip Forward */}
               <button
                 onClick={skipForward}
-                className="p-2 hover:bg-white/10 rounded-full transition-all hidden md:block"
+                className="p-2 hover:bg-surface-hover rounded-full transition-all hidden md:block"
                 title="Forward 10s"
               >
                 <SkipForward className="w-6 h-6 text-white" />
@@ -411,7 +411,7 @@ export function VideoPlayer() {
               >
                 <button
                   onClick={toggleMute}
-                  className="p-2 hover:bg-white/10 rounded-full transition-all"
+                  className="p-2 hover:bg-surface-hover rounded-full transition-all"
                   title={isMuted ? 'Unmute' : 'Mute'}
                 >
                   {isMuted || volume === 0 ? (
@@ -425,7 +425,7 @@ export function VideoPlayer() {
                 <div className={`absolute left-full ml-2 transition-all ${
                   showVolumeSlider ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-2 pointer-events-none'
                 }`}>
-                  <div className="bg-black/90 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-2">
+                  <div className="bg-overlay/90 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-2">
                     <input
                       type="range"
                       min="0"
@@ -436,7 +436,7 @@ export function VideoPlayer() {
                         setVolume(val);
                         setIsMuted(val === 0);
                       }}
-                      className="w-20 h-1 bg-white/20 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
+                      className="w-20 h-1 bg-surface-active rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
                     />
                     <span className="text-white text-sm font-semibold w-8 text-right">{volume}%</span>
                   </div>
@@ -455,7 +455,7 @@ export function VideoPlayer() {
               {nextEpisode && (
                 <button
                   onClick={playNextEpisode}
-                  className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded transition-all"
+                  className="flex items-center gap-2 px-4 py-2 bg-surface-hover hover:bg-surface-active rounded transition-all"
                   title={t.playerNext}
                 >
                   <SkipForward className="w-5 h-5 text-white" />
@@ -466,7 +466,7 @@ export function VideoPlayer() {
               {/* Episodes List */}
               <button
                 onClick={() => setShowEpisodes(!showEpisodes)}
-                className="p-2 hover:bg-white/10 rounded-full transition-all"
+                className="p-2 hover:bg-surface-hover rounded-full transition-all"
                 title={t.playerEpisodes}
               >
                 <List className="w-6 h-6 text-white" />
@@ -475,7 +475,7 @@ export function VideoPlayer() {
               {/* Fullscreen */}
               <button
                 onClick={handleFullscreen}
-                className="p-2 hover:bg-white/10 rounded-full transition-all"
+                className="p-2 hover:bg-surface-hover rounded-full transition-all"
                 title={isFullscreen ? t.playerExitFullscreen : t.playerFullscreen}
               >
                 {isFullscreen ? (
@@ -495,12 +495,12 @@ export function VideoPlayer() {
           }`}
         >
           <div className="flex flex-col gap-2">
-            <div className="flex items-center gap-2 bg-black/60 backdrop-blur-sm px-4 py-2 rounded">
+            <div className="flex items-center gap-2 bg-overlay/60 backdrop-blur-sm px-4 py-2 rounded">
               <img src="/images/logo-simple.png" alt="Blueberry" className="h-4 w-auto" />
             </div>
-            <div className="text-white/60 text-sm bg-black/60 backdrop-blur-sm px-4 py-2 rounded">
+            <div className="text-foreground-secondary text-sm bg-overlay/60 backdrop-blur-sm px-4 py-2 rounded">
               <span className="font-semibold text-white">{course.title}</span>
-              <span className="mx-2 text-white/20">•</span>
+              <span className="mx-2 text-foreground-faint">•</span>
               <span>E{currentEpisode?.number} {currentEpisode?.title}</span>
             </div>
           </div>

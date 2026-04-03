@@ -42,17 +42,17 @@ export function CourseRow({ title, courses }: CourseRowProps) {
 
   return (
     <div className="space-y-3 px-4 md:px-12">
-      <h2 className="text-base md:text-lg font-bold text-white">{title}</h2>
+      <h2 className="text-base md:text-lg font-bold text-foreground">{title}</h2>
       <div className="relative group/row">
         {/* Left Arrow */}
         {showLeftArrow && (
           <button
             onClick={() => scroll('left')}
-            className="absolute left-0 top-0 bottom-0 z-20 w-14 md:w-20 bg-gradient-to-r from-black via-black/95 to-transparent flex items-center justify-start pl-2 md:pl-3 opacity-0 group-hover/row:opacity-100 transition-opacity duration-300"
+            className="absolute left-0 top-0 bottom-0 z-20 w-14 md:w-20 bg-gradient-to-r from-background via-background/95 to-transparent flex items-center justify-start pl-2 md:pl-3 opacity-0 group-hover/row:opacity-100 transition-opacity duration-300"
             aria-label="Scroll left"
           >
-            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/90 border-2 border-white/30 flex items-center justify-center hover:bg-black hover:border-white/50 hover:scale-110 transition-all shadow-xl">
-              <ChevronRight className="w-6 h-6 md:w-7 md:h-7 text-white rotate-180" />
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-background/90 border-2 border-foreground-faint flex items-center justify-center hover:bg-background hover:border-foreground-subtle hover:scale-110 transition-all shadow-xl">
+              <ChevronRight className="w-6 h-6 md:w-7 md:h-7 text-foreground rotate-180" />
             </div>
           </button>
         )}
@@ -74,11 +74,11 @@ export function CourseRow({ title, courses }: CourseRowProps) {
         {showRightArrow && (
           <button
             onClick={() => scroll('right')}
-            className="absolute right-0 top-0 bottom-0 z-20 w-14 md:w-20 bg-gradient-to-l from-black via-black/95 to-transparent flex items-center justify-end pr-2 md:pr-3 opacity-0 group-hover/row:opacity-100 transition-opacity duration-300"
+            className="absolute right-0 top-0 bottom-0 z-20 w-14 md:w-20 bg-gradient-to-l from-background via-background/95 to-transparent flex items-center justify-end pr-2 md:pr-3 opacity-0 group-hover/row:opacity-100 transition-opacity duration-300"
             aria-label="Scroll right"
           >
-            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/90 border-2 border-white/30 flex items-center justify-center hover:bg-black hover:border-white/50 hover:scale-110 transition-all shadow-xl">
-              <ChevronRight className="w-6 h-6 md:w-7 md:h-7 text-white" />
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-background/90 border-2 border-foreground-faint flex items-center justify-center hover:bg-background hover:border-foreground-subtle hover:scale-110 transition-all shadow-xl">
+              <ChevronRight className="w-6 h-6 md:w-7 md:h-7 text-foreground" />
             </div>
           </button>
         )}
