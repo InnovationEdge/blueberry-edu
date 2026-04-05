@@ -291,10 +291,10 @@ export function Landing() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid grid-cols-4 mt-16"
+            className="flex items-center gap-8 mt-16"
           >
-            {stats.map((s, i) => (
-              <div key={s.label} className={`${i > 0 ? 'border-l border-white/10 pl-6' : ''}`}>
+            {stats.map((s) => (
+              <div key={s.label} className="min-w-[70px]">
                 <div className="text-2xl md:text-3xl font-bold text-white">
                   <AnimatedCounter value={s.value} suffix={s.suffix} />
                 </div>
