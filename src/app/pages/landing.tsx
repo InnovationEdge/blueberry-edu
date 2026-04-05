@@ -306,7 +306,7 @@ export function Landing() {
       </section>
 
       {/* ═══ COMPANIES — Our graduates work at ═══ */}
-      <section className="py-10 bg-background border-b border-border-subtle overflow-hidden">
+      <section className="relative z-10 py-10 bg-background border-b border-border-subtle overflow-hidden">
         <p className="text-center text-foreground-faint text-xs uppercase tracking-[0.2em] mb-8">
           ჩვენი კურსდამთავრებულები დღეს მუშაობენ
         </p>
