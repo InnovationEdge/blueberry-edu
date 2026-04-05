@@ -1,68 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
-import { ChevronDown, Star, Clock, Users, Award, CheckCircle, Zap, BookOpen, Globe, ArrowRight, Plus, Sun, Moon } from 'lucide-react';
+import { ChevronDown, Star, Clock, Users, Award, CheckCircle, Zap, BookOpen, Globe, ArrowRight, Plus } from 'lucide-react';
 import { AnimatePresence, motion, useInView } from 'motion/react';
 import { useAuth } from '../context/auth-context';
 import { useTheme } from 'next-themes';
 import { getAppT } from '../i18n/app';
 import { Logo } from '../components/logo';
+import { HeroCanvas } from '../components/hero-canvas';
 import { usePopularCourses, useAllCourses } from '../hooks/use-courses';
-
-/* ─── Hero background video — rotating tech clips ─── */
-const HERO_VIDEOS = [
-  'https://assets.mixkit.co/videos/1728/1728-720.mp4',     // Developer coding on screen close-up
-  'https://assets.mixkit.co/videos/50600/50600-720.mp4',   // Graphic designer — color picker on screen
-  'https://assets.mixkit.co/videos/46635/46635-720.mp4',   // Programming & new technologies
-  'https://assets.mixkit.co/videos/50598/50598-720.mp4',   // Designer picking colors for typography
-  'https://assets.mixkit.co/videos/3257/3257-720.mp4',     // Two designers working with design software
-  'https://assets.mixkit.co/videos/31510/31510-720.mp4',   // Programmer hands on desk with code
-  'https://assets.mixkit.co/videos/51214/51214-720.mp4',   // Woman with futuristic VR/AI glasses
-  'https://assets.mixkit.co/videos/9757/9757-720.mp4',     // Code scrolling on computer screen
-];
-
-function HeroVideo() {
-  const [currentVideo, setCurrentVideo] = useState(0);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const handleEnded = () => {
-      setCurrentVideo(prev => (prev + 1) % HERO_VIDEOS.length);
-    };
-
-    // Also auto-switch every 6s even if video hasn't ended
-    const timer = setInterval(() => {
-      setCurrentVideo(prev => (prev + 1) % HERO_VIDEOS.length);
-    }, 6000);
-
-    video.addEventListener('ended', handleEnded);
-    return () => {
-      video.removeEventListener('ended', handleEnded);
-      clearInterval(timer);
-    };
-  }, [currentVideo]);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (video) {
-      video.load();
-      video.play().catch(() => {});
-    }
-  }, [currentVideo]);
-
-  return (
-    <video
-      ref={videoRef}
-      className="absolute inset-0 w-full h-full object-cover"
-      src={HERO_VIDEOS[currentVideo]}
-      autoPlay
-      muted
-      playsInline
-      preload="auto"
-    />
-  );
-}
 
 /* ─── Animated counter — counts up from 0 ─── */
 function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: string }) {
@@ -161,12 +105,15 @@ export function Landing() {
 
       {/* ═══ HEADER — Making Science style ═══ */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
-        <div className="flex items-center justify-between px-5 md:px-12 lg:px-16 h-[72px]">
-          {/* Logo */}
+        <div className="flex items-center px-5 md:px-12 lg:px-16 h-[72px]">
+          {/* Logo — left */}
           <Logo variant="academy" className="h-[120px] md:h-[130px] w-auto -my-8" />
 
-          {/* Nav links */}
-          <nav className="hidden lg:flex items-center gap-8">
+          {/* Spacer */}
+          <div className="flex-1" />
+
+          {/* Nav + actions — all right */}
+          <nav className="hidden lg:flex items-center gap-7 mr-6">
             {['კურსები', 'მასტერკლასები', 'სერტიფიკატები', 'კარიერა', 'ჩვენს შესახებ'].map((item) => (
               <button key={item} onClick={handleSignIn} className="text-sm font-medium text-gray-700 hover:text-[#004aad] transition-colors">
                 {item}
@@ -174,7 +121,6 @@ export function Landing() {
             ))}
           </nav>
 
-          {/* Right side */}
           <div className="flex items-center gap-2">
             {/* Language */}
             <div className="relative">
@@ -214,37 +160,20 @@ export function Landing() {
               </AnimatePresence>
             </div>
 
-            {/* Theme */}
-            <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 rounded-full hover:bg-gray-100 transition-colors text-gray-500 hover:text-gray-900"
-            >
-              {theme === 'dark' ? <Sun className="w-4.5 h-4.5" /> : <Moon className="w-4.5 h-4.5" />}
-            </button>
-
-            {/* Sign In */}
-            <button
-              onClick={handleSignIn}
-              className="ml-1 px-5 py-2 bg-[#004aad] text-white text-sm font-medium rounded-full hover:bg-[#003d8f] transition-all shadow-sm hover:shadow-md active:scale-[0.97]"
-            >
-              {t.landingSignIn}
-            </button>
           </div>
         </div>
       </header>
 
-      {/* ═══ HERO — Full-screen background video ═══ */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden bg-[#0a0a1a]">
-        {/* Background video — auto-switching tech clips */}
-        <HeroVideo />
+      {/* ═══ HERO — Compact with particle canvas ═══ */}
+      <section ref={heroRef} className="relative h-[85vh] flex items-end overflow-hidden bg-black">
+        {/* Particle network animation only */}
+        <HeroCanvas />
 
-        {/* Overlays — lighter so video is visible */}
-        <div className="absolute inset-0 bg-[#0a0a1a]/40 z-[1]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a1a]/80 via-[#0a0a1a]/30 to-transparent z-[1]" />
-        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#0a0a1a] to-transparent z-[1]" />
+        {/* Bottom gradient */}
+        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black to-transparent z-[3]" />
 
         {/* Content — bottom-left */}
-        <div className="relative z-[2] w-full px-5 md:px-12 lg:px-16 self-end pb-20">
+        <div className="relative z-[4] w-full px-5 md:px-12 lg:px-16 self-end pb-20">
           <div className="max-w-2xl">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
@@ -276,59 +205,28 @@ export function Landing() {
             </motion.button>
           </div>
 
-          {/* Stats row */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-            className="flex mt-16"
-          >
-            {stats.map((s) => (
-              <div key={s.label} className="w-[200px]">
-                <div className="text-3xl md:text-4xl font-bold text-white leading-none tracking-tight">
-                  <AnimatedCounter value={s.value} suffix={s.suffix} />
-                </div>
-                <div className="text-sm text-white/40 mt-3">{s.label}</div>
-              </div>
-            ))}
-          </motion.div>
         </div>
       </section>
 
-      {/* ═══ COMPANIES — Our graduates work at ═══ */}
-      <section className="relative z-10 py-10 bg-background border-b border-border-subtle overflow-hidden">
-        <p className="text-center text-foreground-faint text-xs uppercase tracking-[0.2em] mb-8">
-          ჩვენი კურსდამთავრებულები დღეს მუშაობენ
+      {/* ═══ COMPANIES — Lovable style: centered, faded edges, grayscale ═══ */}
+      <section className="relative z-10 py-14 md:py-16 bg-background overflow-hidden">
+        <p className="text-center text-foreground-faint text-sm mb-10">
+          ჩვენი კურსდამთავრებულები მუშაობენ წამყვან კომპანიებში
         </p>
         <div className="relative">
-          {/* Edge fades — full width, on top of everything */}
-          <div className="absolute left-0 top-0 bottom-0 w-[15%] bg-gradient-to-r from-background from-30% to-transparent z-20 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-[15%] bg-gradient-to-l from-background from-30% to-transparent z-20 pointer-events-none" />
-          <div className="flex items-center gap-14 company-scroll whitespace-nowrap">
-            {[...Array(3)].map((_, setIdx) => (
-              <div key={setIdx} className="flex items-center gap-14 flex-shrink-0">
-                {/* Blueberry */}
-                <Logo className="h-8 w-auto flex-shrink-0 scale-[3.5] mx-10" />
-                {/* Google */}
-                <svg className="h-7 w-auto flex-shrink-0 hover:scale-110 transition-opacity" viewBox="0 0 272 92">
-                  <path d="M115.75 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18C71.25 34.32 81.24 25 93.5 25s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44S80.99 39.2 80.99 47.18c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z" fill="#EA4335"/><path d="M163.75 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18c0-12.85 9.99-22.18 22.25-22.18s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44s-12.51 5.46-12.51 13.44c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z" fill="#FBBC04"/><path d="M209.75 26.34v39.82c0 16.38-9.66 23.07-21.08 23.07-10.75 0-17.22-7.19-19.66-13.07l8.48-3.53c1.51 3.61 5.21 7.87 11.17 7.87 7.31 0 11.84-4.51 11.84-13v-3.19h-.34c-2.18 2.69-6.38 5.04-11.68 5.04-11.09 0-21.25-9.66-21.25-22.09 0-12.52 10.16-22.26 21.25-22.26 5.29 0 9.49 2.35 11.68 4.96h.34v-3.61h9.25zm-8.56 20.92c0-7.81-5.21-13.52-11.84-13.52-6.72 0-12.35 5.71-12.35 13.52 0 7.73 5.63 13.36 12.35 13.36 6.63 0 11.84-5.63 11.84-13.36z" fill="#4285F4"/><path d="M225 3v65h-9.5V3h9.5z" fill="#34A853"/><path d="M262.02 54.48l7.56 5.04c-2.44 3.61-8.32 9.83-18.48 9.83-12.6 0-22.01-9.74-22.01-22.18 0-13.19 9.49-22.18 20.92-22.18 11.51 0 17.14 9.16 18.98 14.11l1.01 2.52-29.65 12.28c2.27 4.45 5.8 6.72 10.75 6.72 4.96 0 8.4-2.44 10.92-6.14zm-23.27-7.98l19.82-8.23c-1.09-2.77-4.37-4.7-8.23-4.7-4.95 0-11.84 4.37-11.59 12.93z" fill="#EA4335"/><path d="M35.29 41.19V32H67c.31 1.64.47 3.58.47 5.68 0 7.06-1.93 15.79-8.15 22.01-6.05 6.3-13.78 9.66-24.02 9.66C16.32 69.35.36 53.89.36 34.91.36 15.93 16.32.47 35.3.47c10.5 0 17.98 4.12 23.6 9.49l-6.64 6.64c-4.03-3.78-9.49-6.72-16.97-6.72-13.86 0-24.7 11.17-24.7 25.03 0 13.86 10.84 25.03 24.7 25.03 8.99 0 14.11-3.61 17.39-6.89 2.66-2.66 4.41-6.46 5.1-11.65l-22.49-.01z" fill="#4285F4"/>
-                </svg>
-                {/* Microsoft */}
-                <svg className="h-6 w-auto flex-shrink-0 hover:scale-110 transition-opacity" viewBox="0 0 23 23">
-                  <rect x="1" y="1" width="10" height="10" fill="#F25022"/><rect x="12" y="1" width="10" height="10" fill="#7FBA00"/><rect x="1" y="12" width="10" height="10" fill="#00A4EF"/><rect x="12" y="12" width="10" height="10" fill="#FFB900"/>
-                </svg>
-                {/* Apple */}
-                <svg className="h-7 w-auto flex-shrink-0 hover:scale-110 transition-opacity text-foreground" viewBox="0 0 42 50" fill="currentColor">
-                  <path d="M28.2 12.1c-1.6 1.9-4.2 3.3-6.8 3.1-.3-2.6.9-5.3 2.4-7 1.6-1.9 4.4-3.2 6.6-3.3.3 2.7-.8 5.4-2.2 7.2zm2.2 3.6c-3.7-.2-6.9 2.1-8.7 2.1-1.8 0-4.5-2-7.4-1.9-3.8.1-7.3 2.2-9.3 5.6-4 6.9-1 17.1 2.8 22.7 1.9 2.8 4.2 5.8 7.1 5.7 2.9-.1 3.9-1.8 7.4-1.8 3.4 0 4.4 1.8 7.4 1.8 3.1-.1 5-2.8 6.9-5.6 2.2-3.2 3-6.3 3.1-6.5-.1 0-5.9-2.3-6-9-.1-5.7 4.6-8.4 4.8-8.5-2.6-3.9-6.7-4.3-8.1-4.6z"/>
-                </svg>
-                {/* Meta */}
-                <span className="text-xl font-bold flex-shrink-0 hover:scale-110 transition-opacity text-[#0082FB]">Meta</span>
-                {/* Amazon */}
-                <span className="text-xl font-bold flex-shrink-0 hover:scale-110 transition-opacity text-[#FF9900]">amazon</span>
-                {/* Netflix */}
-                <span className="text-xl font-bold flex-shrink-0 hover:scale-110 transition-opacity text-[#E50914] tracking-wider">NETFLIX</span>
-                {/* Spotify */}
-                <span className="text-xl font-bold flex-shrink-0 hover:scale-110 transition-opacity text-[#1DB954]">Spotify</span>
+          <div className="absolute left-0 top-0 bottom-0 w-[18%] bg-gradient-to-r from-background via-background/80 to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-[18%] bg-gradient-to-l from-background via-background/80 to-transparent z-10 pointer-events-none" />
+
+          <div className="company-marquee flex items-center whitespace-nowrap">
+            {[0, 1, 2].map((setIdx) => (
+              <div key={setIdx} className="company-marquee-set flex items-center shrink-0 gap-16 md:gap-24 px-8 md:px-12" aria-hidden={setIdx > 0}>
+                <svg className="h-10 w-auto shrink-0 grayscale opacity-50" viewBox="0 0 272 92"><path d="M115.75 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18C71.25 34.32 81.24 25 93.5 25s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44S80.99 39.2 80.99 47.18c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z" fill="#999"/><path d="M163.75 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18c0-12.85 9.99-22.18 22.25-22.18s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44s-12.51 5.46-12.51 13.44c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z" fill="#999"/><path d="M209.75 26.34v39.82c0 16.38-9.66 23.07-21.08 23.07-10.75 0-17.22-7.19-19.66-13.07l8.48-3.53c1.51 3.61 5.21 7.87 11.17 7.87 7.31 0 11.84-4.51 11.84-13v-3.19h-.34c-2.18 2.69-6.38 5.04-11.68 5.04-11.09 0-21.25-9.66-21.25-22.09 0-12.52 10.16-22.26 21.25-22.26 5.29 0 9.49 2.35 11.68 4.96h.34v-3.61h9.25zm-8.56 20.92c0-7.81-5.21-13.52-11.84-13.52-6.72 0-12.35 5.71-12.35 13.52 0 7.73 5.63 13.36 12.35 13.36 6.63 0 11.84-5.63 11.84-13.36z" fill="#999"/><path d="M225 3v65h-9.5V3h9.5z" fill="#999"/><path d="M262.02 54.48l7.56 5.04c-2.44 3.61-8.32 9.83-18.48 9.83-12.6 0-22.01-9.74-22.01-22.18 0-13.19 9.49-22.18 20.92-22.18 11.51 0 17.14 9.16 18.98 14.11l1.01 2.52-29.65 12.28c2.27 4.45 5.8 6.72 10.75 6.72 4.96 0 8.4-2.44 10.92-6.14zm-23.27-7.98l19.82-8.23c-1.09-2.77-4.37-4.7-8.23-4.7-4.95 0-11.84 4.37-11.59 12.93z" fill="#999"/><path d="M35.29 41.19V32H67c.31 1.64.47 3.58.47 5.68 0 7.06-1.93 15.79-8.15 22.01-6.05 6.3-13.78 9.66-24.02 9.66C16.32 69.35.36 53.89.36 34.91.36 15.93 16.32.47 35.3.47c10.5 0 17.98 4.12 23.6 9.49l-6.64 6.64c-4.03-3.78-9.49-6.72-16.97-6.72-13.86 0-24.7 11.17-24.7 25.03 0 13.86 10.84 25.03 24.7 25.03 8.99 0 14.11-3.61 17.39-6.89 2.66-2.66 4.41-6.46 5.1-11.65l-22.49-.01z" fill="#999"/></svg>
+                <svg className="h-9 w-auto shrink-0 grayscale opacity-50" viewBox="0 0 23 23"><rect x="1" y="1" width="10" height="10" fill="#999"/><rect x="12" y="1" width="10" height="10" fill="#999"/><rect x="1" y="12" width="10" height="10" fill="#999"/><rect x="12" y="12" width="10" height="10" fill="#999"/></svg>
+                <svg className="h-10 w-auto shrink-0 opacity-50 text-foreground" viewBox="0 0 42 50" fill="currentColor"><path d="M28.2 12.1c-1.6 1.9-4.2 3.3-6.8 3.1-.3-2.6.9-5.3 2.4-7 1.6-1.9 4.4-3.2 6.6-3.3.3 2.7-.8 5.4-2.2 7.2zm2.2 3.6c-3.7-.2-6.9 2.1-8.7 2.1-1.8 0-4.5-2-7.4-1.9-3.8.1-7.3 2.2-9.3 5.6-4 6.9-1 17.1 2.8 22.7 1.9 2.8 4.2 5.8 7.1 5.7 2.9-.1 3.9-1.8 7.4-1.8 3.4 0 4.4 1.8 7.4 1.8 3.1-.1 5-2.8 6.9-5.6 2.2-3.2 3-6.3 3.1-6.5-.1 0-5.9-2.3-6-9-.1-5.7 4.6-8.4 4.8-8.5-2.6-3.9-6.7-4.3-8.1-4.6z"/></svg>
+                <span className="text-2xl font-bold shrink-0 opacity-50 text-foreground">Meta</span>
+                <span className="text-2xl font-bold shrink-0 opacity-50 text-foreground">amazon</span>
+                <span className="text-2xl font-bold shrink-0 opacity-50 text-foreground tracking-wider">NETFLIX</span>
+                <span className="text-2xl font-bold shrink-0 opacity-50 text-foreground">Spotify</span>
               </div>
             ))}
           </div>
@@ -336,121 +234,189 @@ export function Landing() {
       </section>
 
       <style>{`
-        .company-scroll {
-          animation: scrollCompanies 25s linear infinite;
+        .company-marquee {
+          animation: marquee 15s linear infinite;
         }
-        .company-scroll:hover {
-          animation-play-state: paused;
-        }
-        @keyframes scrollCompanies {
+        @keyframes marquee {
           0% { transform: translateX(0); }
           100% { transform: translateX(-33.333%); }
         }
       `}</style>
 
-      {/* ═══ COURSES — digitaledu.ge style cards ═══ */}
+      {/* ═══ COURSES — Lovable "Discover templates" style ═══ */}
       <section className="py-16 md:py-24 bg-surface">
         <div className="px-5 md:px-12 lg:px-16">
           <Reveal>
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-3">დაგეგმილი კურსები ჩვენი<br /><span className="text-brand">პროფესიონალებისგან</span></h2>
+            <div className="flex items-end justify-between mb-10">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold mb-2">ტოპ კურსები</h2>
+                <p className="text-foreground-secondary text-base">აღმოაჩინე საუკეთესო კურსები ჩვენი პროფესიონალებისგან</p>
+              </div>
+              <button onClick={handleSignIn} className="hidden md:flex items-center gap-2 px-5 py-2.5 border border-border-subtle rounded-full text-sm font-medium text-foreground hover:bg-surface-hover transition-all shrink-0">
+                View all
+              </button>
             </div>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              {
-                title: 'React Native კურსი',
-                price: '900',
-                mentor: '2 ხელმისაწვდომი მენტორი',
-                desc: 'React Native-ით მობილური აპლიკაციების შექმნა iOS და Android-ისთვის. ისწავლი კომპონენტებს, ნავიგაციას, API ინტეგრაციას და App Store-ში გამოქვეყნებას.',
-                category: 'პროგრამირება',
-                duration: '3 თვე',
-                img: 'https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=600&h=450&fit=crop',
-              },
-              {
-                title: 'UI/UX Design კურსი',
-                price: '800',
-                mentor: '1 ხელმისაწვდომი მენტორი',
-                desc: 'Figma-ში მუშაობა, wireframe და პროტოტიპების შექმნა, მომხმარებლის კვლევა, დიზაინ სისტემები და რეალური პროექტის პორტფოლიო.',
-                category: 'დიზაინი',
-                duration: '2 თვე',
-                img: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=450&fit=crop',
-              },
-              {
-                title: 'Digital Marketing კურსი',
-                price: '700',
-                mentor: '1 ხელმისაწვდომი მენტორი',
-                desc: 'SEO, Google Ads, Facebook & Instagram რეკლამა, ანალიტიკა, კონტენტ სტრატეგია და სოციალური მედიის მენეჯმენტი პრაქტიკული პროექტებით.',
-                category: 'მარკეტინგი',
-                duration: '1.5 თვე',
-                img: 'https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=600&h=450&fit=crop',
-              },
+              { title: 'React Native', desc: 'მობილური აპლიკაციების შექმნა iOS და Android-ისთვის', duration: '3 თვე', price: '900', gradient: 'from-[#1a1a2e] to-[#16213e]', logo: '<svg viewBox="-11.5 -10.23174 23 20.46348" width="28" height="28"><circle cx="0" cy="0" r="2.05" fill="#61DAFB"/><g stroke="#61DAFB" stroke-width="1" fill="none"><ellipse rx="11" ry="4.2"/><ellipse rx="11" ry="4.2" transform="rotate(60)"/><ellipse rx="11" ry="4.2" transform="rotate(120)"/></g></svg>' },
+              { title: 'UI/UX Design', desc: 'Figma, პროტოტიპები და დიზაინ სისტემები', duration: '2 თვე', price: '800', gradient: 'from-[#2d1b3d] to-[#1a1a2e]', logo: '<svg width="22" height="32" viewBox="0 0 38 57" fill="none"><path d="M19 28.5a9.5 9.5 0 1 1 0-19 9.5 9.5 0 0 1 0 19z" fill="#1ABCFE"/><path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z" fill="#0ACF83"/><path d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z" fill="#FF7262"/><path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z" fill="#F24E1E"/><path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z" fill="#A259FF"/></svg>' },
+              { title: 'Meta Advertising', desc: 'Facebook & Instagram რეკლამა და ანალიტიკა', duration: '1.5 თვე', price: '600', gradient: 'from-[#1a1a2e] to-[#1a2e3e]', logo: '<svg width="24" height="24" viewBox="0 0 24 24"><path d="M12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 4.41 3.6 8.12 8.24 8.9v-6.3H7.9v-2.6h2.38V10c0-2.36 1.4-3.66 3.54-3.66 1.03 0 2.1.18 2.1.18v2.32h-1.18c-1.17 0-1.53.72-1.53 1.47v1.77h2.6l-.42 2.6h-2.18v6.3c4.64-.78 8.24-4.49 8.24-8.9 0-5.5-4.46-9.96-9.96-9.96z" fill="#1877F2"/></svg>' },
+              { title: 'SEO & Content', desc: 'საძიებო ოპტიმიზაცია და კონტენტ სტრატეგია', duration: '1 თვე', price: '500', gradient: 'from-[#1a2e1a] to-[#1a1a2e]', logo: '<svg width="24" height="24" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18A10.96 10.96 0 0 0 1 12c0 1.77.42 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>' },
+              { title: 'Vibe Coding', desc: 'AI-ით კოდის წერა და აპლიკაციების შექმნა', duration: '2 თვე', price: '700', gradient: 'from-[#1a1a3e] to-[#2e1a3e]', logo: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/><path d="M9 17v-2M15 17v-2"/></svg>' },
+              { title: 'Data Analytics', desc: 'მონაცემთა ანალიზი Python-ით და ვიზუალიზაცია', duration: '2.5 თვე', price: '750', gradient: 'from-[#2e1a1a] to-[#1a1a2e]', logo: '<svg width="24" height="24" viewBox="0 0 256 255"><path d="M126.916.072c-64.832 0-60.784 28.115-60.784 28.115l.072 29.128h61.868v8.745H41.631S.145 61.355.145 126.77c0 65.417 36.21 63.097 36.21 63.097h21.61v-30.356s-1.165-36.21 35.632-36.21h61.362s34.475.557 34.475-33.319V33.97S194.67.072 126.916.072z" fill="#366A96"/><path d="M128.757 254.126c64.832 0 60.784-28.115 60.784-28.115l-.072-29.127H127.6v-8.746h86.441s41.486 4.705 41.486-60.712c0-65.416-36.21-63.096-36.21-63.096h-21.61v30.355s1.165 36.21-35.632 36.21h-61.362s-34.475-.557-34.475 33.32v56.013s-5.235 33.897 62.518 33.897z" fill="#FFC331"/></svg>' },
+              { title: 'Cyber Security', desc: 'კიბერუსაფრთხოება და ეთიკური ჰაკინგი', duration: '3 თვე', price: '850', gradient: 'from-[#1a1a2e] to-[#2e1a2e]', logo: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>' },
+              { title: 'Product Management', desc: 'პროდუქტის მართვა, ანალიტიკა და სტრატეგია', duration: '2 თვე', price: '650', gradient: 'from-[#2e2e1a] to-[#1a1a2e]', logo: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>' },
             ].map((course, i) => (
-              <Reveal key={i} delay={i * 0.08}>
-                <div className="group">
-                  {/* Thumbnail */}
-                  <div className="aspect-[4/3] overflow-hidden rounded-lg">
-                    <img
-                      src={course.img}
-                      alt={course.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
+              <Reveal key={i} delay={i * 0.05}>
+                <div
+                  onClick={handleSignIn}
+                  className="group cursor-pointer rounded-2xl overflow-hidden border border-border-subtle hover:border-white/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl h-full flex flex-col"
+                >
+                  {/* Gradient header with logo */}
+                  <div className={`bg-gradient-to-br ${course.gradient} h-[130px] relative flex items-end p-5`}>
+                    <div className="absolute top-4 right-4 w-10 h-10 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center" dangerouslySetInnerHTML={{ __html: course.logo }} />
+                    <h3 className="font-bold text-white text-lg leading-snug">{course.title}</h3>
                   </div>
 
-                  {/* Content */}
-                  <div className="pt-5">
-                    {/* Title + Price */}
-                    <div className="flex items-start justify-between gap-4 mb-1">
-                      <h3 className="font-bold text-foreground text-lg leading-snug">{course.title}</h3>
-                      <span className="text-2xl font-bold text-foreground shrink-0">{course.price}₾</span>
-                    </div>
+                  {/* Body */}
+                  <div className="bg-card p-5 flex-1 flex flex-col">
+                    <p className="text-xs text-foreground-secondary leading-relaxed mb-auto line-clamp-2">{course.desc}</p>
 
-                    {/* Mentor */}
-                    <p className="text-sm text-foreground-subtle mb-3">{course.mentor}</p>
-
-                    {/* Description */}
-                    <p className="text-sm text-foreground-secondary leading-relaxed line-clamp-3 mb-5">{course.desc}</p>
-
-                    {/* Meta row */}
-                    <div className="flex items-center gap-5 text-xs text-foreground-faint mb-5">
-                      <div className="flex items-center gap-1.5">
-                        <BookOpen className="w-4 h-4 text-foreground-subtle" />
-                        <span>{course.category}</span>
+                    {/* Info row — symmetrical 3 columns */}
+                    <div className="grid grid-cols-3 gap-3 mt-4 pt-4 border-t border-border-subtle text-center">
+                      <div>
+                        <span className="block text-[10px] text-foreground-faint uppercase tracking-wide mb-1">კურსი</span>
+                        <span className="text-xs font-semibold text-foreground">{course.title.split(' ')[0]}</span>
                       </div>
-                      <div className="flex items-center gap-1.5">
-                        <Clock className="w-4 h-4 text-foreground-subtle" />
-                        <span>{course.duration}</span>
+                      <div>
+                        <span className="block text-[10px] text-foreground-faint uppercase tracking-wide mb-1">ხანგრძლივობა</span>
+                        <span className="text-xs font-semibold text-foreground">{course.duration}</span>
                       </div>
-                      <div className="flex items-center gap-1.5">
-                        <Globe className="w-4 h-4 text-foreground-subtle" />
-                        <span>ონლაინი</span>
+                      <div>
+                        <span className="block text-[10px] text-foreground-faint uppercase tracking-wide mb-1">ფასი</span>
+                        <span className="text-xs font-semibold text-foreground">{course.price}₾</span>
                       </div>
                     </div>
-
-                    {/* CTA */}
-                    <button
-                      onClick={handleSignIn}
-                      className="w-full py-3.5 border border-brand text-brand rounded-lg font-semibold text-sm hover:bg-brand hover:text-white transition-all active:scale-[0.98]"
-                    >
-                      აღმოაჩინე კურსი
-                    </button>
                   </div>
                 </div>
               </Reveal>
             ))}
           </div>
 
+          <div className="md:hidden text-center mt-8">
+            <button onClick={handleSignIn} className="px-8 py-3 border border-border-subtle rounded-full text-sm font-medium text-foreground hover:bg-surface-hover transition-all">
+              ყველას ნახვა
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ STATS — ჩვენ რიცხვებში ═══ */}
+      <section className="py-14 md:py-20 border-b border-border-subtle">
+        <div className="max-w-[1000px] mx-auto px-5 md:px-8">
           <Reveal>
-            <div className="text-center mt-10">
-              <button
-                onClick={handleSignIn}
-                className="px-10 py-3.5 border-2 border-brand text-brand rounded-full font-semibold text-base hover:bg-brand hover:text-white transition-all active:scale-[0.97]"
-              >
-                ყველას ნახვა
-              </button>
-            </div>
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">ჩვენ რიცხვებში</h2>
           </Reveal>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            {stats.map((s, i) => (
+              <Reveal key={s.label} delay={i * 0.1}>
+                <div className="text-4xl md:text-5xl font-bold text-foreground leading-none tracking-tight">
+                  <AnimatedCounter value={s.value} suffix={s.suffix} />
+                </div>
+                <div className="text-sm text-foreground-faint mt-3">{s.label}</div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ CERTIFICATE ═══ */}
+      <section className="py-20 md:py-28">
+        <div className="max-w-[1100px] mx-auto px-5 md:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+            {/* Left — Certificate (Coursera/Penn style) */}
+            <Reveal>
+              <div className="relative bg-white shadow-2xl rounded-sm overflow-hidden aspect-[1.414/1]">
+                {/* Wavy ornament border — CSS pattern */}
+                <div className="absolute inset-0 pointer-events-none" style={{
+                  borderImage: 'repeating-linear-gradient(45deg, #004aad18, #004aad18 2px, transparent 2px, transparent 8px) 14',
+                  borderWidth: '14px',
+                  borderStyle: 'solid',
+                }} />
+
+                <div className="relative p-6 md:p-8">
+                  {/* Right badge — Verified Certificate */}
+                  <div className="absolute top-6 right-6 bg-gray-100 border border-gray-200 px-4 py-2.5 text-center z-10">
+                    <p className="text-[8px] uppercase tracking-[0.15em] text-gray-500 font-bold leading-tight">Verified<br />Certificate</p>
+                  </div>
+
+                  {/* Spacer — same height as logo was */}
+                  <div className="mb-5 h-16" />
+
+                  {/* Date */}
+                  <p className="text-[11px] text-gray-400 italic mb-3" style={{ fontFamily: 'Georgia, serif' }}>აპრილი 05, 2026</p>
+
+                  {/* Name */}
+                  <p className="text-xl md:text-2xl text-gray-900 leading-tight mb-0.5" style={{ fontFamily: 'Georgia, serif' }}>გიორგი ბერიძე</p>
+
+                  {/* Completed text */}
+                  <p className="text-[11px] text-gray-400 italic mb-2" style={{ fontFamily: 'Georgia, serif' }}>წარმატებით დაასრულა</p>
+
+                  {/* Course */}
+                  <p className="text-sm md:text-base font-bold text-gray-900 italic mb-5" style={{ fontFamily: 'Georgia, serif' }}>React Native Development</p>
+
+                  {/* Bottom — signature left, seal + verify right */}
+                  <div className="flex items-end justify-between">
+                    <div>
+                      <p className="text-sm italic text-gray-500 mb-1" style={{ fontFamily: 'Georgia, serif' }}>Signature</p>
+                      <div className="w-28 border-b border-gray-300 mb-1" />
+                      <p className="text-[10px] text-gray-500 font-medium">აკადემიის დირექტორი</p>
+                      <p className="text-[9px] text-gray-400">Blueberry Academy</p>
+                    </div>
+
+                    <div className="text-right">
+                      {/* Seal */}
+                      <div className="inline-flex items-center justify-center w-[60px] h-[60px] rounded-full border-[3px] border-[#004aad] mb-2">
+                        <div className="w-[46px] h-[46px] rounded-full border border-[#004aad]/40 flex items-center justify-center bg-[#004aad]/5">
+                          <p className="text-[5px] uppercase tracking-wider text-[#004aad] font-bold leading-tight text-center">Blueberry<br />Academy<br />Verified</p>
+                        </div>
+                      </div>
+                      <p className="text-[8px] text-gray-300">Verify at blueberry.academy/verify/<span className="font-mono">BB04821</span></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Right — Description */}
+            <Reveal delay={0.15}>
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold mb-5">მიიღე <span className="text-brand">სერტიფიკატი</span></h2>
+                <p className="text-foreground-secondary text-base leading-relaxed mb-8">კურსის დასრულების შემდეგ მიიღებ ვერიფიცირებულ სერტიფიკატს. გააზიარე LinkedIn-ზე, დაამატე CV-ში და დამსაქმებლები ნახავენ შენს უნარებს.</p>
+
+                <div className="space-y-5">
+                  <div className="flex items-start gap-4">
+                    <CheckCircle className="w-5 h-5 text-brand mt-0.5 shrink-0" />
+                    <p className="text-sm text-foreground-secondary"><span className="font-semibold text-foreground">ონლაინ გადამოწმებადი</span> · თითოეულ სერტიფიკატს აქვს უნიკალური ID</p>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <CheckCircle className="w-5 h-5 text-brand mt-0.5 shrink-0" />
+                    <p className="text-sm text-foreground-secondary"><span className="font-semibold text-foreground">LinkedIn-თან ინტეგრაცია</span> · პირდაპირ პროფილში დამატება</p>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <CheckCircle className="w-5 h-5 text-brand mt-0.5 shrink-0" />
+                    <p className="text-sm text-foreground-secondary"><span className="font-semibold text-foreground">პრაქტიკაზე დაფუძნებული</span> · რეალური პროექტები, არა მხოლოდ თეორია</p>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <CheckCircle className="w-5 h-5 text-brand mt-0.5 shrink-0" />
+                    <p className="text-sm text-foreground-secondary"><span className="font-semibold text-foreground">უვადო</span> · სერტიფიკატი შენია სამუდამოდ</p>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
@@ -606,6 +572,10 @@ export function Landing() {
               <span>© 2026 Blueberry Academy</span>
               <a href="#" className="hover:text-foreground transition-colors">პირობები</a>
               <a href="#" className="hover:text-foreground transition-colors">კონფიდენციალურობა</a>
+              <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="hover:text-foreground transition-colors">
+                {theme === 'dark' ? 'ღია თემა' : 'მუქი თემა'}
+              </button>
+              <button onClick={handleSignIn} className="hover:text-foreground transition-colors">შესვლა</button>
             </div>
           </div>
         </div>
