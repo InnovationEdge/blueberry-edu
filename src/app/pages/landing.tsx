@@ -239,7 +239,7 @@ export function Landing() {
         {/* Overlays — lighter so video is visible */}
         <div className="absolute inset-0 bg-[#0a0a1a]/40 z-[1]" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a1a]/80 via-[#0a0a1a]/30 to-transparent z-[1]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a1a]/90 via-transparent to-transparent z-[1]" />
+        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#0a0a1a] to-transparent z-[1]" />
 
         {/* Content — bottom-left */}
         <div className="relative z-[2] w-full px-5 md:px-12 lg:px-16 self-end pb-20">
@@ -291,7 +291,7 @@ export function Landing() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-            className="flex items-center gap-6 md:gap-8 mt-16"
+            className="flex items-center gap-4 md:gap-6 mt-16"
           >
             {stats.map((s) => (
               <div key={s.label}>
@@ -311,8 +311,8 @@ export function Landing() {
           ჩვენი კურსდამთავრებულები დღეს მუშაობენ
         </p>
         <div className="relative max-w-[1100px] mx-auto">
-          <div className="absolute left-0 top-0 bottom-0 w-28 bg-gradient-to-r from-background via-background/60 to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-28 bg-gradient-to-l from-background via-background/60 to-transparent z-10 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-40 bg-gradient-to-r from-background via-background/80 to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-40 bg-gradient-to-l from-background via-background/80 to-transparent z-10 pointer-events-none" />
           <div className="flex items-center gap-16 company-scroll">
             {[...Array(2)].map((_, setIdx) => (
               <div key={setIdx} className="flex items-center gap-16 flex-shrink-0">
