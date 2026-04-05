@@ -357,45 +357,73 @@ export function Landing() {
             </div>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {displayCourses.slice(0, 3).map((course, i) => (
-              <Reveal key={course.id} delay={i * 0.08}>
-                <div className="bg-card rounded-2xl border border-border-subtle overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 group">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                title: 'React Native კურსი',
+                price: '900',
+                mentor: '2 ხელმისაწვდომი მენტორი',
+                desc: 'React Native-ით მობილური აპლიკაციების შექმნა iOS და Android-ისთვის. ისწავლი კომპონენტებს, ნავიგაციას, API ინტეგრაციას და App Store-ში გამოქვეყნებას.',
+                category: 'პროგრამირება',
+                duration: '3 თვე',
+                img: 'https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=600&h=450&fit=crop',
+              },
+              {
+                title: 'UI/UX Design კურსი',
+                price: '800',
+                mentor: '1 ხელმისაწვდომი მენტორი',
+                desc: 'Figma-ში მუშაობა, wireframe და პროტოტიპების შექმნა, მომხმარებლის კვლევა, დიზაინ სისტემები და რეალური პროექტის პორტფოლიო.',
+                category: 'დიზაინი',
+                duration: '2 თვე',
+                img: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=450&fit=crop',
+              },
+              {
+                title: 'Digital Marketing კურსი',
+                price: '700',
+                mentor: '1 ხელმისაწვდომი მენტორი',
+                desc: 'SEO, Google Ads, Facebook & Instagram რეკლამა, ანალიტიკა, კონტენტ სტრატეგია და სოციალური მედიის მენეჯმენტი პრაქტიკული პროექტებით.',
+                category: 'მარკეტინგი',
+                duration: '1.5 თვე',
+                img: 'https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=600&h=450&fit=crop',
+              },
+            ].map((course, i) => (
+              <Reveal key={i} delay={i * 0.08}>
+                <div className="group">
                   {/* Thumbnail */}
-                  <div className="relative aspect-[4/3] overflow-hidden">
+                  <div className="aspect-[4/3] overflow-hidden rounded-lg">
                     <img
-                      src={course.thumbnail}
+                      src={course.img}
                       alt={course.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
 
                   {/* Content */}
-                  <div className="p-5">
+                  <div className="pt-5">
                     {/* Title + Price */}
-                    <div className="flex items-start justify-between gap-3 mb-2">
-                      <h3 className="font-bold text-foreground text-base leading-snug">{course.title}</h3>
-                      <span className="text-xl font-bold text-foreground shrink-0">{(course as any).price || 700}₾</span>
+                    <div className="flex items-start justify-between gap-4 mb-1">
+                      <h3 className="font-bold text-foreground text-lg leading-snug">{course.title}</h3>
+                      <span className="text-2xl font-bold text-foreground shrink-0">{course.price}₾</span>
                     </div>
 
                     {/* Mentor */}
-                    <p className="text-sm text-foreground-subtle mb-3">1 ხელმისაწვდომი მენტორი</p>
+                    <p className="text-sm text-foreground-subtle mb-3">{course.mentor}</p>
 
                     {/* Description */}
-                    <p className="text-sm text-foreground-secondary leading-relaxed line-clamp-3 mb-4">{course.subtitle}</p>
+                    <p className="text-sm text-foreground-secondary leading-relaxed line-clamp-3 mb-5">{course.desc}</p>
 
                     {/* Meta row */}
-                    <div className="flex items-center gap-4 text-xs text-foreground-faint mb-4 pt-3 border-t border-border-subtle">
+                    <div className="flex items-center gap-5 text-xs text-foreground-faint mb-5">
                       <div className="flex items-center gap-1.5">
-                        <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
-                        <span>{course.category?.[0] || 'ტექნოლოგია'}</span>
+                        <BookOpen className="w-4 h-4 text-foreground-subtle" />
+                        <span>{course.category}</span>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <Clock className="w-3.5 h-3.5" />
-                        <span>{course.duration || '1 თვე'}</span>
+                        <Clock className="w-4 h-4 text-foreground-subtle" />
+                        <span>{course.duration}</span>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <Globe className="w-3.5 h-3.5" />
+                        <Globe className="w-4 h-4 text-foreground-subtle" />
                         <span>ონლაინი</span>
                       </div>
                     </div>
@@ -403,7 +431,7 @@ export function Landing() {
                     {/* CTA */}
                     <button
                       onClick={handleSignIn}
-                      className="w-full py-3 border-2 border-brand text-brand rounded-xl font-semibold text-sm hover:bg-brand hover:text-white transition-all active:scale-[0.98]"
+                      className="w-full py-3.5 border border-brand text-brand rounded-lg font-semibold text-sm hover:bg-brand hover:text-white transition-all active:scale-[0.98]"
                     >
                       აღმოაჩინე კურსი
                     </button>
