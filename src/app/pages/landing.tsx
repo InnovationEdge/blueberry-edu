@@ -86,18 +86,18 @@ export function Landing() {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
 
       {/* ═══ HEADER ═══ */}
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-background/90 backdrop-blur-xl border-b border-border-subtle shadow-sm' : ''
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled ? 'bg-[#0a0a1a]/95 backdrop-blur-xl border-b border-white/10 shadow-lg' : ''
       }`}>
         <div className="max-w-[1200px] mx-auto flex items-center justify-between px-5 md:px-8 py-4">
-          <Logo className="h-9 md:h-10 w-auto" />
+          <Logo variant="academy" className="h-14 md:h-16 w-auto" forceDark />
 
           <div className="flex items-center gap-2">
             {/* Language */}
             <div className="relative">
               <button
                 onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
-                className="flex items-center gap-1.5 px-3 py-2 text-foreground-secondary hover:text-foreground rounded-full hover:bg-surface-hover transition-all text-sm"
+                className="flex items-center gap-1.5 px-3 py-2 text-white/60 hover:text-white rounded-full hover:bg-white/10 transition-all text-sm"
               >
                 <Globe className="w-4 h-4" />
                 <span className="hidden sm:inline">{language}</span>
@@ -112,14 +112,14 @@ export function Landing() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -4 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute right-0 mt-2 w-40 bg-card border border-border-subtle rounded-xl shadow-lg overflow-hidden z-50"
+                      className="absolute right-0 mt-2 w-40 bg-[#1a1a2e] border border-white/10 rounded-xl shadow-lg overflow-hidden z-50"
                     >
                       {languages.map((lang) => (
                         <button
                           key={lang}
                           onClick={() => { setLanguage(lang); setShowLanguageDropdown(false); }}
                           className={`block w-full px-4 py-2.5 text-sm text-left transition-colors ${
-                            language === lang ? 'bg-brand-subtle text-brand font-medium' : 'text-foreground-secondary hover:bg-surface-hover'
+                            language === lang ? 'bg-blue-500/10 text-blue-400 font-medium' : 'text-white/60 hover:bg-white/10 hover:text-white'
                           }`}
                         >
                           {lang}
@@ -134,7 +134,7 @@ export function Landing() {
             {/* Theme */}
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 rounded-full hover:bg-surface-hover transition-colors text-foreground-secondary"
+              className="p-2 rounded-full hover:bg-white/10 transition-colors text-white/60 hover:text-white"
             >
               {theme === 'dark' ? <Sun className="w-4.5 h-4.5" /> : <Moon className="w-4.5 h-4.5" />}
             </button>
@@ -150,43 +150,93 @@ export function Landing() {
         </div>
       </header>
 
-      {/* ═══ HERO ═══ */}
-      <section ref={heroRef} className="relative min-h-[92vh] flex items-center pt-20">
-        {/* Gradient background */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-brand/8 rounded-full blur-[120px]" />
-          <div className="absolute bottom-[-10%] left-[-5%] w-[400px] h-[400px] bg-brand/5 rounded-full blur-[100px]" />
+      {/* ═══ HERO — Tech / Neural Network Style ═══ */}
+      <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden bg-[#0a0a1a]">
+        {/* Animated tech background — neural network sphere */}
+        <div className="absolute inset-0">
+          {/* Radial glow */}
+          <div className="absolute top-1/2 left-[60%] -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-[radial-gradient(circle,rgba(26,115,232,0.15)_0%,rgba(26,115,232,0.05)_40%,transparent_70%)]" />
+
+          {/* Animated particles via CSS */}
+          <div className="hero-particles absolute inset-0">
+            {Array.from({ length: 40 }).map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-1 h-1 bg-blue-400/40 rounded-full"
+                style={{
+                  left: `${20 + Math.random() * 70}%`,
+                  top: `${10 + Math.random() * 80}%`,
+                  animation: `particleFloat ${3 + Math.random() * 4}s ease-in-out infinite`,
+                  animationDelay: `${Math.random() * 5}s`,
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Neural network lines SVG */}
+          <svg className="absolute inset-0 w-full h-full opacity-20" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="lineGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#1a73e8" stopOpacity="0" />
+                <stop offset="50%" stopColor="#1a73e8" stopOpacity="0.6" />
+                <stop offset="100%" stopColor="#1a73e8" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            {/* Network connection lines */}
+            {[
+              'M200,100 Q400,200 600,150', 'M100,300 Q350,250 500,400', 'M600,100 Q750,300 900,200',
+              'M300,500 Q500,350 700,500', 'M150,200 Q300,400 500,300', 'M700,300 Q850,150 1000,250',
+              'M400,100 Q550,250 700,180', 'M200,450 Q400,500 600,400', 'M500,200 Q650,350 800,280',
+              'M100,150 Q250,300 400,250', 'M600,350 Q800,400 950,300', 'M350,350 Q500,200 650,350',
+            ].map((d, i) => (
+              <path key={i} d={d} stroke="url(#lineGrad1)" strokeWidth="1" fill="none" className="hero-network-line" style={{ animationDelay: `${i * 0.3}s` }} />
+            ))}
+            {/* Glowing nodes */}
+            {[
+              [200,100],[400,200],[600,150],[500,400],[300,300],[750,250],[850,350],[150,400],[650,300],[450,150],[350,450],[700,180],[550,350],[250,250],[800,150],
+            ].map(([cx, cy], i) => (
+              <circle key={i} cx={cx} cy={cy} r="3" fill="#1a73e8" opacity="0.5" className="hero-node" style={{ animationDelay: `${i * 0.2}s` }}>
+                <animate attributeName="r" values="2;4;2" dur={`${2 + Math.random() * 2}s`} repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.3;0.8;0.3" dur={`${2 + Math.random() * 2}s`} repeatCount="indefinite" />
+              </circle>
+            ))}
+          </svg>
+
+          {/* Gradient overlays */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a1a] via-[#0a0a1a]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a1a] via-transparent to-[#0a0a1a]/50" />
         </div>
 
-        <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative max-w-[1200px] mx-auto px-5 md:px-8 w-full">
+        {/* Content */}
+        <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-10 max-w-[1200px] mx-auto px-5 md:px-8 w-full">
           <div className="max-w-2xl">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-brand-subtle border border-brand/20 rounded-full text-brand text-sm font-medium mb-8">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-blue-400 text-sm font-medium mb-8 backdrop-blur-sm">
                 <Zap className="w-4 h-4" />
                 ახალი კურსები ყოველ კვირას
               </div>
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-6"
+              transition={{ duration: 0.8, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
+              className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight text-white mb-6"
             >
               {t.landingHeroTitle1}
               <br />
-              <span className="text-brand">{t.landingHeroTitle2}</span>
+              <span className="bg-gradient-to-r from-blue-400 via-blue-500 to-cyan-400 bg-clip-text text-transparent">{t.landingHeroTitle2}</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-              className="text-lg md:text-xl text-foreground-secondary leading-relaxed mb-10 max-w-lg"
+              transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+              className="text-lg md:text-xl text-white/50 leading-relaxed mb-10 max-w-lg"
             >
               {t.landingHeroSubtitle}
             </motion.p>
@@ -194,19 +244,19 @@ export function Landing() {
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ duration: 0.8, delay: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
               className="flex items-center gap-4"
             >
               <button
                 onClick={handleSignIn}
-                className="px-8 py-3.5 bg-brand text-white rounded-full font-semibold text-base hover:bg-brand-hover transition-all shadow-md hover:shadow-lg active:scale-[0.97] flex items-center gap-2"
+                className="px-8 py-3.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full font-semibold text-base hover:from-blue-600 hover:to-blue-700 transition-all shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 active:scale-[0.97] flex items-center gap-2"
               >
                 {t.landingGetStarted}
                 <ArrowRight className="w-4 h-4" />
               </button>
               <button
                 onClick={handleSignIn}
-                className="px-6 py-3.5 border border-border text-foreground rounded-full font-medium text-base hover:bg-surface-hover transition-all flex items-center gap-2"
+                className="px-6 py-3.5 border border-white/15 text-white/80 rounded-full font-medium text-base hover:bg-white/5 hover:border-white/25 transition-all flex items-center gap-2 backdrop-blur-sm"
               >
                 <Play className="w-4 h-4 fill-current" />
                 ვიდეო ნახვა
@@ -218,18 +268,36 @@ export function Landing() {
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-            className="flex items-center gap-10 md:gap-16 mt-16 pt-10 border-t border-border-subtle"
+            transition={{ duration: 0.8, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            className="flex items-center gap-10 md:gap-16 mt-20 pt-10 border-t border-white/10"
           >
             {stats.map((s) => (
               <div key={s.label}>
-                <div className="text-2xl md:text-3xl font-bold text-foreground">{s.value}</div>
-                <div className="text-sm text-foreground-subtle mt-0.5">{s.label}</div>
+                <div className="text-2xl md:text-3xl font-bold text-white">{s.value}</div>
+                <div className="text-sm text-white/40 mt-0.5">{s.label}</div>
               </div>
             ))}
           </motion.div>
         </motion.div>
       </section>
+
+      {/* Hero animations */}
+      <style>{`
+        @keyframes particleFloat {
+          0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+          25% { transform: translateY(-15px) translateX(8px); opacity: 0.6; }
+          50% { transform: translateY(-5px) translateX(-5px); opacity: 0.4; }
+          75% { transform: translateY(-20px) translateX(3px); opacity: 0.7; }
+        }
+        .hero-network-line {
+          stroke-dasharray: 200;
+          stroke-dashoffset: 200;
+          animation: drawLine 3s ease-in-out infinite alternate;
+        }
+        @keyframes drawLine {
+          to { stroke-dashoffset: 0; }
+        }
+      `}</style>
 
       {/* ═══ COURSES GRID — Animated on scroll ═══ */}
       <section className="py-20 md:py-28 bg-surface">
@@ -443,7 +511,7 @@ export function Landing() {
       <footer className="border-t border-border-subtle py-10">
         <div className="max-w-[1200px] mx-auto px-5 md:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <Logo className="h-7 w-auto" />
+            <Logo variant="academy" className="h-7 w-auto" />
             <div className="flex items-center gap-6 text-sm text-foreground-faint">
               <span>© 2026 Blueberry Academy</span>
               <a href="#" className="hover:text-foreground transition-colors">პირობები</a>
