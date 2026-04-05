@@ -9,12 +9,14 @@ import { usePopularCourses, useAllCourses } from '../hooks/use-courses';
 
 /* ─── Hero background video — rotating tech clips ─── */
 const HERO_VIDEOS = [
-  'https://assets.mixkit.co/videos/3257/3257-720.mp4',     // Designers working with design software
-  'https://assets.mixkit.co/videos/50600/50600-720.mp4',   // Graphic designer color picker on screen
+  'https://assets.mixkit.co/videos/1728/1728-720.mp4',     // Developer coding on screen close-up
+  'https://assets.mixkit.co/videos/50600/50600-720.mp4',   // Graphic designer — color picker on screen
+  'https://assets.mixkit.co/videos/46635/46635-720.mp4',   // Programming & new technologies
   'https://assets.mixkit.co/videos/50598/50598-720.mp4',   // Designer picking colors for typography
-  'https://assets.mixkit.co/videos/29986/29986-720.mp4',   // Furniture designer in Photoshop
-  'https://assets.mixkit.co/videos/29993/29993-720.mp4',   // Engineer working on computer in workshop
-  'https://assets.mixkit.co/videos/1728/1728-720.mp4',     // Developer coding close-up
+  'https://assets.mixkit.co/videos/3257/3257-720.mp4',     // Two designers working with design software
+  'https://assets.mixkit.co/videos/31510/31510-720.mp4',   // Programmer hands on desk with code
+  'https://assets.mixkit.co/videos/51214/51214-720.mp4',   // Woman with futuristic VR/AI glasses
+  'https://assets.mixkit.co/videos/9757/9757-720.mp4',     // Code scrolling on computer screen
 ];
 
 function HeroVideo() {
@@ -62,6 +64,33 @@ function HeroVideo() {
   );
 }
 
+/* ─── Animated counter — counts up from 0 ─── */
+function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: string }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (!isInView) return;
+    const duration = 2000;
+    const steps = 60;
+    const increment = value / steps;
+    let current = 0;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= value) {
+        setCount(value);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(current));
+      }
+    }, duration / steps);
+    return () => clearInterval(timer);
+  }, [isInView, value]);
+
+  return <span ref={ref}>{count}{suffix}</span>;
+}
+
 /* ─── Fade-in on scroll component ─── */
 function Reveal({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef(null);
@@ -107,10 +136,10 @@ export function Landing() {
   const displayCourses = apiCourses.length > 0 ? apiCourses : allCourses;
 
   const stats = [
-    { value: '50+', label: 'კურსი' },
-    { value: '10K+', label: 'სტუდენტი' },
-    { value: '30+', label: 'ინსტრუქტორი' },
-    { value: '95%', label: 'კმაყოფილება' },
+    { value: 500, suffix: '+', label: 'კურსდამთავრებული' },
+    { value: 98, suffix: '%', label: 'დასაქმებული' },
+    { value: 50, suffix: '+', label: 'კურსი' },
+    { value: 30, suffix: '+', label: 'ინსტრუქტორი' },
   ];
 
   const benefits = [
@@ -269,7 +298,9 @@ export function Landing() {
           >
             {stats.map((s) => (
               <div key={s.label}>
-                <div className="text-2xl md:text-3xl font-bold text-white">{s.value}</div>
+                <div className="text-2xl md:text-3xl font-bold text-white">
+                  <AnimatedCounter value={s.value} suffix={s.suffix} />
+                </div>
                 <div className="text-sm text-white/40 mt-0.5">{s.label}</div>
               </div>
             ))}
