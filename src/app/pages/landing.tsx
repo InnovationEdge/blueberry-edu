@@ -188,8 +188,8 @@ export function Landing() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a1a] via-transparent to-[#0a0a1a]/40" />
 
         {/* Content — bottom-left */}
-        <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-10 max-w-[1200px] mx-auto px-5 md:px-8 w-full self-end pb-24">
-          <div className="max-w-xl">
+        <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-10 w-full px-5 md:px-12 lg:px-16 self-end pb-24">
+          <div className="max-w-lg">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
