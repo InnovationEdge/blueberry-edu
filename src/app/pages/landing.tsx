@@ -171,7 +171,7 @@ export function Landing() {
 
       {/* ═══ HEADER ═══ */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled ? 'bg-[#0a0a1a]/95 backdrop-blur-xl border-b border-white/10 shadow-lg' : ''
+        isScrolled ? 'bg-[#0a0a1a]/95 backdrop-blur-xl' : ''
       }`}>
         <div className="flex items-center justify-between px-5 md:px-12 lg:px-16 py-4">
           <Logo variant="academy" className="h-20 md:h-24 w-auto" forceDark />
@@ -294,7 +294,7 @@ export function Landing() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-            className="flex items-center gap-10 md:gap-16 mt-20 pt-10 border-t border-white/10"
+            className="flex items-center gap-10 md:gap-16 mt-16"
           >
             {stats.map((s) => (
               <div key={s.label}>
