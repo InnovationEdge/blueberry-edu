@@ -291,21 +291,67 @@ export function Landing() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid grid-cols-4 gap-6 md:gap-10 mt-16 bg-white/5 backdrop-blur-sm rounded-2xl px-6 md:px-10 py-6 border border-white/10"
+            className="flex items-center gap-10 md:gap-16 mt-16"
           >
             {stats.map((s) => (
-              <div key={s.label} className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-white mb-1">
+              <div key={s.label}>
+                <div className="text-2xl md:text-3xl font-bold text-white">
                   <AnimatedCounter value={s.value} suffix={s.suffix} />
                 </div>
-                <div className="text-[11px] md:text-xs text-white/50 uppercase tracking-wider font-medium">{s.label}</div>
+                <div className="text-sm text-white/40 mt-0.5">{s.label}</div>
               </div>
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* No extra style block needed — video handles hero background */}
+      {/* ═══ COMPANIES — Our graduates work at ═══ */}
+      <section className="py-10 bg-background border-b border-border-subtle overflow-hidden">
+        <p className="text-center text-foreground-faint text-xs uppercase tracking-[0.2em] mb-8">
+          ჩვენი კურსდამთავრებულები დღეს მუშაობენ
+        </p>
+        <div className="relative max-w-[1100px] mx-auto">
+          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+          <div className="flex items-center gap-16 company-scroll">
+            {[...Array(2)].map((_, setIdx) => (
+              <div key={setIdx} className="flex items-center gap-16 flex-shrink-0">
+                {/* Blueberry */}
+                <Logo className="h-6 w-auto opacity-40 hover:opacity-80 transition-opacity flex-shrink-0" />
+                {/* Google */}
+                <svg className="h-6 w-auto flex-shrink-0 opacity-30 hover:opacity-70 transition-opacity" viewBox="0 0 272 92" fill="currentColor">
+                  <path d="M115.75 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18C71.25 34.32 81.24 25 93.5 25s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44S80.99 39.2 80.99 47.18c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z"/><path d="M163.75 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18c0-12.85 9.99-22.18 22.25-22.18s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44s-12.51 5.46-12.51 13.44c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z"/><path d="M209.75 26.34v39.82c0 16.38-9.66 23.07-21.08 23.07-10.75 0-17.22-7.19-19.66-13.07l8.48-3.53c1.51 3.61 5.21 7.87 11.17 7.87 7.31 0 11.84-4.51 11.84-13v-3.19h-.34c-2.18 2.69-6.38 5.04-11.68 5.04-11.09 0-21.25-9.66-21.25-22.09 0-12.52 10.16-22.26 21.25-22.26 5.29 0 9.49 2.35 11.68 4.96h.34v-3.61h9.25zm-8.56 20.92c0-7.81-5.21-13.52-11.84-13.52-6.72 0-12.35 5.71-12.35 13.52 0 7.73 5.63 13.36 12.35 13.36 6.63 0 11.84-5.63 11.84-13.36z"/><path d="M225 3v65h-9.5V3h9.5z"/><path d="M262.02 54.48l7.56 5.04c-2.44 3.61-8.32 9.83-18.48 9.83-12.6 0-22.01-9.74-22.01-22.18 0-13.19 9.49-22.18 20.92-22.18 11.51 0 17.14 9.16 18.98 14.11l1.01 2.52-29.65 12.28c2.27 4.45 5.8 6.72 10.75 6.72 4.96 0 8.4-2.44 10.92-6.14zm-23.27-7.98l19.82-8.23c-1.09-2.77-4.37-4.7-8.23-4.7-4.95 0-11.84 4.37-11.59 12.93z"/><path d="M35.29 41.19V32H67c.31 1.64.47 3.58.47 5.68 0 7.06-1.93 15.79-8.15 22.01-6.05 6.3-13.78 9.66-24.02 9.66C16.32 69.35.36 53.89.36 34.91.36 15.93 16.32.47 35.3.47c10.5 0 17.98 4.12 23.6 9.49l-6.64 6.64c-4.03-3.78-9.49-6.72-16.97-6.72-13.86 0-24.7 11.17-24.7 25.03 0 13.86 10.84 25.03 24.7 25.03 8.99 0 14.11-3.61 17.39-6.89 2.66-2.66 4.41-6.46 5.1-11.65l-22.49-.01z"/>
+                </svg>
+                {/* Microsoft */}
+                <span className="text-lg font-semibold opacity-30 hover:opacity-70 transition-opacity flex-shrink-0 tracking-tight">Microsoft</span>
+                {/* Apple */}
+                <span className="text-lg font-semibold opacity-30 hover:opacity-70 transition-opacity flex-shrink-0">Apple</span>
+                {/* Meta */}
+                <span className="text-lg font-semibold opacity-30 hover:opacity-70 transition-opacity flex-shrink-0">Meta</span>
+                {/* Amazon */}
+                <span className="text-lg font-semibold opacity-30 hover:opacity-70 transition-opacity flex-shrink-0">amazon</span>
+                {/* Netflix */}
+                <span className="text-lg font-bold opacity-30 hover:opacity-70 transition-opacity flex-shrink-0 tracking-wider">NETFLIX</span>
+                {/* Spotify */}
+                <span className="text-lg font-semibold opacity-30 hover:opacity-70 transition-opacity flex-shrink-0">Spotify</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <style>{`
+        .company-scroll {
+          animation: scrollCompanies 25s linear infinite;
+        }
+        .company-scroll:hover {
+          animation-play-state: paused;
+        }
+        @keyframes scrollCompanies {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
 
       {/* ═══ COURSES GRID — Animated on scroll ═══ */}
       <section className="py-20 md:py-28 bg-surface">
