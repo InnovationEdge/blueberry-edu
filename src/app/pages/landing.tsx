@@ -8,6 +8,16 @@ import { Logo } from '../components/logo';
 import { HeroCanvas } from '../components/hero-canvas';
 import { usePopularCourses, useAllCourses } from '../hooks/use-courses';
 
+function HeroVideo() {
+  return (
+    <video
+      className="absolute inset-0 w-full h-full object-cover z-0"
+      src="/hero-bg.mp4"
+      autoPlay muted loop playsInline preload="auto"
+    />
+  );
+}
+
 /* ─── Animated counter — counts up from 0 ─── */
 function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: string }) {
   const [count, setCount] = useState(0);
@@ -165,9 +175,12 @@ export function Landing() {
       </header>
 
       {/* ═══ HERO — Compact with particle canvas ═══ */}
-      <section ref={heroRef} className="relative h-[85vh] flex items-end overflow-hidden bg-black">
-        {/* Particle network animation only */}
-        <HeroCanvas />
+      <section ref={heroRef} className="relative h-[85vh] flex items-end overflow-hidden bg-transparent">
+        {/* Background video — nonstop loop */}
+        <HeroVideo />
+        <div className="absolute inset-0 bg-black/30 z-[1]" />
+        {/* Particle network on top */}
+        <div className="absolute inset-0 z-[2]"><HeroCanvas /></div>
 
         {/* Bottom gradient */}
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black to-transparent z-[3]" />
