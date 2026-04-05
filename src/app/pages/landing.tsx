@@ -7,6 +7,60 @@ import { getAppT } from '../i18n/app';
 import { Logo } from '../components/logo';
 import { usePopularCourses, useAllCourses } from '../hooks/use-courses';
 
+/* ─── Hero background video — rotating tech clips ─── */
+const HERO_VIDEOS = [
+  'https://assets.mixkit.co/videos/1728/1728-720.mp4',   // Developer coding close-up
+  'https://assets.mixkit.co/videos/46635/46635-720.mp4',  // Programming & new tech
+  'https://assets.mixkit.co/videos/99786/99786-720.mp4',  // Futuristic devices animation
+  'https://assets.mixkit.co/videos/51214/51214-720.mp4',  // Woman with VR glasses
+  'https://assets.mixkit.co/videos/9757/9757-720.mp4',    // Code on screen
+];
+
+function HeroVideo() {
+  const [currentVideo, setCurrentVideo] = useState(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleEnded = () => {
+      setCurrentVideo(prev => (prev + 1) % HERO_VIDEOS.length);
+    };
+
+    // Also auto-switch every 6s even if video hasn't ended
+    const timer = setInterval(() => {
+      setCurrentVideo(prev => (prev + 1) % HERO_VIDEOS.length);
+    }, 6000);
+
+    video.addEventListener('ended', handleEnded);
+    return () => {
+      video.removeEventListener('ended', handleEnded);
+      clearInterval(timer);
+    };
+  }, [currentVideo]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.load();
+      video.play().catch(() => {});
+    }
+  }, [currentVideo]);
+
+  return (
+    <video
+      ref={videoRef}
+      className="absolute inset-0 w-full h-full object-cover"
+      src={HERO_VIDEOS[currentVideo]}
+      autoPlay
+      muted
+      playsInline
+      preload="auto"
+    />
+  );
+}
+
 /* ─── Fade-in on scroll component ─── */
 function Reveal({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef(null);
@@ -150,45 +204,18 @@ export function Landing() {
         </div>
       </header>
 
-      {/* ═══ HERO — Tech / 3D Sphere Style ═══ */}
+      {/* ═══ HERO — Full-screen background video ═══ */}
       <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden bg-[#0a0a1a]">
-        {/* 3D Glowing Sphere — right side */}
-        <div className="absolute right-[-5%] top-1/2 -translate-y-1/2 w-[600px] h-[600px] md:w-[700px] md:h-[700px] lg:w-[800px] lg:h-[800px]">
-          {/* Blob 1 — blue */}
-          <div className="absolute top-[20%] left-[15%] w-[55%] h-[55%] rounded-full bg-[#004aad] blur-[60px] opacity-60 hero-blob-1" />
-          {/* Blob 2 — pink/magenta */}
-          <div className="absolute top-[10%] right-[15%] w-[45%] h-[50%] rounded-full bg-[#c850c0] blur-[60px] opacity-50 hero-blob-2" />
-          {/* Blob 3 — cyan */}
-          <div className="absolute bottom-[10%] left-[25%] w-[50%] h-[45%] rounded-full bg-[#00d2ff] blur-[60px] opacity-40 hero-blob-3" />
-          {/* Blob 4 — silver/white core */}
-          <div className="absolute top-[30%] left-[30%] w-[40%] h-[40%] rounded-full bg-white/30 blur-[40px] hero-blob-4" />
-          {/* Outer glow ring */}
-          <div className="absolute inset-[5%] rounded-full border border-white/5" />
-          <div className="absolute inset-[15%] rounded-full border border-white/3" />
-        </div>
+        {/* Background video — auto-switching tech clips */}
+        <HeroVideo />
 
-        {/* Subtle particles */}
-        <div className="absolute inset-0">
-          {Array.from({ length: 25 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-0.5 h-0.5 bg-white/30 rounded-full"
-              style={{
-                left: `${10 + Math.random() * 80}%`,
-                top: `${10 + Math.random() * 80}%`,
-                animation: `particleFloat ${4 + Math.random() * 4}s ease-in-out infinite`,
-                animationDelay: `${Math.random() * 5}s`,
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Left gradient for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a1a] via-[#0a0a1a]/90 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a1a] via-transparent to-[#0a0a1a]/40" />
+        {/* Overlays — lighter so video is visible */}
+        <div className="absolute inset-0 bg-[#0a0a1a]/40 z-[1]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a1a]/80 via-[#0a0a1a]/30 to-transparent z-[1]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a1a]/90 via-transparent to-transparent z-[1]" />
 
         {/* Content — bottom-left */}
-        <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-10 w-full px-5 md:px-12 lg:px-16 self-end pb-24">
+        <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-[2] w-full px-5 md:px-12 lg:px-16 self-end pb-24">
           <div className="max-w-lg">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
@@ -249,43 +276,7 @@ export function Landing() {
         </motion.div>
       </section>
 
-      {/* Hero animations */}
-      <style>{`
-        @keyframes particleFloat {
-          0%, 100% { transform: translateY(0) translateX(0); opacity: 0.2; }
-          50% { transform: translateY(-20px) translateX(10px); opacity: 0.5; }
-        }
-        .hero-blob-1 {
-          animation: blobMove1 8s ease-in-out infinite;
-        }
-        .hero-blob-2 {
-          animation: blobMove2 10s ease-in-out infinite;
-        }
-        .hero-blob-3 {
-          animation: blobMove3 9s ease-in-out infinite;
-        }
-        .hero-blob-4 {
-          animation: blobMove4 7s ease-in-out infinite;
-        }
-        @keyframes blobMove1 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(30px, -20px) scale(1.05); }
-          66% { transform: translate(-15px, 15px) scale(0.95); }
-        }
-        @keyframes blobMove2 {
-          0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
-          33% { transform: translate(-25px, 20px) scale(1.1) rotate(5deg); }
-          66% { transform: translate(20px, -10px) scale(0.9) rotate(-5deg); }
-        }
-        @keyframes blobMove3 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          50% { transform: translate(20px, -25px) scale(1.08); }
-        }
-        @keyframes blobMove4 {
-          0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
-          50% { transform: translate(-10px, 10px) scale(1.15); opacity: 0.5; }
-        }
-      `}</style>
+      {/* No extra style block needed — video handles hero background */}
 
       {/* ═══ COURSES GRID — Animated on scroll ═══ */}
       <section className="py-20 md:py-28 bg-surface">
