@@ -360,13 +360,45 @@ export function Landing() {
                 }} />
 
                 <div className="relative p-6 md:p-8">
-                  {/* Right badge — Verified Certificate */}
-                  <div className="absolute top-6 right-6 bg-gray-100 border border-gray-200 px-4 py-2.5 text-center z-10">
-                    <p className="text-[8px] uppercase tracking-[0.15em] text-gray-500 font-bold leading-tight">Verified<br />Certificate</p>
+                  {/* Right ribbon — Coursera exact style, long hanging */}
+                  <div className="absolute -top-[14px] right-5 z-10" style={{ filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.2))' }}>
+                    <div className="w-[110px] flex flex-col items-center" style={{ height: '65%', minHeight: '260px', background: 'linear-gradient(180deg, #f8f8f8 0%, #efefef 40%, #e0e0e0 80%, #cccccc 100%)', clipPath: 'polygon(0 0, 100% 0, 100% 92%, 50% 100%, 0 92%)', borderLeft: '1px solid rgba(0,0,0,0.06)', borderRight: '1px solid rgba(0,0,0,0.06)' }}>
+                      {/* Top text */}
+                      <div className="pt-8 mb-8">
+                        <p className="text-[10px] uppercase tracking-[0.25em] text-gray-600 font-bold leading-relaxed text-center">Course<br />Certificate</p>
+                      </div>
+
+                      {/* Spacer to push logo to bottom area */}
+                      <div className="flex-1" />
+
+                      {/* Seal — outer ring with text + logo center */}
+                      <div className="relative w-[80px] h-[80px] mb-8">
+                        {/* Outer dashed ring */}
+                        <div className="absolute inset-0 rounded-full border-[2px] border-[#5a6d7e]" />
+                        <div className="absolute inset-[4px] rounded-full border border-[#5a6d7e]/30" />
+                        {/* Ring text — top arc */}
+                        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 80 80">
+                          <defs>
+                            <path id="topArc" d="M 12,40 a 28,28 0 1,1 56,0" />
+                            <path id="bottomArc" d="M 68,40 a 28,28 0 1,1 -56,0" />
+                          </defs>
+                          <text className="fill-[#5a6d7e]" style={{ fontSize: '6px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase' }}>
+                            <textPath href="#topArc" startOffset="50%" textAnchor="middle">EDUCATION FOR EVERYONE</textPath>
+                          </text>
+                          <text className="fill-[#5a6d7e]" style={{ fontSize: '6px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' }}>
+                            <textPath href="#bottomArc" startOffset="50%" textAnchor="middle">COURSE CERTIFICATE</textPath>
+                          </text>
+                        </svg>
+                        {/* Center — logo */}
+                        <div className="absolute inset-[10px] rounded-full bg-white flex items-center justify-center overflow-hidden">
+                          <Logo variant="academy" className="h-12 w-auto" />
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Spacer — same height as logo was */}
-                  <div className="mb-5 h-16" />
+                  {/* Spacer for removed logo */}
+                  <div className="mb-5 h-14" />
 
                   {/* Date */}
                   <p className="text-[11px] text-gray-400 italic mb-3" style={{ fontFamily: 'Georgia, serif' }}>აპრილი 05, 2026</p>
@@ -383,19 +415,15 @@ export function Landing() {
                   {/* Bottom — signature left, seal + verify right */}
                   <div className="flex items-end justify-between">
                     <div>
-                      <p className="text-sm italic text-gray-500 mb-1" style={{ fontFamily: 'Georgia, serif' }}>Signature</p>
-                      <div className="w-28 border-b border-gray-300 mb-1" />
-                      <p className="text-[10px] text-gray-500 font-medium">აკადემიის დირექტორი</p>
+                      <svg viewBox="0 0 200 50" className="w-32 h-8 text-gray-700">
+                        <text x="5" y="38" style={{ fontFamily: 'Brush Script MT, Dancing Script, cursive', fontSize: '32px', fill: 'currentColor' }}>T. Shakeladze</text>
+                      </svg>
+                      <div className="w-32 border-b border-gray-300 mb-1" />
+                      <p className="text-[10px] text-gray-500 font-medium">Founder & CEO</p>
                       <p className="text-[9px] text-gray-400">Blueberry Academy</p>
                     </div>
 
                     <div className="text-right">
-                      {/* Seal */}
-                      <div className="inline-flex items-center justify-center w-[60px] h-[60px] rounded-full border-[3px] border-[#004aad] mb-2">
-                        <div className="w-[46px] h-[46px] rounded-full border border-[#004aad]/40 flex items-center justify-center bg-[#004aad]/5">
-                          <p className="text-[5px] uppercase tracking-wider text-[#004aad] font-bold leading-tight text-center">Blueberry<br />Academy<br />Verified</p>
-                        </div>
-                      </div>
                       <p className="text-[8px] text-gray-300">Verify at blueberry.academy/verify/<span className="font-mono">BB04821</span></p>
                     </div>
                   </div>
