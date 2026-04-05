@@ -171,7 +171,7 @@ export function Landing() {
         scrolledPast ? 'bg-[#0a0a1a]' : 'bg-transparent'
       }`}>
         <div className="flex items-center justify-between px-5 md:px-12 lg:px-16 h-[72px]">
-          <Logo variant="academy" className="h-[200px] md:h-[220px] w-auto -my-16" forceDark />
+          <Logo variant="academy" className="h-[140px] md:h-[150px] w-auto -my-10" forceDark />
 
           <div className="flex items-center gap-2">
             {/* Language */}
