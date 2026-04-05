@@ -294,7 +294,7 @@ export function Landing() {
             className="flex mt-16"
           >
             {stats.map((s) => (
-              <div key={s.label} className="w-[300px]">
+              <div key={s.label} className="w-[220px]">
                 <div className="text-4xl md:text-5xl font-bold text-white leading-none tracking-tight">
                   <AnimatedCounter value={s.value} suffix={s.suffix} />
                 </div>
