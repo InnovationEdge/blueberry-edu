@@ -160,7 +160,7 @@ export function Landing() {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
 
       {/* ═══ HEADER ═══ */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-[#0a0a1a] via-[#0a0a1a]/70 to-transparent">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-black/80 via-black/40 to-transparent">
         <div className="flex items-center justify-between px-5 md:px-12 lg:px-16 py-4">
           <Logo variant="academy" className="h-8 md:h-9 w-auto" forceDark />
 
