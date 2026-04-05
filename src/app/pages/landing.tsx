@@ -90,7 +90,7 @@ export function Landing() {
         isScrolled ? 'bg-background/90 backdrop-blur-xl border-b border-border-subtle shadow-sm' : ''
       }`}>
         <div className="max-w-[1200px] mx-auto flex items-center justify-between px-5 md:px-8 py-4">
-          <Logo className="h-6 md:h-7 w-auto" />
+          <Logo className="h-9 md:h-10 w-auto" />
 
           <div className="flex items-center gap-2">
             {/* Language */}
@@ -443,7 +443,7 @@ export function Landing() {
       <footer className="border-t border-border-subtle py-10">
         <div className="max-w-[1200px] mx-auto px-5 md:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <Logo className="h-5 w-auto" />
+            <Logo className="h-7 w-auto" />
             <div className="flex items-center gap-6 text-sm text-foreground-faint">
               <span>© 2026 Blueberry Academy</span>
               <a href="#" className="hover:text-foreground transition-colors">პირობები</a>

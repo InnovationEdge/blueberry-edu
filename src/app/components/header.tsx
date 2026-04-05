@@ -92,7 +92,7 @@ export function Header() {
         {/* Logo and Navigation */}
         <div className="flex items-center gap-6 md:gap-10">
           <Link to="/" className="group hover:opacity-80 transition-opacity">
-            <Logo className="h-7 md:h-8 w-auto" />
+            <Logo className="h-9 md:h-10 w-auto" />
           </Link>
           {!showSearch && (
             <nav className="hidden md:flex items-center gap-6 lg:gap-8">
