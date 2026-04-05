@@ -120,13 +120,6 @@ export function Landing() {
   const languages = ['ქართული', 'English', 'Русский'];
 
   const heroRef = useRef(null);
-  const [scrolledPast, setScrolledPast] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolledPast(window.scrollY > 80);
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   const handleSignIn = () => openLogin();
 
@@ -166,19 +159,28 @@ export function Landing() {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
 
-      {/* ═══ HEADER ═══ */}
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${
-        scrolledPast ? 'bg-[#0a0a1a]' : 'bg-transparent'
-      }`}>
+      {/* ═══ HEADER — Making Science style ═══ */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
         <div className="flex items-center justify-between px-5 md:px-12 lg:px-16 h-[72px]">
-          <Logo variant="academy" className="h-[140px] md:h-[150px] w-auto -my-10" forceDark />
+          {/* Logo */}
+          <Logo variant="academy" className="h-[120px] md:h-[130px] w-auto -my-8" />
 
+          {/* Nav links */}
+          <nav className="hidden lg:flex items-center gap-8">
+            {['კურსები', 'მასტერკლასები', 'სერტიფიკატები', 'კარიერა', 'ჩვენს შესახებ'].map((item) => (
+              <button key={item} onClick={handleSignIn} className="text-sm font-medium text-gray-700 hover:text-[#004aad] transition-colors">
+                {item}
+              </button>
+            ))}
+          </nav>
+
+          {/* Right side */}
           <div className="flex items-center gap-2">
             {/* Language */}
             <div className="relative">
               <button
                 onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
-                className="flex items-center gap-1.5 px-3 py-2 text-white/60 hover:text-white rounded-full hover:bg-white/10 transition-all text-sm"
+                className="flex items-center gap-1.5 px-3 py-2 text-gray-500 hover:text-gray-900 rounded-full hover:bg-gray-100 transition-all text-sm"
               >
                 <Globe className="w-4 h-4" />
                 <span className="hidden sm:inline">{language}</span>
@@ -193,14 +195,14 @@ export function Landing() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -4 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute right-0 mt-2 w-40 bg-[#1a1a2e] border border-white/10 rounded-xl shadow-lg overflow-hidden z-50"
+                      className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden z-50"
                     >
                       {languages.map((lang) => (
                         <button
                           key={lang}
                           onClick={() => { setLanguage(lang); setShowLanguageDropdown(false); }}
                           className={`block w-full px-4 py-2.5 text-sm text-left transition-colors ${
-                            language === lang ? 'bg-blue-500/10 text-[#5b9bd5] font-medium' : 'text-white/60 hover:bg-white/10 hover:text-white'
+                            language === lang ? 'bg-[#004aad]/10 text-[#004aad] font-medium' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                           }`}
                         >
                           {lang}
@@ -215,7 +217,7 @@ export function Landing() {
             {/* Theme */}
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 rounded-full hover:bg-white/10 transition-colors text-white/60 hover:text-white"
+              className="p-2 rounded-full hover:bg-gray-100 transition-colors text-gray-500 hover:text-gray-900"
             >
               {theme === 'dark' ? <Sun className="w-4.5 h-4.5" /> : <Moon className="w-4.5 h-4.5" />}
             </button>
@@ -223,7 +225,7 @@ export function Landing() {
             {/* Sign In */}
             <button
               onClick={handleSignIn}
-              className="ml-1 px-5 py-2 bg-brand text-white text-sm font-medium rounded-full hover:bg-brand-hover transition-all shadow-sm hover:shadow-md active:scale-[0.97]"
+              className="ml-1 px-5 py-2 bg-[#004aad] text-white text-sm font-medium rounded-full hover:bg-[#003d8f] transition-all shadow-sm hover:shadow-md active:scale-[0.97]"
             >
               {t.landingSignIn}
             </button>
