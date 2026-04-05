@@ -357,8 +357,8 @@ export function Landing() {
             </div>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {displayCourses.slice(0, 6).map((course, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {displayCourses.slice(0, 3).map((course, i) => (
               <Reveal key={course.id} delay={i * 0.08}>
                 <div className="bg-card rounded-2xl border border-border-subtle overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 group">
                   {/* Thumbnail */}
@@ -412,6 +412,17 @@ export function Landing() {
               </Reveal>
             ))}
           </div>
+
+          <Reveal>
+            <div className="text-center mt-10">
+              <button
+                onClick={handleSignIn}
+                className="px-10 py-3.5 border-2 border-brand text-brand rounded-full font-semibold text-base hover:bg-brand hover:text-white transition-all active:scale-[0.97]"
+              >
+                ყველას ნახვა
+              </button>
+            </div>
+          </Reveal>
         </div>
       </section>
 
