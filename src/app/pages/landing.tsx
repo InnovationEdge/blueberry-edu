@@ -291,14 +291,14 @@ export function Landing() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-            className="flex items-center gap-10 md:gap-16 mt-16"
+            className="grid grid-cols-4 gap-6 md:gap-10 mt-16 bg-white/5 backdrop-blur-sm rounded-2xl px-6 md:px-10 py-6 border border-white/10"
           >
             {stats.map((s) => (
-              <div key={s.label}>
-                <div className="text-2xl md:text-3xl font-bold text-white">
+              <div key={s.label} className="text-center">
+                <div className="text-3xl md:text-4xl font-bold text-white mb-1">
                   <AnimatedCounter value={s.value} suffix={s.suffix} />
                 </div>
-                <div className="text-sm text-white/40 mt-0.5">{s.label}</div>
+                <div className="text-[11px] md:text-xs text-white/50 uppercase tracking-wider font-medium">{s.label}</div>
               </div>
             ))}
           </motion.div>
