@@ -170,8 +170,12 @@ export function Landing() {
       <header className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${
         scrolledPast ? 'bg-[#0a0a1a]' : 'bg-transparent'
       }`}>
-        <div className="flex items-center justify-between px-5 md:px-12 lg:px-16 py-4">
-          <Logo variant="academy" className="h-[70px] md:h-[80px] w-auto" forceDark />
+        <div className={`flex items-center justify-between px-5 md:px-12 lg:px-16 transition-all duration-500 ${
+          scrolledPast ? 'py-2' : 'py-4'
+        }`}>
+          <Logo variant="academy" className={`w-auto transition-all duration-500 ${
+            scrolledPast ? 'h-[40px] md:h-[45px]' : 'h-[70px] md:h-[80px]'
+          }`} forceDark />
 
           <div className="flex items-center gap-2">
             {/* Language */}
