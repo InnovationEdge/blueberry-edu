@@ -9,11 +9,14 @@ import { usePopularCourses, useAllCourses } from '../hooks/use-courses';
 
 /* ─── Hero background video — rotating tech clips ─── */
 const HERO_VIDEOS = [
-  'https://assets.mixkit.co/videos/1728/1728-720.mp4',   // Developer coding close-up
-  'https://assets.mixkit.co/videos/46635/46635-720.mp4',  // Programming & new tech
-  'https://assets.mixkit.co/videos/99786/99786-720.mp4',  // Futuristic devices animation
-  'https://assets.mixkit.co/videos/51214/51214-720.mp4',  // Woman with VR glasses
-  'https://assets.mixkit.co/videos/9757/9757-720.mp4',    // Code on screen
+  'https://assets.mixkit.co/videos/9069/9069-720.mp4',    // Marketing team strategy whiteboard
+  'https://assets.mixkit.co/videos/3257/3257-720.mp4',     // Designers working with design software
+  'https://assets.mixkit.co/videos/50600/50600-720.mp4',   // Graphic designer color picker on screen
+  'https://assets.mixkit.co/videos/41278/41278-720.mp4',   // Analyzing YouTube video analytics
+  'https://assets.mixkit.co/videos/4623/4623-720.mp4',     // Teacher teaching on blackboard
+  'https://assets.mixkit.co/videos/9053/9053-720.mp4',     // Students learning from tutor in library
+  'https://assets.mixkit.co/videos/3247/3247-720.mp4',     // Team collaborating at wooden table
+  'https://assets.mixkit.co/videos/50598/50598-720.mp4',   // Designer picking colors for typography
 ];
 
 function HeroVideo() {
