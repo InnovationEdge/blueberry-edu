@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { ChevronRight, ChevronDown, Play, Star, Clock, Users, Award, CheckCircle, Zap, BookOpen, Globe, ArrowRight, Plus, Sun, Moon } from 'lucide-react';
+import { ChevronDown, Star, Clock, Users, Award, CheckCircle, Zap, BookOpen, Globe, ArrowRight, Plus, Sun, Moon } from 'lucide-react';
 import { AnimatePresence, motion, useInView } from 'motion/react';
 import { useAuth } from '../context/auth-context';
 import { useTheme } from 'next-themes';
@@ -255,26 +255,25 @@ export function Landing() {
               {t.landingHeroTitle1} <span className="bg-gradient-to-r from-[#5b9bd5] via-[#004aad] to-[#5b9bd5] bg-clip-text text-transparent">{t.landingHeroTitle2}</span>
             </motion.h1>
 
-            <div className="flex items-center justify-between gap-8 mt-5">
-              <motion.p
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-                className="text-sm md:text-base text-white/50 leading-relaxed max-w-md"
-              >
-                {t.landingHeroSubtitle}
-              </motion.p>
-              <motion.button
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
-                onClick={handleSignIn}
-                className="px-8 py-3.5 bg-gradient-to-r from-[#004aad] to-[#003d8f] text-white rounded-full font-semibold text-base hover:from-[#003d8f] hover:to-[#002d6b] transition-all shadow-lg shadow-[#004aad]/25 hover:shadow-[#004aad]/40 active:scale-[0.97] flex items-center gap-2 shrink-0"
-              >
-                {t.landingGetStarted}
-                <ArrowRight className="w-4 h-4" />
-              </motion.button>
-            </div>
+            <motion.p
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+              className="text-sm md:text-base text-white/50 leading-relaxed max-w-md mt-5"
+            >
+              {t.landingHeroSubtitle}
+            </motion.p>
+
+            <motion.button
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
+              onClick={handleSignIn}
+              className="mt-6 px-8 py-3.5 bg-gradient-to-r from-[#004aad] to-[#003d8f] text-white rounded-full font-semibold text-base hover:from-[#003d8f] hover:to-[#002d6b] transition-all shadow-lg shadow-[#004aad]/25 hover:shadow-[#004aad]/40 active:scale-[0.97] inline-flex items-center gap-2"
+            >
+              {t.landingGetStarted}
+              <ArrowRight className="w-4 h-4" />
+            </motion.button>
           </div>
 
           {/* Stats row */}
@@ -349,67 +348,69 @@ export function Landing() {
         }
       `}</style>
 
-      {/* ═══ COURSES GRID — Animated on scroll ═══ */}
-      <section className="py-20 md:py-28 bg-surface">
-        <div className="max-w-[1200px] mx-auto px-5 md:px-8">
+      {/* ═══ COURSES — digitaledu.ge style cards ═══ */}
+      <section className="py-16 md:py-24 bg-surface">
+        <div className="px-5 md:px-12 lg:px-16">
           <Reveal>
-            <div className="flex items-end justify-between mb-10">
-              <div>
-                <h2 className="text-3xl md:text-4xl font-bold mb-3">{t.landingTrendingNow}</h2>
-                <p className="text-foreground-secondary text-base">პოპულარული კურსები ამ კვირას</p>
-              </div>
-              <button onClick={handleSignIn} className="hidden md:flex items-center gap-2 text-brand font-medium hover:underline text-sm">
-                ყველას ნახვა <ChevronRight className="w-4 h-4" />
-              </button>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-3">დაგეგმილი კურსები ჩვენი<br /><span className="text-brand">პროფესიონალებისგან</span></h2>
             </div>
           </Reveal>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-            {displayCourses.slice(0, 8).map((course, i) => (
-              <Reveal key={course.id} delay={i * 0.05}>
-                <div
-                  onClick={handleSignIn}
-                  className="group cursor-pointer bg-card rounded-2xl border border-border-subtle overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-                >
-                  <div className="relative aspect-video overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {displayCourses.slice(0, 6).map((course, i) => (
+              <Reveal key={course.id} delay={i * 0.08}>
+                <div className="bg-card rounded-2xl border border-border-subtle overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 group">
+                  {/* Thumbnail */}
+                  <div className="relative aspect-[4/3] overflow-hidden">
                     <img
                       src={course.thumbnail}
                       alt={course.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-overlay/0 group-hover:bg-overlay/40 transition-colors duration-300 flex items-center justify-center">
-                      <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg">
-                        <Play className="w-5 h-5 text-brand fill-brand ml-0.5" />
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-5">
+                    {/* Title + Price */}
+                    <div className="flex items-start justify-between gap-3 mb-2">
+                      <h3 className="font-bold text-foreground text-base leading-snug">{course.title}</h3>
+                      <span className="text-xl font-bold text-foreground shrink-0">{(course as any).price || 700}₾</span>
+                    </div>
+
+                    {/* Mentor */}
+                    <p className="text-sm text-foreground-subtle mb-3">1 ხელმისაწვდომი მენტორი</p>
+
+                    {/* Description */}
+                    <p className="text-sm text-foreground-secondary leading-relaxed line-clamp-3 mb-4">{course.subtitle}</p>
+
+                    {/* Meta row */}
+                    <div className="flex items-center gap-4 text-xs text-foreground-faint mb-4 pt-3 border-t border-border-subtle">
+                      <div className="flex items-center gap-1.5">
+                        <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
+                        <span>{course.category?.[0] || 'ტექნოლოგია'}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Clock className="w-3.5 h-3.5" />
+                        <span>{course.duration || '1 თვე'}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Globe className="w-3.5 h-3.5" />
+                        <span>ონლაინი</span>
                       </div>
                     </div>
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-semibold text-sm text-foreground line-clamp-2 mb-1.5 group-hover:text-brand transition-colors">{course.title}</h3>
-                    <p className="text-xs text-foreground-subtle mb-3">{course.instructor}</p>
-                    <div className="flex items-center gap-3 text-xs text-foreground-faint">
-                      {course.rating > 0 && (
-                        <span className="flex items-center gap-1">
-                          <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
-                          {course.rating}
-                        </span>
-                      )}
-                      {course.lessons > 0 && (
-                        <span className="flex items-center gap-1">
-                          <Clock className="w-3.5 h-3.5" />
-                          {course.lessons} გაკვ.
-                        </span>
-                      )}
-                    </div>
+
+                    {/* CTA */}
+                    <button
+                      onClick={handleSignIn}
+                      className="w-full py-3 border-2 border-brand text-brand rounded-xl font-semibold text-sm hover:bg-brand hover:text-white transition-all active:scale-[0.98]"
+                    >
+                      აღმოაჩინე კურსი
+                    </button>
                   </div>
                 </div>
               </Reveal>
             ))}
-          </div>
-
-          <div className="md:hidden mt-6 text-center">
-            <button onClick={handleSignIn} className="text-brand font-medium text-sm flex items-center gap-1 mx-auto">
-              ყველას ნახვა <ChevronRight className="w-4 h-4" />
-            </button>
           </div>
         </div>
       </section>
