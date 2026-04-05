@@ -266,7 +266,7 @@ export function Landing() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
-              className="flex items-center gap-4"
+              className="flex justify-end"
             >
               <button
                 onClick={handleSignIn}
@@ -274,12 +274,6 @@ export function Landing() {
               >
                 {t.landingGetStarted}
                 <ArrowRight className="w-4 h-4" />
-              </button>
-              <button
-                onClick={handleSignIn}
-                className="px-6 py-3.5 border border-white/15 text-white/80 rounded-full font-medium text-base hover:bg-white/5 hover:border-white/25 transition-all flex items-center gap-2 backdrop-blur-sm"
-              >
-                გაიგე მეტი
               </button>
             </motion.div>
           </div>
