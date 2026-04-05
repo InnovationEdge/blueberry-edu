@@ -291,7 +291,7 @@ export function Landing() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-            className="flex items-center gap-10 md:gap-16 mt-16"
+            className="flex items-center gap-6 md:gap-8 mt-16"
           >
             {stats.map((s) => (
               <div key={s.label}>
