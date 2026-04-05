@@ -187,14 +187,14 @@ export function Landing() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a1a] via-[#0a0a1a]/90 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a1a] via-transparent to-[#0a0a1a]/40" />
 
-        {/* Content — left side */}
-        <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-10 max-w-[1200px] mx-auto px-5 md:px-8 w-full">
-          <div className="max-w-2xl">
+        {/* Content — bottom-left */}
+        <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-10 max-w-[1200px] mx-auto px-5 md:px-8 w-full self-end pb-24">
+          <div className="max-w-xl">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
-              className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight text-white mb-6"
+              className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight text-white mb-5"
             >
               {t.landingHeroTitle1}
               <br />
@@ -205,7 +205,7 @@ export function Landing() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-              className="text-lg md:text-xl text-white/50 leading-relaxed mb-10 max-w-lg"
+              className="text-sm md:text-base text-white/50 leading-relaxed mb-8 max-w-md"
             >
               {t.landingHeroSubtitle}
             </motion.p>
