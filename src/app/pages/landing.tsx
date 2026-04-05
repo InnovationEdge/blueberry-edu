@@ -248,26 +248,31 @@ export function Landing() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight text-white flex items-center gap-6 flex-wrap"
+              className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight text-white"
             >
-              <span>{t.landingHeroTitle1} <span className="bg-gradient-to-r from-[#5b9bd5] via-[#004aad] to-[#5b9bd5] bg-clip-text text-transparent">{t.landingHeroTitle2}</span></span>
-              <button
+              {t.landingHeroTitle1} <span className="bg-gradient-to-r from-[#5b9bd5] via-[#004aad] to-[#5b9bd5] bg-clip-text text-transparent">{t.landingHeroTitle2}</span>
+            </motion.h1>
+
+            <div className="flex items-center justify-between gap-8 mt-5">
+              <motion.p
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+                className="text-sm md:text-base text-white/50 leading-relaxed max-w-md"
+              >
+                {t.landingHeroSubtitle}
+              </motion.p>
+              <motion.button
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
                 onClick={handleSignIn}
                 className="px-8 py-3.5 bg-gradient-to-r from-[#004aad] to-[#003d8f] text-white rounded-full font-semibold text-base hover:from-[#003d8f] hover:to-[#002d6b] transition-all shadow-lg shadow-[#004aad]/25 hover:shadow-[#004aad]/40 active:scale-[0.97] flex items-center gap-2 shrink-0"
               >
                 {t.landingGetStarted}
                 <ArrowRight className="w-4 h-4" />
-              </button>
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-              className="text-sm md:text-base text-white/50 leading-relaxed mt-5 max-w-md"
-            >
-              {t.landingHeroSubtitle}
-            </motion.p>
+              </motion.button>
+            </div>
           </div>
 
           {/* Stats row */}
