@@ -89,7 +89,7 @@ export function Landing() {
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled ? 'bg-[#0a0a1a]/95 backdrop-blur-xl border-b border-white/10 shadow-lg' : ''
       }`}>
-        <div className="max-w-[1200px] mx-auto flex items-center justify-between px-5 md:px-8 py-4">
+        <div className="flex items-center justify-between px-5 md:px-12 lg:px-16 py-4">
           <Logo variant="academy" className="h-20 md:h-24 w-auto" forceDark />
 
           <div className="flex items-center gap-2">
