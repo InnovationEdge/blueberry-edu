@@ -291,14 +291,14 @@ export function Landing() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid grid-cols-4 gap-6 mt-16 max-w-md"
+            className="flex items-start gap-10 mt-16"
           >
             {stats.map((s) => (
-              <div key={s.label} className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-white leading-none">
+              <div key={s.label}>
+                <div className="text-3xl font-bold text-white leading-none tracking-tight">
                   <AnimatedCounter value={s.value} suffix={s.suffix} />
                 </div>
-                <div className="text-[11px] text-white/40 mt-1.5 whitespace-nowrap">{s.label}</div>
+                <div className="text-[11px] text-white/40 mt-2">{s.label}</div>
               </div>
             ))}
           </motion.div>
