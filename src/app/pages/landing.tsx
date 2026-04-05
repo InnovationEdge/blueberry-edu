@@ -243,7 +243,7 @@ export function Landing() {
 
         {/* Content — bottom-left */}
         <div className="relative z-[2] w-full px-5 md:px-12 lg:px-16 self-end pb-20">
-          <div className="max-w-lg">
+          <div className="max-w-2xl">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
