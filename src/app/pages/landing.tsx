@@ -90,7 +90,7 @@ export function Landing() {
         isScrolled ? 'bg-[#0a0a1a]/95 backdrop-blur-xl border-b border-white/10 shadow-lg' : ''
       }`}>
         <div className="max-w-[1200px] mx-auto flex items-center justify-between px-5 md:px-8 py-4">
-          <Logo variant="academy" className="h-12 md:h-14 w-auto" forceDark />
+          <Logo variant="academy" className="h-20 md:h-24 w-auto" forceDark />
 
           <div className="flex items-center gap-2">
             {/* Language */}
@@ -150,77 +150,46 @@ export function Landing() {
         </div>
       </header>
 
-      {/* ═══ HERO — Tech / Neural Network Style ═══ */}
+      {/* ═══ HERO — Tech / 3D Sphere Style ═══ */}
       <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden bg-[#0a0a1a]">
-        {/* Animated tech background — neural network sphere */}
-        <div className="absolute inset-0">
-          {/* Radial glow */}
-          <div className="absolute top-1/2 left-[60%] -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-[radial-gradient(circle,rgba(0,74,173,0.15)_0%,rgba(0,74,173,0.05)_40%,transparent_70%)]" />
-
-          {/* Animated particles via CSS */}
-          <div className="hero-particles absolute inset-0">
-            {Array.from({ length: 40 }).map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-1 h-1 bg-[#004aad]/40 rounded-full"
-                style={{
-                  left: `${20 + Math.random() * 70}%`,
-                  top: `${10 + Math.random() * 80}%`,
-                  animation: `particleFloat ${3 + Math.random() * 4}s ease-in-out infinite`,
-                  animationDelay: `${Math.random() * 5}s`,
-                }}
-              />
-            ))}
-          </div>
-
-          {/* Neural network lines SVG */}
-          <svg className="absolute inset-0 w-full h-full opacity-20" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="lineGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#004aad" stopOpacity="0" />
-                <stop offset="50%" stopColor="#004aad" stopOpacity="0.6" />
-                <stop offset="100%" stopColor="#004aad" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            {/* Network connection lines */}
-            {[
-              'M200,100 Q400,200 600,150', 'M100,300 Q350,250 500,400', 'M600,100 Q750,300 900,200',
-              'M300,500 Q500,350 700,500', 'M150,200 Q300,400 500,300', 'M700,300 Q850,150 1000,250',
-              'M400,100 Q550,250 700,180', 'M200,450 Q400,500 600,400', 'M500,200 Q650,350 800,280',
-              'M100,150 Q250,300 400,250', 'M600,350 Q800,400 950,300', 'M350,350 Q500,200 650,350',
-            ].map((d, i) => (
-              <path key={i} d={d} stroke="url(#lineGrad1)" strokeWidth="1" fill="none" className="hero-network-line" style={{ animationDelay: `${i * 0.3}s` }} />
-            ))}
-            {/* Glowing nodes */}
-            {[
-              [200,100],[400,200],[600,150],[500,400],[300,300],[750,250],[850,350],[150,400],[650,300],[450,150],[350,450],[700,180],[550,350],[250,250],[800,150],
-            ].map(([cx, cy], i) => (
-              <circle key={i} cx={cx} cy={cy} r="3" fill="#004aad" opacity="0.5" className="hero-node" style={{ animationDelay: `${i * 0.2}s` }}>
-                <animate attributeName="r" values="2;4;2" dur={`${2 + Math.random() * 2}s`} repeatCount="indefinite" />
-                <animate attributeName="opacity" values="0.3;0.8;0.3" dur={`${2 + Math.random() * 2}s`} repeatCount="indefinite" />
-              </circle>
-            ))}
-          </svg>
-
-          {/* Gradient overlays */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a1a] via-[#0a0a1a]/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a1a] via-transparent to-[#0a0a1a]/50" />
+        {/* 3D Glowing Sphere — right side */}
+        <div className="absolute right-[-5%] top-1/2 -translate-y-1/2 w-[600px] h-[600px] md:w-[700px] md:h-[700px] lg:w-[800px] lg:h-[800px]">
+          {/* Blob 1 — blue */}
+          <div className="absolute top-[20%] left-[15%] w-[55%] h-[55%] rounded-full bg-[#004aad] blur-[60px] opacity-60 hero-blob-1" />
+          {/* Blob 2 — pink/magenta */}
+          <div className="absolute top-[10%] right-[15%] w-[45%] h-[50%] rounded-full bg-[#c850c0] blur-[60px] opacity-50 hero-blob-2" />
+          {/* Blob 3 — cyan */}
+          <div className="absolute bottom-[10%] left-[25%] w-[50%] h-[45%] rounded-full bg-[#00d2ff] blur-[60px] opacity-40 hero-blob-3" />
+          {/* Blob 4 — silver/white core */}
+          <div className="absolute top-[30%] left-[30%] w-[40%] h-[40%] rounded-full bg-white/30 blur-[40px] hero-blob-4" />
+          {/* Outer glow ring */}
+          <div className="absolute inset-[5%] rounded-full border border-white/5" />
+          <div className="absolute inset-[15%] rounded-full border border-white/3" />
         </div>
 
-        {/* Content */}
+        {/* Subtle particles */}
+        <div className="absolute inset-0">
+          {Array.from({ length: 25 }).map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-0.5 h-0.5 bg-white/30 rounded-full"
+              style={{
+                left: `${10 + Math.random() * 80}%`,
+                top: `${10 + Math.random() * 80}%`,
+                animation: `particleFloat ${4 + Math.random() * 4}s ease-in-out infinite`,
+                animationDelay: `${Math.random() * 5}s`,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Left gradient for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a1a] via-[#0a0a1a]/90 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a1a] via-transparent to-[#0a0a1a]/40" />
+
+        {/* Content — left side */}
         <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-10 max-w-[1200px] mx-auto px-5 md:px-8 w-full">
           <div className="max-w-2xl">
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            >
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-[#5b9bd5] text-sm font-medium mb-8 backdrop-blur-sm">
-                <Zap className="w-4 h-4" />
-                ახალი კურსები ყოველ კვირას
-              </div>
-            </motion.div>
-
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -258,8 +227,7 @@ export function Landing() {
                 onClick={handleSignIn}
                 className="px-6 py-3.5 border border-white/15 text-white/80 rounded-full font-medium text-base hover:bg-white/5 hover:border-white/25 transition-all flex items-center gap-2 backdrop-blur-sm"
               >
-                <Play className="w-4 h-4 fill-current" />
-                ვიდეო ნახვა
+                გაიგე მეტი
               </button>
             </motion.div>
           </div>
@@ -284,18 +252,38 @@ export function Landing() {
       {/* Hero animations */}
       <style>{`
         @keyframes particleFloat {
-          0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
-          25% { transform: translateY(-15px) translateX(8px); opacity: 0.6; }
-          50% { transform: translateY(-5px) translateX(-5px); opacity: 0.4; }
-          75% { transform: translateY(-20px) translateX(3px); opacity: 0.7; }
+          0%, 100% { transform: translateY(0) translateX(0); opacity: 0.2; }
+          50% { transform: translateY(-20px) translateX(10px); opacity: 0.5; }
         }
-        .hero-network-line {
-          stroke-dasharray: 200;
-          stroke-dashoffset: 200;
-          animation: drawLine 3s ease-in-out infinite alternate;
+        .hero-blob-1 {
+          animation: blobMove1 8s ease-in-out infinite;
         }
-        @keyframes drawLine {
-          to { stroke-dashoffset: 0; }
+        .hero-blob-2 {
+          animation: blobMove2 10s ease-in-out infinite;
+        }
+        .hero-blob-3 {
+          animation: blobMove3 9s ease-in-out infinite;
+        }
+        .hero-blob-4 {
+          animation: blobMove4 7s ease-in-out infinite;
+        }
+        @keyframes blobMove1 {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          33% { transform: translate(30px, -20px) scale(1.05); }
+          66% { transform: translate(-15px, 15px) scale(0.95); }
+        }
+        @keyframes blobMove2 {
+          0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+          33% { transform: translate(-25px, 20px) scale(1.1) rotate(5deg); }
+          66% { transform: translate(20px, -10px) scale(0.9) rotate(-5deg); }
+        }
+        @keyframes blobMove3 {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(20px, -25px) scale(1.08); }
+        }
+        @keyframes blobMove4 {
+          0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+          50% { transform: translate(-10px, 10px) scale(1.15); opacity: 0.5; }
         }
       `}</style>
 
