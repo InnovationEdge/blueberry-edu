@@ -75,8 +75,8 @@ html {
 .ease-premium { transition-timing-function: cubic-bezier(0.2, 0, 0, 1); }
 
 /* Text selection — brand blue */
-::selection { background-color: rgba(26, 115, 232, 0.2); color: inherit; }
-::-moz-selection { background-color: rgba(26, 115, 232, 0.2); color: inherit; }
+::selection { background-color: rgba(0, 74, 173, 0.2); color: inherit; }
+::-moz-selection { background-color: rgba(0, 74, 173, 0.2); color: inherit; }
 
 /* Focus visible — Google-style ring */
 :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 4px; }

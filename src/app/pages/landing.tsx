@@ -90,7 +90,7 @@ export function Landing() {
         isScrolled ? 'bg-[#0a0a1a]/95 backdrop-blur-xl border-b border-white/10 shadow-lg' : ''
       }`}>
         <div className="max-w-[1200px] mx-auto flex items-center justify-between px-5 md:px-8 py-4">
-          <Logo variant="academy" className="h-14 md:h-16 w-auto" forceDark />
+          <Logo variant="academy" className="h-12 md:h-14 w-auto" forceDark />
 
           <div className="flex items-center gap-2">
             {/* Language */}
@@ -119,7 +119,7 @@ export function Landing() {
                           key={lang}
                           onClick={() => { setLanguage(lang); setShowLanguageDropdown(false); }}
                           className={`block w-full px-4 py-2.5 text-sm text-left transition-colors ${
-                            language === lang ? 'bg-blue-500/10 text-blue-400 font-medium' : 'text-white/60 hover:bg-white/10 hover:text-white'
+                            language === lang ? 'bg-blue-500/10 text-[#5b9bd5] font-medium' : 'text-white/60 hover:bg-white/10 hover:text-white'
                           }`}
                         >
                           {lang}
@@ -155,14 +155,14 @@ export function Landing() {
         {/* Animated tech background — neural network sphere */}
         <div className="absolute inset-0">
           {/* Radial glow */}
-          <div className="absolute top-1/2 left-[60%] -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-[radial-gradient(circle,rgba(26,115,232,0.15)_0%,rgba(26,115,232,0.05)_40%,transparent_70%)]" />
+          <div className="absolute top-1/2 left-[60%] -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-[radial-gradient(circle,rgba(0,74,173,0.15)_0%,rgba(0,74,173,0.05)_40%,transparent_70%)]" />
 
           {/* Animated particles via CSS */}
           <div className="hero-particles absolute inset-0">
             {Array.from({ length: 40 }).map((_, i) => (
               <div
                 key={i}
-                className="absolute w-1 h-1 bg-blue-400/40 rounded-full"
+                className="absolute w-1 h-1 bg-[#004aad]/40 rounded-full"
                 style={{
                   left: `${20 + Math.random() * 70}%`,
                   top: `${10 + Math.random() * 80}%`,
@@ -177,9 +177,9 @@ export function Landing() {
           <svg className="absolute inset-0 w-full h-full opacity-20" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="lineGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#1a73e8" stopOpacity="0" />
-                <stop offset="50%" stopColor="#1a73e8" stopOpacity="0.6" />
-                <stop offset="100%" stopColor="#1a73e8" stopOpacity="0" />
+                <stop offset="0%" stopColor="#004aad" stopOpacity="0" />
+                <stop offset="50%" stopColor="#004aad" stopOpacity="0.6" />
+                <stop offset="100%" stopColor="#004aad" stopOpacity="0" />
               </linearGradient>
             </defs>
             {/* Network connection lines */}
@@ -195,7 +195,7 @@ export function Landing() {
             {[
               [200,100],[400,200],[600,150],[500,400],[300,300],[750,250],[850,350],[150,400],[650,300],[450,150],[350,450],[700,180],[550,350],[250,250],[800,150],
             ].map(([cx, cy], i) => (
-              <circle key={i} cx={cx} cy={cy} r="3" fill="#1a73e8" opacity="0.5" className="hero-node" style={{ animationDelay: `${i * 0.2}s` }}>
+              <circle key={i} cx={cx} cy={cy} r="3" fill="#004aad" opacity="0.5" className="hero-node" style={{ animationDelay: `${i * 0.2}s` }}>
                 <animate attributeName="r" values="2;4;2" dur={`${2 + Math.random() * 2}s`} repeatCount="indefinite" />
                 <animate attributeName="opacity" values="0.3;0.8;0.3" dur={`${2 + Math.random() * 2}s`} repeatCount="indefinite" />
               </circle>
@@ -215,7 +215,7 @@ export function Landing() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-blue-400 text-sm font-medium mb-8 backdrop-blur-sm">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-[#5b9bd5] text-sm font-medium mb-8 backdrop-blur-sm">
                 <Zap className="w-4 h-4" />
                 ახალი კურსები ყოველ კვირას
               </div>
@@ -229,7 +229,7 @@ export function Landing() {
             >
               {t.landingHeroTitle1}
               <br />
-              <span className="bg-gradient-to-r from-blue-400 via-blue-500 to-cyan-400 bg-clip-text text-transparent">{t.landingHeroTitle2}</span>
+              <span className="bg-gradient-to-r from-[#5b9bd5] via-[#004aad] to-[#5b9bd5] bg-clip-text text-transparent">{t.landingHeroTitle2}</span>
             </motion.h1>
 
             <motion.p
@@ -249,7 +249,7 @@ export function Landing() {
             >
               <button
                 onClick={handleSignIn}
-                className="px-8 py-3.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full font-semibold text-base hover:from-blue-600 hover:to-blue-700 transition-all shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 active:scale-[0.97] flex items-center gap-2"
+                className="px-8 py-3.5 bg-gradient-to-r from-[#004aad] to-[#003d8f] text-white rounded-full font-semibold text-base hover:from-[#003d8f] hover:to-[#002d6b] transition-all shadow-lg shadow-[#004aad]/25 hover:shadow-[#004aad]/40 active:scale-[0.97] flex items-center gap-2"
               >
                 {t.landingGetStarted}
                 <ArrowRight className="w-4 h-4" />
