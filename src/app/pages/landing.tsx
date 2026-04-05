@@ -295,7 +295,7 @@ export function Landing() {
           >
             {stats.map((s) => (
               <div key={s.label} className="w-[300px]">
-                <div className="text-5xl md:text-6xl font-bold text-white leading-none tracking-tight">
+                <div className="text-4xl md:text-5xl font-bold text-white leading-none tracking-tight">
                   <AnimatedCounter value={s.value} suffix={s.suffix} />
                 </div>
                 <div className="text-sm text-white/40 mt-3">{s.label}</div>
