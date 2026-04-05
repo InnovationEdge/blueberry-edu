@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { ChevronRight, ChevronDown, Play, Star, Clock, Users, Award, CheckCircle, Zap, BookOpen, Globe, ArrowRight, Plus, Sun, Moon } from 'lucide-react';
-import { AnimatePresence, motion, useInView, useScroll, useTransform } from 'motion/react';
+import { AnimatePresence, motion, useInView } from 'motion/react';
 import { useAuth } from '../context/auth-context';
 import { useTheme } from 'next-themes';
 import { getAppT } from '../i18n/app';
@@ -111,7 +111,6 @@ function Reveal({ children, className = '', delay = 0 }: { children: React.React
 export function Landing() {
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [isScrolled, setIsScrolled] = useState(false);
   const { openLogin, language, setLanguage } = useAuth();
   const { theme, setTheme } = useTheme();
   const t = getAppT(language);
@@ -121,15 +120,6 @@ export function Landing() {
   const languages = ['ქართული', 'English', 'Русский'];
 
   const heroRef = useRef(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-
-  useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   const handleSignIn = () => openLogin();
 
@@ -170,11 +160,9 @@ export function Landing() {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
 
       {/* ═══ HEADER ═══ */}
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled ? 'bg-[#0a0a1a]/95 backdrop-blur-xl' : ''
-      }`}>
+      <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-[#0a0a1a] via-[#0a0a1a]/70 to-transparent">
         <div className="flex items-center justify-between px-5 md:px-12 lg:px-16 py-4">
-          <Logo variant="academy" className="h-20 md:h-24 w-auto" forceDark />
+          <Logo variant="academy" className="h-8 md:h-9 w-auto" forceDark />
 
           <div className="flex items-center gap-2">
             {/* Language */}
@@ -245,7 +233,7 @@ export function Landing() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a1a]/90 via-transparent to-transparent z-[1]" />
 
         {/* Content — bottom-left */}
-        <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-[2] w-full px-5 md:px-12 lg:px-16 self-end pb-24">
+        <div className="relative z-[2] w-full px-5 md:px-12 lg:px-16 self-end pb-20">
           <div className="max-w-lg">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
@@ -305,7 +293,7 @@ export function Landing() {
               </div>
             ))}
           </motion.div>
-        </motion.div>
+        </div>
       </section>
 
       {/* No extra style block needed — video handles hero background */}
