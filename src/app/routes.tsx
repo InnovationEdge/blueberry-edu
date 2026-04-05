@@ -27,6 +27,7 @@ const InstructorAnalytics = lazy(() => import('./pages/instructor/analytics').th
 const Assignments = lazy(() => import('./pages/instructor/assignments').then(m => ({ default: m.Assignments })));
 const Profile = lazy(() => import('./pages/profile').then(m => ({ default: m.Profile })));
 const CertificatePage = lazy(() => import('./pages/certificate').then(m => ({ default: m.Certificate })));
+const CoursesCatalog = lazy(() => import('./pages/courses-catalog').then(m => ({ default: m.CoursesCatalog })));
 
 function PageLoader() {
   return (
@@ -88,6 +89,10 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout><LazyPage><Home /></LazyPage></Layout>,
+  },
+  {
+    path: '/courses',
+    element: <LazyPage><CoursesCatalog /></LazyPage>,
   },
   {
     path: '/search',

@@ -115,10 +115,16 @@ export function Landing() {
 
           {/* Nav + actions — all right */}
           <nav className="hidden lg:flex items-center gap-7 mr-6">
-            {['კურსები', 'მასტერკლასები', 'სერტიფიკატები', 'კარიერა', 'ჩვენს შესახებ'].map((item) => (
-              <button key={item} onClick={handleSignIn} className="text-sm font-medium text-gray-700 hover:text-[#004aad] transition-colors">
-                {item}
-              </button>
+            {[
+              { label: 'კურსები', href: '/courses' },
+              { label: 'მასტერკლასები', href: '#' },
+              { label: 'სერტიფიკატები', href: '#' },
+              { label: 'კარიერა', href: '#' },
+              { label: 'ჩვენს შესახებ', href: '#' },
+            ].map((item) => (
+              <a key={item.label} href={item.href} className="text-sm font-medium text-gray-700 hover:text-[#004aad] transition-colors">
+                {item.label}
+              </a>
             ))}
           </nav>
 
