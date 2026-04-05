@@ -1,24 +1,23 @@
 interface LogoProps {
   className?: string;
   variant?: 'simple' | 'academy';
-  /** Keep logo white regardless of theme (for dark overlays) */
+  /** Always show white logo (for dark overlays like video player) */
   forceDark?: boolean;
 }
 
 export function Logo({ className = 'h-7 w-auto', variant = 'simple', forceDark = false }: LogoProps) {
-  const whiteLogo = variant === 'academy' ? '/images/logo-academy.png' : '/images/logo-simple.png';
-  const blueLogo = '/images/logo-transparent.png';
+  const logos = variant === 'academy'
+    ? { light: '/images/logo-academy-blue.svg', dark: '/images/logo-academy-white.svg' }
+    : { light: '/images/logo-blue.svg', dark: '/images/logo-white.svg' };
 
   if (forceDark) {
-    return <img src={whiteLogo} alt="Blueberry Academy" className={className} />;
+    return <img src={logos.dark} alt="Blueberry Academy" className={className} />;
   }
 
   return (
     <>
-      {/* Dark mode — white logo */}
-      <img src={whiteLogo} alt="Blueberry Academy" className={`${className} hidden dark:block`} />
-      {/* Light mode — blue logo (transparent bg) */}
-      <img src={blueLogo} alt="Blueberry Academy" className={`${className} block dark:hidden`} />
+      <img src={logos.dark} alt="Blueberry Academy" className={`${className} hidden dark:block`} />
+      <img src={logos.light} alt="Blueberry Academy" className={`${className} block dark:hidden`} />
     </>
   );
 }
