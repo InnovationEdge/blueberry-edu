@@ -162,7 +162,7 @@ export function Landing() {
       {/* ═══ HEADER ═══ */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-black/80 via-black/40 to-transparent">
         <div className="flex items-center justify-between px-5 md:px-12 lg:px-16 py-4">
-          <Logo variant="academy" className="h-8 md:h-9 w-auto" forceDark />
+          <Logo variant="academy" className="h-5 md:h-6 w-auto" forceDark />
 
           <div className="flex items-center gap-2">
             {/* Language */}
@@ -510,7 +510,7 @@ export function Landing() {
       <footer className="border-t border-border-subtle py-10">
         <div className="max-w-[1200px] mx-auto px-5 md:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <Logo variant="academy" className="h-7 w-auto" />
+            <Logo variant="academy" className="h-4 w-auto" />
             <div className="flex items-center gap-6 text-sm text-foreground-faint">
               <span>© 2026 Blueberry Academy</span>
               <a href="#" className="hover:text-foreground transition-colors">პირობები</a>
