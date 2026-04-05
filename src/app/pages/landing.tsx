@@ -134,7 +134,7 @@ export function Landing() {
 
   const stats = [
     { value: 500, suffix: '+', label: 'კურსდამთავრებული' },
-    { value: 98, suffix: '%', label: 'დასაქმებული' },
+    { value: 98, suffix: '%', label: 'დასაქმდა' },
     { value: 50, suffix: '+', label: 'კურსი' },
     { value: 30, suffix: '+', label: 'ინსტრუქტორი' },
   ];
@@ -291,14 +291,14 @@ export function Landing() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-            className="flex items-start mt-16"
+            className="grid grid-cols-4 gap-6 mt-16 max-w-md"
           >
             {stats.map((s) => (
-              <div key={s.label} className="w-24">
+              <div key={s.label} className="text-center">
                 <div className="text-2xl md:text-3xl font-bold text-white leading-none">
                   <AnimatedCounter value={s.value} suffix={s.suffix} />
                 </div>
-                <div className="text-[11px] text-white/40 mt-1.5">{s.label}</div>
+                <div className="text-[11px] text-white/40 mt-1.5 whitespace-nowrap">{s.label}</div>
               </div>
             ))}
           </motion.div>
