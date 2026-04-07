@@ -5,17 +5,13 @@ import { useNavigate } from 'react-router';
 import { LandingHeader } from '../components/landing-header';
 import { CourseCardLanding } from '../components/course-card-landing';
 import { LANDING_COURSES } from '../data/courses-landing';
-import { Logo } from '../components/logo';
-import { useAuth } from '../context/auth-context';
-import { useTheme } from 'next-themes';
+import { LandingFooter } from '../components/landing-footer';
 
 const TRIBES = ['ყველა', 'ინჟინერია', 'დიზაინი', 'მარკეტინგი', 'AI', 'მენეჯმენტი'];
 
 export function CoursesCatalog() {
   const [selectedTribe, setSelectedTribe] = useState('ყველა');
   const [sortBy, setSortBy] = useState<'popular' | 'price-asc' | 'price-desc'>('popular');
-  const { openLogin } = useAuth();
-  const { theme, setTheme } = useTheme();
   const navigate = useNavigate();
 
   const featured = LANDING_COURSES.find(c => c.popular) ?? LANDING_COURSES[0];
@@ -139,23 +135,7 @@ export function CoursesCatalog() {
         </div>
       </section>
 
-      {/* ═══ FOOTER ═══ */}
-      <footer className="border-t border-border-subtle py-10">
-        <div className="max-w-[1200px] mx-auto px-5 md:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <Logo variant="academy" className="h-6 w-auto" />
-            <div className="flex items-center gap-6 text-sm text-foreground-faint">
-              <span>&copy; 2026 Blueberry Academy</span>
-              <a href="#" className="hover:text-foreground transition-colors">პირობები</a>
-              <a href="#" className="hover:text-foreground transition-colors">კონფიდენციალურობა</a>
-              <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="hover:text-foreground transition-colors">
-                {theme === 'dark' ? 'ღია თემა' : 'მუქი თემა'}
-              </button>
-              <button onClick={() => openLogin()} className="hover:text-foreground transition-colors">შესვლა</button>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <LandingFooter />
     </div>
   );
 }

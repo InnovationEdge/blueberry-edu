@@ -5,11 +5,12 @@ import { useAuth } from '../context/auth-context';
 import { Logo } from './logo';
 
 const NAV_ITEMS = [
+  { label: 'მთავარი', href: '/' },
   { label: 'კურსები', href: '/courses' },
-  { label: 'მასტერკლასები', href: '#' },
-  { label: 'სერტიფიკატები', href: '#' },
-  { label: 'კარიერა', href: '#' },
-  { label: 'ჩვენს შესახებ', href: '#' },
+  { label: 'მასტერკლასები', href: '/masterclass' },
+  { label: 'სერტიფიკატები', href: '/certificates' },
+  { label: 'კარიერა', href: '/career' },
+  { label: 'ჩვენს შესახებ', href: '/about' },
 ];
 
 const LANGUAGES = ['ქართული', 'English', 'Русский'];
