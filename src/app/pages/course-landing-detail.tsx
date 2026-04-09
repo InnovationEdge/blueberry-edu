@@ -1,14 +1,22 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router';
-import { ChevronDown, ChevronUp, Clock, Globe, Calendar, MapPin, User, ArrowLeft } from 'lucide-react';
-import { motion } from 'motion/react';
+import { ChevronDown, ChevronUp, Clock, Globe, Calendar, MapPin, User, ArrowLeft, ArrowRight, CheckCircle, Plus } from 'lucide-react';
+import { AnimatePresence, motion, useInView } from 'motion/react';
 import { LandingHeader } from '../components/landing-header';
-import { Logo } from '../components/logo';
+import { LandingFooter } from '../components/landing-footer';
 import { LANDING_COURSES } from '../data/courses-landing';
 import { useAuth } from '../context/auth-context';
-import { useTheme } from 'next-themes';
 
-/* ─── Extended course data (syllabus, mentor, etc.) ─── */
+function Reveal({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-60px' });
+  return (
+    <motion.div ref={ref} initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay }} className={className}>
+      {children}
+    </motion.div>
+  );
+}
+
 const COURSE_DETAILS: Record<number, {
   fullDesc: string;
   learningOutcomes: string[];
@@ -16,9 +24,10 @@ const COURSE_DETAILS: Record<number, {
   schedule: { days: string; time: string };
   startDate: string;
   syllabus: { title: string; topics: string[] }[];
+  faq: { q: string; a: string }[];
 }> = {
   1: {
-    fullDesc: 'React Native კურსი განკუთვნილია იმ ადამიანებისთვის, ვისაც სურთ მობილური აპლიკაციების შექმნა iOS და Android პლატფორმებისთვის ერთი კოდის ბაზით.',
+    fullDesc: 'React Native კურსი განკუთვნილია იმ ადამიანებისთვის, ვისაც სურთ მობილური აპლიკაციების შექმნა iOS და Android პლატფორმებისთვის ერთი კოდის ბაზით. კურსი მოიცავს ყველაფერს, კომპონენტებიდან App Store-ში გამოქვეყნებამდე.',
     learningOutcomes: [
       'React Native-ის ფუნდამენტური კონცეფციები და კომპონენტები',
       'ნავიგაცია, state management და API ინტეგრაცია',
@@ -31,41 +40,36 @@ const COURSE_DETAILS: Record<number, {
     startDate: '28 აპრ. 2026',
     syllabus: [
       { title: 'React Native საფუძვლები', topics: ['კომპონენტები და JSX', 'Props და State', 'StyleSheet და Flexbox', 'ScrollView და FlatList'] },
-      { title: 'ნავიგაცია', topics: ['React Navigation setup', 'Stack, Tab, Drawer navigators', 'Deep linking', 'Navigation state management'] },
-      { title: 'State Management', topics: ['Context API', 'Zustand/Redux', 'AsyncStorage', 'Global state patterns'] },
-      { title: 'API ინტეგრაცია', topics: ['Fetch და Axios', 'REST API-თან მუშაობა', 'Loading და Error states', 'Caching strategies'] },
-      { title: 'UI/UX პატერნები', topics: ['ანიმაციები Reanimated-ით', 'Gesture Handler', 'Custom components', 'Platform-specific design'] },
-      { title: 'გამოქვეყნება', topics: ['Expo EAS Build', 'App Store submission', 'Google Play submission', 'CI/CD pipeline'] },
+      { title: 'ნავიგაცია', topics: ['React Navigation setup', 'Stack, Tab, Drawer navigators', 'Deep linking'] },
+      { title: 'State Management', topics: ['Context API', 'Zustand/Redux', 'AsyncStorage'] },
+      { title: 'API ინტეგრაცია', topics: ['Fetch და Axios', 'REST API-თან მუშაობა', 'Loading და Error states'] },
+      { title: 'UI/UX პატერნები', topics: ['ანიმაციები Reanimated-ით', 'Gesture Handler', 'Custom components'] },
+      { title: 'გამოქვეყნება', topics: ['Expo EAS Build', 'App Store submission', 'Google Play submission'] },
     ],
-  },
-  2: {
-    fullDesc: 'UI/UX Design კურსი მოიცავს Figma-ში მუშაობას, მომხმარებლის კვლევას, wireframing-ს, პროტოტიპირებას და დიზაინ სისტემების შექმნას.',
-    learningOutcomes: ['Figma-ს სრული ფუნქციონალი', 'User Research მეთოდოლოგიები', 'Wireframing და პროტოტიპირება', 'Design System შექმნა', 'პორტფოლიოს მომზადება'],
-    mentor: { name: 'მარიამ ჯავახიშვილი', role: 'Lead UX Designer' },
-    schedule: { days: 'ორშაბათი, ოთხშაბათი', time: '18:30 - 20:30' },
-    startDate: '5 მაი. 2026',
-    syllabus: [
-      { title: 'Figma საფუძვლები', topics: ['Interface და Tools', 'Frames და Components', 'Auto Layout', 'Variants'] },
-      { title: 'User Research', topics: ['Interview techniques', 'User Personas', 'Journey Mapping', 'Competitive Analysis'] },
-      { title: 'Wireframing', topics: ['Low-fidelity wireframes', 'Information Architecture', 'User Flows', 'Rapid prototyping'] },
-      { title: 'Visual Design', topics: ['Typography', 'Color Theory', 'Grid Systems', 'Iconography'] },
-      { title: 'Design Systems', topics: ['Component Library', 'Design Tokens', 'Documentation', 'Handoff to developers'] },
+    faq: [
+      { q: 'რა წინაპირობაა საჭირო?', a: 'JavaScript-ის საბაზისო ცოდნა სასურველია, მაგრამ ნულიდანაც შეიძლება.' },
+      { q: 'კომპიუტერი რა უნდა მქონდეს?', a: 'ნებისმიერი Mac ან Windows კომპიუტერი. iOS ტესტირებისთვის Mac სასურველია.' },
+      { q: 'რა ფორმატშია კურსი?', a: 'ონლაინ, ლაივ ლექციები Zoom-ით + ჩანაწერების წვდომა.' },
     ],
   },
 };
 
-// Default detail for courses without specific data
 const DEFAULT_DETAIL = {
-  fullDesc: 'კურსი განკუთვნილია იმ ადამიანებისთვის, ვინც ამ სფეროში კარიერის დაწყებას ან გაღრმავებას გეგმავს. კურსი მოიცავს თეორიულ და პრაქტიკულ მასალას.',
+  fullDesc: 'კურსი განკუთვნილია იმ ადამიანებისთვის, ვინც ამ სფეროში კარიერის დაწყებას ან გაღრმავებას გეგმავს. კურსი მოიცავს თეორიულ და პრაქტიკულ მასალას რეალური პროექტებით.',
   learningOutcomes: ['საფუძვლების სრული ათვისება', 'პრაქტიკული პროექტების შექმნა', 'რეალურ ინსტრუმენტებთან მუშაობა', 'პორტფოლიოს მომზადება', 'სერტიფიკატის მიღება'],
   mentor: { name: 'შალვა სილაგაძე', role: 'ინსტრუქტორი' },
   schedule: { days: 'სამშაბათი, პარასკევი', time: '19:30 - 21:30' },
   startDate: '28 აპრ. 2026',
   syllabus: [
     { title: 'შესავალი', topics: ['სფეროს მიმოხილვა', 'ინსტრუმენტები', 'გარემოს მომზადება'] },
-    { title: 'საფუძვლები', topics: ['ძირითადი კონცეფციები', 'პრაქტიკული სავარჯიშოები', 'პირველი პროექტი'] },
-    { title: 'მოწინავე თემები', topics: ['რეალური სცენარები', 'Best practices', 'ოპტიმიზაცია'] },
+    { title: 'საფუძვლები', topics: ['ძირითადი კონცეფციები', 'პრაქტიკული სავარჯიშოები'] },
+    { title: 'მოწინავე თემები', topics: ['რეალური სცენარები', 'Best practices'] },
     { title: 'ფინალური პროექტი', topics: ['დაგეგმვა', 'იმპლემენტაცია', 'პრეზენტაცია'] },
+  ],
+  faq: [
+    { q: 'რა წინაპირობაა საჭირო?', a: 'არანაირი წინასწარი ცოდნა არ არის საჭირო.' },
+    { q: 'რა ფორმატშია კურსი?', a: 'ონლაინ, ლაივ ლექციები Zoom-ით.' },
+    { q: 'სერტიფიკატს მივიღებ?', a: 'დიახ, ვერიფიცირებულ სერტიფიკატს.' },
   ],
 };
 
@@ -73,8 +77,8 @@ export function CourseLandingDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { openLogin } = useAuth();
-  const { theme, setTheme } = useTheme();
   const [openModule, setOpenModule] = useState<number | null>(0);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [activeSection, setActiveSection] = useState('overview');
 
   const courseId = parseInt(id ?? '1');
@@ -85,7 +89,7 @@ export function CourseLandingDetail() {
     { id: 'overview', label: 'მიმოხილვა' },
     { id: 'syllabus', label: 'სილაბუსი' },
     { id: 'schedule', label: 'განრიგი' },
-    { id: 'register', label: 'რეგისტრაცია' },
+    { id: 'faq', label: 'FAQ' },
   ];
 
   return (
@@ -93,137 +97,172 @@ export function CourseLandingDetail() {
       <LandingHeader activePath="/courses" />
       <div className="h-[72px]" />
 
-      <div className="max-w-[1200px] mx-auto px-5 md:px-12 lg:px-16 py-8">
-        {/* Back */}
-        <button onClick={() => navigate('/courses')} className="flex items-center gap-2 text-sm text-foreground-faint hover:text-foreground mb-6 transition-colors">
-          <ArrowLeft className="w-4 h-4" /> კურსებზე დაბრუნება
-        </button>
+      {/* ═══ HERO BANNER — digitaledu.ge style ═══ */}
+      <section className="relative bg-gradient-to-r from-[#e8f4fd] to-[#f0f4ff] overflow-hidden">
+        <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 py-10 md:py-14">
+          <button onClick={() => navigate('/courses')} className="flex items-center gap-2 text-sm text-foreground-faint hover:text-foreground mb-6 transition-colors">
+            <ArrowLeft className="w-4 h-4" /> კურსებზე დაბრუნება
+          </button>
+          <div className="flex items-start justify-between gap-8">
+            <div className="max-w-xl">
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{course.title}</h1>
+              <div className="flex items-center gap-5 text-sm text-gray-500 mb-5 flex-wrap">
+                <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#004aad]" />{course.tribe}</span>
+                <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" />{course.duration}</span>
+                <span className="flex items-center gap-1.5"><Globe className="w-4 h-4" />{course.format ?? 'ონლაინ'}</span>
+              </div>
+              <p className="text-gray-600 text-sm leading-relaxed">{detail.fullDesc}</p>
+            </div>
+            {/* Logo */}
+            <div className="hidden md:flex w-20 h-20 rounded-2xl bg-white shadow-md border border-gray-100 items-center justify-center shrink-0" dangerouslySetInnerHTML={{ __html: course.logo }} />
+          </div>
+        </div>
+      </section>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-10">
-          {/* ═══ LEFT — Main content ═══ */}
+      {/* ═══ MAIN CONTENT ═══ */}
+      <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 py-10 md:py-14">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-10 md:gap-14">
+
+          {/* ═══ LEFT ═══ */}
           <div>
-            {/* Hero image / gradient */}
-            <div className={`bg-gradient-to-br ${course.gradient} rounded-2xl h-[280px] md:h-[360px] flex items-end p-8 mb-8 relative overflow-hidden`}>
-              <div className="absolute top-6 right-6 w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-sm flex items-center justify-center" dangerouslySetInnerHTML={{ __html: course.logo }} />
-              <div>
-                <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">{course.title}</h1>
-                <div className="flex items-center gap-4 text-sm text-white/60">
-                  <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-white/50" />{course.tribe}</span>
-                  <span className="flex items-center gap-1.5"><Globe className="w-4 h-4" />{course.format ?? 'ონლაინ'}</span>
+            {/* Overview */}
+            <Reveal>
+              <section id="overview" className="mb-14">
+                <h2 className="text-xl font-bold mb-5">რა შეიძენ ამ კურსზე</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {detail.learningOutcomes.map((item, i) => (
+                    <div key={i} className="flex items-start gap-3 bg-surface rounded-xl p-4">
+                      <CheckCircle className="w-5 h-5 text-[#004aad] mt-0.5 shrink-0" />
+                      <span className="text-sm text-foreground-secondary">{item}</span>
+                    </div>
+                  ))}
                 </div>
-              </div>
-            </div>
+              </section>
+            </Reveal>
 
-            {/* Course title + meta */}
-            <h2 className="text-2xl font-bold mb-3">{course.title}</h2>
-            <div className="flex items-center gap-5 text-sm text-foreground-faint mb-8 flex-wrap">
-              <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#004aad]" />{course.tribe}</span>
-              <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" />{course.duration}</span>
-              <span className="flex items-center gap-1.5"><Globe className="w-4 h-4" />{course.format ?? 'ონლაინ'}</span>
-            </div>
-
-            {/* ── Overview ── */}
-            <section id="overview" className="mb-12">
-              <h3 className="text-lg font-bold mb-4">კურსის მიმოხილვა</h3>
-              <p className="text-foreground-secondary leading-relaxed mb-6">{detail.fullDesc}</p>
-
-              <h4 className="font-semibold mb-3">კურსის დასრულების შემდეგ შეძლებ:</h4>
-              <ul className="space-y-2.5">
-                {detail.learningOutcomes.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm text-foreground-secondary">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#004aad] mt-2 shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            {/* ── Syllabus ── */}
-            <section id="syllabus" className="mb-12">
-              <h3 className="text-lg font-bold mb-4">სილაბუსი</h3>
-              <div className="space-y-2">
-                {detail.syllabus.map((module, i) => (
-                  <div key={i} className="border border-border-subtle rounded-xl overflow-hidden">
-                    <button
-                      onClick={() => setOpenModule(openModule === i ? null : i)}
-                      className="w-full flex items-center justify-between p-4 hover:bg-surface-hover transition-colors"
-                    >
-                      <div className="flex items-center gap-3">
-                        {openModule === i ? <ChevronUp className="w-4 h-4 text-foreground-faint" /> : <ChevronDown className="w-4 h-4 text-foreground-faint" />}
-                        <span className="font-medium text-sm">{module.title}</span>
-                      </div>
-                      <span className="text-xs text-foreground-faint bg-surface px-3 py-1 rounded-full">Module {i + 1}</span>
-                    </button>
-                    {openModule === i && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        transition={{ duration: 0.2 }}
-                        className="border-t border-border-subtle"
+            {/* Syllabus */}
+            <Reveal>
+              <section id="syllabus" className="mb-14">
+                <h2 className="text-xl font-bold mb-5">სილაბუსი</h2>
+                <div className="space-y-3">
+                  {detail.syllabus.map((module, i) => (
+                    <div key={i} className="border border-border-subtle rounded-xl overflow-hidden">
+                      <button
+                        onClick={() => setOpenModule(openModule === i ? null : i)}
+                        className="w-full flex items-center justify-between p-5 hover:bg-surface/50 transition-colors"
                       >
-                        <ul className="p-4 space-y-2.5">
-                          {module.topics.map((topic, j) => (
-                            <li key={j} className="flex items-start gap-3 text-sm text-foreground-secondary">
-                              <span className="w-1 h-1 rounded-full bg-foreground-faint mt-2 shrink-0" />
-                              {topic}
-                            </li>
-                          ))}
-                        </ul>
-                      </motion.div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </section>
+                        <div className="flex items-center gap-4">
+                          {openModule === i ? <ChevronUp className="w-5 h-5 text-foreground-faint" /> : <ChevronDown className="w-5 h-5 text-foreground-faint" />}
+                          <span className="font-semibold text-sm">{module.title}</span>
+                        </div>
+                        <span className="text-xs text-foreground-faint bg-surface px-3 py-1.5 rounded-full font-medium">Module {i + 1}</span>
+                      </button>
+                      <AnimatePresence>
+                        {openModule === i && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="overflow-hidden"
+                          >
+                            <ul className="px-5 pb-5 pt-2 space-y-3 border-t border-border-subtle">
+                              {module.topics.map((topic, j) => (
+                                <li key={j} className="flex items-center gap-3 text-sm text-foreground-secondary">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-[#004aad]/40 shrink-0" />
+                                  {topic}
+                                </li>
+                              ))}
+                            </ul>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </Reveal>
 
-            {/* ── Schedule / Mentor ── */}
-            <section id="schedule" className="mb-12">
-              <h3 className="text-lg font-bold mb-4">განრიგი</h3>
-              <div className="border border-border-subtle rounded-xl divide-y divide-border-subtle">
-                <div className="flex items-center justify-between p-4">
-                  <span className="flex items-center gap-2.5 text-sm text-foreground-faint"><Calendar className="w-4 h-4" /> დაწყების თარიღი</span>
-                  <span className="text-sm font-medium">{detail.startDate}</span>
+            {/* Schedule */}
+            <Reveal>
+              <section id="schedule" className="mb-14">
+                <h2 className="text-xl font-bold mb-5">განრიგი</h2>
+                <div className="bg-card border border-border-subtle rounded-xl divide-y divide-border-subtle">
+                  {[
+                    { icon: Calendar, label: 'დაწყების თარიღი', value: detail.startDate },
+                    { icon: Clock, label: 'ხანგრძლივობა', value: course.duration },
+                    { icon: User, label: 'მენტორი', value: detail.mentor.name, sub: detail.mentor.role },
+                    { icon: MapPin, label: 'ადგილმდებარეობა', value: 'ONLINE' },
+                    { icon: Calendar, label: 'სალექციო დღეები', value: detail.schedule.days },
+                    { icon: Clock, label: 'სალექციო დრო', value: detail.schedule.time },
+                  ].map((row, i) => {
+                    const Icon = row.icon;
+                    return (
+                      <div key={i} className="flex items-center justify-between py-4 px-5">
+                        <span className="flex items-center gap-3 text-sm text-foreground-faint">
+                          <Icon className="w-4 h-4 shrink-0" /> {row.label}
+                        </span>
+                        <div className="text-right">
+                          <span className="text-sm font-medium">{row.value}</span>
+                          {row.sub && <span className="block text-xs text-foreground-faint">{row.sub}</span>}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-                <div className="flex items-center justify-between p-4">
-                  <span className="flex items-center gap-2.5 text-sm text-foreground-faint"><Clock className="w-4 h-4" /> ხანგრძლივობა</span>
-                  <span className="text-sm font-medium">{course.duration}</span>
+              </section>
+            </Reveal>
+
+            {/* FAQ */}
+            <Reveal>
+              <section id="faq" className="mb-14">
+                <h2 className="text-xl font-bold mb-5">FAQ</h2>
+                <div className="space-y-3">
+                  {detail.faq.map((item, i) => (
+                    <div key={i} className="bg-card border border-border-subtle rounded-xl overflow-hidden">
+                      <button
+                        onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                        className="w-full flex items-center justify-between p-5 text-left"
+                      >
+                        <span className="text-sm font-medium pr-4">{item.q}</span>
+                        <Plus className={`w-5 h-5 text-foreground-faint shrink-0 transition-transform ${openFaq === i ? 'rotate-45' : ''}`} />
+                      </button>
+                      <AnimatePresence>
+                        {openFaq === i && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="overflow-hidden"
+                          >
+                            <p className="text-sm text-foreground-secondary leading-relaxed px-5 pb-5">{item.a}</p>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ))}
                 </div>
-                <div className="flex items-center justify-between p-4">
-                  <span className="flex items-center gap-2.5 text-sm text-foreground-faint"><User className="w-4 h-4" /> მენტორი</span>
-                  <div className="text-right">
-                    <span className="text-sm font-medium block">{detail.mentor.name}</span>
-                    <span className="text-xs text-foreground-faint">{detail.mentor.role}</span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between p-4">
-                  <span className="flex items-center gap-2.5 text-sm text-foreground-faint"><MapPin className="w-4 h-4" /> ადგილმდებარეობა</span>
-                  <span className="text-sm font-medium">ONLINE</span>
-                </div>
-                <div className="flex items-center justify-between p-4">
-                  <span className="flex items-center gap-2.5 text-sm text-foreground-faint"><Calendar className="w-4 h-4" /> სალექციო დღეები</span>
-                  <span className="text-sm font-medium">{detail.schedule.days}</span>
-                </div>
-                <div className="flex items-center justify-between p-4">
-                  <span className="flex items-center gap-2.5 text-sm text-foreground-faint"><Clock className="w-4 h-4" /> სალექციო დრო</span>
-                  <span className="text-sm font-medium">{detail.schedule.time}</span>
-                </div>
-              </div>
-            </section>
+              </section>
+            </Reveal>
           </div>
 
-          {/* ═══ RIGHT — Sticky sidebar ═══ */}
+          {/* ═══ RIGHT SIDEBAR ═══ */}
           <div>
-            <div className="sticky top-[88px] space-y-6">
+            <div className="sticky top-[88px] space-y-5">
               {/* Price card */}
-              <div className="bg-card border border-border-subtle rounded-2xl p-6">
+              <div className="bg-card border border-border-subtle rounded-2xl p-6 shadow-sm">
                 <p className="text-3xl font-bold mb-1">{course.price}₾</p>
-                <p className="text-sm text-foreground-faint mb-5">ყველაზე ადრე დაწყების დრო: {detail.startDate}</p>
+                <p className="text-sm text-foreground-faint mb-6">ყველაზე ადრე დაწყების დრო: {detail.startDate}</p>
                 <button
                   onClick={() => openLogin()}
-                  className="w-full py-3.5 bg-[#004aad] text-white rounded-xl font-semibold text-sm hover:bg-[#003d8f] transition-all active:scale-[0.97]"
+                  className="w-full py-3.5 bg-[#004aad] text-white rounded-xl font-semibold text-sm hover:bg-[#003d8f] transition-all active:scale-[0.97] mb-3"
                 >
                   დარეგისტრირდი
                 </button>
+                <a href="/masterclass" className="block w-full py-3 border border-border-subtle text-foreground text-center rounded-xl text-sm font-medium hover:bg-surface-hover transition-all">
+                  უფასო მასტერკლასი
+                </a>
               </div>
 
               {/* Section nav */}
@@ -233,9 +272,9 @@ export function CourseLandingDetail() {
                     key={s.id}
                     href={`#${s.id}`}
                     onClick={() => setActiveSection(s.id)}
-                    className={`block px-5 py-3.5 text-sm transition-colors border-l-2 ${
+                    className={`block px-5 py-4 text-sm transition-colors border-l-[3px] ${
                       activeSection === s.id
-                        ? 'border-[#004aad] text-[#004aad] font-medium bg-[#004aad]/5'
+                        ? 'border-[#004aad] text-[#004aad] font-semibold bg-[#004aad]/5'
                         : 'border-transparent text-foreground-faint hover:text-foreground hover:bg-surface-hover'
                     }`}
                   >
@@ -243,28 +282,27 @@ export function CourseLandingDetail() {
                   </a>
                 ))}
               </div>
+
+              {/* Quick info */}
+              <div className="bg-surface rounded-2xl p-5 space-y-3">
+                {[
+                  { label: 'Tribe', value: course.tribe },
+                  { label: 'ხანგრძლივობა', value: course.duration },
+                  { label: 'ფორმატი', value: course.format ?? 'ონლაინ' },
+                  { label: 'მენტორი', value: detail.mentor.name },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center justify-between text-sm">
+                    <span className="text-foreground-faint">{item.label}</span>
+                    <span className="font-medium">{item.value}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="border-t border-border-subtle py-10 mt-16">
-        <div className="max-w-[1200px] mx-auto px-5 md:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <Logo variant="academy" className="h-6 w-auto" />
-            <div className="flex items-center gap-6 text-sm text-foreground-faint">
-              <span>&copy; 2026 Blueberry Academy</span>
-              <a href="#" className="hover:text-foreground transition-colors">პირობები</a>
-              <a href="#" className="hover:text-foreground transition-colors">კონფიდენციალურობა</a>
-              <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="hover:text-foreground transition-colors">
-                {theme === 'dark' ? 'ღია თემა' : 'მუქი თემა'}
-              </button>
-              <button onClick={() => openLogin()} className="hover:text-foreground transition-colors">შესვლა</button>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <LandingFooter />
     </div>
   );
 }

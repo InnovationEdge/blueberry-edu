@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
-import { ChevronDown, Star, Clock, CheckCircle, Globe, ArrowRight, Plus } from 'lucide-react';
+import { Star, CheckCircle, ArrowRight, Plus } from 'lucide-react';
 import { AnimatePresence, motion, useInView } from 'motion/react';
 import { useAuth } from '../context/auth-context';
-import { useTheme } from 'next-themes';
 import { getAppT } from '../i18n/app';
 import { Logo } from '../components/logo';
 import { HeroCanvas } from '../components/hero-canvas';
-import { usePopularCourses, useAllCourses } from '../hooks/use-courses';
+import { LandingHeader } from '../components/landing-header';
+import { LandingFooter } from '../components/landing-footer';
+
 
 function HeroVideo() {
   return (
@@ -63,21 +64,12 @@ function Reveal({ children, className = '', delay = 0 }: { children: React.React
 }
 
 export function Landing() {
-  const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const { openLogin, language, setLanguage } = useAuth();
-  const { theme, setTheme } = useTheme();
+  const { openLogin, language } = useAuth();
   const t = getAppT(language);
-  const { data: apiCourses = [] } = usePopularCourses();
-  const { data: allCourses = [] } = useAllCourses();
-
-  const languages = ['ქართული', 'English', 'Русский'];
-
   const heroRef = useRef(null);
 
   const handleSignIn = () => openLogin();
-
-  const displayCourses = apiCourses.length > 0 ? apiCourses : allCourses;
 
   const stats = [
     { value: 500, suffix: '+', label: 'კურსდამთავრებული' },
@@ -104,72 +96,7 @@ export function Landing() {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
 
-      {/* ═══ HEADER — Making Science style ═══ */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
-        <div className="flex items-center px-5 md:px-12 lg:px-16 h-[72px]">
-          {/* Logo — left */}
-          <Logo variant="academy" className="h-[120px] md:h-[130px] w-auto -my-8" />
-
-          {/* Spacer */}
-          <div className="flex-1" />
-
-          {/* Nav + actions — all right */}
-          <nav className="hidden lg:flex items-center gap-7 mr-6">
-            {[
-              { label: 'კურსები', href: '/courses' },
-              { label: 'მასტერკლასები', href: '#' },
-              { label: 'სერტიფიკატები', href: '#' },
-              { label: 'კარიერა', href: '#' },
-              { label: 'ჩვენს შესახებ', href: '#' },
-            ].map((item) => (
-              <a key={item.label} href={item.href} className="text-sm font-medium text-gray-700 hover:text-[#004aad] transition-colors">
-                {item.label}
-              </a>
-            ))}
-          </nav>
-
-          <div className="flex items-center gap-2">
-            {/* Language */}
-            <div className="relative">
-              <button
-                onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
-                className="flex items-center gap-1.5 px-3 py-2 text-gray-500 hover:text-gray-900 rounded-full hover:bg-gray-100 transition-all text-sm"
-              >
-                <Globe className="w-4 h-4" />
-                <span className="hidden sm:inline">{language}</span>
-                <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showLanguageDropdown ? 'rotate-180' : ''}`} />
-              </button>
-              <AnimatePresence>
-                {showLanguageDropdown && (
-                  <>
-                    <div className="fixed inset-0 z-40" onClick={() => setShowLanguageDropdown(false)} />
-                    <motion.div
-                      initial={{ opacity: 0, y: -4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -4 }}
-                      transition={{ duration: 0.15 }}
-                      className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden z-50"
-                    >
-                      {languages.map((lang) => (
-                        <button
-                          key={lang}
-                          onClick={() => { setLanguage(lang); setShowLanguageDropdown(false); }}
-                          className={`block w-full px-4 py-2.5 text-sm text-left transition-colors ${
-                            language === lang ? 'bg-[#004aad]/10 text-[#004aad] font-medium' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
-                          }`}
-                        >
-                          {lang}
-                        </button>
-                      ))}
-                    </motion.div>
-                  </>
-                )}
-              </AnimatePresence>
-            </div>
-
-          </div>
-        </div>
-      </header>
+      <LandingHeader activePath="/" />
 
       {/* ═══ HERO — Compact with particle canvas ═══ */}
       <section ref={heroRef} className="relative h-[85vh] flex items-end overflow-hidden bg-transparent">
@@ -555,22 +482,7 @@ export function Landing() {
       </section>
 
       {/* ═══ FOOTER ═══ */}
-      <footer className="border-t border-border-subtle py-10">
-        <div className="max-w-[1200px] mx-auto px-5 md:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <Logo variant="academy" className="h-6 w-auto" />
-            <div className="flex items-center gap-6 text-sm text-foreground-faint">
-              <span>© 2026 Blueberry Academy</span>
-              <a href="#" className="hover:text-foreground transition-colors">პირობები</a>
-              <a href="#" className="hover:text-foreground transition-colors">კონფიდენციალურობა</a>
-              <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="hover:text-foreground transition-colors">
-                {theme === 'dark' ? 'ღია თემა' : 'მუქი თემა'}
-              </button>
-              <button onClick={handleSignIn} className="hover:text-foreground transition-colors">შესვლა</button>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <LandingFooter />
     </div>
   );
 }
