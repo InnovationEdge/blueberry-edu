@@ -1,11 +1,11 @@
 import { useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router';
-import { ChevronDown, ChevronUp, Clock, Globe, Calendar, MapPin, User, ArrowLeft, ArrowRight, CheckCircle, Plus } from 'lucide-react';
+import { ChevronDown, ChevronUp, Clock, Globe, Calendar, MapPin, User, ArrowLeft, CheckCircle, Plus } from 'lucide-react';
 import { AnimatePresence, motion, useInView } from 'motion/react';
 import { LandingHeader } from '../components/landing-header';
 import { LandingFooter } from '../components/landing-footer';
-import { LANDING_COURSES } from '../data/courses-landing';
-import { useAuth } from '../context/auth-context';
+import { useCourseDetail } from '../hooks/use-course-detail';
+import { useCourseRegistration } from '../hooks/use-registration';
 
 function Reveal({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef(null);
@@ -17,73 +17,16 @@ function Reveal({ children, className = '', delay = 0 }: { children: React.React
   );
 }
 
-const COURSE_DETAILS: Record<number, {
-  fullDesc: string;
-  learningOutcomes: string[];
-  mentor: { name: string; role: string };
-  schedule: { days: string; time: string };
-  startDate: string;
-  syllabus: { title: string; topics: string[] }[];
-  faq: { q: string; a: string }[];
-}> = {
-  1: {
-    fullDesc: 'React Native კურსი განკუთვნილია იმ ადამიანებისთვის, ვისაც სურთ მობილური აპლიკაციების შექმნა iOS და Android პლატფორმებისთვის ერთი კოდის ბაზით. კურსი მოიცავს ყველაფერს, კომპონენტებიდან App Store-ში გამოქვეყნებამდე.',
-    learningOutcomes: [
-      'React Native-ის ფუნდამენტური კონცეფციები და კომპონენტები',
-      'ნავიგაცია, state management და API ინტეგრაცია',
-      'Expo და EAS Build-ის გამოყენება',
-      'App Store და Google Play-ში გამოქვეყნება',
-      'რეალური პროექტის შექმნა პორტფოლიოსთვის',
-    ],
-    mentor: { name: 'გიორგი ბერიძე', role: 'Senior Mobile Developer' },
-    schedule: { days: 'სამშაბათი, ხუთშაბათი', time: '19:00 - 21:00' },
-    startDate: '28 აპრ. 2026',
-    syllabus: [
-      { title: 'React Native საფუძვლები', topics: ['კომპონენტები და JSX', 'Props და State', 'StyleSheet და Flexbox', 'ScrollView და FlatList'] },
-      { title: 'ნავიგაცია', topics: ['React Navigation setup', 'Stack, Tab, Drawer navigators', 'Deep linking'] },
-      { title: 'State Management', topics: ['Context API', 'Zustand/Redux', 'AsyncStorage'] },
-      { title: 'API ინტეგრაცია', topics: ['Fetch და Axios', 'REST API-თან მუშაობა', 'Loading და Error states'] },
-      { title: 'UI/UX პატერნები', topics: ['ანიმაციები Reanimated-ით', 'Gesture Handler', 'Custom components'] },
-      { title: 'გამოქვეყნება', topics: ['Expo EAS Build', 'App Store submission', 'Google Play submission'] },
-    ],
-    faq: [
-      { q: 'რა წინაპირობაა საჭირო?', a: 'JavaScript-ის საბაზისო ცოდნა სასურველია, მაგრამ ნულიდანაც შეიძლება.' },
-      { q: 'კომპიუტერი რა უნდა მქონდეს?', a: 'ნებისმიერი Mac ან Windows კომპიუტერი. iOS ტესტირებისთვის Mac სასურველია.' },
-      { q: 'რა ფორმატშია კურსი?', a: 'ონლაინ, ლაივ ლექციები Zoom-ით + ჩანაწერების წვდომა.' },
-    ],
-  },
-};
-
-const DEFAULT_DETAIL = {
-  fullDesc: 'კურსი განკუთვნილია იმ ადამიანებისთვის, ვინც ამ სფეროში კარიერის დაწყებას ან გაღრმავებას გეგმავს. კურსი მოიცავს თეორიულ და პრაქტიკულ მასალას რეალური პროექტებით.',
-  learningOutcomes: ['საფუძვლების სრული ათვისება', 'პრაქტიკული პროექტების შექმნა', 'რეალურ ინსტრუმენტებთან მუშაობა', 'პორტფოლიოს მომზადება', 'სერტიფიკატის მიღება'],
-  mentor: { name: 'შალვა სილაგაძე', role: 'ინსტრუქტორი' },
-  schedule: { days: 'სამშაბათი, პარასკევი', time: '19:30 - 21:30' },
-  startDate: '28 აპრ. 2026',
-  syllabus: [
-    { title: 'შესავალი', topics: ['სფეროს მიმოხილვა', 'ინსტრუმენტები', 'გარემოს მომზადება'] },
-    { title: 'საფუძვლები', topics: ['ძირითადი კონცეფციები', 'პრაქტიკული სავარჯიშოები'] },
-    { title: 'მოწინავე თემები', topics: ['რეალური სცენარები', 'Best practices'] },
-    { title: 'ფინალური პროექტი', topics: ['დაგეგმვა', 'იმპლემენტაცია', 'პრეზენტაცია'] },
-  ],
-  faq: [
-    { q: 'რა წინაპირობაა საჭირო?', a: 'არანაირი წინასწარი ცოდნა არ არის საჭირო.' },
-    { q: 'რა ფორმატშია კურსი?', a: 'ონლაინ, ლაივ ლექციები Zoom-ით.' },
-    { q: 'სერტიფიკატს მივიღებ?', a: 'დიახ, ვერიფიცირებულ სერტიფიკატს.' },
-  ],
-};
-
 export function CourseLandingDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { openLogin } = useAuth();
+  const courseId = parseInt(id ?? '1');
+  const { data: course, isLoading, error } = useCourseDetail(courseId);
   const [openModule, setOpenModule] = useState<number | null>(0);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [activeSection, setActiveSection] = useState('overview');
-
-  const courseId = parseInt(id ?? '1');
-  const course = LANDING_COURSES.find(c => c.id === courseId) ?? LANDING_COURSES[0];
-  const detail = COURSE_DETAILS[courseId] ?? DEFAULT_DETAIL;
+  const [regForm, setRegForm] = useState({ name: '', email: '', phone: '' });
+  const registration = useCourseRegistration(courseId);
 
   const sections = [
     { id: 'overview', label: 'მიმოხილვა' },
@@ -92,13 +35,45 @@ export function CourseLandingDetail() {
     { id: 'faq', label: 'FAQ' },
   ];
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background text-foreground">
+        <LandingHeader activePath="/courses" />
+        <div className="h-[72px]" />
+        <div className="max-w-[1200px] mx-auto px-6 py-20 text-center text-foreground-faint">იტვირთება...</div>
+      </div>
+    );
+  }
+
+  if (error || !course) {
+    return (
+      <div className="min-h-screen bg-background text-foreground">
+        <LandingHeader activePath="/courses" />
+        <div className="h-[72px]" />
+        <div className="max-w-[1200px] mx-auto px-6 py-20 text-center">
+          <p className="text-foreground-faint mb-4">კურსი ვერ მოიძებნა</p>
+          <button onClick={() => navigate('/courses')} className="px-6 py-3 bg-[#004aad] text-white rounded-xl text-sm font-semibold">კურსებზე დაბრუნება</button>
+        </div>
+      </div>
+    );
+  }
+
+  const syllabus = course.course_syllabus ?? [];
+  const faq = course.course_faq ?? [];
+  const learningOutcomes = course.learning_outcomes ?? [];
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await registration.submit({ full_name: regForm.name, email: regForm.email, phone: regForm.phone });
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <LandingHeader activePath="/courses" />
       <div className="h-[72px]" />
 
-      {/* ═══ HERO BANNER — digitaledu.ge style ═══ */}
-      <section className="relative bg-gradient-to-r from-[#e8f4fd] to-[#f0f4ff] overflow-hidden">
+      {/* ═══ HERO BANNER ═══ */}
+      <section className="relative overflow-hidden" style={course.image_url ? { backgroundImage: `linear-gradient(135deg, rgba(232,244,253,0.92), rgba(240,244,255,0.92)), url(${course.image_url})`, backgroundSize: 'cover', backgroundPosition: 'center' } : { background: 'linear-gradient(to right, #e8f4fd, #f0f4ff)' }}>
         <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 py-10 md:py-14">
           <button onClick={() => navigate('/courses')} className="flex items-center gap-2 text-sm text-foreground-faint hover:text-foreground mb-6 transition-colors">
             <ArrowLeft className="w-4 h-4" /> კურსებზე დაბრუნება
@@ -110,11 +85,13 @@ export function CourseLandingDetail() {
                 <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#004aad]" />{course.tribe}</span>
                 <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" />{course.duration}</span>
                 <span className="flex items-center gap-1.5"><Globe className="w-4 h-4" />{course.format ?? 'ონლაინ'}</span>
+                {course.level && <span className="flex items-center gap-1.5"><User className="w-4 h-4" />{course.level}</span>}
               </div>
-              <p className="text-gray-600 text-sm leading-relaxed">{detail.fullDesc}</p>
+              <p className="text-gray-600 text-sm leading-relaxed">{course.description}</p>
             </div>
-            {/* Logo */}
-            <div className="hidden md:flex w-20 h-20 rounded-2xl bg-white shadow-md border border-gray-100 items-center justify-center shrink-0" dangerouslySetInnerHTML={{ __html: course.logo }} />
+            {course.logo && (
+              <div className="hidden md:flex w-20 h-20 rounded-2xl bg-white shadow-md border border-gray-100 items-center justify-center shrink-0" dangerouslySetInnerHTML={{ __html: course.logo }} />
+            )}
           </div>
         </div>
       </section>
@@ -125,63 +102,79 @@ export function CourseLandingDetail() {
 
           {/* ═══ LEFT ═══ */}
           <div>
-            {/* Overview */}
-            <Reveal>
-              <section id="overview" className="mb-14">
-                <h2 className="text-xl font-bold mb-5">რა შეიძენ ამ კურსზე</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {detail.learningOutcomes.map((item, i) => (
-                    <div key={i} className="flex items-start gap-3 bg-surface rounded-xl p-4">
-                      <CheckCircle className="w-5 h-5 text-[#004aad] mt-0.5 shrink-0" />
-                      <span className="text-sm text-foreground-secondary">{item}</span>
+            {/* Overview / Learning outcomes */}
+            {learningOutcomes.length > 0 && (
+              <Reveal>
+                <section id="overview" className="mb-14">
+                  <h2 className="text-xl font-bold mb-5">რა შეიძენ ამ კურსზე</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {learningOutcomes.map((item, i) => (
+                      <div key={i} className="flex items-start gap-3 bg-surface rounded-xl p-4">
+                        <CheckCircle className="w-5 h-5 text-[#004aad] mt-0.5 shrink-0" />
+                        <span className="text-sm text-foreground-secondary">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              </Reveal>
+            )}
+
+            {/* Mentor */}
+            {(course.mentor_name || course.mentor_bio) && (
+              <Reveal>
+                <section className="mb-14">
+                  <h2 className="text-xl font-bold mb-5">მენტორი</h2>
+                  <div className="bg-card border border-border-subtle rounded-xl p-6 flex gap-5">
+                    {course.mentor_photo && (
+                      <img src={course.mentor_photo} alt={course.mentor_name} className="w-24 h-24 rounded-full object-cover shrink-0" />
+                    )}
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-lg">{course.mentor_name}</h3>
+                      <p className="text-sm text-[#004aad] mb-3">{course.mentor_role}</p>
+                      {course.mentor_bio && (
+                        <p className="text-sm text-foreground-secondary leading-relaxed whitespace-pre-line">{course.mentor_bio}</p>
+                      )}
                     </div>
-                  ))}
-                </div>
-              </section>
-            </Reveal>
+                  </div>
+                </section>
+              </Reveal>
+            )}
 
             {/* Syllabus */}
-            <Reveal>
-              <section id="syllabus" className="mb-14">
-                <h2 className="text-xl font-bold mb-5">სილაბუსი</h2>
-                <div className="space-y-3">
-                  {detail.syllabus.map((module, i) => (
-                    <div key={i} className="border border-border-subtle rounded-xl overflow-hidden">
-                      <button
-                        onClick={() => setOpenModule(openModule === i ? null : i)}
-                        className="w-full flex items-center justify-between p-5 hover:bg-surface/50 transition-colors"
-                      >
-                        <div className="flex items-center gap-4">
-                          {openModule === i ? <ChevronUp className="w-5 h-5 text-foreground-faint" /> : <ChevronDown className="w-5 h-5 text-foreground-faint" />}
-                          <span className="font-semibold text-sm">{module.title}</span>
-                        </div>
-                        <span className="text-xs text-foreground-faint bg-surface px-3 py-1.5 rounded-full font-medium">Module {i + 1}</span>
-                      </button>
-                      <AnimatePresence>
-                        {openModule === i && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.2 }}
-                            className="overflow-hidden"
-                          >
-                            <ul className="px-5 pb-5 pt-2 space-y-3 border-t border-border-subtle">
-                              {module.topics.map((topic, j) => (
-                                <li key={j} className="flex items-center gap-3 text-sm text-foreground-secondary">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-[#004aad]/40 shrink-0" />
-                                  {topic}
-                                </li>
-                              ))}
-                            </ul>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            </Reveal>
+            {syllabus.length > 0 && (
+              <Reveal>
+                <section id="syllabus" className="mb-14">
+                  <h2 className="text-xl font-bold mb-5">სილაბუსი</h2>
+                  <div className="space-y-3">
+                    {syllabus.map((module, i) => (
+                      <div key={module.id ?? i} className="border border-border-subtle rounded-xl overflow-hidden">
+                        <button onClick={() => setOpenModule(openModule === i ? null : i)} className="w-full flex items-center justify-between p-5 hover:bg-surface/50 transition-colors">
+                          <div className="flex items-center gap-4">
+                            {openModule === i ? <ChevronUp className="w-5 h-5 text-foreground-faint" /> : <ChevronDown className="w-5 h-5 text-foreground-faint" />}
+                            <span className="font-semibold text-sm text-left">{module.title}</span>
+                          </div>
+                          <span className="text-xs text-foreground-faint bg-surface px-3 py-1.5 rounded-full font-medium">Module {i + 1}</span>
+                        </button>
+                        <AnimatePresence>
+                          {openModule === i && (
+                            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
+                              <ul className="px-5 pb-5 pt-2 space-y-3 border-t border-border-subtle">
+                                {module.topics.map((topic, j) => (
+                                  <li key={j} className="flex items-center gap-3 text-sm text-foreground-secondary">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#004aad]/40 shrink-0" />
+                                    {topic}
+                                  </li>
+                                ))}
+                              </ul>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              </Reveal>
+            )}
 
             {/* Schedule */}
             <Reveal>
@@ -189,19 +182,17 @@ export function CourseLandingDetail() {
                 <h2 className="text-xl font-bold mb-5">განრიგი</h2>
                 <div className="bg-card border border-border-subtle rounded-xl divide-y divide-border-subtle">
                   {[
-                    { icon: Calendar, label: 'დაწყების თარიღი', value: detail.startDate },
+                    { icon: Calendar, label: 'დაწყების თარიღი', value: course.start_date ?? '—' },
                     { icon: Clock, label: 'ხანგრძლივობა', value: course.duration },
-                    { icon: User, label: 'მენტორი', value: detail.mentor.name, sub: detail.mentor.role },
-                    { icon: MapPin, label: 'ადგილმდებარეობა', value: 'ONLINE' },
-                    { icon: Calendar, label: 'სალექციო დღეები', value: detail.schedule.days },
-                    { icon: Clock, label: 'სალექციო დრო', value: detail.schedule.time },
+                    { icon: User, label: 'მენტორი', value: course.mentor_name ?? '—', sub: course.mentor_role },
+                    { icon: MapPin, label: 'ფორმატი', value: course.format ?? 'ონლაინ (Google Meet)' },
+                    { icon: Calendar, label: 'სალექციო დღეები', value: course.schedule_days ?? '—' },
+                    { icon: Clock, label: 'სალექციო დრო', value: course.schedule_time ?? '—' },
                   ].map((row, i) => {
                     const Icon = row.icon;
                     return (
                       <div key={i} className="flex items-center justify-between py-4 px-5">
-                        <span className="flex items-center gap-3 text-sm text-foreground-faint">
-                          <Icon className="w-4 h-4 shrink-0" /> {row.label}
-                        </span>
+                        <span className="flex items-center gap-3 text-sm text-foreground-faint"><Icon className="w-4 h-4 shrink-0" /> {row.label}</span>
                         <div className="text-right">
                           <span className="text-sm font-medium">{row.value}</span>
                           {row.sub && <span className="block text-xs text-foreground-faint">{row.sub}</span>}
@@ -214,52 +205,58 @@ export function CourseLandingDetail() {
             </Reveal>
 
             {/* FAQ */}
-            <Reveal>
-              <section id="faq" className="mb-14">
-                <h2 className="text-xl font-bold mb-5">FAQ</h2>
-                <div className="space-y-3">
-                  {detail.faq.map((item, i) => (
-                    <div key={i} className="bg-card border border-border-subtle rounded-xl overflow-hidden">
-                      <button
-                        onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                        className="w-full flex items-center justify-between p-5 text-left"
-                      >
-                        <span className="text-sm font-medium pr-4">{item.q}</span>
-                        <Plus className={`w-5 h-5 text-foreground-faint shrink-0 transition-transform ${openFaq === i ? 'rotate-45' : ''}`} />
-                      </button>
-                      <AnimatePresence>
-                        {openFaq === i && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.2 }}
-                            className="overflow-hidden"
-                          >
-                            <p className="text-sm text-foreground-secondary leading-relaxed px-5 pb-5">{item.a}</p>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            </Reveal>
+            {faq.length > 0 && (
+              <Reveal>
+                <section id="faq" className="mb-14">
+                  <h2 className="text-xl font-bold mb-5">ხშირად დასმული კითხვები</h2>
+                  <div className="space-y-3">
+                    {faq.map((item, i) => (
+                      <div key={item.id ?? i} className="bg-card border border-border-subtle rounded-xl overflow-hidden">
+                        <button onClick={() => setOpenFaq(openFaq === i ? null : i)} className="w-full flex items-center justify-between p-5 text-left">
+                          <span className="text-sm font-medium pr-4">{item.question}</span>
+                          <Plus className={`w-5 h-5 text-foreground-faint shrink-0 transition-transform ${openFaq === i ? 'rotate-45' : ''}`} />
+                        </button>
+                        <AnimatePresence>
+                          {openFaq === i && (
+                            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
+                              <p className="text-sm text-foreground-secondary leading-relaxed px-5 pb-5">{item.answer}</p>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              </Reveal>
+            )}
           </div>
 
           {/* ═══ RIGHT SIDEBAR ═══ */}
           <div>
             <div className="sticky top-[88px] space-y-5">
-              {/* Price card */}
+              {/* Price + Register */}
               <div className="bg-card border border-border-subtle rounded-2xl p-6 shadow-sm">
                 <p className="text-3xl font-bold mb-1">{course.price}₾</p>
-                <p className="text-sm text-foreground-faint mb-6">ყველაზე ადრე დაწყების დრო: {detail.startDate}</p>
-                <button
-                  onClick={() => openLogin()}
-                  className="w-full py-3.5 bg-[#004aad] text-white rounded-xl font-semibold text-sm hover:bg-[#003d8f] transition-all active:scale-[0.97] mb-3"
-                >
-                  დარეგისტრირდი
-                </button>
+                <p className="text-sm text-foreground-faint mb-5">დაწყება: {course.start_date ?? '—'}</p>
+
+                {!registration.isSubmitted ? (
+                  <form onSubmit={handleSubmit} className="space-y-3 mb-4">
+                    <input type="text" required value={regForm.name} onChange={e => setRegForm({ ...regForm, name: e.target.value })} placeholder="სახელი და გვარი" className="w-full px-4 py-3 rounded-xl border border-border-subtle bg-background text-sm focus:outline-none focus:border-[#004aad]" />
+                    <input type="email" required value={regForm.email} onChange={e => setRegForm({ ...regForm, email: e.target.value })} placeholder="ელ. ფოსტა" className="w-full px-4 py-3 rounded-xl border border-border-subtle bg-background text-sm focus:outline-none focus:border-[#004aad]" />
+                    <input type="tel" required value={regForm.phone} onChange={e => setRegForm({ ...regForm, phone: e.target.value })} placeholder="+995 5XX XXX XXX" className="w-full px-4 py-3 rounded-xl border border-border-subtle bg-background text-sm focus:outline-none focus:border-[#004aad]" />
+                    {registration.error && <p className="text-xs text-red-500">{registration.error}</p>}
+                    <button type="submit" disabled={registration.isSubmitting} className="w-full py-3.5 bg-[#004aad] text-white rounded-xl font-semibold text-sm hover:bg-[#003d8f] transition-all active:scale-[0.97] disabled:opacity-50">
+                      {registration.isSubmitting ? 'იგზავნება...' : 'დარეგისტრირდი'}
+                    </button>
+                  </form>
+                ) : (
+                  <div className="text-center py-4 mb-4">
+                    <CheckCircle className="w-10 h-10 text-green-500 mx-auto mb-2" />
+                    <p className="text-sm font-semibold">წარმატებით დარეგისტრირდი!</p>
+                    <p className="text-xs text-foreground-faint mt-1">დაგიკავშირდებით მალე</p>
+                  </div>
+                )}
+
                 <a href="/masterclass" className="block w-full py-3 border border-border-subtle text-foreground text-center rounded-xl text-sm font-medium hover:bg-surface-hover transition-all">
                   უფასო მასტერკლასი
                 </a>
@@ -268,16 +265,7 @@ export function CourseLandingDetail() {
               {/* Section nav */}
               <div className="bg-card border border-border-subtle rounded-2xl overflow-hidden">
                 {sections.map((s) => (
-                  <a
-                    key={s.id}
-                    href={`#${s.id}`}
-                    onClick={() => setActiveSection(s.id)}
-                    className={`block px-5 py-4 text-sm transition-colors border-l-[3px] ${
-                      activeSection === s.id
-                        ? 'border-[#004aad] text-[#004aad] font-semibold bg-[#004aad]/5'
-                        : 'border-transparent text-foreground-faint hover:text-foreground hover:bg-surface-hover'
-                    }`}
-                  >
+                  <a key={s.id} href={`#${s.id}`} onClick={() => setActiveSection(s.id)} className={`block px-5 py-4 text-sm transition-colors border-l-[3px] ${activeSection === s.id ? 'border-[#004aad] text-[#004aad] font-semibold bg-[#004aad]/5' : 'border-transparent text-foreground-faint hover:text-foreground hover:bg-surface-hover'}`}>
                     {s.label}
                   </a>
                 ))}
@@ -289,7 +277,9 @@ export function CourseLandingDetail() {
                   { label: 'Tribe', value: course.tribe },
                   { label: 'ხანგრძლივობა', value: course.duration },
                   { label: 'ფორმატი', value: course.format ?? 'ონლაინ' },
-                  { label: 'მენტორი', value: detail.mentor.name },
+                  { label: 'დონე', value: course.level ?? '—' },
+                  { label: 'ენა', value: course.language ?? 'ქართული' },
+                  { label: 'მენტორი', value: course.mentor_name ?? '—' },
                 ].map((item, i) => (
                   <div key={i} className="flex items-center justify-between text-sm">
                     <span className="text-foreground-faint">{item.label}</span>

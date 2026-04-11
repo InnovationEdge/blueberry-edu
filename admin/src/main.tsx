@@ -7,6 +7,7 @@ import { Login } from './pages/login';
 import { Dashboard } from './pages/dashboard';
 import { CoursesList } from './pages/courses-list';
 import { CourseEditor } from './pages/course-editor';
+import { Masterclasses } from './pages/masterclasses';
 import { Registrations } from './pages/registrations';
 import './index.css';
 
@@ -55,6 +56,7 @@ function App() {
             <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/courses" element={<ProtectedRoute><CoursesList /></ProtectedRoute>} />
             <Route path="/courses/:id" element={<ProtectedRoute><CourseEditor /></ProtectedRoute>} />
+            <Route path="/masterclasses" element={<ProtectedRoute><Masterclasses /></ProtectedRoute>} />
             <Route path="/registrations" element={<ProtectedRoute><Registrations /></ProtectedRoute>} />
           </Routes>
         </BrowserRouter>

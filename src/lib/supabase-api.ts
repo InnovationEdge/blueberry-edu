@@ -13,8 +13,11 @@ export interface SupabaseCourse {
   gradient: string;
   logo: string;
   popular: boolean;
+  image_url: string | null;
   mentor_name: string;
   mentor_role: string;
+  mentor_photo: string | null;
+  mentor_bio: string | null;
   schedule_days: string;
   schedule_time: string;
   start_date: string;
