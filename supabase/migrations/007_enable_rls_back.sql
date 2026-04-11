@@ -1,0 +1,2 @@
+ALTER TABLE course_registrations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE masterclass_registrations ENABLE ROW LEVEL SECURITY;
