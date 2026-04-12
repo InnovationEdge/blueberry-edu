@@ -14,14 +14,17 @@ import { useLandingStats, useLandingTestimonials, useLandingFaq } from '../hooks
 import { useDocumentTitle } from '../hooks/use-document-title';
 
 
-function HeroBackground() {
+function HeroVideo() {
   return (
-    <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#001530] via-[#002855] to-[#001030]">
-      {/* Decorative glow blobs */}
-      <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-[#004aad]/20 rounded-full blur-[150px]" />
-      <div className="absolute bottom-[-30%] left-[-15%] w-[500px] h-[500px] bg-[#0066cc]/15 rounded-full blur-[120px]" />
-      <div className="absolute top-[30%] left-[40%] w-[300px] h-[300px] bg-[#5b9bd5]/10 rounded-full blur-[100px]" />
-    </div>
+    <video
+      className="absolute inset-0 w-full h-full object-cover z-0"
+      src="/hero-bg.mp4"
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+    />
   );
 }
 
@@ -96,9 +99,9 @@ export function Landing() {
 
       {/* ═══ HERO — Compact with particle canvas ═══ */}
       <section ref={heroRef} className="relative h-[85vh] flex items-end overflow-hidden bg-transparent">
-        {/* Background gradient */}
-        <HeroBackground />
-        <div className="absolute inset-0 bg-black/10 z-[1]" />
+        {/* Background video */}
+        <HeroVideo />
+        <div className="absolute inset-0 bg-black/30 z-[1]" />
         {/* Particle network on top */}
         <div className="absolute inset-0 z-[2]"><HeroCanvas /></div>
 
