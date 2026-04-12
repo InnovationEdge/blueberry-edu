@@ -36,7 +36,7 @@ export function CertificatesLanding() {
               დაადასტურე შენი ცოდნა<br /><span className="text-[#004aad]">ოფიციალურად</span>
             </h1>
             <p className="text-foreground-secondary text-base md:text-lg max-w-2xl mx-auto">
-              Blueberry Academy-ს სერტიფიკატი ადასტურებს შენს კომპეტენციას და ეხმარება კარიერულ წინსვლაში. ყოველი კურსის დასრულებისას მიიღებ ვერიფიცირებულ სერტიფიკატს.
+              ყველა ლაივ ვორკშოპის წარმატებით გავლის შემდეგ მიიღებ Blueberry Academy-ს ვერიფიცირებულ სერტიფიკატს. გააზიარე LinkedIn-ზე, დაამატე CV-ში — Blueberry Systems-ის რეკომენდაციით.
             </p>
           </Reveal>
         </div>

@@ -53,7 +53,7 @@ export function Career() {
               შეცვალე განათლების მომავალი ჩვენთან ერთად
             </h1>
             <p className="text-white/60 text-base leading-relaxed max-w-md mb-10">
-              ვეძებთ ამბიციურ ადამიანებს, რომლებსაც სურთ საუკეთესო სასწავლო პლატფორმის შექმნა საქართველოში.
+              Blueberry Academy და Blueberry Systems ერთად ვქმნით ტექნოლოგიურ ეკოსისტემას. ვეძებთ ამბიციურ ადამიანებს, რომლებსაც სურთ განათლებისა და ტექნოლოგიის შეერთება.
             </p>
             <a href="#positions" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-[#004aad] rounded-full font-semibold text-sm hover:bg-white/90 transition-all active:scale-[0.97]">
               ნახე ღია პოზიციები

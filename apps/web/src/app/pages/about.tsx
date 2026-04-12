@@ -49,12 +49,12 @@ export function About() {
         <div className="relative max-w-[1100px] mx-auto px-6 md:px-12 py-20 md:py-32">
           <Reveal>
             <div className="max-w-2xl">
-              <p className="text-white/50 text-sm font-medium uppercase tracking-wider mb-4">2020 წლიდან</p>
+              <p className="text-white/50 text-sm font-medium uppercase tracking-wider mb-4">Blueberry Academy</p>
               <h1 className="text-4xl md:text-5xl font-bold leading-[1.1] mb-6">
-                ტექნოლოგიური განათლების ახალი სტანდარტი
+                პრაქტიკული განათლება ლაივ ვორკშოპებით
               </h1>
               <p className="text-white/60 text-base leading-relaxed mb-8 max-w-md">
-                Blueberry Academy არის ონლაინ და კორპორატიული სასწავლო პლატფორმა, რომელიც 2020 წლიდან ტექ სფეროს 400+ ექსპერტთან ერთად ამზადებს მომავლის პროფესიონალებს.
+                Blueberry Academy არის ონლაინ სასწავლო პლატფორმა, სადაც კურსები ტარდება ლაივ ვორკშოპების ფორმატით Google Meet-ზე. ინდუსტრიის ექსპერტები გასწავლიან პრაქტიკულ უნარებს რეალურ პროექტებზე. ტექნოლოგიური პარტნიორი — Blueberry Systems.
               </p>
               <a href="/courses" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-[#004aad] rounded-full font-semibold text-sm hover:bg-white/90 transition-all active:scale-[0.97]">
                 კურსების ნახვა <ArrowRight className="w-4 h-4" />
@@ -69,10 +69,10 @@ export function About() {
         <div className="max-w-[1000px] mx-auto">
           <div className="bg-card border border-border-subtle rounded-2xl shadow-xl grid grid-cols-2 md:grid-cols-4 divide-x divide-border-subtle">
             {[
-              { value: 400, suffix: '+', label: 'ექსპერტი' },
               { value: 500, suffix: '+', label: 'კურსდამთავრებული' },
-              { value: 98, suffix: '%', label: 'დასაქმება' },
-              { value: 5, suffix: '', label: 'Tribe' },
+              { value: 98, suffix: '%', label: 'დასაქმდა' },
+              { value: 50, suffix: '+', label: 'კურსი' },
+              { value: 30, suffix: '+', label: 'ინსტრუქტორი' },
             ].map((stat, i) => (
               <div key={i} className="py-8 px-6 text-center">
                 <p className="text-3xl md:text-4xl font-bold text-[#004aad] leading-none">
@@ -98,12 +98,12 @@ export function About() {
                 <div className="w-14 h-14 rounded-2xl bg-[#004aad] flex items-center justify-center mb-6">
                   <GraduationCap className="w-7 h-7 text-white" />
                 </div>
-                <h3 className="text-xl font-bold mb-4">ონლაინ კურსები</h3>
+                <h3 className="text-xl font-bold mb-4">ლაივ ვორკშოპები</h3>
                 <p className="text-sm text-foreground-secondary leading-relaxed mb-6">
-                  პროგრამირება, დიზაინი, მარკეტინგი, AI, კიბერუსაფრთხოება და პროდუქტის მართვა. ყოველი კურსი მოიცავს პრაქტიკულ პროექტებს და ვერიფიცირებულ სერტიფიკატს.
+                  პროგრამირება, დიზაინი, მარკეტინგი, AI, კიბერუსაფრთხოება და პროდუქტის მართვა. ყოველი კურსი მოიცავს 5-8 ლაივ სესიას Google Meet-ზე და ვერიფიცირებულ სერტიფიკატს.
                 </p>
                 <ul className="space-y-2.5">
-                  {['ტექ სფეროს 400+ ექსპერტი', 'პრაქტიკაზე დაფუძნებული სილაბუსი', 'ვერიფიცირებული სერტიფიკატი', 'კარიერული მხარდაჭერა'].map((item, i) => (
+                  {['5-8 ლაივ ვორკშოპი Google Meet-ზე', 'პრაქტიკაზე დაფუძნებული სილაბუსი', 'ვერიფიცირებული სერტიფიკატი', 'კარიერული მხარდაჭერა'].map((item, i) => (
                     <li key={i} className="flex items-center gap-2.5 text-sm text-foreground-secondary">
                       <CheckCircle className="w-4 h-4 text-[#004aad] shrink-0" /> {item}
                     </li>
@@ -116,12 +116,12 @@ export function About() {
                 <div className="w-14 h-14 rounded-2xl bg-[#004aad] flex items-center justify-center mb-6">
                   <Building2 className="w-7 h-7 text-white" />
                 </div>
-                <h3 className="text-xl font-bold mb-4">კორპორატიული ტრეინინგი</h3>
+                <h3 className="text-xl font-bold mb-4">Blueberry Systems — ტექნოლოგიური პარტნიორი</h3>
                 <p className="text-sm text-foreground-secondary leading-relaxed mb-6">
-                  კომპანიებისთვის მორგებული სასწავლო პროგრამები. თანამშრომლების გადამზადება, upskilling, ახალი ტექნოლოგიების დანერგვა თქვენს ორგანიზაციაში.
+                  Blueberry Systems არის ჩვენი პარტნიორი სოფტვეარ დეველოპმენტის კომპანია. საუკეთესო კურსდამთავრებულებს რეალურ პროექტებში ჩართვის შესაძლებლობას ვთავაზობთ.
                 </p>
                 <ul className="space-y-2.5">
-                  {['კომპანიაზე მორგებული პროგრამა', 'მოქნილი ფორმატი და განრიგი', 'პროგრესის ანალიტიკა', 'ინდივიდუალური მიდგომა'].map((item, i) => (
+                  {['რეალურ პროექტებში ჩართვა', 'სტაჟირების პროგრამა', 'დასაქმების შესაძლებლობა', 'ინდუსტრიის ექსპერტების მენტორობა'].map((item, i) => (
                     <li key={i} className="flex items-center gap-2.5 text-sm text-foreground-secondary">
                       <CheckCircle className="w-4 h-4 text-[#004aad] shrink-0" /> {item}
                     </li>
@@ -146,7 +146,7 @@ export function About() {
                 <Target className="w-8 h-8 text-[#5b9bd5] mb-6" />
                 <h3 className="text-xl font-bold mb-4">მისია</h3>
                 <p className="text-white/50 text-sm leading-relaxed">
-                  ხელმისაწვდომი და პრაქტიკული ტექნოლოგიური განათლება ყველასთვის. ჩვენი მიზანია ყოველი სტუდენტი გავამზადოთ რეალური სამუშაო გარემოსთვის, პრაქტიკული პროექტებით და ინდუსტრიის ექსპერტებთან ერთად.
+                  ხელმისაწვდომი და პრაქტიკული ტექნოლოგიური განათლება ლაივ ფორმატით. ყოველი სტუდენტი სწავლობს რეალური პროექტებით, ლაივ ვორკშოპებზე ინდუსტრიის ექსპერტებთან ერთად და ამზადებს პორტფოლიოს დასაქმებისთვის.
                 </p>
               </div>
             </Reveal>
@@ -172,9 +172,9 @@ export function About() {
           </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {[
-              { icon: BookOpen, title: 'პრაქტიკა', desc: 'ყოველი კურსი აგებულია რეალურ პროექტებზე. სტუდენტები სწავლობენ იმას, რაც სამუშაო ადგილზე დასჭირდებათ.' },
-              { icon: Users, title: 'ექსპერტიზა', desc: '400+ ექსპერტი ტექ სფეროდან. ინსტრუქტორები არიან მოქმედი პროფესიონალები რეალური გამოცდილებით.' },
-              { icon: Award, title: 'შედეგი', desc: 'ჩვენთვის მთავარია კურსდამთავრებულის კარიერული წინსვლა. 98% დასაქმების მაჩვენებელი ამას ადასტურებს.' },
+              { icon: BookOpen, title: 'ლაივ ფორმატი', desc: 'ყოველი კურსი მოიცავს ლაივ ვორკშოპებს Google Meet-ზე. პირდაპირი ინტერაქცია ინსტრუქტორთან, კითხვები და პრაქტიკა.' },
+              { icon: Users, title: 'ექსპერტი ინსტრუქტორები', desc: 'ინსტრუქტორები არიან მოქმედი პროფესიონალები ინდუსტრიიდან. Blueberry Systems-ის გუნდი აქტიურად მონაწილეობს სწავლებაში.' },
+              { icon: Award, title: 'დასაქმება', desc: 'ჩვენი მიზანია კარიერული წინსვლა. საუკეთესო კურსდამთავრებულებს Blueberry Systems-ში სტაჟირების შესაძლებლობა ეძლევათ.' },
             ].map((item, i) => {
               const Icon = item.icon;
               return (
