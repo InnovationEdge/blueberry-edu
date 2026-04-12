@@ -1,39 +1,44 @@
 import { useState } from 'react';
-import { Clock, Globe, Calendar, Users, CheckCircle, ArrowRight } from 'lucide-react';
+import { Clock, Globe, Calendar, Users, CheckCircle, ArrowRight, Loader2 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { LandingHeader } from '../components/landing-header';
 import { LandingFooter } from '../components/landing-footer';
-import { LANDING_COURSES } from '../data/courses-landing';
+import { useMasterclasses } from '../hooks/use-masterclasses';
+import { useMasterclassRegistration } from '../hooks/use-registration';
 import { useDocumentTitle } from '../hooks/use-document-title';
-
-const MASTERCLASS_DATES: Record<number, { date: string; time: string }> = {
-  1: { date: '12 აპრილი, შაბათი', time: '15:00' },
-  2: { date: '13 აპრილი, კვირა', time: '14:00' },
-  3: { date: '15 აპრილი, სამშაბათი', time: '19:00' },
-  4: { date: '16 აპრილი, ოთხშაბათი', time: '18:00' },
-  5: { date: '17 აპრილი, ხუთშაბათი', time: '20:00' },
-  6: { date: '19 აპრილი, შაბათი', time: '16:00' },
-  7: { date: '20 აპრილი, კვირა', time: '15:00' },
-  8: { date: '22 აპრილი, სამშაბათი', time: '19:00' },
-  9: { date: '23 აპრილი, ოთხშაბათი', time: '18:00' },
-};
 
 export function Masterclass() {
   useDocumentTitle('მასტერკლასები');
-  const [selectedCourse, setSelectedCourse] = useState(LANDING_COURSES[0].id ?? 1);
+  const { data: masterclasses = [], isLoading } = useMasterclasses();
+  const [selectedMcId, setSelectedMcId] = useState<number | null>(null);
   const [form, setForm] = useState({ name: '', email: '', phone: '' });
-  const [submitted, setSubmitted] = useState(false);
 
-  const course = LANDING_COURSES.find(c => c.id === selectedCourse) ?? LANDING_COURSES[0];
+  const selectedMc = masterclasses.find(m => m.id === selectedMcId) ?? masterclasses[0];
+  const registration = useMasterclassRegistration(selectedMc?.id ?? 0);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (!selectedMc) return;
+    await registration.submit({
+      full_name: form.name,
+      email: form.email,
+      phone: form.phone,
+    });
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background text-foreground">
+        <LandingHeader activePath="/masterclass" />
+        <div className="h-[72px]" />
+        <div className="py-20 text-center text-foreground-faint">იტვირთება...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <LandingHeader activePath="#" />
+      <LandingHeader activePath="/masterclass" />
       <div className="h-[72px]" />
 
       {/* ═══ HERO ═══ */}
@@ -42,7 +47,7 @@ export function Masterclass() {
           <div className="absolute top-[-30%] right-[-10%] w-[600px] h-[600px] bg-white/20 rounded-full blur-[120px]" />
           <div className="absolute bottom-[-20%] left-[-10%] w-[400px] h-[400px] bg-white/10 rounded-full blur-[100px]" />
         </div>
-        <div className="relative max-w-[1200px] mx-auto px-5 md:px-12 lg:px-16">
+        <div className="relative max-w-[1300px] mx-auto px-5 md:px-12 lg:px-16">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <div className="inline-block bg-white/15 backdrop-blur-sm rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider mb-6">
               უფასო მასტერკლასი
@@ -55,7 +60,7 @@ export function Masterclass() {
             </p>
             <div className="flex items-center gap-6 text-sm text-white/50 flex-wrap">
               <span className="flex items-center gap-2"><Clock className="w-4 h-4" /> 1 საათი</span>
-              <span className="flex items-center gap-2"><Globe className="w-4 h-4" /> ონლაინ (Zoom)</span>
+              <span className="flex items-center gap-2"><Globe className="w-4 h-4" /> ონლაინ (Google Meet)</span>
               <span className="flex items-center gap-2"><Calendar className="w-4 h-4" /> ყოველ კვირას</span>
               <span className="flex items-center gap-2"><Users className="w-4 h-4" /> შეზღუდული ადგილები</span>
             </div>
@@ -65,7 +70,7 @@ export function Masterclass() {
 
       {/* ═══ MAIN — form + info ═══ */}
       <section className="py-14 md:py-20">
-        <div className="max-w-[1200px] mx-auto px-5 md:px-12 lg:px-16">
+        <div className="max-w-[1300px] mx-auto px-5 md:px-12 lg:px-16">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-12 md:gap-16">
 
             {/* Left — რა მოიცავს + course select */}
@@ -98,24 +103,25 @@ export function Masterclass() {
               {/* აირჩიე კურსი */}
               <h3 className="text-lg font-bold mb-4">აირჩიე მიმართულება</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                {LANDING_COURSES.map((c) => (
+                {masterclasses.map((mc) => (
                   <button
-                    key={c.id}
-                    onClick={() => setSelectedCourse(c.id ?? 1)}
+                    key={mc.id}
+                    onClick={() => setSelectedMcId(mc.id)}
                     className={`p-4 rounded-xl border text-left transition-all ${
-                      selectedCourse === c.id
+                      (selectedMcId ?? masterclasses[0]?.id) === mc.id
                         ? 'border-[#004aad] bg-[#004aad]/5 shadow-sm'
                         : 'border-border-subtle hover:border-gray-300'
                     }`}
                   >
-                    <div className="flex items-center gap-2.5 mb-2">
-                      <div className="w-8 h-8 rounded-lg bg-white/80 border border-border-subtle flex items-center justify-center shrink-0" dangerouslySetInnerHTML={{ __html: c.logo }} />
-                      <p className="text-sm font-semibold text-foreground">{c.title}</p>
-                    </div>
-                    <p className="text-[11px] text-foreground-faint">{MASTERCLASS_DATES[c.id ?? 1]?.date} · {MASTERCLASS_DATES[c.id ?? 1]?.time}</p>
+                    <p className="text-sm font-semibold text-foreground mb-1">{mc.courses?.title ?? 'კურსი'}</p>
+                    <p className="text-[11px] text-foreground-faint">{mc.date} · {mc.time}</p>
                   </button>
                 ))}
               </div>
+
+              {masterclasses.length === 0 && (
+                <p className="text-center text-foreground-faint py-8">მასტერკლასები ჯერ არ არის დაგეგმილი</p>
+              )}
             </div>
 
             {/* Right — Registration form */}
@@ -127,11 +133,21 @@ export function Masterclass() {
                       უფასო
                     </div>
                     <h3 className="text-xl font-bold mb-1">დარეგისტრირდი მასტერკლასზე</h3>
-                    <p className="text-sm font-semibold text-foreground mb-0.5">{course.title}</p>
-                    <p className="text-sm text-foreground-faint">{MASTERCLASS_DATES[selectedCourse]?.date} · {MASTERCLASS_DATES[selectedCourse]?.time}</p>
+                    {selectedMc && (
+                      <>
+                        <p className="text-sm font-semibold text-foreground mb-0.5">{selectedMc.courses?.title}</p>
+                        <p className="text-sm text-foreground-faint">{selectedMc.date} · {selectedMc.time}</p>
+                      </>
+                    )}
                   </div>
 
-                  {!submitted ? (
+                  {registration.error && (
+                    <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700">
+                      {registration.error}
+                    </div>
+                  )}
+
+                  {!registration.isSubmitted ? (
                     <form onSubmit={handleSubmit} className="space-y-4">
                       <div>
                         <label className="block text-xs font-medium text-foreground-faint mb-1.5">სახელი და გვარი</label>
@@ -169,10 +185,14 @@ export function Masterclass() {
 
                       <button
                         type="submit"
-                        className="w-full py-3.5 bg-[#004aad] text-white rounded-xl font-semibold text-sm hover:bg-[#003d8f] transition-all active:scale-[0.97] flex items-center justify-center gap-2 mt-2"
+                        disabled={registration.isSubmitting}
+                        className="w-full py-3.5 bg-[#004aad] text-white rounded-xl font-semibold text-sm hover:bg-[#003d8f] transition-all active:scale-[0.97] flex items-center justify-center gap-2 mt-2 disabled:opacity-60"
                       >
-                        რეგისტრაცია
-                        <ArrowRight className="w-4 h-4" />
+                        {registration.isSubmitting ? (
+                          <><Loader2 className="w-4 h-4 animate-spin" /> იგზავნება...</>
+                        ) : (
+                          <>რეგისტრაცია <ArrowRight className="w-4 h-4" /></>
+                        )}
                       </button>
 
                       <p className="text-[10px] text-foreground-faint text-center mt-3">
@@ -196,11 +216,13 @@ export function Masterclass() {
                 </div>
 
                 {/* Next masterclass info */}
-                <div className="mt-4 bg-surface border border-border-subtle rounded-xl p-5">
-                  <p className="text-xs text-foreground-faint uppercase tracking-wider mb-2">არჩეული მასტერკლასი</p>
-                  <p className="text-sm font-semibold">{MASTERCLASS_DATES[selectedCourse]?.date} · {MASTERCLASS_DATES[selectedCourse]?.time}</p>
-                  <p className="text-xs text-foreground-faint mt-1">ონლაინ · Zoom · 1 საათი · {course.tribe}</p>
-                </div>
+                {selectedMc && (
+                  <div className="mt-4 bg-surface border border-border-subtle rounded-xl p-5">
+                    <p className="text-xs text-foreground-faint uppercase tracking-wider mb-2">არჩეული მასტერკლასი</p>
+                    <p className="text-sm font-semibold">{selectedMc.date} · {selectedMc.time}</p>
+                    <p className="text-xs text-foreground-faint mt-1">ონლაინ · Google Meet · 1 საათი · {selectedMc.courses?.tribe}</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>

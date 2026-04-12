@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { LandingHeader } from '../components/landing-header';
 import { LandingFooter } from '../components/landing-footer';
 import { Logo } from '../components/logo';
-import { LANDING_COURSES } from '../data/courses-landing';
+import { useLandingCourses } from '../hooks/use-landing-courses';
 import { useDocumentTitle } from '../hooks/use-document-title';
 
 function Reveal({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
@@ -19,6 +19,7 @@ function Reveal({ children, className = '', delay = 0 }: { children: React.React
 
 export function CertificatesLanding() {
   useDocumentTitle('სერტიფიკატები');
+  const { data: courses = [] } = useLandingCourses();
   return (
     <div className="min-h-screen bg-background text-foreground">
       <LandingHeader activePath="/certificates" />
@@ -142,7 +143,7 @@ export function CertificatesLanding() {
           </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {LANDING_COURSES.map((course, i) => (
+            {courses.map((course, i) => (
               <Reveal key={course.id} delay={i * 0.05}>
                 <div className="bg-card border border-border-subtle rounded-2xl overflow-hidden hover:shadow-md transition-all group">
                   {/* Gradient top */}
