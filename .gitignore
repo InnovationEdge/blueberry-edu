@@ -1,6 +1,5 @@
 node_modules/
 dist/
-public/hero-bg.mp4
-BM APP
+.env
 .vercel
-BM APP
+apps/web/public/hero-bg.mp4
