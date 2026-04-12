@@ -6,10 +6,12 @@ import { LandingHeader } from '../components/landing-header';
 import { CourseCardLanding } from '../components/course-card-landing';
 import { useLandingCourses } from '../hooks/use-landing-courses';
 import { LandingFooter } from '../components/landing-footer';
+import { useDocumentTitle } from '../hooks/use-document-title';
 
 const TRIBES = ['ყველა', 'ინჟინერია', 'დიზაინი', 'მარკეტინგი', 'AI', 'მენეჯმენტი'];
 
 export function CoursesCatalog() {
+  useDocumentTitle('კურსები');
   const [selectedTribe, setSelectedTribe] = useState('ყველა');
   const [sortBy, setSortBy] = useState<'popular' | 'price-asc' | 'price-desc'>('popular');
   const navigate = useNavigate();

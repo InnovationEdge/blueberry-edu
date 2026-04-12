@@ -54,6 +54,7 @@ export function CoursesList() {
               <Link to="/courses" className="text-sm font-medium text-blue-600">კურსები</Link>
               <Link to="/masterclasses" className="text-sm font-medium text-gray-500 hover:text-gray-900">მასტერკლასები</Link>
               <Link to="/registrations" className="text-sm font-medium text-gray-500 hover:text-gray-900">რეგისტრაციები</Link>
+              <Link to="/content" className="text-sm font-medium text-gray-500 hover:text-gray-900">კონტენტი</Link>
             </nav>
           </div>
           <div className="flex items-center gap-4">
@@ -78,7 +79,7 @@ export function CoursesList() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="text-left text-xs text-gray-400 border-b border-gray-100 bg-gray-50">
-                  <th className="px-6 py-3">ID</th>
+                  <th className="px-6 py-3 w-20">სურათი</th>
                   <th className="px-6 py-3">სახელი</th>
                   <th className="px-6 py-3">Tribe</th>
                   <th className="px-6 py-3">ფასი</th>
@@ -88,10 +89,26 @@ export function CoursesList() {
                 </tr>
               </thead>
               <tbody>
-                {(courses ?? []).map((c: Record<string, unknown>) => (
+                {(courses ?? []).map((c: Record<string, unknown>) => {
+                  const imageUrl = c.image_url ? String(c.image_url) : '';
+                  const title = String(c.title);
+                  return (
                   <tr key={String(c.id)} className="border-b border-gray-50 hover:bg-gray-50">
-                    <td className="px-6 py-4 text-gray-400">{String(c.id)}</td>
-                    <td className="px-6 py-4 font-medium">{String(c.title)}</td>
+                    <td className="px-6 py-3">
+                      {imageUrl ? (
+                        <img src={imageUrl} alt={title} className="w-14 h-10 object-cover rounded-md border border-gray-100" />
+                      ) : (
+                        <div className="w-14 h-10 rounded-md bg-gray-100 flex items-center justify-center text-[10px] text-gray-400">
+                          N/A
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 font-medium">
+                      <div className="flex flex-col">
+                        <span>{title}</span>
+                        <span className="text-xs text-gray-400">#{String(c.id)}</span>
+                      </div>
+                    </td>
                     <td className="px-6 py-4 text-gray-500">{String(c.tribe)}</td>
                     <td className="px-6 py-4 font-semibold">{String(c.price)}₾</td>
                     <td className="px-6 py-4 text-gray-500">{String(c.duration)}</td>
@@ -99,11 +116,12 @@ export function CoursesList() {
                     <td className="px-6 py-4">
                       <div className="flex items-center justify-end gap-3">
                         <Link to={`/courses/${c.id}`} className="text-blue-600 hover:text-blue-800"><Pencil className="w-4 h-4" /></Link>
-                        <button onClick={() => handleDelete(Number(c.id), String(c.title))} className="text-red-500 hover:text-red-700"><Trash2 className="w-4 h-4" /></button>
+                        <button onClick={() => handleDelete(Number(c.id), title)} className="text-red-500 hover:text-red-700"><Trash2 className="w-4 h-4" /></button>
                       </div>
                     </td>
                   </tr>
-                ))}
+                  );
+                })}
               </tbody>
             </table>
           </div>

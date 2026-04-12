@@ -3,6 +3,7 @@ import { Target, Eye, Users, Award, BookOpen, Building2, GraduationCap, Globe, A
 import { motion, useInView } from 'motion/react';
 import { LandingHeader } from '../components/landing-header';
 import { LandingFooter } from '../components/landing-footer';
+import { useDocumentTitle } from '../hooks/use-document-title';
 
 function Reveal({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef(null);
@@ -33,6 +34,7 @@ function AnimatedNumber({ value, suffix = '' }: { value: number; suffix?: string
 }
 
 export function About() {
+  useDocumentTitle('ჩვენს შესახებ');
   return (
     <div className="min-h-screen bg-background text-foreground">
       <LandingHeader activePath="/about" />

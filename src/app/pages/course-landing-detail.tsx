@@ -6,6 +6,7 @@ import { LandingHeader } from '../components/landing-header';
 import { LandingFooter } from '../components/landing-footer';
 import { useCourseDetail } from '../hooks/use-course-detail';
 import { useCourseRegistration } from '../hooks/use-registration';
+import { useDocumentTitle } from '../hooks/use-document-title';
 
 function Reveal({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef(null);
@@ -27,6 +28,7 @@ export function CourseLandingDetail() {
   const [activeSection, setActiveSection] = useState('overview');
   const [regForm, setRegForm] = useState({ name: '', email: '', phone: '' });
   const registration = useCourseRegistration(courseId);
+  useDocumentTitle(course?.title ?? 'კურსი');
 
   const sections = [
     { id: 'overview', label: 'მიმოხილვა' },

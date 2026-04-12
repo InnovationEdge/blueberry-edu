@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { LandingHeader } from '../components/landing-header';
 import { LandingFooter } from '../components/landing-footer';
 import { LANDING_COURSES } from '../data/courses-landing';
+import { useDocumentTitle } from '../hooks/use-document-title';
 
 const MASTERCLASS_DATES: Record<number, { date: string; time: string }> = {
   1: { date: '12 აპრილი, შაბათი', time: '15:00' },
@@ -18,6 +19,7 @@ const MASTERCLASS_DATES: Record<number, { date: string; time: string }> = {
 };
 
 export function Masterclass() {
+  useDocumentTitle('მასტერკლასები');
   const [selectedCourse, setSelectedCourse] = useState(LANDING_COURSES[0].id ?? 1);
   const [form, setForm] = useState({ name: '', email: '', phone: '' });
   const [submitted, setSubmitted] = useState(false);

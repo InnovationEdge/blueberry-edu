@@ -3,6 +3,7 @@ import { MapPin, Briefcase, ArrowRight, Search, ChevronDown, Heart, Zap } from '
 import { motion, useInView } from 'motion/react';
 import { LandingHeader } from '../components/landing-header';
 import { LandingFooter } from '../components/landing-footer';
+import { useDocumentTitle } from '../hooks/use-document-title';
 
 function Reveal({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef(null);
@@ -28,6 +29,7 @@ const JOBS = [
 const DEPARTMENTS = ['ყველა', 'Sales', 'Management', 'Marketing', 'Design', 'Engineering', 'Education'];
 
 export function Career() {
+  useDocumentTitle('კარიერა');
   const [search, setSearch] = useState('');
   const [department, setDepartment] = useState('ყველა');
 

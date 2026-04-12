@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Star, CheckCircle, ArrowRight, Plus } from 'lucide-react';
 import { AnimatePresence, motion, useInView } from 'motion/react';
+import { useNavigate } from 'react-router';
 import { useAuth } from '../context/auth-context';
 import { getAppT } from '../i18n/app';
 import { Logo } from '../components/logo';
@@ -9,14 +10,21 @@ import { LandingHeader } from '../components/landing-header';
 import { LandingFooter } from '../components/landing-footer';
 import { CourseCardLanding } from '../components/course-card-landing';
 import { useLandingCourses } from '../hooks/use-landing-courses';
+import { useLandingStats, useLandingTestimonials, useLandingFaq } from '../hooks/use-landing-content';
+import { useDocumentTitle } from '../hooks/use-document-title';
 
 
 function HeroVideo() {
   return (
     <video
-      className="absolute inset-0 w-full h-full object-cover z-0"
+      className="absolute inset-0 w-full h-full object-cover z-0 bg-[#001530]"
       src="/hero-bg.mp4"
-      autoPlay muted loop playsInline preload="auto"
+      poster="/images/hero-poster.jpg"
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="metadata"
     />
   );
 }
@@ -56,7 +64,7 @@ function Reveal({ children, className = '', delay = 0 }: { children: React.React
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 32 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
       transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay }}
       className={className}
     >
@@ -66,40 +74,24 @@ function Reveal({ children, className = '', delay = 0 }: { children: React.React
 }
 
 export function Landing() {
+  useDocumentTitle('');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const { openLogin, language } = useAuth();
   const t = getAppT(language);
+  const navigate = useNavigate();
   const heroRef = useRef(null);
   const { data: allCourses = [] } = useLandingCourses();
   const landingCourses = allCourses.slice(0, 8);
+  const { data: stats = [] } = useLandingStats();
+  const { data: testimonials = [] } = useLandingTestimonials();
+  const { data: faqs = [] } = useLandingFaq();
 
   const handleSignIn = () => openLogin();
+  const goToCourses = () => navigate('/courses');
 
   const goToCourse = (id?: number) => {
-    if (id) window.location.href = `/courses/${id}`;
+    if (id) navigate(`/courses/${id}`);
   };
-
-  const stats = [
-    { value: 500, suffix: '+', label: 'კურსდამთავრებული' },
-    { value: 98, suffix: '%', label: 'დასაქმდა' },
-    { value: 50, suffix: '+', label: 'კურსი' },
-    { value: 30, suffix: '+', label: 'ინსტრუქტორი' },
-  ];
-
-  const testimonials = [
-    { quote: "Blueberry-ზე ბიზნეს კურსის შემდეგ საკუთარი სტარტაპი წამოვიწყე.", name: "ნინო კვარაცხელია", role: "სტარტაპის დამფუძნებელი", avatar: "ნ" },
-    { quote: "პროგრამირების კურსი ნულიდან დავიწყე და 4 თვეში პირველი სამსახური ვიშოვე.", name: "გიორგი ბერიძე", role: "Junior Developer", avatar: "გ" },
-    { quote: "დიზაინის კურსმა კარიერა შემიცვალა. ფრილანსერად ვმუშაობ საერთაშორისო კლიენტებთან.", name: "მარიამ ჯავახიშვილი", role: "UX/UI დიზაინერი", avatar: "მ" },
-    { quote: "მარკეტინგის კურსმა კომპანიის გაყიდვები 3-ჯერ გაზარდა.", name: "ანა გოგიჩაიშვილი", role: "მარკეტინგის მენეჯერი", avatar: "ა" },
-  ];
-
-  const faqs = [
-    { q: 'რა არის Blueberry?', a: 'Blueberry არის ონლაინ სასწავლო პლატფორმა, სადაც შეგიძლია შეიძინო კურსები საუკეთესო ქართველი და საერთაშორისო ინსტრუქტორებისგან.' },
-    { q: 'როგორ მუშაობს გადახდა?', a: 'შეარჩიე კურსი, გადაიხადე ერთჯერადი თანხა და მიიღე უვადო წვდომა. არანაირი გამოწერა.' },
-    { q: 'სად შემიძლია ვუყურო?', a: 'ნებისმიერ მოწყობილობაზე — კომპიუტერზე, ტელეფონზე, ტაბლეტზე ან Smart TV-ზე.' },
-    { q: 'შემიძლია თანხის დაბრუნება?', a: '30-დღიანი თანხის დაბრუნების გარანტია. თუ კურსი არ მოგეწონა, სრულ თანხას დაგიბრუნებთ.' },
-    { q: 'რა მივიღებ კურსის დასრულებისას?', a: 'ვერიფიცირებულ სერტიფიკატს, რომელიც გააზიარე LinkedIn-ზე ან დაამატე რეზიუმეში.' },
-  ];
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
@@ -197,8 +189,9 @@ export function Landing() {
                 <h2 className="text-3xl md:text-4xl font-bold mb-2">ტოპ კურსები</h2>
                 <p className="text-foreground-secondary text-base">აღმოაჩინე საუკეთესო კურსები ჩვენი პროფესიონალებისგან</p>
               </div>
-              <button onClick={handleSignIn} className="hidden md:flex items-center gap-2 px-5 py-2.5 border border-border-subtle rounded-full text-sm font-medium text-foreground hover:bg-surface-hover transition-all shrink-0">
-                View all
+              <button onClick={goToCourses} className="hidden md:flex items-center gap-2 px-5 py-2.5 border border-border-subtle rounded-full text-sm font-medium text-foreground hover:bg-surface-hover transition-all shrink-0">
+                ყველას ნახვა
+                <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </Reveal>
@@ -212,7 +205,7 @@ export function Landing() {
           </div>
 
           <div className="md:hidden text-center mt-8">
-            <button onClick={handleSignIn} className="px-8 py-3 border border-border-subtle rounded-full text-sm font-medium text-foreground hover:bg-surface-hover transition-all">
+            <button onClick={goToCourses} className="px-8 py-3 border border-border-subtle rounded-full text-sm font-medium text-foreground hover:bg-surface-hover transition-all">
               ყველას ნახვა
             </button>
           </div>
@@ -221,7 +214,7 @@ export function Landing() {
 
       {/* ═══ STATS — ჩვენ რიცხვებში ═══ */}
       <section className="py-14 md:py-20 border-b border-border-subtle">
-        <div className="max-w-[1000px] mx-auto px-5 md:px-8">
+        <div className="max-w-[1300px] mx-auto px-5 md:px-12 lg:px-16">
           <Reveal>
             <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">ჩვენ რიცხვებში</h2>
           </Reveal>
@@ -240,8 +233,8 @@ export function Landing() {
 
       {/* ═══ CERTIFICATE ═══ */}
       <section className="py-20 md:py-28">
-        <div className="max-w-[1100px] mx-auto px-5 md:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+        <div className="max-w-[1300px] mx-auto px-5 md:px-12 lg:px-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
             {/* Left — Certificate (Coursera/Penn style) */}
             <Reveal>
               <div className="relative bg-white shadow-2xl rounded-sm overflow-hidden aspect-[1.414/1]">
@@ -357,7 +350,7 @@ export function Landing() {
 
       {/* ═══ TESTIMONIALS ═══ */}
       <section className="py-20 md:py-28">
-        <div className="max-w-[1200px] mx-auto px-5 md:px-8">
+        <div className="max-w-[1300px] mx-auto px-5 md:px-12 lg:px-16">
           <Reveal>
             <div className="text-center mb-14">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">რას ამბობენ ჩვენი სტუდენტები</h2>
@@ -367,7 +360,7 @@ export function Landing() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {testimonials.map((t, i) => (
-              <Reveal key={i} delay={i * 0.08}>
+              <Reveal key={t.id} delay={i * 0.08}>
                 <div className="bg-card border border-border-subtle rounded-2xl p-6 hover:shadow-md transition-all h-full flex flex-col">
                   <div className="flex items-center gap-1 mb-4">
                     {[...Array(5)].map((_, s) => (
@@ -393,20 +386,20 @@ export function Landing() {
 
       {/* ═══ FAQ ═══ */}
       <section className="py-20 md:py-28 bg-surface">
-        <div className="max-w-[720px] mx-auto px-5 md:px-8">
+        <div className="max-w-[820px] mx-auto px-5 md:px-12 lg:px-16">
           <Reveal>
             <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">ხშირად დასმული კითხვები</h2>
           </Reveal>
 
           <div className="space-y-3">
             {faqs.map((item, i) => (
-              <Reveal key={i} delay={i * 0.05}>
+              <Reveal key={item.id} delay={i * 0.05}>
                 <div className="bg-card border border-border-subtle rounded-xl overflow-hidden">
                   <button
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
                     className="w-full flex items-center justify-between p-5 text-left group"
                   >
-                    <span className="text-sm font-medium text-foreground pr-4">{item.q}</span>
+                    <span className="text-sm font-medium text-foreground pr-4">{item.question}</span>
                     <Plus className={`w-5 h-5 text-foreground-faint flex-shrink-0 transition-transform duration-300 ${openFaq === i ? 'rotate-45' : ''}`} />
                   </button>
                   <AnimatePresence>
@@ -418,7 +411,7 @@ export function Landing() {
                         transition={{ duration: 0.25 }}
                         className="overflow-hidden"
                       >
-                        <p className="text-sm text-foreground-secondary leading-relaxed px-5 pb-5">{item.a}</p>
+                        <p className="text-sm text-foreground-secondary leading-relaxed px-5 pb-5">{item.answer}</p>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -431,7 +424,7 @@ export function Landing() {
 
       {/* ═══ FINAL CTA ═══ */}
       <section className="py-20 md:py-28">
-        <div className="max-w-[800px] mx-auto px-5 md:px-8 text-center">
+        <div className="max-w-[900px] mx-auto px-5 md:px-12 lg:px-16 text-center">
           <Reveal>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">მზად ხარ დასაწყებად?</h2>
             <p className="text-foreground-secondary text-base mb-10 max-w-md mx-auto">

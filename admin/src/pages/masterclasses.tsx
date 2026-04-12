@@ -78,6 +78,7 @@ export function Masterclasses() {
               <Link to="/courses" className="text-sm font-medium text-gray-500 hover:text-gray-900">კურსები</Link>
               <Link to="/masterclasses" className="text-sm font-medium text-blue-600">მასტერკლასები</Link>
               <Link to="/registrations" className="text-sm font-medium text-gray-500 hover:text-gray-900">რეგისტრაციები</Link>
+              <Link to="/content" className="text-sm font-medium text-gray-500 hover:text-gray-900">კონტენტი</Link>
             </nav>
           </div>
           <div className="flex items-center gap-4">

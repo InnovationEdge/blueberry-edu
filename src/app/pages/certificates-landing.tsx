@@ -5,6 +5,7 @@ import { LandingHeader } from '../components/landing-header';
 import { LandingFooter } from '../components/landing-footer';
 import { Logo } from '../components/logo';
 import { LANDING_COURSES } from '../data/courses-landing';
+import { useDocumentTitle } from '../hooks/use-document-title';
 
 function Reveal({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef(null);
@@ -17,6 +18,7 @@ function Reveal({ children, className = '', delay = 0 }: { children: React.React
 }
 
 export function CertificatesLanding() {
+  useDocumentTitle('სერტიფიკატები');
   return (
     <div className="min-h-screen bg-background text-foreground">
       <LandingHeader activePath="/certificates" />
