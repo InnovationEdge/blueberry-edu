@@ -76,7 +76,7 @@ export function Career() {
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search offers..."
+                placeholder="ვაკანსიის ძებნა..."
                 className="w-full h-12 pl-11 pr-4 rounded-lg border border-border-subtle bg-background text-sm focus:outline-none focus:border-[#004aad] transition-colors"
               />
             </div>
@@ -87,7 +87,7 @@ export function Career() {
                 className="appearance-none h-12 bg-background border border-border-subtle rounded-lg pl-4 pr-10 text-sm cursor-pointer min-w-[200px]"
               >
                 {DEPARTMENTS.map(d => (
-                  <option key={d} value={d}>{d === 'ყველა' ? 'All departments' : d}</option>
+                  <option key={d} value={d}>{d === 'ყველა' ? 'ყველა დეპარტამენტი' : d}</option>
                 ))}
               </select>
               <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-faint pointer-events-none" />

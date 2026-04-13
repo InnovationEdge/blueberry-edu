@@ -28,7 +28,7 @@ export function LandingFooter() {
           <div className="col-span-2">
             <Logo variant="academy" className="h-10 w-auto mb-4" />
             <p className="text-sm text-foreground-faint leading-relaxed max-w-xs">
-              ონლაინ სასწავლო პლატფორმა საუკეთესო ინსტრუქტორებისგან. ისწავლე ახალი პროფესია და შეცვალე კარიერა.
+              პროფესიონალური სასწავლებელი ლაივ ვორკშოპებით. ისწავლე წამყვანი პროფესიონალებისგან და დასაქმდი.
             </p>
           </div>
 

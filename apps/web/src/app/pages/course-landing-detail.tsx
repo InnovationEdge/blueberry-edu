@@ -276,7 +276,7 @@ export function CourseLandingDetail() {
               {/* Quick info */}
               <div className="bg-surface rounded-2xl p-5 space-y-3">
                 {[
-                  { label: 'Tribe', value: course.tribe },
+                  { label: 'კატეგორია', value: course.tribe },
                   { label: 'ხანგრძლივობა', value: course.duration },
                   { label: 'ფორმატი', value: course.format ?? 'ონლაინ' },
                   { label: 'დონე', value: course.level ?? '—' },
