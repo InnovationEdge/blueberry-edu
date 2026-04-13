@@ -147,7 +147,7 @@ export function Landing() {
       {/* ═══ COMPANIES — Lovable style: centered, faded edges, grayscale ═══ */}
       <section className="relative z-10 py-14 md:py-16 bg-background overflow-hidden">
         <p className="text-center text-foreground-faint text-sm mb-10">
-          ტექნოლოგიური პარტნიორი: Blueberry Systems · ჩვენი კურსდამთავრებულები მუშაობენ წამყვან კომპანიებში
+          კურსდამთავრებულები მუშაობენ წამყვან კომპანიებში
         </p>
         <div className="relative">
           <div className="absolute left-0 top-0 bottom-0 w-[18%] bg-gradient-to-r from-background via-background/80 to-transparent z-10 pointer-events-none" />
@@ -320,7 +320,7 @@ export function Landing() {
             <Reveal delay={0.15}>
               <div>
                 <h2 className="text-3xl md:text-4xl font-bold mb-5">მიიღე <span className="text-brand">სერტიფიკატი</span></h2>
-                <p className="text-foreground-secondary text-base leading-relaxed mb-8">ყველა ვორკშოპის წარმატებით გავლის შემდეგ მიიღებ ვერიფიცირებულ სერტიფიკატს. გააზიარე LinkedIn-ზე, დაამატე CV-ში და დამსაქმებლები ნახავენ შენს უნარებს.</p>
+                <p className="text-foreground-secondary text-base leading-relaxed mb-8">კურსის წარმატებით დასრულების შემდეგ მიიღებ ვერიფიცირებულ სერტიფიკატს. დაამატე LinkedIn-ში ან CV-ში.</p>
 
                 <div className="space-y-5">
                   <div className="flex items-start gap-4">
@@ -337,7 +337,7 @@ export function Landing() {
                   </div>
                   <div className="flex items-start gap-4">
                     <CheckCircle className="w-5 h-5 text-brand mt-0.5 shrink-0" />
-                    <p className="text-sm text-foreground-secondary"><span className="font-semibold text-foreground">Blueberry Systems-ის მხარდაჭერით</span> · ტექნოლოგიური პარტნიორის რეკომენდაცია</p>
+                    <p className="text-sm text-foreground-secondary"><span className="font-semibold text-foreground">დასაქმების მხარდაჭერა</span> · Blueberry Systems-ში სტაჟირების შესაძლებლობა</p>
                   </div>
                 </div>
               </div>
@@ -352,8 +352,8 @@ export function Landing() {
         <div className="max-w-[1300px] mx-auto px-5 md:px-12 lg:px-16">
           <Reveal>
             <div className="text-center mb-14">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">რას ამბობენ ჩვენი სტუდენტები</h2>
-              <p className="text-foreground-secondary text-base">ათასობით სტუდენტმა უკვე შეცვალა კარიერა</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">რას ამბობენ კურსდამთავრებულები</h2>
+              <p className="text-foreground-secondary text-base">მათი გამოცდილება Blueberry Academy-ში</p>
             </div>
           </Reveal>
 
@@ -425,9 +425,9 @@ export function Landing() {
       <section className="py-20 md:py-28">
         <div className="max-w-[900px] mx-auto px-5 md:px-12 lg:px-16 text-center">
           <Reveal>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">მზად ხარ ახალი კარიერისთვის?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">დაიწყე სწავლა</h2>
             <p className="text-foreground-secondary text-base mb-10 max-w-md mx-auto">
-              აირჩიე კურსი, ესწარი ლაივ ვორკშოპებს და დასაქმდი Blueberry Academy-ით.
+              აირჩიე შენთვის სასურველი კურსი და შეუერთდი Blueberry Academy-ს.
             </p>
             <button
               onClick={goToCourses}

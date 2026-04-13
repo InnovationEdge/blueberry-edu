@@ -54,7 +54,7 @@ export function About() {
                 პრაქტიკული განათლება ლაივ ვორკშოპებით
               </h1>
               <p className="text-white/60 text-base leading-relaxed mb-8 max-w-md">
-                Blueberry Academy არის ონლაინ სასწავლო პლატფორმა, სადაც კურსები ტარდება ლაივ ვორკშოპების ფორმატით Google Meet-ზე. ინდუსტრიის ექსპერტები გასწავლიან პრაქტიკულ უნარებს რეალურ პროექტებზე. ტექნოლოგიური პარტნიორი — Blueberry Systems.
+                Blueberry Academy არის პროფესიონალური სასწავლებელი, რომელიც საშუალებას აძლევს კურსდამთავრებულებს მიიღონ პრაქტიკული ცოდნა წამყვანი პროფესიონალებისგან, მათ შორის Blueberry Systems-ის სპეციალისტებისგან.
               </p>
               <a href="/courses" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-[#004aad] rounded-full font-semibold text-sm hover:bg-white/90 transition-all active:scale-[0.97]">
                 კურსების ნახვა <ArrowRight className="w-4 h-4" />
@@ -100,10 +100,10 @@ export function About() {
                 </div>
                 <h3 className="text-xl font-bold mb-4">ლაივ ვორკშოპები</h3>
                 <p className="text-sm text-foreground-secondary leading-relaxed mb-6">
-                  პროგრამირება, დიზაინი, მარკეტინგი, AI, კიბერუსაფრთხოება და პროდუქტის მართვა. ყოველი კურსი მოიცავს 5-8 ლაივ სესიას Google Meet-ზე და ვერიფიცირებულ სერტიფიკატს.
+                  პროგრამირება, დიზაინი, მარკეტინგი, AI, კიბერუსაფრთხოება და პროდუქტის მართვა. ყოველი კურსი მოიცავს ლაივ სესიებს Google Meet-ზე და სერტიფიკატს.
                 </p>
                 <ul className="space-y-2.5">
-                  {['5-8 ლაივ ვორკშოპი Google Meet-ზე', 'პრაქტიკაზე დაფუძნებული სილაბუსი', 'ვერიფიცირებული სერტიფიკატი', 'კარიერული მხარდაჭერა'].map((item, i) => (
+                  {['ლაივ ვორკშოპები Google Meet-ზე', 'პრაქტიკაზე დაფუძნებული სწავლება', 'სერტიფიკატი დასრულებისას', 'დასაქმების მხარდაჭერა'].map((item, i) => (
                     <li key={i} className="flex items-center gap-2.5 text-sm text-foreground-secondary">
                       <CheckCircle className="w-4 h-4 text-[#004aad] shrink-0" /> {item}
                     </li>
@@ -146,7 +146,7 @@ export function About() {
                 <Target className="w-8 h-8 text-[#5b9bd5] mb-6" />
                 <h3 className="text-xl font-bold mb-4">მისია</h3>
                 <p className="text-white/50 text-sm leading-relaxed">
-                  ხელმისაწვდომი და პრაქტიკული ტექნოლოგიური განათლება ლაივ ფორმატით. ყოველი სტუდენტი სწავლობს რეალური პროექტებით, ლაივ ვორკშოპებზე ინდუსტრიის ექსპერტებთან ერთად და ამზადებს პორტფოლიოს დასაქმებისთვის.
+                  ხელმისაწვდომი და პრაქტიკული ტექნოლოგიური განათლება. ყოველი სტუდენტი სწავლობს რეალურ პროექტებზე, წამყვანი პროფესიონალებისგან და ამზადებს პორტფოლიოს დასაქმებისთვის.
                 </p>
               </div>
             </Reveal>
@@ -172,9 +172,9 @@ export function About() {
           </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {[
-              { icon: BookOpen, title: 'ლაივ ფორმატი', desc: 'ყოველი კურსი მოიცავს ლაივ ვორკშოპებს Google Meet-ზე. პირდაპირი ინტერაქცია ინსტრუქტორთან, კითხვები და პრაქტიკა.' },
-              { icon: Users, title: 'ექსპერტი ინსტრუქტორები', desc: 'ინსტრუქტორები არიან მოქმედი პროფესიონალები ინდუსტრიიდან. Blueberry Systems-ის გუნდი აქტიურად მონაწილეობს სწავლებაში.' },
-              { icon: Award, title: 'დასაქმება', desc: 'ჩვენი მიზანია კარიერული წინსვლა. საუკეთესო კურსდამთავრებულებს Blueberry Systems-ში სტაჟირების შესაძლებლობა ეძლევათ.' },
+              { icon: BookOpen, title: 'პრაქტიკული სწავლება', desc: 'ყოველი კურსი მოიცავს ლაივ ვორკშოპებს Google Meet-ზე. პირდაპირი ინტერაქცია ინსტრუქტორთან და პრაქტიკული დავალებები.' },
+              { icon: Users, title: 'წამყვანი პროფესიონალები', desc: 'ინსტრუქტორები არიან მოქმედი სპეციალისტები, მათ შორის Blueberry Systems-ის გუნდის წევრები.' },
+              { icon: Award, title: 'დასაქმების შესაძლებლობა', desc: 'საუკეთესო კურსდამთავრებულებს Blueberry Systems-ში სტაჟირების და დასაქმების შესაძლებლობა ეძლევათ.' },
             ].map((item, i) => {
               const Icon = item.icon;
               return (
