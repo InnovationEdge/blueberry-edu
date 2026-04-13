@@ -57,8 +57,8 @@ export function CourseLandingDetail() {
         <LandingHeader activePath="/courses" />
         <div className="h-[72px]" />
         <div className="max-w-[1200px] mx-auto px-6 py-20 text-center">
-          <p className="text-foreground-faint mb-4">კურსი ვერ მოიძებნა</p>
-          <button onClick={() => navigate('/courses')} className="px-6 py-3 bg-[#004aad] text-white rounded-xl text-sm font-semibold">კურსებზე დაბრუნება</button>
+          <p className="text-foreground-faint mb-4">{t.loading}</p>
+          <button onClick={() => navigate('/courses')} className="px-6 py-3 bg-[#004aad] text-white rounded-xl text-sm font-semibold">{t.navCourses}</button>
         </div>
       </div>
     );
@@ -247,8 +247,8 @@ export function CourseLandingDetail() {
 
                 {!registration.isSubmitted ? (
                   <form onSubmit={handleSubmit} className="space-y-3 mb-4">
-                    <input type="text" required value={regForm.name} onChange={e => setRegForm({ ...regForm, name: e.target.value })} placeholder="სახელი და გვარი" className="w-full px-4 py-3 rounded-xl border border-border-subtle bg-background text-sm focus:outline-none focus:border-[#004aad]" />
-                    <input type="email" required value={regForm.email} onChange={e => setRegForm({ ...regForm, email: e.target.value })} placeholder="ელ. ფოსტა" className="w-full px-4 py-3 rounded-xl border border-border-subtle bg-background text-sm focus:outline-none focus:border-[#004aad]" />
+                    <input type="text" required value={regForm.name} onChange={e => setRegForm({ ...regForm, name: e.target.value })} placeholder={t.mcNamePlaceholder} className="w-full px-4 py-3 rounded-xl border border-border-subtle bg-background text-sm focus:outline-none focus:border-[#004aad]" />
+                    <input type="email" required value={regForm.email} onChange={e => setRegForm({ ...regForm, email: e.target.value })} placeholder={t.mcEmailPlaceholder} className="w-full px-4 py-3 rounded-xl border border-border-subtle bg-background text-sm focus:outline-none focus:border-[#004aad]" />
                     <input type="tel" required value={regForm.phone} onChange={e => setRegForm({ ...regForm, phone: e.target.value })} placeholder="+995 5XX XXX XXX" className="w-full px-4 py-3 rounded-xl border border-border-subtle bg-background text-sm focus:outline-none focus:border-[#004aad]" />
                     {registration.error && <p className="text-xs text-red-500">{registration.error}</p>}
                     <button type="submit" disabled={registration.isSubmitting} className="w-full py-3.5 bg-[#004aad] text-white rounded-xl font-semibold text-sm hover:bg-[#003d8f] transition-all active:scale-[0.97] disabled:opacity-50">

@@ -12,6 +12,7 @@ import { CourseCardLanding } from '../components/course-card-landing';
 import { useLandingCourses } from '../hooks/use-landing-courses';
 import { useLandingStats, useLandingTestimonials, useLandingFaq } from '../hooks/use-landing-content';
 import { useDocumentTitle } from '../hooks/use-document-title';
+import { getPageT } from '../i18n/pages';
 
 
 function HeroVideo() {
@@ -77,6 +78,7 @@ export function Landing() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const { openLogin, language } = useAuth();
   const t = getAppT(language);
+  const p = getPageT(language);
   const navigate = useNavigate();
   const heroRef = useRef(null);
   const { data: allCourses = [] } = useLandingCourses();
@@ -133,7 +135,7 @@ export function Landing() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
-              onClick={handleSignIn}
+              onClick={goToCourses}
               className="mt-6 px-8 py-3.5 bg-gradient-to-r from-[#004aad] to-[#003d8f] text-white rounded-full font-semibold text-base hover:from-[#003d8f] hover:to-[#002d6b] transition-all shadow-lg shadow-[#004aad]/25 hover:shadow-[#004aad]/40 active:scale-[0.97] inline-flex items-center gap-2"
             >
               {t.landingGetStarted}
@@ -147,7 +149,7 @@ export function Landing() {
       {/* ═══ COMPANIES — Lovable style: centered, faded edges, grayscale ═══ */}
       <section className="relative z-10 py-14 md:py-16 bg-background overflow-hidden">
         <p className="text-center text-foreground-faint text-sm mb-10">
-          კურსდამთავრებულები მუშაობენ წამყვან კომპანიებში
+          {p.landingCompanies}
         </p>
         <div className="relative">
           <div className="absolute left-0 top-0 bottom-0 w-[18%] bg-gradient-to-r from-background via-background/80 to-transparent z-10 pointer-events-none" />
@@ -185,8 +187,8 @@ export function Landing() {
           <Reveal>
             <div className="flex items-end justify-between mb-10">
               <div>
-                <h2 className="text-3xl md:text-4xl font-bold mb-2">ტოპ კურსები</h2>
-                <p className="text-foreground-secondary text-base">აღმოაჩინე საუკეთესო კურსები ჩვენი პროფესიონალებისგან</p>
+                <h2 className="text-3xl md:text-4xl font-bold mb-2">{p.landingTopCourses}</h2>
+                <p className="text-foreground-secondary text-base">{p.landingTopCoursesDesc}</p>
               </div>
               <button onClick={goToCourses} className="hidden md:flex items-center gap-2 px-5 py-2.5 border border-border-subtle rounded-full text-sm font-medium text-foreground hover:bg-surface-hover transition-all shrink-0">
                 ყველას ნახვა
@@ -215,8 +217,8 @@ export function Landing() {
       <section className="py-16 md:py-24">
         <div className="max-w-[1300px] mx-auto px-5 md:px-12 lg:px-16">
           <Reveal>
-            <p className="text-sm text-[#004aad] font-semibold uppercase tracking-wider mb-3 text-center">რიცხვები</p>
-            <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">ჩვენ რიცხვებში</h2>
+            <p className="text-sm text-[#004aad] font-semibold uppercase tracking-wider mb-3 text-center">{p.landingStatsLabel}</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">{p.landingStatsTitle}</h2>
           </Reveal>
           <div className="bg-gradient-to-br from-[#004aad] to-[#002d6b] rounded-2xl shadow-2xl overflow-hidden">
             <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10">
@@ -324,25 +326,25 @@ export function Landing() {
             {/* Right — Description */}
             <Reveal delay={0.15}>
               <div>
-                <h2 className="text-3xl md:text-4xl font-bold mb-5">მიიღე <span className="text-brand">სერტიფიკატი</span></h2>
-                <p className="text-foreground-secondary text-base leading-relaxed mb-8">კურსის წარმატებით დასრულების შემდეგ მიიღებ ვერიფიცირებულ სერტიფიკატს. დაამატე LinkedIn-ში ან CV-ში.</p>
+                <h2 className="text-3xl md:text-4xl font-bold mb-5"><span className="text-brand">{p.landingCertTitle}</span></h2>
+                <p className="text-foreground-secondary text-base leading-relaxed mb-8">{p.landingCertDesc}</p>
 
                 <div className="space-y-5">
                   <div className="flex items-start gap-4">
                     <CheckCircle className="w-5 h-5 text-brand mt-0.5 shrink-0" />
-                    <p className="text-sm text-foreground-secondary"><span className="font-semibold text-foreground">ონლაინ გადამოწმებადი</span> · თითოეულ სერტიფიკატს აქვს უნიკალური ID</p>
+                    <p className="text-sm text-foreground-secondary"><span className="font-semibold text-foreground">{p.landingCertBullet1}</span></p>
                   </div>
                   <div className="flex items-start gap-4">
                     <CheckCircle className="w-5 h-5 text-brand mt-0.5 shrink-0" />
-                    <p className="text-sm text-foreground-secondary"><span className="font-semibold text-foreground">LinkedIn-თან ინტეგრაცია</span> · პირდაპირ პროფილში დამატება</p>
+                    <p className="text-sm text-foreground-secondary"><span className="font-semibold text-foreground">{p.landingCertBullet2}</span></p>
                   </div>
                   <div className="flex items-start gap-4">
                     <CheckCircle className="w-5 h-5 text-brand mt-0.5 shrink-0" />
-                    <p className="text-sm text-foreground-secondary"><span className="font-semibold text-foreground">პრაქტიკაზე დაფუძნებული</span> · რეალური პროექტები, არა მხოლოდ თეორია</p>
+                    <p className="text-sm text-foreground-secondary"><span className="font-semibold text-foreground">{p.landingCertBullet3}</span></p>
                   </div>
                   <div className="flex items-start gap-4">
                     <CheckCircle className="w-5 h-5 text-brand mt-0.5 shrink-0" />
-                    <p className="text-sm text-foreground-secondary"><span className="font-semibold text-foreground">დასაქმების მხარდაჭერა</span> · Blueberry Systems-ში სტაჟირების შესაძლებლობა</p>
+                    <p className="text-sm text-foreground-secondary"><span className="font-semibold text-foreground">{p.landingCertBullet4}</span></p>
                   </div>
                 </div>
               </div>
@@ -357,8 +359,8 @@ export function Landing() {
         <div className="max-w-[1300px] mx-auto px-5 md:px-12 lg:px-16">
           <Reveal>
             <div className="text-center mb-14">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">რას ამბობენ კურსდამთავრებულები</h2>
-              <p className="text-foreground-secondary text-base">მათი გამოცდილება Blueberry Academy-ში</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">{p.landingTestimonialsTitle}</h2>
+              <p className="text-foreground-secondary text-base">{p.landingTestimonialsDesc}</p>
             </div>
           </Reveal>
 
@@ -392,7 +394,7 @@ export function Landing() {
       <section className="py-20 md:py-28 bg-surface">
         <div className="max-w-[820px] mx-auto px-5 md:px-12 lg:px-16">
           <Reveal>
-            <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">ხშირად დასმული კითხვები</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">{p.landingFaqTitle}</h2>
           </Reveal>
 
           <div className="space-y-3">
@@ -430,15 +432,15 @@ export function Landing() {
       <section className="py-20 md:py-28">
         <div className="max-w-[900px] mx-auto px-5 md:px-12 lg:px-16 text-center">
           <Reveal>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">დაიწყე სწავლა</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{p.landingCtaTitle}</h2>
             <p className="text-foreground-secondary text-base mb-10 max-w-md mx-auto">
-              აირჩიე შენთვის სასურველი კურსი და შეუერთდი Blueberry Academy-ს.
+              {p.landingCtaDesc}
             </p>
             <button
               onClick={goToCourses}
               className="px-10 py-4 bg-brand text-white rounded-full font-bold text-base hover:bg-brand-hover transition-all shadow-md hover:shadow-lg active:scale-[0.97]"
             >
-              კურსების ნახვა
+              {p.landingCtaBtn}
             </button>
           </Reveal>
         </div>

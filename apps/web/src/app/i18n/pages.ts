@@ -146,6 +146,25 @@ interface PageTranslations {
   detailMentor: string;
   detailMentorAbout: string;
 
+  // Landing sections
+  landingCompanies: string;
+  landingTopCourses: string;
+  landingTopCoursesDesc: string;
+  landingStatsLabel: string;
+  landingStatsTitle: string;
+  landingCertTitle: string;
+  landingCertDesc: string;
+  landingTestimonialsTitle: string;
+  landingTestimonialsDesc: string;
+  landingFaqTitle: string;
+  landingCtaTitle: string;
+  landingCtaDesc: string;
+  landingCtaBtn: string;
+  landingCertBullet1: string;
+  landingCertBullet2: string;
+  landingCertBullet3: string;
+  landingCertBullet4: string;
+
   // Common
   loading: string;
   viewAll: string;
@@ -288,6 +307,24 @@ const ka: PageTranslations = {
   detailMentor: 'ინსტრუქტორი',
   detailMentorAbout: 'ინსტრუქტორის შესახებ',
 
+  landingCompanies: 'კურსდამთავრებულები მუშაობენ წამყვან კომპანიებში',
+  landingTopCourses: 'ტოპ კურსები',
+  landingTopCoursesDesc: 'აირჩიე კურსი და დაიწყე სწავლა პროფესიონალებთან ერთად',
+  landingStatsLabel: 'რიცხვები',
+  landingStatsTitle: 'ჩვენ რიცხვებში',
+  landingCertTitle: 'სერტიფიკატი',
+  landingCertDesc: 'კურსის წარმატებით დასრულების შემდეგ მიიღებ ვერიფიცირებულ სერტიფიკატს. დაამატე LinkedIn-ში ან CV-ში.',
+  landingTestimonialsTitle: 'რას ამბობენ კურსდამთავრებულები',
+  landingTestimonialsDesc: 'მათი გამოცდილება Blueberry Academy-ში',
+  landingFaqTitle: 'ხშირად დასმული კითხვები',
+  landingCtaTitle: 'დაიწყე სწავლა',
+  landingCtaDesc: 'აირჩიე შენთვის სასურველი კურსი და შეუერთდი Blueberry Academy-ს.',
+  landingCtaBtn: 'კურსების ნახვა',
+  landingCertBullet1: 'ონლაინ გადამოწმებადი',
+  landingCertBullet2: 'LinkedIn-თან ინტეგრაცია',
+  landingCertBullet3: 'პრაქტიკაზე დაფუძნებული',
+  landingCertBullet4: 'დასაქმების მხარდაჭერა',
+
   loading: 'იტვირთება...',
   viewAll: 'ყველას ნახვა',
 };
@@ -429,6 +466,24 @@ const en: PageTranslations = {
   detailMentor: 'Instructor',
   detailMentorAbout: 'About the instructor',
 
+  landingCompanies: 'Our graduates work at top companies',
+  landingTopCourses: 'Top Courses',
+  landingTopCoursesDesc: 'Choose a course and start learning with professionals',
+  landingStatsLabel: 'Numbers',
+  landingStatsTitle: 'In numbers',
+  landingCertTitle: 'Certificate',
+  landingCertDesc: 'After completing the course you will receive a verified certificate. Add it to LinkedIn or your CV.',
+  landingTestimonialsTitle: 'What our graduates say',
+  landingTestimonialsDesc: 'Their experience at Blueberry Academy',
+  landingFaqTitle: 'Frequently asked questions',
+  landingCtaTitle: 'Start learning',
+  landingCtaDesc: 'Choose a course and join Blueberry Academy.',
+  landingCtaBtn: 'View courses',
+  landingCertBullet1: 'Online verifiable',
+  landingCertBullet2: 'LinkedIn integration',
+  landingCertBullet3: 'Practice-based',
+  landingCertBullet4: 'Career support',
+
   loading: 'Loading...',
   viewAll: 'View all',
 };
@@ -569,6 +624,24 @@ const ru: PageTranslations = {
   detailRegisterBtn: 'Регистрация',
   detailMentor: 'Инструктор',
   detailMentorAbout: 'Об инструкторе',
+
+  landingCompanies: 'Наши выпускники работают в ведущих компаниях',
+  landingTopCourses: 'Топ курсы',
+  landingTopCoursesDesc: 'Выбери курс и начни обучение с профессионалами',
+  landingStatsLabel: 'Цифры',
+  landingStatsTitle: 'Мы в цифрах',
+  landingCertTitle: 'Сертификат',
+  landingCertDesc: 'После успешного завершения курса ты получишь верифицированный сертификат. Добавь в LinkedIn или резюме.',
+  landingTestimonialsTitle: 'Что говорят наши выпускники',
+  landingTestimonialsDesc: 'Их опыт в Blueberry Academy',
+  landingFaqTitle: 'Часто задаваемые вопросы',
+  landingCtaTitle: 'Начни обучение',
+  landingCtaDesc: 'Выбери курс и присоединяйся к Blueberry Academy.',
+  landingCtaBtn: 'Смотреть курсы',
+  landingCertBullet1: 'Онлайн верификация',
+  landingCertBullet2: 'Интеграция с LinkedIn',
+  landingCertBullet3: 'На основе практики',
+  landingCertBullet4: 'Поддержка трудоустройства',
 
   loading: 'Загрузка...',
   viewAll: 'Смотреть все',
