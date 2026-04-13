@@ -212,20 +212,25 @@ export function Landing() {
       </section>
 
       {/* ═══ STATS — ჩვენ რიცხვებში ═══ */}
-      <section className="py-14 md:py-20 border-b border-border-subtle">
+      <section className="py-16 md:py-24">
         <div className="max-w-[1300px] mx-auto px-5 md:px-12 lg:px-16">
           <Reveal>
+            <p className="text-sm text-[#004aad] font-semibold uppercase tracking-wider mb-3 text-center">რიცხვები</p>
             <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">ჩვენ რიცხვებში</h2>
           </Reveal>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {stats.map((s, i) => (
-              <Reveal key={s.label} delay={i * 0.1}>
-                <div className="text-4xl md:text-5xl font-bold text-foreground leading-none tracking-tight">
-                  <AnimatedCounter value={s.value} suffix={s.suffix} />
-                </div>
-                <div className="text-sm text-foreground-faint mt-3">{s.label}</div>
-              </Reveal>
-            ))}
+          <div className="bg-gradient-to-br from-[#004aad] to-[#002d6b] rounded-2xl shadow-2xl overflow-hidden">
+            <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10">
+              {stats.map((s, i) => (
+                <Reveal key={s.label} delay={i * 0.1}>
+                  <div className="py-10 px-6 text-center">
+                    <p className="text-4xl md:text-5xl font-bold text-white leading-none tracking-tight">
+                      <AnimatedCounter value={s.value} suffix={s.suffix} />
+                    </p>
+                    <p className="text-xs text-white/50 mt-3 uppercase tracking-wider">{s.label}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </div>
       </section>
