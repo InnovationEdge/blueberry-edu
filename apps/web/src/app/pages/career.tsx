@@ -4,6 +4,8 @@ import { motion, useInView } from 'motion/react';
 import { LandingHeader } from '../components/landing-header';
 import { LandingFooter } from '../components/landing-footer';
 import { useDocumentTitle } from '../hooks/use-document-title';
+import { useAuth } from '../context/auth-context';
+import { getPageT } from '../i18n/pages';
 
 function Reveal({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef(null);
@@ -30,6 +32,8 @@ const DEPARTMENTS = ['ყველა', 'Sales', 'Management', 'Marketing', 'Des
 
 export function Career() {
   useDocumentTitle('კარიერა');
+  const { language } = useAuth();
+  const t = getPageT(language);
   const [search, setSearch] = useState('');
   const [department, setDepartment] = useState('ყველა');
 
@@ -48,15 +52,15 @@ export function Career() {
       <section className="bg-[#004aad] text-white">
         <div className="max-w-[1000px] mx-auto px-6 md:px-12 py-12 md:py-16">
           <Reveal>
-            <p className="text-white/60 text-sm font-medium uppercase tracking-wider mb-4">კარიერა</p>
+            <p className="text-white/60 text-sm font-medium uppercase tracking-wider mb-4">{t.careerBadge}</p>
             <h1 className="text-4xl md:text-5xl font-bold leading-[1.15] mb-6 max-w-lg">
-              შეცვალე განათლების მომავალი ჩვენთან ერთად
+              {t.careerHeroTitle}
             </h1>
             <p className="text-white/60 text-base leading-relaxed max-w-md mb-10">
-              Blueberry Academy და Blueberry Systems ერთად ვქმნით ტექნოლოგიურ ეკოსისტემას. ვეძებთ ამბიციურ ადამიანებს, რომლებსაც სურთ განათლებისა და ტექნოლოგიის შეერთება.
+              {t.careerHeroDesc}
             </p>
             <a href="#positions" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-[#004aad] rounded-full font-semibold text-sm hover:bg-white/90 transition-all active:scale-[0.97]">
-              ნახე ღია პოზიციები
+              {t.careerViewPositions}
               <ArrowRight className="w-4 h-4" />
             </a>
           </Reveal>
@@ -76,7 +80,7 @@ export function Career() {
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="ვაკანსიის ძებნა..."
+                placeholder={t.careerSearchPlaceholder}
                 className="w-full h-12 pl-11 pr-4 rounded-lg border border-border-subtle bg-background text-sm focus:outline-none focus:border-[#004aad] transition-colors"
               />
             </div>
@@ -87,7 +91,7 @@ export function Career() {
                 className="appearance-none h-12 bg-background border border-border-subtle rounded-lg pl-4 pr-10 text-sm cursor-pointer min-w-[200px]"
               >
                 {DEPARTMENTS.map(d => (
-                  <option key={d} value={d}>{d === 'ყველა' ? 'ყველა დეპარტამენტი' : d}</option>
+                  <option key={d} value={d}>{d === 'ყველა' ? t.careerAllDepartments : d}</option>
                 ))}
               </select>
               <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-faint pointer-events-none" />
@@ -130,8 +134,8 @@ export function Career() {
 
           {filtered.length === 0 && (
             <div className="text-center py-20 text-foreground-faint">
-              <p className="text-base mb-1">ვაკანსია ვერ მოიძებნა</p>
-              <p className="text-sm">სცადე სხვა ფილტრი</p>
+              <p className="text-base mb-1">{t.careerNoResults}</p>
+              <p className="text-sm">{t.careerTryOther}</p>
             </div>
           )}
         </div>
@@ -141,13 +145,13 @@ export function Career() {
       <section className="py-16 md:py-24 bg-surface">
         <div className="max-w-[1000px] mx-auto px-6 md:px-12">
           <Reveal>
-            <h2 className="text-2xl md:text-3xl font-bold mb-12">რატომ ჩვენთან მუშაობა</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-12">{t.careerWhyJoin}</h2>
           </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { icon: Zap, title: 'მოქნილობა', desc: 'Remote ან Hybrid, თავისუფალი გრაფიკი. მთავარია შედეგი, არა ადგილმდებარეობა.' },
-              { icon: ArrowRight, title: 'სწრაფი ზრდა', desc: 'სტარტაპის ენერგია, სადაც შენი წვლილი პირდაპირ აისახება პროდუქტზე.' },
-              { icon: Heart, title: 'მისია', desc: 'ვცვლით განათლებას საქართველოში. შენ იქნები ამ ცვლილების ნაწილი.' },
+              { icon: Zap, title: t.careerFlexTitle, desc: t.careerFlexDesc },
+              { icon: ArrowRight, title: t.careerGrowthTitle, desc: t.careerGrowthDesc },
+              { icon: Heart, title: t.careerMissionTitle, desc: t.careerMissionDesc },
             ].map((item, i) => {
               const Icon = item.icon;
               return (

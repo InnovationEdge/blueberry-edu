@@ -7,6 +7,8 @@ import { LandingFooter } from '../components/landing-footer';
 import { useCourseDetail } from '../hooks/use-course-detail';
 import { useCourseRegistration } from '../hooks/use-registration';
 import { useDocumentTitle } from '../hooks/use-document-title';
+import { useAuth } from '../context/auth-context';
+import { getPageT } from '../i18n/pages';
 
 function Reveal({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef(null);
@@ -28,13 +30,15 @@ export function CourseLandingDetail() {
   const [activeSection, setActiveSection] = useState('overview');
   const [regForm, setRegForm] = useState({ name: '', email: '', phone: '' });
   const registration = useCourseRegistration(courseId);
-  useDocumentTitle(course?.title ?? 'კურსი');
+  const { language } = useAuth();
+  const t = getPageT(language);
+  useDocumentTitle(course?.title ?? t.loading);
 
   const sections = [
-    { id: 'overview', label: 'მიმოხილვა' },
-    { id: 'syllabus', label: 'სილაბუსი' },
-    { id: 'schedule', label: 'განრიგი' },
-    { id: 'faq', label: 'FAQ' },
+    { id: 'overview', label: t.detailOverview },
+    { id: 'syllabus', label: t.detailSyllabus },
+    { id: 'schedule', label: t.detailSchedule },
+    { id: 'faq', label: t.detailFaq },
   ];
 
   if (isLoading) {
@@ -42,7 +46,7 @@ export function CourseLandingDetail() {
       <div className="min-h-screen bg-background text-foreground">
         <LandingHeader activePath="/courses" />
         <div className="h-[72px]" />
-        <div className="max-w-[1200px] mx-auto px-6 py-20 text-center text-foreground-faint">იტვირთება...</div>
+        <div className="max-w-[1200px] mx-auto px-6 py-20 text-center text-foreground-faint">{t.loading}</div>
       </div>
     );
   }
@@ -185,10 +189,10 @@ export function CourseLandingDetail() {
                 <div className="bg-card border border-border-subtle rounded-xl divide-y divide-border-subtle">
                   {[
                     { icon: Calendar, label: 'დაწყების თარიღი', value: course.start_date ?? '—' },
-                    { icon: Clock, label: 'ხანგრძლივობა', value: course.duration },
+                    { icon: Clock, label: t.detailDuration, value: course.duration },
                     { icon: User, label: 'მენტორი', value: course.mentor_name ?? '—', sub: course.mentor_role },
-                    { icon: MapPin, label: 'ფორმატი', value: course.format ?? 'ონლაინ (Google Meet)' },
-                    { icon: Calendar, label: 'სალექციო დღეები', value: course.schedule_days ?? '—' },
+                    { icon: MapPin, label: t.detailFormat, value: course.format ?? 'Google Meet' },
+                    { icon: Calendar, label: t.detailScheduleDays, value: course.schedule_days ?? '—' },
                     { icon: Clock, label: 'სალექციო დრო', value: course.schedule_time ?? '—' },
                   ].map((row, i) => {
                     const Icon = row.icon;
@@ -248,13 +252,13 @@ export function CourseLandingDetail() {
                     <input type="tel" required value={regForm.phone} onChange={e => setRegForm({ ...regForm, phone: e.target.value })} placeholder="+995 5XX XXX XXX" className="w-full px-4 py-3 rounded-xl border border-border-subtle bg-background text-sm focus:outline-none focus:border-[#004aad]" />
                     {registration.error && <p className="text-xs text-red-500">{registration.error}</p>}
                     <button type="submit" disabled={registration.isSubmitting} className="w-full py-3.5 bg-[#004aad] text-white rounded-xl font-semibold text-sm hover:bg-[#003d8f] transition-all active:scale-[0.97] disabled:opacity-50">
-                      {registration.isSubmitting ? 'იგზავნება...' : 'დარეგისტრირდი'}
+                      {registration.isSubmitting ? t.mcSending : t.detailRegisterBtn}
                     </button>
                   </form>
                 ) : (
                   <div className="text-center py-4 mb-4">
                     <CheckCircle className="w-10 h-10 text-green-500 mx-auto mb-2" />
-                    <p className="text-sm font-semibold">წარმატებით დარეგისტრირდი!</p>
+                    <p className="text-sm font-semibold">{t.mcSuccessTitle}</p>
                     <p className="text-xs text-foreground-faint mt-1">დაგიკავშირდებით მალე</p>
                   </div>
                 )}
@@ -276,11 +280,11 @@ export function CourseLandingDetail() {
               {/* Quick info */}
               <div className="bg-surface rounded-2xl p-5 space-y-3">
                 {[
-                  { label: 'კატეგორია', value: course.tribe },
-                  { label: 'ხანგრძლივობა', value: course.duration },
-                  { label: 'ფორმატი', value: course.format ?? 'ონლაინ' },
-                  { label: 'დონე', value: course.level ?? '—' },
-                  { label: 'ენა', value: course.language ?? 'ქართული' },
+                  { label: t.detailCategory, value: course.tribe },
+                  { label: t.detailDuration, value: course.duration },
+                  { label: t.detailFormat, value: course.format ?? 'Google Meet' },
+                  { label: t.detailLevel, value: course.level ?? '—' },
+                  { label: t.detailLanguage, value: course.language ?? 'ქართული' },
                   { label: 'მენტორი', value: course.mentor_name ?? '—' },
                 ].map((item, i) => (
                   <div key={i} className="flex items-center justify-between text-sm">

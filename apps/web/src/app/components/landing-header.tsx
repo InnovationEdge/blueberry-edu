@@ -3,15 +3,7 @@ import { ChevronDown, Globe, Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useAuth } from '../context/auth-context';
 import { Logo } from './logo';
-
-const NAV_ITEMS = [
-  { label: 'მთავარი', href: '/' },
-  { label: 'კურსები', href: '/courses' },
-  { label: 'მასტერკლასები', href: '/masterclass' },
-  { label: 'სერტიფიკატები', href: '/certificates' },
-  { label: 'კარიერა', href: '/career' },
-  { label: 'ჩვენს შესახებ', href: '/about' },
-];
+import { getPageT } from '../i18n/pages';
 
 const LANGUAGES = ['ქართული', 'English', 'Русский'];
 
@@ -23,6 +15,16 @@ export function LandingHeader({ activePath }: LandingHeaderProps) {
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { language, setLanguage } = useAuth();
+  const t = getPageT(language);
+
+  const NAV_ITEMS = [
+    { label: t.navHome, href: '/' },
+    { label: t.navCourses, href: '/courses' },
+    { label: t.navMasterclasses, href: '/masterclass' },
+    { label: t.navCertificates, href: '/certificates' },
+    { label: t.navCareer, href: '/career' },
+    { label: t.navAbout, href: '/about' },
+  ];
 
   useEffect(() => {
     if (mobileOpen) {

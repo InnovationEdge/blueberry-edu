@@ -6,6 +6,8 @@ import { LandingFooter } from '../components/landing-footer';
 import { Logo } from '../components/logo';
 import { useLandingCourses } from '../hooks/use-landing-courses';
 import { useDocumentTitle } from '../hooks/use-document-title';
+import { useAuth } from '../context/auth-context';
+import { getPageT } from '../i18n/pages';
 
 function Reveal({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef(null);
@@ -19,6 +21,8 @@ function Reveal({ children, className = '', delay = 0 }: { children: React.React
 
 export function CertificatesLanding() {
   useDocumentTitle('სერტიფიკატები');
+  const { language } = useAuth();
+  const t = getPageT(language);
   const { data: courses = [] } = useLandingCourses();
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -30,13 +34,13 @@ export function CertificatesLanding() {
         <div className="max-w-[1100px] mx-auto px-5 md:px-12 lg:px-16 text-center">
           <Reveal>
             <div className="inline-flex items-center gap-2 bg-[#004aad]/10 text-[#004aad] rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider mb-6">
-              <Award className="w-4 h-4" /> სერტიფიკატები
+              <Award className="w-4 h-4" /> {t.certBadge}
             </div>
             <h1 className="text-3xl md:text-5xl font-bold leading-tight mb-5">
-              დაადასტურე შენი ცოდნა<br /><span className="text-[#004aad]">ოფიციალურად</span>
+              {t.certHeroTitle1}<br /><span className="text-[#004aad]">{t.certHeroTitle2}</span>
             </h1>
             <p className="text-foreground-secondary text-base md:text-lg max-w-2xl mx-auto">
-              კურსის წარმატებით დასრულების შემდეგ მიიღებ Blueberry Academy-ს ვერიფიცირებულ სერტიფიკატს. დაამატე LinkedIn-ში ან CV-ში.
+              {t.certHeroDesc}
             </p>
           </Reveal>
         </div>
@@ -138,8 +142,8 @@ export function CertificatesLanding() {
       <section className="py-16 md:py-24">
         <div className="max-w-[1100px] mx-auto px-5 md:px-12 lg:px-16">
           <Reveal>
-            <h2 className="text-2xl md:text-3xl font-bold text-center mb-4">ხელმისაწვდომი სერტიფიკატები</h2>
-            <p className="text-foreground-secondary text-center mb-12 max-w-lg mx-auto">ყოველი კურსის წარმატებით დასრულებისას მიიღებ შესაბამის სერტიფიკატს</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-4">{t.certAvailable}</h2>
+            <p className="text-foreground-secondary text-center mb-12 max-w-lg mx-auto">{t.certAvailableDesc}</p>
           </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -157,8 +161,8 @@ export function CertificatesLanding() {
                       </div>
                     </div>
                     <div className="flex items-center gap-4 text-xs text-foreground-faint">
-                      <span className="flex items-center gap-1"><CheckCircle className="w-3.5 h-3.5 text-green-500" /> ვერიფიცირებული</span>
-                      <span className="flex items-center gap-1"><Globe className="w-3.5 h-3.5" /> ონლაინ</span>
+                      <span className="flex items-center gap-1"><CheckCircle className="w-3.5 h-3.5 text-green-500" /> {t.certVerified}</span>
+                      <span className="flex items-center gap-1"><Globe className="w-3.5 h-3.5" /> {t.certOnline}</span>
                     </div>
                   </div>
                 </div>
@@ -173,16 +177,16 @@ export function CertificatesLanding() {
         <div className="max-w-[600px] mx-auto px-5 md:px-12 text-center">
           <Reveal>
             <Shield className="w-10 h-10 text-[#004aad] mx-auto mb-4" />
-            <h2 className="text-2xl font-bold mb-3">სერტიფიკატის გადამოწმება</h2>
+            <h2 className="text-2xl font-bold mb-3">{t.certVerifyTitle}</h2>
             <p className="text-foreground-secondary text-sm mb-6">შეიყვანე სერტიფიკატის ID რომ გადაამოწმო ავთენტურობა</p>
             <div className="flex gap-3 max-w-md mx-auto">
               <input
                 type="text"
-                placeholder="მაგ. BB-04821"
+                placeholder={t.certVerifyPlaceholder}
                 className="flex-1 px-4 py-3 rounded-xl border border-border-subtle bg-background text-sm focus:outline-none focus:border-[#004aad] focus:ring-1 focus:ring-[#004aad]/20"
               />
               <button className="px-6 py-3 bg-[#004aad] text-white rounded-xl font-semibold text-sm hover:bg-[#003d8f] transition-all active:scale-[0.97] flex items-center gap-2">
-                <ExternalLink className="w-4 h-4" /> შემოწმება
+                <ExternalLink className="w-4 h-4" /> {t.certVerifyBtn}
               </button>
             </div>
           </Reveal>

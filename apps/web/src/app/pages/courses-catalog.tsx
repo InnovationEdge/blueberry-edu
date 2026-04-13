@@ -7,11 +7,15 @@ import { CourseCardLanding } from '../components/course-card-landing';
 import { useLandingCourses } from '../hooks/use-landing-courses';
 import { LandingFooter } from '../components/landing-footer';
 import { useDocumentTitle } from '../hooks/use-document-title';
+import { useAuth } from '../context/auth-context';
+import { getPageT } from '../i18n/pages';
 
-const TRIBES = ['ყველა', 'ინჟინერია', 'დიზაინი', 'მარკეტინგი', 'AI', 'მენეჯმენტი'];
+const TRIBE_KEYS = ['ყველა', 'ინჟინერია', 'დიზაინი', 'მარკეტინგი', 'AI', 'მენეჯმენტი'] as const;
 
 export function CoursesCatalog() {
   useDocumentTitle('კურსები');
+  const { language } = useAuth();
+  const t = getPageT(language);
   const [selectedTribe, setSelectedTribe] = useState('ყველა');
   const [sortBy, setSortBy] = useState<'popular' | 'price-asc' | 'price-desc'>('popular');
   const navigate = useNavigate();
@@ -65,7 +69,7 @@ export function CoursesCatalog() {
                   onClick={() => navigate(`/courses/${featured.id}`)}
                   className="px-7 py-3 bg-[#004aad] text-white rounded-lg font-semibold text-sm hover:bg-[#003d8f] transition-all active:scale-[0.97] inline-flex items-center gap-2"
                 >
-                  გაიგე მეტი
+                  {t.catalogLearnMore}
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </motion.div>
@@ -91,7 +95,7 @@ export function CoursesCatalog() {
         <div className="max-w-[1300px] mx-auto px-5 md:px-12 lg:px-16">
           {/* Title + filters */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
-            <h2 className="text-2xl md:text-3xl font-bold">კურსები</h2>
+            <h2 className="text-2xl md:text-3xl font-bold">{t.catalogTitle}</h2>
 
             <div className="flex items-center gap-3 flex-wrap">
               {/* Sort */}
@@ -101,16 +105,16 @@ export function CoursesCatalog() {
                   onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
                   className="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-2.5 pr-9 text-sm text-gray-700 cursor-pointer hover:border-gray-300 transition-colors"
                 >
-                  <option value="popular">პოპულარული</option>
-                  <option value="price-asc">ფასი: დაბლიდან</option>
-                  <option value="price-desc">ფასი: მაღლიდან</option>
+                  <option value="popular">{t.catalogPopular}</option>
+                  <option value="price-asc">{t.catalogPriceAsc}</option>
+                  <option value="price-desc">{t.catalogPriceDesc}</option>
                 </select>
                 <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
               </div>
 
               {/* Tribe filter */}
               <div className="flex items-center gap-2">
-                {TRIBES.map((tribe) => (
+                {TRIBE_KEYS.map((tribe) => (
                   <button
                     key={tribe}
                     onClick={() => setSelectedTribe(tribe)}
@@ -120,7 +124,7 @@ export function CoursesCatalog() {
                         : 'bg-white border border-gray-200 text-gray-600 hover:border-gray-300'
                     }`}
                   >
-                    {tribe}
+                    {tribe === 'ყველა' ? t.catalogAll : tribe}
                   </button>
                 ))}
               </div>
@@ -143,7 +147,7 @@ export function CoursesCatalog() {
 
           {sorted.length === 0 && (
             <div className="text-center py-20 text-foreground-faint">
-              <p className="text-lg">ამ კატეგორიაში კურსები ჯერ არ არის</p>
+              <p className="text-lg">{t.catalogEmpty}</p>
             </div>
           )}
         </div>

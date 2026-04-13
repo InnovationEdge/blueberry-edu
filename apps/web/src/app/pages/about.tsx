@@ -4,6 +4,8 @@ import { motion, useInView } from 'motion/react';
 import { LandingHeader } from '../components/landing-header';
 import { LandingFooter } from '../components/landing-footer';
 import { useDocumentTitle } from '../hooks/use-document-title';
+import { useAuth } from '../context/auth-context';
+import { getPageT } from '../i18n/pages';
 
 function Reveal({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef(null);
@@ -35,6 +37,8 @@ function AnimatedNumber({ value, suffix = '' }: { value: number; suffix?: string
 
 export function About() {
   useDocumentTitle('ჩვენს შესახებ');
+  const { language } = useAuth();
+  const t = getPageT(language);
   return (
     <div className="min-h-screen bg-background text-foreground">
       <LandingHeader activePath="/about" />
@@ -49,15 +53,15 @@ export function About() {
         <div className="relative max-w-[1100px] mx-auto px-6 md:px-12 py-20 md:py-32">
           <Reveal>
             <div className="max-w-2xl">
-              <p className="text-white/50 text-sm font-medium uppercase tracking-wider mb-4">Blueberry Academy</p>
+              <p className="text-white/50 text-sm font-medium uppercase tracking-wider mb-4">{t.aboutBadge}</p>
               <h1 className="text-4xl md:text-5xl font-bold leading-[1.1] mb-6">
-                პრაქტიკული განათლება ლაივ ვორკშოპებით
+                {t.aboutHeroTitle}
               </h1>
               <p className="text-white/60 text-base leading-relaxed mb-8 max-w-md">
-                Blueberry Academy არის პროფესიონალური სასწავლებელი, რომელიც საშუალებას აძლევს კურსდამთავრებულებს მიიღონ პრაქტიკული ცოდნა წამყვანი პროფესიონალებისგან, მათ შორის Blueberry Systems-ის სპეციალისტებისგან.
+                {t.aboutHeroDesc}
               </p>
               <a href="/courses" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-[#004aad] rounded-full font-semibold text-sm hover:bg-white/90 transition-all active:scale-[0.97]">
-                კურსების ნახვა <ArrowRight className="w-4 h-4" />
+                {t.aboutViewCourses} <ArrowRight className="w-4 h-4" />
               </a>
             </div>
           </Reveal>
@@ -89,8 +93,8 @@ export function About() {
       <section className="py-20 md:py-28">
         <div className="max-w-[1100px] mx-auto px-6 md:px-12">
           <Reveal>
-            <p className="text-sm text-[#004aad] font-semibold uppercase tracking-wider mb-3 text-center">რას ვაკეთებთ</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-14">ორი მიმართულება, ერთი სტანდარტი</h2>
+            <p className="text-sm text-[#004aad] font-semibold uppercase tracking-wider mb-3 text-center">{t.aboutWhatWeDo}</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-14">{t.aboutTwoDirections}</h2>
           </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Reveal>
@@ -98,12 +102,12 @@ export function About() {
                 <div className="w-14 h-14 rounded-2xl bg-[#004aad] flex items-center justify-center mb-6">
                   <GraduationCap className="w-7 h-7 text-white" />
                 </div>
-                <h3 className="text-xl font-bold mb-4">ლაივ ვორკშოპები</h3>
+                <h3 className="text-xl font-bold mb-4">{t.aboutWorkshopsTitle}</h3>
                 <p className="text-sm text-foreground-secondary leading-relaxed mb-6">
-                  პროგრამირება, დიზაინი, მარკეტინგი, AI, კიბერუსაფრთხოება და პროდუქტის მართვა. ყოველი კურსი მოიცავს ლაივ სესიებს Google Meet-ზე და სერტიფიკატს.
+                  {t.aboutWorkshopsDesc}
                 </p>
                 <ul className="space-y-2.5">
-                  {['ლაივ ვორკშოპები Google Meet-ზე', 'პრაქტიკაზე დაფუძნებული სწავლება', 'სერტიფიკატი დასრულებისას', 'დასაქმების მხარდაჭერა'].map((item, i) => (
+                  {[t.aboutWorkshopsBullet1, t.aboutWorkshopsBullet2, t.aboutWorkshopsBullet3, t.aboutWorkshopsBullet4].map((item, i) => (
                     <li key={i} className="flex items-center gap-2.5 text-sm text-foreground-secondary">
                       <CheckCircle className="w-4 h-4 text-[#004aad] shrink-0" /> {item}
                     </li>
@@ -116,12 +120,12 @@ export function About() {
                 <div className="w-14 h-14 rounded-2xl bg-[#004aad] flex items-center justify-center mb-6">
                   <Building2 className="w-7 h-7 text-white" />
                 </div>
-                <h3 className="text-xl font-bold mb-4">Blueberry Systems — ტექნოლოგიური პარტნიორი</h3>
+                <h3 className="text-xl font-bold mb-4">{t.aboutPartnerTitle}</h3>
                 <p className="text-sm text-foreground-secondary leading-relaxed mb-6">
-                  Blueberry Systems არის ჩვენი პარტნიორი სოფტვეარ დეველოპმენტის კომპანია. საუკეთესო კურსდამთავრებულებს რეალურ პროექტებში ჩართვის შესაძლებლობას ვთავაზობთ.
+                  {t.aboutPartnerDesc}
                 </p>
                 <ul className="space-y-2.5">
-                  {['რეალურ პროექტებში ჩართვა', 'სტაჟირების პროგრამა', 'დასაქმების შესაძლებლობა', 'ინდუსტრიის ექსპერტების მენტორობა'].map((item, i) => (
+                  {[t.aboutPartnerBullet1, t.aboutPartnerBullet2, t.aboutPartnerBullet3, t.aboutPartnerBullet4].map((item, i) => (
                     <li key={i} className="flex items-center gap-2.5 text-sm text-foreground-secondary">
                       <CheckCircle className="w-4 h-4 text-[#004aad] shrink-0" /> {item}
                     </li>
@@ -137,25 +141,25 @@ export function About() {
       <section className="py-16 md:py-24 bg-[#060611] text-white">
         <div className="max-w-[1100px] mx-auto px-6 md:px-12">
           <Reveal>
-            <p className="text-sm text-[#5b9bd5] font-semibold uppercase tracking-wider mb-3 text-center">ჩვენი მიმართულება</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-14">მისია და ხედვა</h2>
+            <p className="text-sm text-[#5b9bd5] font-semibold uppercase tracking-wider mb-3 text-center">{t.aboutDirection}</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-14">{t.aboutMissionVision}</h2>
           </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Reveal>
               <div className="border border-white/10 rounded-2xl p-8 md:p-10 bg-white/[0.03] h-full">
                 <Target className="w-8 h-8 text-[#5b9bd5] mb-6" />
-                <h3 className="text-xl font-bold mb-4">მისია</h3>
+                <h3 className="text-xl font-bold mb-4">{t.aboutMission}</h3>
                 <p className="text-white/50 text-sm leading-relaxed">
-                  ხელმისაწვდომი და პრაქტიკული ტექნოლოგიური განათლება. ყოველი სტუდენტი სწავლობს რეალურ პროექტებზე, წამყვანი პროფესიონალებისგან და ამზადებს პორტფოლიოს დასაქმებისთვის.
+                  {t.aboutMissionDesc}
                 </p>
               </div>
             </Reveal>
             <Reveal delay={0.1}>
               <div className="border border-white/10 rounded-2xl p-8 md:p-10 bg-white/[0.03] h-full">
                 <Eye className="w-8 h-8 text-[#5b9bd5] mb-6" />
-                <h3 className="text-xl font-bold mb-4">ხედვა</h3>
+                <h3 className="text-xl font-bold mb-4">{t.aboutVision}</h3>
                 <p className="text-white/50 text-sm leading-relaxed">
-                  გავხდეთ რეგიონის წამყვანი ტექნოლოგიური აკადემია. განათლება, რომელიც რეალურ კარიერულ შედეგს მოიტანს. ჩვენი კურსდამთავრებულები მუშაობენ წამყვან ტექ კომპანიებში.
+                  {t.aboutVisionDesc}
                 </p>
               </div>
             </Reveal>
@@ -167,14 +171,14 @@ export function About() {
       <section className="py-20 md:py-28">
         <div className="max-w-[1100px] mx-auto px-6 md:px-12">
           <Reveal>
-            <p className="text-sm text-[#004aad] font-semibold uppercase tracking-wider mb-3 text-center">პრინციპები</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-14">რა გვამოძრავებს</h2>
+            <p className="text-sm text-[#004aad] font-semibold uppercase tracking-wider mb-3 text-center">{t.aboutPrinciples}</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-14">{t.aboutWhatDrivesUs}</h2>
           </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {[
-              { icon: BookOpen, title: 'პრაქტიკული სწავლება', desc: 'ყოველი კურსი მოიცავს ლაივ ვორკშოპებს Google Meet-ზე. პირდაპირი ინტერაქცია ინსტრუქტორთან და პრაქტიკული დავალებები.' },
-              { icon: Users, title: 'წამყვანი პროფესიონალები', desc: 'ინსტრუქტორები არიან მოქმედი სპეციალისტები, მათ შორის Blueberry Systems-ის გუნდის წევრები.' },
-              { icon: Award, title: 'დასაქმების შესაძლებლობა', desc: 'საუკეთესო კურსდამთავრებულებს Blueberry Systems-ში სტაჟირების და დასაქმების შესაძლებლობა ეძლევათ.' },
+              { icon: BookOpen, title: t.aboutValue1Title, desc: t.aboutValue1Desc },
+              { icon: Users, title: t.aboutValue2Title, desc: t.aboutValue2Desc },
+              { icon: Award, title: t.aboutValue3Title, desc: t.aboutValue3Desc },
             ].map((item, i) => {
               const Icon = item.icon;
               return (
@@ -197,9 +201,9 @@ export function About() {
       <section className="py-16 md:py-20 bg-surface">
         <div className="max-w-[700px] mx-auto px-6 md:px-12 text-center">
           <Reveal>
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">თანამშრომლობა</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">{t.aboutCollaboration}</h2>
             <p className="text-sm text-foreground-secondary leading-relaxed mb-8">
-              კორპორატიული ტრეინინგის, პარტნიორობის ან სხვა კითხვების შემთხვევაში დაგვიკავშირდი.
+              {t.aboutCollabDesc}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a href="mailto:info@blueberry.academy" className="px-8 py-3.5 bg-[#004aad] text-white rounded-full font-semibold text-sm hover:bg-[#003d8f] transition-all active:scale-[0.97] inline-flex items-center justify-center gap-2">
