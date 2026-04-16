@@ -10,13 +10,13 @@ import { useDocumentTitle } from '../hooks/use-document-title';
 import { useAuth } from '../context/auth-context';
 import { getPageT } from '../i18n/pages';
 
-const TRIBE_KEYS = ['ყველა', 'ინჟინერია', 'დიზაინი', 'მარკეტინგი', 'AI', 'მენეჯმენტი'] as const;
+const TRIBE_DB_VALUES = ['_all', 'ინჟინერია', 'დიზაინი', 'მარკეტინგი', 'AI', 'მენეჯმენტი'] as const;
 
 export function CoursesCatalog() {
   useDocumentTitle('კურსები');
   const { language } = useAuth();
   const t = getPageT(language);
-  const [selectedTribe, setSelectedTribe] = useState('ყველა');
+  const [selectedTribe, setSelectedTribe] = useState('_all');
   const [sortBy, setSortBy] = useState<'popular' | 'price-asc' | 'price-desc'>('popular');
   const navigate = useNavigate();
   const { data: courses = [], isLoading } = useLandingCourses();
@@ -33,7 +33,7 @@ export function CoursesCatalog() {
     );
   }
 
-  const filtered = courses.filter(c => selectedTribe === 'ყველა' || c.tribe === selectedTribe);
+  const filtered = courses.filter(c => selectedTribe === '_all' || c.tribe === selectedTribe);
   const sorted = [...filtered].sort((a, b) => {
     const priceA = typeof a.price === 'string' ? parseInt(a.price) : a.price;
     const priceB = typeof b.price === 'string' ? parseInt(b.price) : b.price;
@@ -114,7 +114,7 @@ export function CoursesCatalog() {
 
               {/* Tribe filter */}
               <div className="flex items-center gap-2">
-                {TRIBE_KEYS.map((tribe) => (
+                {TRIBE_DB_VALUES.map((tribe) => (
                   <button
                     key={tribe}
                     onClick={() => setSelectedTribe(tribe)}
@@ -124,7 +124,7 @@ export function CoursesCatalog() {
                         : 'bg-white border border-gray-200 text-gray-600 hover:border-gray-300'
                     }`}
                   >
-                    {tribe === 'ყველა' ? t.catalogAll : tribe}
+                    {tribe === '_all' ? t.catalogAll : tribe}
                   </button>
                 ))}
               </div>

@@ -28,18 +28,18 @@ const JOBS = [
   { id: 8, title: 'Course Instructor (React Native)', type: 'Remote', location: 'Remote', department: 'Education', posted: '3 დღის წინ' },
 ];
 
-const DEPARTMENTS = ['ყველა', 'Sales', 'Management', 'Marketing', 'Design', 'Engineering', 'Education'];
+const DEPARTMENTS = ['_all', 'Sales', 'Management', 'Marketing', 'Design', 'Engineering', 'Education'];
 
 export function Career() {
   useDocumentTitle('კარიერა');
   const { language } = useAuth();
   const t = getPageT(language);
   const [search, setSearch] = useState('');
-  const [department, setDepartment] = useState('ყველა');
+  const [department, setDepartment] = useState('_all');
 
   const filtered = JOBS.filter(job => {
     const matchSearch = job.title.toLowerCase().includes(search.toLowerCase());
-    const matchDept = department === 'ყველა' || job.department === department;
+    const matchDept = department === '_all' || job.department === department;
     return matchSearch && matchDept;
   });
 
@@ -92,7 +92,7 @@ export function Career() {
                 className="appearance-none h-12 bg-background border border-border-subtle rounded-lg pl-4 pr-10 text-sm cursor-pointer min-w-[200px]"
               >
                 {DEPARTMENTS.map(d => (
-                  <option key={d} value={d}>{d === 'ყველა' ? t.careerAllDepartments : d}</option>
+                  <option key={d} value={d}>{d === '_all' ? t.careerAllDepartments : d}</option>
                 ))}
               </select>
               <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-faint pointer-events-none" />
