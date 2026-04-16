@@ -59,7 +59,7 @@ export function CourseCardLanding({ course, onClick }: CourseCardLandingProps) {
           </div>
           <div>
             <span className="block text-[10px] text-foreground-faint uppercase tracking-wide mb-1">{t.cardFormat}</span>
-            <span className="text-xs font-semibold text-foreground">{course.format ?? 'ონლაინ'}</span>
+            <span className="text-xs font-semibold text-foreground">{course.format ?? t.detailOnline}</span>
           </div>
         </div>
       </div>

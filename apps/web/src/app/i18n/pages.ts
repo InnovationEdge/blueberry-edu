@@ -175,6 +175,14 @@ interface PageTranslations {
   moduleLabel: string;
   jobsCount: string;
   careerViewJob: string;
+  detailBack: string;
+  detailScheduleTitle: string;
+  detailFaqTitle: string;
+  detailLectureTime: string;
+  detailStarting: string;
+  detailContactSoon: string;
+  detailFreeMasterclass: string;
+  detailOnline: string;
 }
 
 const ka: PageTranslations = {
@@ -341,6 +349,14 @@ const ka: PageTranslations = {
   moduleLabel: 'მოდული',
   jobsCount: 'ვაკანსია',
   careerViewJob: 'ნახვა',
+  detailBack: 'კურსებზე დაბრუნება',
+  detailScheduleTitle: 'განრიგი',
+  detailFaqTitle: 'ხშირად დასმული კითხვები',
+  detailLectureTime: 'სალექციო დრო',
+  detailStarting: 'დაწყება',
+  detailContactSoon: 'დაგიკავშირდებით მალე',
+  detailFreeMasterclass: 'უფასო მასტერკლასი',
+  detailOnline: 'ონლაინ',
 };
 
 const en: PageTranslations = {
@@ -507,6 +523,14 @@ const en: PageTranslations = {
   moduleLabel: 'Module',
   jobsCount: 'jobs',
   careerViewJob: 'View job',
+  detailBack: 'Back to courses',
+  detailScheduleTitle: 'Schedule',
+  detailFaqTitle: 'Frequently asked questions',
+  detailLectureTime: 'Lecture time',
+  detailStarting: 'Starting',
+  detailContactSoon: 'We will contact you soon',
+  detailFreeMasterclass: 'Free masterclass',
+  detailOnline: 'Online',
 };
 
 const ru: PageTranslations = {
@@ -673,6 +697,14 @@ const ru: PageTranslations = {
   moduleLabel: 'Модуль',
   jobsCount: 'вакансий',
   careerViewJob: 'Подробнее',
+  detailBack: 'Назад к курсам',
+  detailScheduleTitle: 'Расписание',
+  detailFaqTitle: 'Часто задаваемые вопросы',
+  detailLectureTime: 'Время лекций',
+  detailStarting: 'Начало',
+  detailContactSoon: 'Мы свяжемся с вами',
+  detailFreeMasterclass: 'Бесплатный мастер-класс',
+  detailOnline: 'Онлайн',
 };
 
 const translations: Record<string, PageTranslations> = {

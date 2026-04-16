@@ -82,7 +82,7 @@ export function CourseLandingDetail() {
       <section className="relative overflow-hidden" style={course.image_url ? { backgroundImage: `linear-gradient(135deg, rgba(232,244,253,0.92), rgba(240,244,255,0.92)), url(${course.image_url})`, backgroundSize: 'cover', backgroundPosition: 'center' } : { background: 'linear-gradient(to right, #e8f4fd, #f0f4ff)' }}>
         <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 py-12 md:py-20">
           <button onClick={() => navigate('/courses')} className="flex items-center gap-2 text-sm text-foreground-faint hover:text-foreground mb-6 transition-colors">
-            <ArrowLeft className="w-4 h-4" /> კურსებზე დაბრუნება
+            <ArrowLeft className="w-4 h-4" /> {t.detailBack}
           </button>
           <div className="flex items-start justify-between gap-8">
             <div className="max-w-xl">
@@ -90,7 +90,7 @@ export function CourseLandingDetail() {
               <div className="flex items-center gap-5 text-sm text-gray-500 mb-5 flex-wrap">
                 <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#004aad]" />{course.tribe}</span>
                 <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" />{course.duration}</span>
-                <span className="flex items-center gap-1.5"><Globe className="w-4 h-4" />{course.format ?? 'ონლაინ'}</span>
+                <span className="flex items-center gap-1.5"><Globe className="w-4 h-4" />{course.format ?? t.detailOnline}</span>
                 {course.level && <span className="flex items-center gap-1.5"><User className="w-4 h-4" />{course.level}</span>}
               </div>
               <p className="text-gray-600 text-sm leading-relaxed">{course.description}</p>
@@ -112,7 +112,7 @@ export function CourseLandingDetail() {
             {learningOutcomes.length > 0 && (
               <Reveal>
                 <section id="overview" className="mb-14">
-                  <h2 className="text-xl font-bold mb-5">რა შეიძენ ამ კურსზე</h2>
+                  <h2 className="text-xl font-bold mb-5">{t.detailWhatYouLearn}</h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {learningOutcomes.map((item, i) => (
                       <div key={i} className="flex items-start gap-3 bg-surface rounded-xl p-4">
@@ -129,7 +129,7 @@ export function CourseLandingDetail() {
             {(course.mentor_name || course.mentor_bio) && (
               <Reveal>
                 <section className="mb-14">
-                  <h2 className="text-xl font-bold mb-5">მენტორი</h2>
+                  <h2 className="text-xl font-bold mb-5">{t.detailMentor}</h2>
                   <div className="bg-card border border-border-subtle rounded-xl p-6 flex gap-5">
                     {course.mentor_photo && (
                       <img src={course.mentor_photo} alt={course.mentor_name} className="w-24 h-24 rounded-full object-cover shrink-0" />
@@ -150,7 +150,7 @@ export function CourseLandingDetail() {
             {syllabus.length > 0 && (
               <Reveal>
                 <section id="syllabus" className="mb-14">
-                  <h2 className="text-xl font-bold mb-5">სილაბუსი</h2>
+                  <h2 className="text-xl font-bold mb-5">{t.detailSyllabus}</h2>
                   <div className="space-y-3">
                     {syllabus.map((module, i) => (
                       <div key={module.id ?? i} className="border border-border-subtle rounded-xl overflow-hidden">
@@ -185,15 +185,15 @@ export function CourseLandingDetail() {
             {/* Schedule */}
             <Reveal>
               <section id="schedule" className="mb-14">
-                <h2 className="text-xl font-bold mb-5">განრიგი</h2>
+                <h2 className="text-xl font-bold mb-5">{t.detailScheduleTitle}</h2>
                 <div className="bg-card border border-border-subtle rounded-xl divide-y divide-border-subtle">
                   {[
-                    { icon: Calendar, label: 'დაწყების თარიღი', value: course.start_date ?? '—' },
+                    { icon: Calendar, label: t.detailStartDate, value: course.start_date ?? '—' },
                     { icon: Clock, label: t.detailDuration, value: course.duration },
-                    { icon: User, label: 'მენტორი', value: course.mentor_name ?? '—', sub: course.mentor_role },
+                    { icon: User, label: t.detailMentor, value: course.mentor_name ?? '—', sub: course.mentor_role },
                     { icon: MapPin, label: t.detailFormat, value: course.format ?? 'Google Meet' },
                     { icon: Calendar, label: t.detailScheduleDays, value: course.schedule_days ?? '—' },
-                    { icon: Clock, label: 'სალექციო დრო', value: course.schedule_time ?? '—' },
+                    { icon: Clock, label: t.detailLectureTime, value: course.schedule_time ?? '—' },
                   ].map((row, i) => {
                     const Icon = row.icon;
                     return (
@@ -214,7 +214,7 @@ export function CourseLandingDetail() {
             {faq.length > 0 && (
               <Reveal>
                 <section id="faq" className="mb-14">
-                  <h2 className="text-xl font-bold mb-5">ხშირად დასმული კითხვები</h2>
+                  <h2 className="text-xl font-bold mb-5">{t.detailFaqTitle}</h2>
                   <div className="space-y-3">
                     {faq.map((item, i) => (
                       <div key={item.id ?? i} className="bg-card border border-border-subtle rounded-xl overflow-hidden">
@@ -243,7 +243,7 @@ export function CourseLandingDetail() {
               {/* Price + Register */}
               <div className="bg-card border border-border-subtle rounded-2xl p-7 shadow-lg glow-card">
                 <p className="text-4xl font-extrabold tracking-tight mb-1">{course.price}₾</p>
-                <p className="text-sm text-foreground-faint mb-5">დაწყება: {course.start_date ?? '—'}</p>
+                <p className="text-sm text-foreground-faint mb-5">{t.detailStarting}: {course.start_date ?? '—'}</p>
 
                 {!registration.isSubmitted ? (
                   <form onSubmit={handleSubmit} className="space-y-3 mb-4">
@@ -259,12 +259,12 @@ export function CourseLandingDetail() {
                   <div className="text-center py-4 mb-4">
                     <CheckCircle className="w-10 h-10 text-green-500 mx-auto mb-2" />
                     <p className="text-sm font-semibold">{t.mcSuccessTitle}</p>
-                    <p className="text-xs text-foreground-faint mt-1">დაგიკავშირდებით მალე</p>
+                    <p className="text-xs text-foreground-faint mt-1">{t.detailContactSoon}</p>
                   </div>
                 )}
 
                 <a href="/masterclass" className="block w-full py-3 border border-border-subtle text-foreground text-center rounded-xl text-sm font-medium hover:bg-surface-hover transition-all">
-                  უფასო მასტერკლასი
+                  {t.detailFreeMasterclass}
                 </a>
               </div>
 
@@ -285,7 +285,7 @@ export function CourseLandingDetail() {
                   { label: t.detailFormat, value: course.format ?? 'Google Meet' },
                   { label: t.detailLevel, value: course.level ?? '—' },
                   { label: t.detailLanguage, value: course.language ?? 'ქართული' },
-                  { label: 'მენტორი', value: course.mentor_name ?? '—' },
+                  { label: t.detailMentor, value: course.mentor_name ?? '—' },
                 ].map((item, i) => (
                   <div key={i} className="flex items-center justify-between text-sm">
                     <span className="text-foreground-faint">{item.label}</span>

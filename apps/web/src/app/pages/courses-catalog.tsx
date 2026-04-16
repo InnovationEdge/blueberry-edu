@@ -62,7 +62,7 @@ export function CoursesCatalog() {
                   <span className="font-bold text-2xl text-gray-900">{featured.price}₾</span>
                   <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#004aad]" />{featured.tribe}</span>
                   <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" />{featured.duration}</span>
-                  <span className="flex items-center gap-1.5"><Globe className="w-4 h-4" />{featured.format ?? 'ონლაინ'}</span>
+                  <span className="flex items-center gap-1.5"><Globe className="w-4 h-4" />{featured.format ?? t.detailOnline}</span>
                 </div>
                 <p className="text-gray-600 leading-relaxed mb-6 max-w-md">{featured.desc}</p>
                 <button
