@@ -22,11 +22,11 @@ export function CourseCardLanding({ course, onClick }: CourseCardLandingProps) {
   return (
     <div
       onClick={onClick}
-      className="group cursor-pointer rounded-2xl overflow-hidden border border-border-subtle hover:border-white/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl h-full flex flex-col"
+      className="group cursor-pointer rounded-2xl overflow-hidden border border-border-subtle hover:border-brand/20 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl h-full flex flex-col glow-card"
     >
       {/* Gradient header with logo */}
-      <div className={`bg-gradient-to-br ${course.gradient} h-[130px] relative flex items-end p-5`}>
-        <div className="absolute top-4 right-4 w-10 h-10 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center" dangerouslySetInnerHTML={{ __html: course.logo }} />
+      <div className={`bg-gradient-to-br ${course.gradient} h-[140px] relative flex items-end p-5`}>
+        <div className="absolute top-4 right-4 w-11 h-11 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/10" dangerouslySetInnerHTML={{ __html: course.logo }} />
         {course.popular && (
           <div className="absolute top-4 left-4 bg-[#ef4444] text-white px-2.5 py-1 rounded-full text-[9px] font-bold flex items-center gap-1">
             <Flame className="w-3 h-3" /> Popular

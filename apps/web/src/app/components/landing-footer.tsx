@@ -25,7 +25,7 @@ export function LandingFooter() {
   };
 
   return (
-    <footer className="border-t border-border-subtle pt-14 pb-8">
+    <footer className="border-t border-border-subtle pt-16 pb-10">
       <div className="max-w-[1300px] mx-auto px-5 md:px-12 lg:px-16">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-10 mb-12">
           <div className="col-span-2">
@@ -53,9 +53,10 @@ export function LandingFooter() {
 
         <div className="border-t border-border-subtle pt-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <span className="text-xs text-foreground-faint">{t.footerCopyright}</span>
-            <div className="flex items-center gap-5 text-xs text-foreground-faint">
+            <span className="text-xs text-foreground-faint tracking-wide">{t.footerCopyright}</span>
+            <div className="flex items-center gap-6 text-xs text-foreground-faint">
               <a href="mailto:info@blueberryedu.ge" className="hover:text-foreground transition-colors">info@blueberryedu.ge</a>
+              <a href="https://blueberry.codes" target="_blank" rel="noopener noreferrer" className="text-brand hover:text-brand-hover transition-colors">Blueberry Systems</a>
             </div>
           </div>
         </div>

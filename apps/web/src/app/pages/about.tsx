@@ -54,7 +54,7 @@ export function About() {
           <Reveal>
             <div className="max-w-2xl">
               <p className="text-white/50 text-sm font-medium uppercase tracking-wider mb-4">{t.aboutBadge}</p>
-              <h1 className="text-4xl md:text-5xl font-bold leading-[1.1] mb-6">
+              <h1 className="text-4xl md:text-6xl font-extrabold tracking-[-0.03em] leading-[1.1] mb-6">
                 {t.aboutHeroTitle}
               </h1>
               <p className="text-white/60 text-base leading-relaxed mb-8 max-w-md">
@@ -79,7 +79,7 @@ export function About() {
               { value: 30, suffix: '+', label: 'ინსტრუქტორი' },
             ].map((stat, i) => (
               <div key={i} className="py-8 px-6 text-center">
-                <p className="text-3xl md:text-4xl font-bold text-[#004aad] leading-none">
+                <p className="text-3xl md:text-5xl font-extrabold tracking-tight text-[#004aad] leading-none">
                   <AnimatedNumber value={stat.value} suffix={stat.suffix} />
                 </p>
                 <p className="text-xs text-foreground-faint mt-2 uppercase tracking-wider">{stat.label}</p>
@@ -90,11 +90,11 @@ export function About() {
       </section>
 
       {/* ═══ WHAT WE DO ═══ */}
-      <section className="py-20 md:py-28">
+      <section className="py-24 md:py-36">
         <div className="max-w-[1100px] mx-auto px-6 md:px-12">
           <Reveal>
             <p className="text-sm text-[#004aad] font-semibold uppercase tracking-wider mb-3 text-center">{t.aboutWhatWeDo}</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-14">{t.aboutTwoDirections}</h2>
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-center mb-14">{t.aboutTwoDirections}</h2>
           </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Reveal>
@@ -142,7 +142,7 @@ export function About() {
         <div className="max-w-[1100px] mx-auto px-6 md:px-12">
           <Reveal>
             <p className="text-sm text-[#5b9bd5] font-semibold uppercase tracking-wider mb-3 text-center">{t.aboutDirection}</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-14">{t.aboutMissionVision}</h2>
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-center mb-14">{t.aboutMissionVision}</h2>
           </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Reveal>
@@ -168,11 +168,11 @@ export function About() {
       </section>
 
       {/* ═══ VALUES ═══ */}
-      <section className="py-20 md:py-28">
+      <section className="py-24 md:py-36">
         <div className="max-w-[1100px] mx-auto px-6 md:px-12">
           <Reveal>
             <p className="text-sm text-[#004aad] font-semibold uppercase tracking-wider mb-3 text-center">{t.aboutPrinciples}</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-14">{t.aboutWhatDrivesUs}</h2>
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-center mb-14">{t.aboutWhatDrivesUs}</h2>
           </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {[

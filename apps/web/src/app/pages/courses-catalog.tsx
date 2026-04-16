@@ -52,12 +52,12 @@ export function CoursesCatalog() {
 
       {/* ═══ FEATURED BANNER — digitaledu.ge style ═══ */}
       {featured && (
-        <section className="relative bg-gradient-to-r from-[#e8f4fd] to-[#f0f4ff] overflow-hidden">
+        <section className="relative bg-gradient-to-br from-[#e8f4fd] via-[#f0f4ff] to-[#e8f0fe] overflow-hidden">
           <div className="max-w-[1300px] mx-auto px-5 md:px-12 lg:px-16">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-12 md:py-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-16 md:py-24">
               {/* Left */}
               <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}>
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{featured.title}</h1>
+                <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-5">{featured.title}</h1>
                 <div className="flex items-center gap-4 text-sm text-gray-500 mb-5 flex-wrap">
                   <span className="font-bold text-2xl text-gray-900">{featured.price}₾</span>
                   <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#004aad]" />{featured.tribe}</span>
@@ -91,11 +91,11 @@ export function CoursesCatalog() {
       )}
 
       {/* ═══ COURSES CATALOG ═══ */}
-      <section className="py-12 md:py-16">
+      <section className="py-16 md:py-24">
         <div className="max-w-[1300px] mx-auto px-5 md:px-12 lg:px-16">
           {/* Title + filters */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
-            <h2 className="text-2xl md:text-3xl font-bold">{t.catalogTitle}</h2>
+            <h2 className="text-2xl md:text-4xl font-extrabold tracking-tight">{t.catalogTitle}</h2>
 
             <div className="flex items-center gap-3 flex-wrap">
               {/* Sort */}
