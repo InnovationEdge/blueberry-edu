@@ -78,7 +78,7 @@ export function CoursesCatalog() {
               <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.15 }} className="hidden md:block">
                 <div className="relative">
                   <div className="absolute -top-3 -right-3 z-10 bg-[#ef4444] text-white px-4 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-lg">
-                    <Flame className="w-3.5 h-3.5" /> Most Popular
+                    <Flame className="w-3.5 h-3.5" /> {t.cardPopularBadge ?? 'Popular'}
                   </div>
                   <div className="max-w-[320px] ml-auto">
                     <CourseCardLanding course={featured} onClick={() => navigate(`/courses/${featured.id}`)} />

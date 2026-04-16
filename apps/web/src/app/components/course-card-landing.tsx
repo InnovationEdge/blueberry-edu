@@ -1,4 +1,6 @@
 import { Flame } from 'lucide-react';
+import { useAuth } from '../context/auth-context';
+import { getPageT } from '../i18n/pages';
 
 export interface CourseCardData {
   id?: number;
@@ -19,6 +21,9 @@ interface CourseCardLandingProps {
 }
 
 export function CourseCardLanding({ course, onClick }: CourseCardLandingProps) {
+  const { language } = useAuth();
+  const t = getPageT(language);
+
   return (
     <div
       onClick={onClick}
@@ -29,7 +34,7 @@ export function CourseCardLanding({ course, onClick }: CourseCardLandingProps) {
         <div className="absolute top-4 right-4 w-11 h-11 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/10" dangerouslySetInnerHTML={{ __html: course.logo }} />
         {course.popular && (
           <div className="absolute top-4 left-4 bg-[#ef4444] text-white px-2.5 py-1 rounded-full text-[9px] font-bold flex items-center gap-1">
-            <Flame className="w-3 h-3" /> Popular
+            <Flame className="w-3 h-3" /> {t.cardPopularBadge}
           </div>
         )}
         <div className="flex items-end justify-between w-full">
@@ -45,15 +50,15 @@ export function CourseCardLanding({ course, onClick }: CourseCardLandingProps) {
         {/* Info row */}
         <div className="grid grid-cols-3 gap-3 mt-4 pt-4 border-t border-border-subtle text-center">
           <div>
-            <span className="block text-[10px] text-foreground-faint uppercase tracking-wide mb-1">Tribe</span>
+            <span className="block text-[10px] text-foreground-faint uppercase tracking-wide mb-1">{t.cardTribe}</span>
             <span className="text-xs font-semibold text-foreground">{course.tribe}</span>
           </div>
           <div>
-            <span className="block text-[10px] text-foreground-faint uppercase tracking-wide mb-1">ხანგრძლივობა</span>
+            <span className="block text-[10px] text-foreground-faint uppercase tracking-wide mb-1">{t.cardDuration}</span>
             <span className="text-xs font-semibold text-foreground">{course.duration}</span>
           </div>
           <div>
-            <span className="block text-[10px] text-foreground-faint uppercase tracking-wide mb-1">ფორმატი</span>
+            <span className="block text-[10px] text-foreground-faint uppercase tracking-wide mb-1">{t.cardFormat}</span>
             <span className="text-xs font-semibold text-foreground">{course.format ?? 'ონლაინ'}</span>
           </div>
         </div>

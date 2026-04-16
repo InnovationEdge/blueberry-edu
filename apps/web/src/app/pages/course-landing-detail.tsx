@@ -159,7 +159,7 @@ export function CourseLandingDetail() {
                             {openModule === i ? <ChevronUp className="w-5 h-5 text-foreground-faint" /> : <ChevronDown className="w-5 h-5 text-foreground-faint" />}
                             <span className="font-semibold text-sm text-left">{module.title}</span>
                           </div>
-                          <span className="text-xs text-foreground-faint bg-surface px-3 py-1.5 rounded-full font-medium">Module {i + 1}</span>
+                          <span className="text-xs text-foreground-faint bg-surface px-3 py-1.5 rounded-full font-medium">{t.moduleLabel} {i + 1}</span>
                         </button>
                         <AnimatePresence>
                           {openModule === i && (

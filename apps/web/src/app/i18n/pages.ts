@@ -168,6 +168,13 @@ interface PageTranslations {
   // Common
   loading: string;
   viewAll: string;
+  cardTribe: string;
+  cardDuration: string;
+  cardFormat: string;
+  cardPopularBadge: string;
+  moduleLabel: string;
+  jobsCount: string;
+  careerViewJob: string;
 }
 
 const ka: PageTranslations = {
@@ -327,6 +334,13 @@ const ka: PageTranslations = {
 
   loading: 'იტვირთება...',
   viewAll: 'ყველას ნახვა',
+  cardTribe: 'კატეგორია',
+  cardDuration: 'ხანგრძლივობა',
+  cardFormat: 'ფორმატი',
+  cardPopularBadge: 'პოპულარული',
+  moduleLabel: 'მოდული',
+  jobsCount: 'ვაკანსია',
+  careerViewJob: 'ნახვა',
 };
 
 const en: PageTranslations = {
@@ -486,6 +500,13 @@ const en: PageTranslations = {
 
   loading: 'Loading...',
   viewAll: 'View all',
+  cardTribe: 'Category',
+  cardDuration: 'Duration',
+  cardFormat: 'Format',
+  cardPopularBadge: 'Popular',
+  moduleLabel: 'Module',
+  jobsCount: 'jobs',
+  careerViewJob: 'View job',
 };
 
 const ru: PageTranslations = {
@@ -645,6 +666,13 @@ const ru: PageTranslations = {
 
   loading: 'Загрузка...',
   viewAll: 'Смотреть все',
+  cardTribe: 'Категория',
+  cardDuration: 'Длительность',
+  cardFormat: 'Формат',
+  cardPopularBadge: 'Популярное',
+  moduleLabel: 'Модуль',
+  jobsCount: 'вакансий',
+  careerViewJob: 'Подробнее',
 };
 
 const translations: Record<string, PageTranslations> = {

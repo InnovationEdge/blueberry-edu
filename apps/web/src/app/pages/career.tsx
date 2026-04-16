@@ -101,7 +101,7 @@ export function Career() {
 
           {/* Count */}
           <div className="flex items-center justify-between mb-6">
-            <p className="text-sm text-foreground-faint">{filtered.length} jobs</p>
+            <p className="text-sm text-foreground-faint">{filtered.length} {t.jobsCount}</p>
           </div>
 
           {/* Job list */}
@@ -125,7 +125,7 @@ export function Career() {
                       </div>
                     </div>
                     <button className="shrink-0 px-7 py-3 bg-gradient-to-r from-[#004aad] to-[#003d8f] text-white rounded-xl text-sm font-bold hover:from-[#003d8f] hover:to-[#002d6b] transition-all active:scale-[0.97] shadow-sm">
-                      {t.careerViewJob ?? 'View job'}
+                      {t.careerViewJob}
                     </button>
                   </div>
                 </a>
