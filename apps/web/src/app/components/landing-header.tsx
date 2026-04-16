@@ -39,7 +39,7 @@ export function LandingHeader({ activePath }: LandingHeaderProps) {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-black/[0.04]">
         <div className="flex items-center px-5 md:px-12 lg:px-16 h-[72px]">
           {/* Logo */}
           <a href="/" onClick={() => setMobileOpen(false)}>
@@ -132,7 +132,7 @@ export function LandingHeader({ activePath }: LandingHeaderProps) {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'tween', duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
-              className="fixed top-[72px] right-0 bottom-0 w-[80%] max-w-sm bg-white z-50 shadow-xl lg:hidden overflow-y-auto"
+              className="fixed top-0 right-0 bottom-0 w-[80%] max-w-sm bg-white z-50 shadow-2xl lg:hidden overflow-y-auto pt-20 border-l border-black/[0.04]"
             >
               <div className="flex flex-col py-4">
                 {NAV_ITEMS.map((item) => (

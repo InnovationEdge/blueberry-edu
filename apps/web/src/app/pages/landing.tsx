@@ -200,7 +200,7 @@ export function Landing() {
                 <p className="text-foreground-secondary text-base md:text-lg">{p.landingTopCoursesDesc}</p>
               </div>
               <button onClick={goToCourses} className="hidden md:flex items-center gap-2 px-5 py-2.5 border border-border-subtle rounded-full text-sm font-medium text-foreground hover:bg-surface-hover transition-all shrink-0">
-                ყველას ნახვა
+                {p.viewAll}
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
