@@ -46,7 +46,7 @@ export function Masterclass() {
       <div className="h-[72px]" />
 
       {/* ═══ HERO ═══ */}
-      <section className="relative bg-gradient-to-br from-[#004aad] to-[#002d6b] text-white py-16 md:py-24 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[#004aad] to-[#001d4a] text-white py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-[-30%] right-[-10%] w-[600px] h-[600px] bg-white/20 rounded-full blur-[120px]" />
           <div className="absolute bottom-[-20%] left-[-10%] w-[400px] h-[400px] bg-white/10 rounded-full blur-[100px]" />
@@ -56,7 +56,7 @@ export function Masterclass() {
             <div className="inline-block bg-white/15 backdrop-blur-sm rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider mb-6">
               {t.mcBadge}
             </div>
-            <h1 className="text-3xl md:text-5xl font-bold leading-tight mb-4 max-w-2xl">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold leading-[0.95] tracking-[-0.03em] mb-5 max-w-2xl">
               {t.mcHeroTitle}
             </h1>
             <p className="text-white/60 text-base md:text-lg max-w-xl mb-8">

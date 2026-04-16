@@ -80,13 +80,13 @@ export function CourseLandingDetail() {
 
       {/* ═══ HERO BANNER ═══ */}
       <section className="relative overflow-hidden" style={course.image_url ? { backgroundImage: `linear-gradient(135deg, rgba(232,244,253,0.92), rgba(240,244,255,0.92)), url(${course.image_url})`, backgroundSize: 'cover', backgroundPosition: 'center' } : { background: 'linear-gradient(to right, #e8f4fd, #f0f4ff)' }}>
-        <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 py-10 md:py-14">
+        <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 py-12 md:py-20">
           <button onClick={() => navigate('/courses')} className="flex items-center gap-2 text-sm text-foreground-faint hover:text-foreground mb-6 transition-colors">
             <ArrowLeft className="w-4 h-4" /> კურსებზე დაბრუნება
           </button>
           <div className="flex items-start justify-between gap-8">
             <div className="max-w-xl">
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{course.title}</h1>
+              <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-5">{course.title}</h1>
               <div className="flex items-center gap-5 text-sm text-gray-500 mb-5 flex-wrap">
                 <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#004aad]" />{course.tribe}</span>
                 <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" />{course.duration}</span>
@@ -241,8 +241,8 @@ export function CourseLandingDetail() {
           <div>
             <div className="sticky top-[88px] space-y-5">
               {/* Price + Register */}
-              <div className="bg-card border border-border-subtle rounded-2xl p-6 shadow-sm">
-                <p className="text-3xl font-bold mb-1">{course.price}₾</p>
+              <div className="bg-card border border-border-subtle rounded-2xl p-7 shadow-lg glow-card">
+                <p className="text-4xl font-extrabold tracking-tight mb-1">{course.price}₾</p>
                 <p className="text-sm text-foreground-faint mb-5">დაწყება: {course.start_date ?? '—'}</p>
 
                 {!registration.isSubmitted ? (
@@ -251,7 +251,7 @@ export function CourseLandingDetail() {
                     <input type="email" required value={regForm.email} onChange={e => setRegForm({ ...regForm, email: e.target.value })} placeholder={t.mcEmailPlaceholder} className="w-full px-4 py-3 rounded-xl border border-border-subtle bg-background text-sm focus:outline-none focus:border-[#004aad]" />
                     <input type="tel" required value={regForm.phone} onChange={e => setRegForm({ ...regForm, phone: e.target.value })} placeholder="+995 5XX XXX XXX" className="w-full px-4 py-3 rounded-xl border border-border-subtle bg-background text-sm focus:outline-none focus:border-[#004aad]" />
                     {registration.error && <p className="text-xs text-red-500">{registration.error}</p>}
-                    <button type="submit" disabled={registration.isSubmitting} className="w-full py-3.5 bg-[#004aad] text-white rounded-xl font-semibold text-sm hover:bg-[#003d8f] transition-all active:scale-[0.97] disabled:opacity-50">
+                    <button type="submit" disabled={registration.isSubmitting} className="w-full py-4 bg-gradient-to-r from-[#004aad] to-[#003d8f] text-white rounded-xl font-bold text-sm hover:from-[#003d8f] hover:to-[#002d6b] transition-all active:scale-[0.97] disabled:opacity-50 shadow-md shadow-[#004aad]/20">
                       {registration.isSubmitting ? t.mcSending : t.detailRegisterBtn}
                     </button>
                   </form>
