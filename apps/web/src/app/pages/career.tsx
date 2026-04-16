@@ -49,11 +49,12 @@ export function Career() {
       <div className="h-[72px]" />
 
       {/* ═══ HERO ═══ */}
-      <section className="bg-[#004aad] text-white">
-        <div className="max-w-[1000px] mx-auto px-6 md:px-12 py-12 md:py-16">
+      <section className="bg-gradient-to-br from-[#004aad] to-[#001d4a] text-white relative overflow-hidden">
+        <div className="absolute inset-0"><div className="absolute top-[-30%] right-[-15%] w-[600px] h-[600px] bg-white/[0.04] rounded-full blur-[120px]" /></div>
+        <div className="relative max-w-[1000px] mx-auto px-6 md:px-12 py-16 md:py-24">
           <Reveal>
             <p className="text-white/60 text-sm font-medium uppercase tracking-wider mb-4">{t.careerBadge}</p>
-            <h1 className="text-4xl md:text-5xl font-bold leading-[1.15] mb-6 max-w-lg">
+            <h1 className="text-4xl md:text-6xl font-extrabold leading-[0.95] tracking-[-0.03em] mb-6 max-w-lg">
               {t.careerHeroTitle}
             </h1>
             <p className="text-white/60 text-base leading-relaxed max-w-md mb-10">
@@ -107,7 +108,7 @@ export function Career() {
           <div className="space-y-4">
             {filtered.map((job, i) => (
               <Reveal key={job.id} delay={i * 0.03}>
-                <a href="#" className="block bg-card border border-border-subtle rounded-2xl p-6 md:p-7 hover:border-[#004aad]/30 hover:shadow-lg transition-all group">
+                <a href="#" className="block bg-card border border-border-subtle rounded-2xl p-6 md:p-8 hover:border-[#004aad]/30 hover:shadow-xl transition-all duration-300 group glow-card">
                   <div className="flex items-center justify-between gap-6">
                     <div className="min-w-0 flex-1">
                       <h3 className="text-lg font-bold text-[#004aad] group-hover:underline mb-3">{job.title}</h3>
@@ -123,8 +124,8 @@ export function Career() {
                         <span className="hidden sm:inline text-foreground-faint/60">{job.department}</span>
                       </div>
                     </div>
-                    <button className="shrink-0 px-7 py-3 bg-[#004aad] text-white rounded-xl text-sm font-semibold hover:bg-[#003d8f] transition-colors active:scale-[0.97]">
-                      View job
+                    <button className="shrink-0 px-7 py-3 bg-gradient-to-r from-[#004aad] to-[#003d8f] text-white rounded-xl text-sm font-bold hover:from-[#003d8f] hover:to-[#002d6b] transition-all active:scale-[0.97] shadow-sm">
+                      {t.careerViewJob ?? 'View job'}
                     </button>
                   </div>
                 </a>
@@ -142,10 +143,10 @@ export function Career() {
       </section>
 
       {/* ═══ WHY JOIN ═══ */}
-      <section className="py-16 md:py-24 bg-surface">
+      <section className="py-20 md:py-32 bg-surface">
         <div className="max-w-[1000px] mx-auto px-6 md:px-12">
           <Reveal>
-            <h2 className="text-2xl md:text-3xl font-bold mb-12">{t.careerWhyJoin}</h2>
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-14">{t.careerWhyJoin}</h2>
           </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
