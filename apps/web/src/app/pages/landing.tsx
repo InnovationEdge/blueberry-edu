@@ -100,33 +100,43 @@ export function Landing() {
       <LandingHeader activePath="/" />
 
       {/* ═══ HERO — Compact with particle canvas ═══ */}
-      <section ref={heroRef} className="relative h-[85vh] flex items-end overflow-hidden bg-transparent">
+      <section ref={heroRef} className="relative h-screen flex items-end overflow-hidden bg-transparent">
         {/* Background video */}
         <HeroVideo />
-        <div className="absolute inset-0 bg-black/30 z-[1]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/70 z-[1]" />
         {/* Particle network on top */}
         <div className="absolute inset-0 z-[2]"><HeroCanvas /></div>
 
-        {/* Bottom gradient */}
-        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black to-transparent z-[3]" />
+        {/* Bottom gradient — stronger */}
+        <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black via-black/80 to-transparent z-[3]" />
 
         {/* Content — bottom-left */}
-        <div className="relative z-[4] w-full px-5 md:px-12 lg:px-16 self-end pb-20">
-          <div className="max-w-2xl">
+        <div className="relative z-[4] w-full px-5 md:px-12 lg:px-16 xl:px-20 self-end pb-24 md:pb-28">
+          <div className="max-w-3xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="inline-flex items-center gap-2 bg-white/[0.08] backdrop-blur-sm border border-white/[0.12] rounded-full px-4 py-2 text-xs font-semibold text-white/70 uppercase tracking-[0.2em] mb-8"
+            >
+              <div className="w-2 h-2 rounded-full bg-[#5b9bd5] animate-pulse" />
+              Blueberry Academy
+            </motion.div>
+
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight text-white"
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-[0.95] tracking-[-0.03em] text-white"
             >
-              {t.landingHeroTitle1} <span className="bg-gradient-to-r from-[#5b9bd5] via-[#004aad] to-[#5b9bd5] bg-clip-text text-transparent">{t.landingHeroTitle2}</span>
+              {t.landingHeroTitle1} <span className="bg-gradient-to-r from-[#5b9bd5] via-[#7db8e0] to-[#5b9bd5] bg-clip-text text-transparent">{t.landingHeroTitle2}</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-              className="text-sm md:text-base text-white/50 leading-relaxed max-w-md mt-5"
+              transition={{ duration: 0.8, delay: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+              className="text-base md:text-lg text-white/50 leading-relaxed max-w-lg mt-6"
             >
               {t.landingHeroSubtitle}
             </motion.p>
@@ -134,15 +144,14 @@ export function Landing() {
             <motion.button
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ duration: 0.8, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
               onClick={goToCourses}
-              className="mt-6 px-8 py-3.5 bg-gradient-to-r from-[#004aad] to-[#003d8f] text-white rounded-full font-semibold text-base hover:from-[#003d8f] hover:to-[#002d6b] transition-all shadow-lg shadow-[#004aad]/25 hover:shadow-[#004aad]/40 active:scale-[0.97] inline-flex items-center gap-2"
+              className="mt-8 px-10 py-4 bg-gradient-to-r from-[#004aad] to-[#003d8f] text-white rounded-full font-bold text-base hover:from-[#003d8f] hover:to-[#002d6b] transition-all shadow-xl shadow-[#004aad]/30 hover:shadow-[#004aad]/50 active:scale-[0.97] inline-flex items-center gap-2.5"
             >
               {t.landingGetStarted}
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-5 h-5" />
             </motion.button>
           </div>
-
         </div>
       </section>
 
@@ -182,13 +191,13 @@ export function Landing() {
       `}</style>
 
       {/* ═══ COURSES — Lovable "Discover templates" style ═══ */}
-      <section className="py-16 md:py-24 bg-surface">
+      <section className="py-20 md:py-32 bg-surface">
         <div className="px-5 md:px-12 lg:px-16">
           <Reveal>
             <div className="flex items-end justify-between mb-10">
               <div>
-                <h2 className="text-3xl md:text-4xl font-bold mb-2">{p.landingTopCourses}</h2>
-                <p className="text-foreground-secondary text-base">{p.landingTopCoursesDesc}</p>
+                <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-2">{p.landingTopCourses}</h2>
+                <p className="text-foreground-secondary text-base md:text-lg">{p.landingTopCoursesDesc}</p>
               </div>
               <button onClick={goToCourses} className="hidden md:flex items-center gap-2 px-5 py-2.5 border border-border-subtle rounded-full text-sm font-medium text-foreground hover:bg-surface-hover transition-all shrink-0">
                 ყველას ნახვა
@@ -214,21 +223,21 @@ export function Landing() {
       </section>
 
       {/* ═══ STATS — ჩვენ რიცხვებში ═══ */}
-      <section className="py-16 md:py-24">
+      <section className="py-20 md:py-32">
         <div className="max-w-[1300px] mx-auto px-5 md:px-12 lg:px-16">
           <Reveal>
-            <p className="text-sm text-[#004aad] font-semibold uppercase tracking-wider mb-3 text-center">{p.landingStatsLabel}</p>
-            <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">{p.landingStatsTitle}</h2>
+            <p className="text-xs text-[#004aad] font-semibold uppercase tracking-[0.25em] mb-4 text-center">{p.landingStatsLabel}</p>
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-center mb-14">{p.landingStatsTitle}</h2>
           </Reveal>
-          <div className="bg-gradient-to-br from-[#004aad] to-[#002d6b] rounded-2xl shadow-2xl overflow-hidden">
-            <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10">
+          <div className="bg-gradient-to-br from-[#004aad] to-[#001d4a] rounded-3xl shadow-2xl shadow-[#004aad]/10 overflow-hidden">
+            <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/[0.08]">
               {stats.map((s, i) => (
                 <Reveal key={s.label} delay={i * 0.1}>
-                  <div className="py-10 px-6 text-center">
-                    <p className="text-4xl md:text-5xl font-bold text-white leading-none tracking-tight">
+                  <div className="py-12 px-6 text-center group">
+                    <p className="text-4xl md:text-5xl font-extrabold text-white leading-none tracking-tight group-hover:scale-105 transition-transform">
                       <AnimatedCounter value={s.value} suffix={s.suffix} />
                     </p>
-                    <p className="text-xs text-white/50 mt-3 uppercase tracking-wider">{s.label}</p>
+                    <p className="text-[11px] text-white/40 mt-4 uppercase tracking-[0.2em]">{s.label}</p>
                   </div>
                 </Reveal>
               ))}
@@ -238,7 +247,7 @@ export function Landing() {
       </section>
 
       {/* ═══ CERTIFICATE ═══ */}
-      <section className="py-20 md:py-28">
+      <section className="py-24 md:py-36">
         <div className="max-w-[1300px] mx-auto px-5 md:px-12 lg:px-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
             {/* Left — Certificate (Coursera/Penn style) */}
@@ -355,11 +364,11 @@ export function Landing() {
 
 
       {/* ═══ TESTIMONIALS ═══ */}
-      <section className="py-20 md:py-28">
+      <section className="py-24 md:py-36">
         <div className="max-w-[1300px] mx-auto px-5 md:px-12 lg:px-16">
           <Reveal>
-            <div className="text-center mb-14">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">{p.landingTestimonialsTitle}</h2>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">{p.landingTestimonialsTitle}</h2>
               <p className="text-foreground-secondary text-base">{p.landingTestimonialsDesc}</p>
             </div>
           </Reveal>
@@ -367,13 +376,16 @@ export function Landing() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {testimonials.map((t, i) => (
               <Reveal key={t.id} delay={i * 0.08}>
-                <div className="bg-card border border-border-subtle rounded-2xl p-6 hover:shadow-md transition-all h-full flex flex-col">
-                  <div className="flex items-center gap-1 mb-4">
-                    {[...Array(5)].map((_, s) => (
-                      <Star key={s} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    ))}
+                <div className="bg-card border border-border-subtle rounded-2xl p-7 hover:shadow-lg transition-all duration-300 h-full flex flex-col glow-card">
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="flex items-center gap-1">
+                      {[...Array(5)].map((_, s) => (
+                        <Star key={s} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      ))}
+                    </div>
+                    <svg className="w-6 h-6 text-brand/15" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
                   </div>
-                  <p className="text-foreground-secondary text-sm leading-relaxed flex-1 mb-5">"{t.quote}"</p>
+                  <p className="text-foreground-secondary text-sm leading-relaxed flex-1 mb-5">{t.quote}</p>
                   <div className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-full bg-brand-subtle flex items-center justify-center text-brand font-bold text-sm">
                       {t.avatar}
@@ -391,10 +403,10 @@ export function Landing() {
       </section>
 
       {/* ═══ FAQ ═══ */}
-      <section className="py-20 md:py-28 bg-surface">
+      <section className="py-24 md:py-36 bg-surface">
         <div className="max-w-[820px] mx-auto px-5 md:px-12 lg:px-16">
           <Reveal>
-            <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">{p.landingFaqTitle}</h2>
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-12 text-center">{p.landingFaqTitle}</h2>
           </Reveal>
 
           <div className="space-y-3">
@@ -429,16 +441,17 @@ export function Landing() {
       </section>
 
       {/* ═══ FINAL CTA ═══ */}
-      <section className="py-20 md:py-28">
-        <div className="max-w-[900px] mx-auto px-5 md:px-12 lg:px-16 text-center">
+      <section className="py-24 md:py-36 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#004aad]/[0.03] via-transparent to-[#5b9bd5]/[0.03]" />
+        <div className="relative max-w-[900px] mx-auto px-5 md:px-12 lg:px-16 text-center">
           <Reveal>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">{p.landingCtaTitle}</h2>
-            <p className="text-foreground-secondary text-base mb-10 max-w-md mx-auto">
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-5">{p.landingCtaTitle}</h2>
+            <p className="text-foreground-secondary text-base md:text-lg mb-12 max-w-lg mx-auto">
               {p.landingCtaDesc}
             </p>
             <button
               onClick={goToCourses}
-              className="px-10 py-4 bg-brand text-white rounded-full font-bold text-base hover:bg-brand-hover transition-all shadow-md hover:shadow-lg active:scale-[0.97]"
+              className="px-12 py-4.5 bg-gradient-to-r from-[#004aad] to-[#003d8f] text-white rounded-full font-bold text-base hover:from-[#003d8f] hover:to-[#002d6b] transition-all shadow-xl shadow-[#004aad]/20 hover:shadow-[#004aad]/40 active:scale-[0.97]"
             >
               {p.landingCtaBtn}
             </button>

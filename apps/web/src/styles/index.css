@@ -90,3 +90,34 @@ img { image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; 
   .backdrop-blur-md { backdrop-filter: blur(8px); }
   .backdrop-blur-lg { backdrop-filter: blur(12px); }
 }
+
+/* ─── Premium: Glow card effect ─── */
+.glow-card {
+  position: relative;
+}
+.glow-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(0,74,173,0.15), transparent 40%, transparent 60%, rgba(91,155,213,0.15));
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.glow-card:hover::after {
+  opacity: 1;
+}
+
+/* ─── Premium: Input glow on focus ─── */
+input:focus, textarea:focus, select:focus {
+  box-shadow: 0 0 0 3px rgba(0, 74, 173, 0.1), 0 0 16px rgba(0, 74, 173, 0.06);
+}
+
+/* ─── Premium: Scrollbar refinement ─── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { border-radius: 3px; }
