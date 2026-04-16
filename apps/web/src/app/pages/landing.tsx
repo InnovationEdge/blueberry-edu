@@ -156,8 +156,8 @@ export function Landing() {
       </section>
 
       {/* ═══ COMPANIES — Lovable style: centered, faded edges, grayscale ═══ */}
-      <section className="relative z-10 py-14 md:py-16 bg-background overflow-hidden">
-        <p className="text-center text-foreground-faint text-sm mb-10">
+      <section className="relative z-10 py-16 md:py-20 bg-background overflow-hidden">
+        <p className="text-center text-foreground-faint text-xs uppercase tracking-[0.2em] mb-12">
           {p.landingCompanies}
         </p>
         <div className="relative">
@@ -216,7 +216,7 @@ export function Landing() {
 
           <div className="md:hidden text-center mt-8">
             <button onClick={goToCourses} className="px-8 py-3 border border-border-subtle rounded-full text-sm font-medium text-foreground hover:bg-surface-hover transition-all">
-              ყველას ნახვა
+              {p.viewAll}
             </button>
           </div>
         </div>
@@ -229,19 +229,17 @@ export function Landing() {
             <p className="text-xs text-[#004aad] font-semibold uppercase tracking-[0.25em] mb-4 text-center">{p.landingStatsLabel}</p>
             <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-center mb-14">{p.landingStatsTitle}</h2>
           </Reveal>
-          <div className="bg-gradient-to-br from-[#004aad] to-[#001d4a] rounded-3xl shadow-2xl shadow-[#004aad]/10 overflow-hidden">
-            <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/[0.08]">
-              {stats.map((s, i) => (
-                <Reveal key={s.label} delay={i * 0.1}>
-                  <div className="py-12 px-6 text-center group">
-                    <p className="text-4xl md:text-5xl font-extrabold text-white leading-none tracking-tight group-hover:scale-105 transition-transform">
-                      <AnimatedCounter value={s.value} suffix={s.suffix} />
-                    </p>
-                    <p className="text-[11px] text-white/40 mt-4 uppercase tracking-[0.2em]">{s.label}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+            {stats.map((s, i) => (
+              <Reveal key={s.label} delay={i * 0.1}>
+                <div className="bg-card border border-border-subtle rounded-2xl py-10 px-6 text-center group hover:shadow-lg hover:border-brand/20 transition-all duration-300 glow-card">
+                  <p className="text-4xl md:text-5xl font-extrabold text-brand leading-none tracking-tight group-hover:scale-105 transition-transform">
+                    <AnimatedCounter value={s.value} suffix={s.suffix} />
+                  </p>
+                  <p className="text-[11px] text-foreground-faint mt-4 uppercase tracking-[0.2em]">{s.label}</p>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
@@ -335,7 +333,7 @@ export function Landing() {
             {/* Right — Description */}
             <Reveal delay={0.15}>
               <div>
-                <h2 className="text-3xl md:text-4xl font-bold mb-5"><span className="text-brand">{p.landingCertTitle}</span></h2>
+                <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-6"><span className="text-brand">{p.landingCertTitle}</span></h2>
                 <p className="text-foreground-secondary text-base leading-relaxed mb-8">{p.landingCertDesc}</p>
 
                 <div className="space-y-5">
@@ -387,7 +385,7 @@ export function Landing() {
                   </div>
                   <p className="text-foreground-secondary text-sm leading-relaxed flex-1 mb-5">{t.quote}</p>
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-brand-subtle flex items-center justify-center text-brand font-bold text-sm">
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm ${['bg-gradient-to-br from-blue-500 to-cyan-400', 'bg-gradient-to-br from-violet-500 to-pink-400', 'bg-gradient-to-br from-emerald-500 to-teal-400', 'bg-gradient-to-br from-amber-500 to-orange-400'][i % 4]}`}>
                       {t.avatar}
                     </div>
                     <div>
