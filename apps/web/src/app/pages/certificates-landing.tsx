@@ -88,9 +88,9 @@ export function CertificatesLanding() {
 
                 <Logo variant="academy" className="h-14 w-auto mb-6" />
                 <p className="text-[11px] text-gray-400 italic mb-3" style={{ fontFamily: 'Georgia, serif' }}>აპრილი 05, 2026</p>
-                <p className="text-2xl md:text-3xl text-gray-900 leading-tight mb-1" style={{ fontFamily: 'Georgia, serif' }}>შენი სახელი</p>
-                <p className="text-[11px] text-gray-400 italic mb-2" style={{ fontFamily: 'Georgia, serif' }}>წარმატებით დაასრულა</p>
-                <p className="text-base md:text-lg font-bold text-gray-900 italic mb-8" style={{ fontFamily: 'Georgia, serif' }}>კურსის დასახელება</p>
+                <p className="text-2xl md:text-3xl text-gray-900 leading-tight mb-1" style={{ fontFamily: 'Georgia, serif' }}>{t.certSampleName}</p>
+                <p className="text-[11px] text-gray-400 italic mb-2" style={{ fontFamily: 'Georgia, serif' }}>{t.certSampleCompleted}</p>
+                <p className="text-base md:text-lg font-bold text-gray-900 italic mb-8" style={{ fontFamily: 'Georgia, serif' }}>{t.certSampleCourse}</p>
                 <div className="flex items-end justify-between">
                   <div>
                     <svg viewBox="0 0 200 50" className="w-32 h-8 text-gray-700">
@@ -112,14 +112,14 @@ export function CertificatesLanding() {
       <section className="py-16 md:py-24 bg-surface">
         <div className="max-w-[1100px] mx-auto px-5 md:px-12 lg:px-16">
           <Reveal>
-            <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">რატომ ღირს ჩვენი სერტიფიკატი</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">{t.certWhyTitle}</h2>
           </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: Shield, title: 'ვერიფიცირებული', desc: 'თითოეულ სერტიფიკატს აქვს უნიკალური ID, რომელიც ონლაინ გადამოწმებადია' },
-              { icon: Globe, title: 'საერთაშორისო', desc: 'LinkedIn-ზე გაზიარება და CV-ში დამატება, დამსაქმებლები აღიარებენ' },
-              { icon: Award, title: 'პროექტებით', desc: 'სერტიფიკატი მოიცავს შენს რეალურ პროექტებს, არა მხოლოდ თეორიას' },
-              { icon: Download, title: 'უვადო', desc: 'სერტიფიკატი შენია სამუდამოდ, ნებისმიერ დროს ჩამოტვირთვა და გაზიარება' },
+              { icon: Shield, title: t.certWhyVerified, desc: t.certWhyVerifiedDesc },
+              { icon: Globe, title: t.certWhyInternational, desc: t.certWhyInternationalDesc },
+              { icon: Award, title: t.certWhyProjects, desc: t.certWhyProjectsDesc },
+              { icon: Download, title: t.certWhyForever, desc: t.certWhyForeverDesc },
             ].map((item, i) => {
               const Icon = item.icon;
               return (
@@ -178,7 +178,7 @@ export function CertificatesLanding() {
           <Reveal>
             <Shield className="w-10 h-10 text-[#004aad] mx-auto mb-4" />
             <h2 className="text-2xl font-bold mb-3">{t.certVerifyTitle}</h2>
-            <p className="text-foreground-secondary text-sm mb-6">შეიყვანე სერტიფიკატის ID რომ გადაამოწმო ავთენტურობა</p>
+            <p className="text-foreground-secondary text-sm mb-6">{t.certVerifyDesc}</p>
             <div className="flex gap-3 max-w-md mx-auto">
               <input
                 type="text"

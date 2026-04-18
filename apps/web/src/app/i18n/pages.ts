@@ -117,6 +117,13 @@ interface PageTranslations {
   certVerifyTitle: string;
   certVerifyPlaceholder: string;
   certVerifyBtn: string;
+  certWhyTitle: string;
+  certWhyVerified: string; certWhyVerifiedDesc: string;
+  certWhyInternational: string; certWhyInternationalDesc: string;
+  certWhyProjects: string; certWhyProjectsDesc: string;
+  certWhyForever: string; certWhyForeverDesc: string;
+  certVerifyDesc: string;
+  certSampleName: string; certSampleCompleted: string; certSampleCourse: string;
 
   // Courses catalog
   catalogTitle: string;
@@ -295,6 +302,13 @@ const ka: PageTranslations = {
   certVerifyTitle: 'სერტიფიკატის გადამოწმება',
   certVerifyPlaceholder: 'მაგ. BB-04821',
   certVerifyBtn: 'გადამოწმება',
+  certWhyTitle: 'რატომ ღირს ჩვენი სერტიფიკატი',
+  certWhyVerified: 'ვერიფიცირებული', certWhyVerifiedDesc: 'თითოეულ სერტიფიკატს აქვს უნიკალური ID, რომელიც ონლაინ გადამოწმებადია',
+  certWhyInternational: 'საერთაშორისო', certWhyInternationalDesc: 'LinkedIn-ზე გაზიარება და CV-ში დამატება, დამსაქმებლები აღიარებენ',
+  certWhyProjects: 'პროექტებით', certWhyProjectsDesc: 'სერტიფიკატი მოიცავს შენს რეალურ პროექტებს, არა მხოლოდ თეორიას',
+  certWhyForever: 'უვადო', certWhyForeverDesc: 'სერტიფიკატი შენია სამუდამოდ, ნებისმიერ დროს ჩამოტვირთვა და გაზიარება',
+  certVerifyDesc: 'შეიყვანე სერტიფიკატის ID რომ გადაამოწმო ავთენტურობა',
+  certSampleName: 'შენი სახელი', certSampleCompleted: 'წარმატებით დაასრულა', certSampleCourse: 'კურსის დასახელება',
 
   catalogTitle: 'კურსები',
   catalogLearnMore: 'გაიგე მეტი',
@@ -469,6 +483,13 @@ const en: PageTranslations = {
   certVerifyTitle: 'Verify certificate',
   certVerifyPlaceholder: 'e.g. BB-04821',
   certVerifyBtn: 'Verify',
+  certWhyTitle: 'Why our certificate matters',
+  certWhyVerified: 'Verified', certWhyVerifiedDesc: 'Each certificate has a unique ID that can be verified online',
+  certWhyInternational: 'International', certWhyInternationalDesc: 'Share on LinkedIn and add to your CV, recognized by employers',
+  certWhyProjects: 'Project-based', certWhyProjectsDesc: 'Certificate includes your real projects, not just theory',
+  certWhyForever: 'Lifetime', certWhyForeverDesc: 'Your certificate is yours forever, download and share anytime',
+  certVerifyDesc: 'Enter the certificate ID to verify its authenticity',
+  certSampleName: 'Your Name', certSampleCompleted: 'has successfully completed', certSampleCourse: 'Course Name',
 
   catalogTitle: 'Courses',
   catalogLearnMore: 'Learn more',
@@ -643,6 +664,13 @@ const ru: PageTranslations = {
   certVerifyTitle: 'Проверка сертификата',
   certVerifyPlaceholder: 'напр. BB-04821',
   certVerifyBtn: 'Проверить',
+  certWhyTitle: 'Почему наш сертификат важен',
+  certWhyVerified: 'Верифицированный', certWhyVerifiedDesc: 'Каждый сертификат имеет уникальный ID для онлайн-проверки',
+  certWhyInternational: 'Международный', certWhyInternationalDesc: 'Поделитесь в LinkedIn и добавьте в CV, признаётся работодателями',
+  certWhyProjects: 'С проектами', certWhyProjectsDesc: 'Сертификат включает ваши реальные проекты, а не только теорию',
+  certWhyForever: 'Навсегда', certWhyForeverDesc: 'Ваш сертификат навсегда, скачивайте и делитесь в любое время',
+  certVerifyDesc: 'Введите ID сертификата для проверки подлинности',
+  certSampleName: 'Ваше имя', certSampleCompleted: 'успешно завершил(а)', certSampleCourse: 'Название курса',
 
   catalogTitle: 'Курсы',
   catalogLearnMore: 'Узнать больше',

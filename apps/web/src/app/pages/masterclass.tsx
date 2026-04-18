@@ -35,7 +35,7 @@ export function Masterclass() {
       <div className="min-h-screen bg-background text-foreground">
         <LandingHeader activePath="/masterclass" />
         <div className="h-[72px]" />
-        <div className="py-20 text-center text-foreground-faint">იტვირთება...</div>
+        <div className="py-20 text-center text-foreground-faint">{t.loading}</div>
       </div>
     );
   }
