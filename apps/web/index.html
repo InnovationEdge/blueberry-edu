@@ -107,5 +107,22 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Firebase Analytics -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-analytics.js";
+      const firebaseConfig = {
+        apiKey: "AIzaSyAfgrf9AW5gD2PTJJfenOdWPpwh6M0gAT4",
+        authDomain: "blueberry-8100c.firebaseapp.com",
+        projectId: "blueberry-8100c",
+        storageBucket: "blueberry-8100c.firebasestorage.app",
+        messagingSenderId: "982437547798",
+        appId: "1:982437547798:web:20d2174646bd61c6580a37",
+        measurementId: "G-X20K0C6E9G"
+      };
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    </script>
   </body>
 </html>
