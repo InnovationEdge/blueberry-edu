@@ -2,7 +2,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState, useEffect, createContext, useContext } from 'react';
-import { supabase } from './lib/supabase';
+import { supabaseAuth } from './lib/supabase';
 import { Login } from './pages/login';
 import { Dashboard } from './pages/dashboard';
 import { CoursesList } from './pages/courses-list';
@@ -23,18 +23,18 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
+    supabaseAuth.auth.getSession().then(({ data }) => {
       setUser(data.session?.user ? { email: data.session.user.email ?? '' } : null);
       setLoading(false);
     });
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: listener } = supabaseAuth.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ? { email: session.user.email ?? '' } : null);
     });
     return () => listener.subscription.unsubscribe();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, signOut: () => supabase.auth.signOut() }}>
+    <AuthContext.Provider value={{ user, loading, signOut: () => supabaseAuth.auth.signOut() }}>
       {children}
     </AuthContext.Provider>
   );
