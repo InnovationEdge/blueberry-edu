@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
-import { MapPin, Briefcase, ArrowRight, Search, ChevronDown, Heart, Zap } from 'lucide-react';
-import { motion, useInView } from 'motion/react';
+import { MapPin, Briefcase, ArrowRight, Search, ChevronDown, Heart, Zap, X, Upload, CheckCircle } from 'lucide-react';
+import { AnimatePresence, motion, useInView } from 'motion/react';
 import { LandingHeader } from '../components/landing-header';
 import { LandingFooter } from '../components/landing-footer';
 import { useDocumentTitle } from '../hooks/use-document-title';
@@ -36,6 +36,10 @@ export function Career() {
   const t = getPageT(language);
   const [search, setSearch] = useState('');
   const [department, setDepartment] = useState('_all');
+  const [applyJob, setApplyJob] = useState<string | null>(null);
+  const [applyForm, setApplyForm] = useState({ name: '', email: '', phone: '', message: '', resume: null as File | null });
+  const [applySending, setApplySending] = useState(false);
+  const [applySent, setApplySent] = useState(false);
 
   const filtered = JOBS.filter(job => {
     const matchSearch = job.title.toLowerCase().includes(search.toLowerCase());
@@ -108,7 +112,7 @@ export function Career() {
           <div className="space-y-4">
             {filtered.map((job, i) => (
               <Reveal key={job.id} delay={i * 0.03}>
-                <a href="#" className="block bg-card border border-border-subtle rounded-2xl p-6 md:p-8 hover:border-[#004aad]/30 hover:shadow-xl transition-all duration-300 group glow-card">
+                <button onClick={() => { setApplyJob(job.title); setApplySent(false); setApplyForm({ name: '', email: '', phone: '', message: '', resume: null }); }} className="w-full text-left block bg-card border border-border-subtle rounded-2xl p-6 md:p-8 hover:border-[#004aad]/30 hover:shadow-xl transition-all duration-300 group glow-card">
                   <div className="flex items-center justify-between gap-6">
                     <div className="min-w-0 flex-1">
                       <h3 className="text-lg font-bold text-[#004aad] group-hover:underline mb-3">{job.title}</h3>
@@ -124,11 +128,11 @@ export function Career() {
                         <span className="hidden sm:inline text-foreground-faint/60">{job.department}</span>
                       </div>
                     </div>
-                    <button className="shrink-0 px-7 py-3 bg-gradient-to-r from-[#004aad] to-[#003d8f] text-white rounded-xl text-sm font-bold hover:from-[#003d8f] hover:to-[#002d6b] transition-all active:scale-[0.97] shadow-sm">
+                    <span className="shrink-0 px-7 py-3 bg-gradient-to-r from-[#004aad] to-[#003d8f] text-white rounded-xl text-sm font-bold group-hover:from-[#003d8f] group-hover:to-[#002d6b] transition-all shadow-sm">
                       {t.careerViewJob}
-                    </button>
+                    </span>
                   </div>
-                </a>
+                </button>
               </Reveal>
             ))}
           </div>
@@ -141,6 +145,81 @@ export function Career() {
           )}
         </div>
       </section>
+
+      {/* ═══ APPLY MODAL ═══ */}
+      <AnimatePresence>
+        {applyJob && (
+          <>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setApplyJob(null)} className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50" />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-lg bg-card border border-border-subtle rounded-2xl z-50 p-8 overflow-y-auto max-h-[90vh] shadow-2xl"
+            >
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-xl font-bold">{t.careerViewJob}</h3>
+                  <p className="text-sm text-[#004aad] mt-1">{applyJob}</p>
+                </div>
+                <button onClick={() => setApplyJob(null)} className="p-2 text-foreground-faint hover:text-foreground transition-colors"><X className="w-5 h-5" /></button>
+              </div>
+
+              {applySent ? (
+                <div className="text-center py-8">
+                  <CheckCircle className="w-14 h-14 text-green-500 mx-auto mb-4" />
+                  <h3 className="text-xl font-bold mb-2">განაცხადი გაგზავნილია!</h3>
+                  <p className="text-sm text-foreground-secondary">ჩვენ განვიხილავთ თქვენს რეზიუმეს და 48 საათში დაგიკავშირდებით.</p>
+                </div>
+              ) : (
+                <form onSubmit={async (e) => {
+                  e.preventDefault();
+                  setApplySending(true);
+                  try {
+                    const formData = new FormData();
+                    formData.append('name', applyForm.name);
+                    formData.append('email', applyForm.email);
+                    formData.append('phone', applyForm.phone);
+                    formData.append('_subject', `ვაკანსია: ${applyJob}`);
+                    formData.append('message', applyForm.message);
+                    if (applyForm.resume) formData.append('attachment', applyForm.resume);
+                    await fetch('https://formsubmit.co/ajax/ikerdikoshv@gmail.com', { method: 'POST', body: formData });
+                    setApplySent(true);
+                  } catch { /* fallback */ }
+                  setApplySending(false);
+                }} className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-medium text-foreground-faint mb-1.5">სახელი და გვარი</label>
+                    <input type="text" required value={applyForm.name} onChange={e => setApplyForm({...applyForm, name: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-border-subtle bg-background text-sm focus:outline-none focus:border-[#004aad]" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-foreground-faint mb-1.5">ელ. ფოსტა</label>
+                    <input type="email" required value={applyForm.email} onChange={e => setApplyForm({...applyForm, email: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-border-subtle bg-background text-sm focus:outline-none focus:border-[#004aad]" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-foreground-faint mb-1.5">ტელეფონი</label>
+                    <input type="tel" required value={applyForm.phone} onChange={e => setApplyForm({...applyForm, phone: e.target.value})} placeholder="+995 5XX XXX XXX" className="w-full px-4 py-3 rounded-xl border border-border-subtle bg-background text-sm focus:outline-none focus:border-[#004aad]" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-foreground-faint mb-1.5">რეზიუმე (PDF)</label>
+                    <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-border-subtle rounded-xl cursor-pointer hover:border-[#004aad]/30 transition-colors bg-surface">
+                      <Upload className="w-5 h-5 text-foreground-faint mb-2" />
+                      <span className="text-xs text-foreground-faint">{applyForm.resume ? applyForm.resume.name : 'ჩააგდეთ ან დააჭირეთ ასატვირთად'}</span>
+                      <span className="text-[10px] text-foreground-faint/60 mt-1">PDF, DOC, DOCX (მაქს 5MB)</span>
+                      <input type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={e => { if (e.target.files?.[0]) setApplyForm({...applyForm, resume: e.target.files[0]}); }} />
+                    </label>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-foreground-faint mb-1.5">დამატებითი ინფორმაცია</label>
+                    <textarea value={applyForm.message} onChange={e => setApplyForm({...applyForm, message: e.target.value})} rows={3} placeholder="მოტივაცია, გამოცდილება..." className="w-full px-4 py-3 rounded-xl border border-border-subtle bg-background text-sm focus:outline-none focus:border-[#004aad]" />
+                  </div>
+                  <button type="submit" disabled={applySending} className="w-full py-3.5 bg-gradient-to-r from-[#004aad] to-[#003d8f] text-white rounded-xl font-bold text-sm hover:from-[#003d8f] hover:to-[#002d6b] transition-all disabled:opacity-50 shadow-md">
+                    {applySending ? 'იგზავნება...' : 'გაგზავნა'}
+                  </button>
+                </form>
+              )}
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* ═══ WHY JOIN ═══ */}
       <section className="py-20 md:py-32 bg-surface">

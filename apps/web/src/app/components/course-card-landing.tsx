@@ -27,7 +27,7 @@ export function CourseCardLanding({ course, onClick }: CourseCardLandingProps) {
   return (
     <div
       onClick={onClick}
-      className="group cursor-pointer rounded-2xl overflow-hidden border border-border-subtle hover:border-brand/20 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl h-full flex flex-col glow-card"
+      className="group cursor-pointer rounded-2xl overflow-hidden border border-border-subtle hover:border-brand/20 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-2 hover:shadow-2xl h-full flex flex-col glow-card"
     >
       {/* Gradient header with logo */}
       <div className={`bg-gradient-to-br ${course.gradient} h-[140px] relative flex items-end p-5`}>

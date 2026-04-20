@@ -17,15 +17,21 @@ import { getPageT } from '../i18n/pages';
 
 function HeroVideo() {
   return (
-    <video
-      className="absolute inset-0 w-full h-full object-cover z-0"
-      src="/hero-bg.mp4"
-      autoPlay
-      muted
-      loop
-      playsInline
-      preload="auto"
-    />
+    <>
+      {/* Black placeholder while video loads */}
+      <div className="absolute inset-0 bg-black z-0" />
+      <video
+        className="absolute inset-0 w-full h-full object-cover z-0"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+      >
+        <source src="/hero-bg.mp4" type="video/mp4" />
+      </video>
+    </>
   );
 }
 
@@ -59,13 +65,13 @@ function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: strin
 /* ─── Fade-in on scroll component ─── */
 function Reveal({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const isInView = useInView(ref, { once: true, margin: '-60px' });
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 32 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
-      transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay }}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay }}
       className={className}
     >
       {children}
@@ -116,7 +122,7 @@ export function Landing() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
+              transition={{ duration: 0.9, delay: 0.15 }}
               className="inline-flex items-center gap-2 bg-white/[0.08] backdrop-blur-sm border border-white/[0.12] rounded-full px-4 py-2 text-xs font-semibold text-white/70 uppercase tracking-[0.2em] mb-8"
             >
               <div className="w-2 h-2 rounded-full bg-[#5b9bd5] animate-pulse" />
@@ -126,7 +132,7 @@ export function Landing() {
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ duration: 1.0, delay: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
               className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-[0.95] tracking-[-0.03em] text-white"
             >
               {t.landingHeroTitle1} <span className="bg-gradient-to-r from-[#5b9bd5] via-[#7db8e0] to-[#5b9bd5] bg-clip-text text-transparent">{t.landingHeroTitle2}</span>
@@ -135,7 +141,7 @@ export function Landing() {
             <motion.p
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ duration: 1.0, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
               className="text-base md:text-lg text-white/50 leading-relaxed max-w-lg mt-6"
             >
               {t.landingHeroSubtitle}
@@ -144,7 +150,7 @@ export function Landing() {
             <motion.button
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ duration: 1.0, delay: 0.55, ease: [0.25, 0.1, 0.25, 1] }}
               onClick={goToCourses}
               className="mt-8 px-10 py-4 bg-gradient-to-r from-[#004aad] to-[#003d8f] text-white rounded-full font-bold text-base hover:from-[#003d8f] hover:to-[#002d6b] transition-all shadow-xl shadow-[#004aad]/30 hover:shadow-[#004aad]/50 active:scale-[0.97] inline-flex items-center gap-2.5"
             >
