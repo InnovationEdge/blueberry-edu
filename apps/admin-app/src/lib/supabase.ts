@@ -10,4 +10,7 @@ const supabaseServiceKey = import.meta.env.VITE_SUPABASE_SERVICE_KEY ?? 'eyJhbGc
 export const supabaseAuth = createClient(supabaseUrl, supabaseAnonKey);
 
 // Data client (for CRUD — uses service_role to bypass RLS)
-export const supabase = createClient(supabaseUrl, supabaseServiceKey);
+// Disable auth persistence so it always uses the service_role key, not user JWT
+export const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+  auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+});
