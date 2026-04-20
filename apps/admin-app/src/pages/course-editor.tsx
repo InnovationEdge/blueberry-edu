@@ -15,6 +15,7 @@ interface CourseForm {
   duration: string;
   price: number;
   format: string;
+  gradient: string;
   image_url: string;
   mentor_name: string;
   mentor_role: string;
@@ -28,8 +29,15 @@ interface CourseForm {
   learning_outcomes: string[];
 }
 
+const GRADIENT_OPTIONS = [
+  'from-[#1a1a2e] to-[#16213e]', 'from-[#0f3460] to-[#16213e]', 'from-[#533483] to-[#0b0e2e]',
+  'from-[#1a472a] to-[#0d2818]', 'from-[#4a1942] to-[#1a1a2e]', 'from-[#2d1b69] to-[#11001c]',
+  'from-[#1b4332] to-[#081c15]', 'from-[#3d1c02] to-[#1a0a00]', 'from-[#1c1c3d] to-[#0a0a1a]',
+];
+
 const emptyForm: CourseForm = {
   title: '', description: '', tribe: 'ინჟინერია', duration: '', price: 0, format: 'ონლაინ',
+  gradient: 'from-[#1a1a2e] to-[#16213e]',
   image_url: '', mentor_name: '', mentor_role: '', mentor_photo: '', mentor_bio: '',
   schedule_days: '', schedule_time: '', start_date: '', level: 'დამწყები', language: 'ქართული',
   learning_outcomes: [],
@@ -38,7 +46,8 @@ const emptyForm: CourseForm = {
 type Tab = 'general' | 'mentor' | 'schedule' | 'outcomes' | 'syllabus' | 'faq';
 
 export function CourseEditor() {
-  const { id } = useParams<{ id: string }>();
+  const { id: rawId } = useParams<{ id: string }>();
+  const courseId = Number(rawId);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { user, signOut } = useAdminAuth();
@@ -51,27 +60,32 @@ export function CourseEditor() {
   const mentorPhotoRef = useRef<HTMLInputElement>(null);
 
   const { data: course, isLoading } = useQuery({
-    queryKey: ['admin-course', id],
+    queryKey: ['admin-course', courseId],
     queryFn: async () => {
-      const { data } = await supabase.from('courses').select('*').eq('id', id).single();
+      if (!courseId || isNaN(courseId)) return null;
+      const { data, error } = await supabase.from('courses').select('*').eq('id', courseId).single();
+      if (error) throw error;
       return data;
     },
+    enabled: !!courseId && !isNaN(courseId),
   });
 
   const { data: syllabusData } = useQuery({
-    queryKey: ['admin-syllabus', id],
+    queryKey: ['admin-syllabus', courseId],
     queryFn: async () => {
-      const { data } = await supabase.from('course_syllabus').select('*').eq('course_id', id).order('sort_order');
+      const { data } = await supabase.from('course_syllabus').select('*').eq('course_id', courseId).order('sort_order');
       return data ?? [];
     },
+    enabled: !!courseId && !isNaN(courseId),
   });
 
   const { data: faqData } = useQuery({
-    queryKey: ['admin-faq', id],
+    queryKey: ['admin-faq', courseId],
     queryFn: async () => {
-      const { data } = await supabase.from('course_faq').select('*').eq('course_id', id).order('sort_order');
+      const { data } = await supabase.from('course_faq').select('*').eq('course_id', courseId).order('sort_order');
       return data ?? [];
     },
+    enabled: !!courseId && !isNaN(courseId),
   });
 
   useEffect(() => {
@@ -82,6 +96,7 @@ export function CourseEditor() {
       duration: course.duration ?? '',
       price: course.price ?? 0,
       format: course.format ?? 'ონლაინ',
+      gradient: course.gradient ?? 'from-[#1a1a2e] to-[#16213e]',
       image_url: course.image_url ?? '',
       mentor_name: course.mentor_name ?? '',
       mentor_role: course.mentor_role ?? '',
@@ -115,8 +130,9 @@ export function CourseEditor() {
   }, [faqData]);
 
   const uploadImage = async (file: File, field: 'image_url' | 'mentor_photo') => {
+    if (!courseId) { alert('ჯერ კურსი შეინახეთ'); return; }
     const ext = file.name.split('.').pop();
-    const path = `${id}/${field}-${Date.now()}.${ext}`;
+    const path = `${courseId}/${field}-${Date.now()}.${ext}`;
     const { error } = await supabase.storage.from('course-assets').upload(path, file, { upsert: true });
     if (error) { alert('სურათის ატვირთვა ვერ მოხერხდა: ' + error.message); return; }
     const { data: { publicUrl } } = supabase.storage.from('course-assets').getPublicUrl(path);
@@ -124,17 +140,20 @@ export function CourseEditor() {
   };
 
   const handleSave = async () => {
+    if (!form.title.trim()) { alert('კურსის სახელი სავალდებულოა'); return; }
+    if (!form.tribe) { alert('Tribe სავალდებულოა'); return; }
+    if (!form.duration.trim()) { alert('ხანგრძლივობა სავალდებულოა'); return; }
     setSaving(true);
     try {
       // Save course fields
-      const { error: courseErr } = await supabase.from('courses').update(form).eq('id', id);
+      const { error: courseErr } = await supabase.from('courses').update(form).eq('id', courseId);
       if (courseErr) throw courseErr;
 
       // Replace syllabus — delete all then re-insert
-      await supabase.from('course_syllabus').delete().eq('course_id', id);
+      await supabase.from('course_syllabus').delete().eq('course_id', courseId);
       if (syllabus.length > 0) {
         const rows = syllabus.map((m, i) => ({
-          course_id: Number(id),
+          course_id: courseId,
           title: m.title,
           topics: m.topics,
           sort_order: i,
@@ -144,10 +163,10 @@ export function CourseEditor() {
       }
 
       // Replace FAQ
-      await supabase.from('course_faq').delete().eq('course_id', id);
+      await supabase.from('course_faq').delete().eq('course_id', courseId);
       if (faq.length > 0) {
         const rows = faq.map((f, i) => ({
-          course_id: Number(id),
+          course_id: courseId,
           question: f.question,
           answer: f.answer,
           sort_order: i,
@@ -157,9 +176,9 @@ export function CourseEditor() {
       }
 
       queryClient.invalidateQueries({ queryKey: ['admin-courses'] });
-      queryClient.invalidateQueries({ queryKey: ['admin-course', id] });
-      queryClient.invalidateQueries({ queryKey: ['admin-syllabus', id] });
-      queryClient.invalidateQueries({ queryKey: ['admin-faq', id] });
+      queryClient.invalidateQueries({ queryKey: ['admin-course', courseId] });
+      queryClient.invalidateQueries({ queryKey: ['admin-syllabus', courseId] });
+      queryClient.invalidateQueries({ queryKey: ['admin-faq', courseId] });
       navigate('/courses');
     } catch (e) {
       alert('შენახვისას შეცდომა: ' + (e instanceof Error ? e.message : 'უცნობი'));
@@ -260,6 +279,14 @@ export function CourseEditor() {
                     <Input value={form.format} onChange={e => setForm({ ...form, format: e.target.value })} />
                   </Field>
                 </div>
+
+                <Field label="ფერი (Gradient)">
+                  <div className="flex gap-2 flex-wrap">
+                    {GRADIENT_OPTIONS.map(g => (
+                      <button key={g} type="button" onClick={() => setForm({ ...form, gradient: g })} className={`w-12 h-8 rounded-lg bg-gradient-to-br ${g} border-2 transition-all ${form.gradient === g ? 'border-blue-500 scale-110' : 'border-gray-200 hover:border-gray-400'}`} />
+                    ))}
+                  </div>
+                </Field>
 
                 <div className="grid grid-cols-2 gap-5">
                   <Field label="დონე">

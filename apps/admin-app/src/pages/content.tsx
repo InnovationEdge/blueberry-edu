@@ -107,17 +107,23 @@ function StatsEditor({ queryClient }: { queryClient: ReturnType<typeof useQueryC
   const save = async (idx: number) => {
     const row = list[idx];
     if (!row.label) { alert('შეავსე სახელი'); return; }
-    if (row.id === 0) {
-      await supabase.from('landing_stats').insert({
-        value: row.value, suffix: row.suffix, label: row.label, sort_order: row.sort_order,
-      });
-    } else {
-      await supabase.from('landing_stats').update({
-        value: row.value, suffix: row.suffix, label: row.label, sort_order: row.sort_order,
-      }).eq('id', row.id);
+    try {
+      if (row.id === 0) {
+        const { error } = await supabase.from('landing_stats').insert({
+          value: row.value, suffix: row.suffix, label: row.label, sort_order: row.sort_order,
+        });
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from('landing_stats').update({
+          value: row.value, suffix: row.suffix, label: row.label, sort_order: row.sort_order,
+        }).eq('id', row.id);
+        if (error) throw error;
+      }
+      queryClient.invalidateQueries({ queryKey: ['admin-landing-stats'] });
+      queryClient.invalidateQueries({ queryKey: ['landing-stats'] });
+    } catch (e) {
+      alert('შეცდომა: ' + (e instanceof Error ? e.message : 'უცნობი'));
     }
-    queryClient.invalidateQueries({ queryKey: ['admin-landing-stats'] });
-    queryClient.invalidateQueries({ queryKey: ['landing-stats'] });
   };
 
   const remove = async (idx: number, id: number) => {
@@ -201,17 +207,23 @@ function TestimonialsEditor({ queryClient }: { queryClient: ReturnType<typeof us
   const save = async (idx: number) => {
     const row = list[idx];
     if (!row.name || !row.quote) { alert('შეავსე სახელი და ტექსტი'); return; }
-    if (row.id === 0) {
-      await supabase.from('landing_testimonials').insert({
-        quote: row.quote, name: row.name, role: row.role, avatar: row.avatar, sort_order: row.sort_order,
-      });
-    } else {
-      await supabase.from('landing_testimonials').update({
-        quote: row.quote, name: row.name, role: row.role, avatar: row.avatar, sort_order: row.sort_order,
-      }).eq('id', row.id);
+    try {
+      if (row.id === 0) {
+        const { error } = await supabase.from('landing_testimonials').insert({
+          quote: row.quote, name: row.name, role: row.role, avatar: row.avatar, sort_order: row.sort_order,
+        });
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from('landing_testimonials').update({
+          quote: row.quote, name: row.name, role: row.role, avatar: row.avatar, sort_order: row.sort_order,
+        }).eq('id', row.id);
+        if (error) throw error;
+      }
+      queryClient.invalidateQueries({ queryKey: ['admin-landing-testimonials'] });
+      queryClient.invalidateQueries({ queryKey: ['landing-testimonials'] });
+    } catch (e) {
+      alert('შეცდომა: ' + (e instanceof Error ? e.message : 'უცნობი'));
     }
-    queryClient.invalidateQueries({ queryKey: ['admin-landing-testimonials'] });
-    queryClient.invalidateQueries({ queryKey: ['landing-testimonials'] });
   };
 
   const remove = async (idx: number, id: number) => {
@@ -304,17 +316,23 @@ function FaqEditor({ queryClient }: { queryClient: ReturnType<typeof useQueryCli
   const save = async (idx: number) => {
     const row = list[idx];
     if (!row.question || !row.answer) { alert('შეავსე კითხვა და პასუხი'); return; }
-    if (row.id === 0) {
-      await supabase.from('landing_faq').insert({
-        question: row.question, answer: row.answer, sort_order: row.sort_order,
-      });
-    } else {
-      await supabase.from('landing_faq').update({
-        question: row.question, answer: row.answer, sort_order: row.sort_order,
-      }).eq('id', row.id);
+    try {
+      if (row.id === 0) {
+        const { error } = await supabase.from('landing_faq').insert({
+          question: row.question, answer: row.answer, sort_order: row.sort_order,
+        });
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from('landing_faq').update({
+          question: row.question, answer: row.answer, sort_order: row.sort_order,
+        }).eq('id', row.id);
+        if (error) throw error;
+      }
+      queryClient.invalidateQueries({ queryKey: ['admin-landing-faq'] });
+      queryClient.invalidateQueries({ queryKey: ['landing-faq'] });
+    } catch (e) {
+      alert('შეცდომა: ' + (e instanceof Error ? e.message : 'უცნობი'));
     }
-    queryClient.invalidateQueries({ queryKey: ['admin-landing-faq'] });
-    queryClient.invalidateQueries({ queryKey: ['landing-faq'] });
   };
 
   const remove = async (idx: number, id: number) => {

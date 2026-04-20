@@ -59,12 +59,18 @@ export function Masterclasses() {
   const saveRow = async (idx: number) => {
     const row = localList[idx];
     if (!row.date || !row.time) { alert('შეავსე თარიღი და დრო'); return; }
-    if (row.id === 0) {
-      await supabase.from('masterclasses').insert({ course_id: row.course_id, date: row.date, time: row.time });
-    } else {
-      await supabase.from('masterclasses').update({ course_id: row.course_id, date: row.date, time: row.time }).eq('id', row.id);
+    try {
+      if (row.id === 0) {
+        const { error } = await supabase.from('masterclasses').insert({ course_id: row.course_id, date: row.date, time: row.time });
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from('masterclasses').update({ course_id: row.course_id, date: row.date, time: row.time }).eq('id', row.id);
+        if (error) throw error;
+      }
+      queryClient.invalidateQueries({ queryKey: ['admin-masterclasses'] });
+    } catch (e) {
+      alert('შენახვისას შეცდომა: ' + (e instanceof Error ? e.message : 'უცნობი'));
     }
-    queryClient.invalidateQueries({ queryKey: ['admin-masterclasses'] });
   };
 
   return (
