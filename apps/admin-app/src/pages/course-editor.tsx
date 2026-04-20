@@ -145,8 +145,9 @@ export function CourseEditor() {
     if (!form.duration.trim()) { alert('ხანგრძლივობა სავალდებულოა'); return; }
     setSaving(true);
     try {
-      // Save course fields
-      const { error: courseErr } = await supabase.from('courses').update(form).eq('id', courseId);
+      // Save course fields (exclude learning_outcomes if column doesn't exist in DB)
+      const { learning_outcomes, ...courseFields } = form;
+      const { error: courseErr } = await supabase.from('courses').update(courseFields).eq('id', courseId);
       if (courseErr) throw courseErr;
 
       // Replace syllabus — delete all then re-insert
@@ -180,8 +181,9 @@ export function CourseEditor() {
       queryClient.invalidateQueries({ queryKey: ['admin-syllabus', courseId] });
       queryClient.invalidateQueries({ queryKey: ['admin-faq', courseId] });
       navigate('/courses');
-    } catch (e) {
-      alert('შენახვისას შეცდომა: ' + (e instanceof Error ? e.message : 'უცნობი'));
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : (e && typeof e === 'object' && 'message' in e) ? String((e as Record<string, unknown>).message) : JSON.stringify(e);
+      alert('შენახვისას შეცდომა: ' + msg);
     } finally {
       setSaving(false);
     }
