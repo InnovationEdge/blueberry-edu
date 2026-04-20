@@ -50,7 +50,8 @@ export function Masterclasses() {
   const removeRow = async (idx: number, id: number) => {
     if (id > 0) {
       if (!confirm('წავშალოთ მასტერკლასი?')) return;
-      await supabase.from('masterclasses').delete().eq('id', id);
+      const { error } = await supabase.from('masterclasses').delete().eq('id', id);
+      if (error) { alert('წაშლისას შეცდომა: ' + error.message); return; }
     }
     setLocalList(prev => prev.filter((_, i) => i !== idx));
     queryClient.invalidateQueries({ queryKey: ['admin-masterclasses'] });

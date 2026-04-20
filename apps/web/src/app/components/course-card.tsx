@@ -28,7 +28,7 @@ export function CourseCard({
   const { language } = useAuth();
   const t = getAppT(language);
 
-  const courseProgress = progress || (course as any).progress || 0;
+  const courseProgress = progress || ('progress' in course ? (course as Record<string, unknown>).progress as number : 0) || 0;
   const queryClient = useQueryClient();
 
   const prefetchCourse = () => {

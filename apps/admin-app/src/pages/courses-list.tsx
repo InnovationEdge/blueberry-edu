@@ -31,13 +31,17 @@ export function CoursesList() {
       logo: '',
     }).select().single();
 
-    if (error) { alert('შექმნა ვერ მოხერხდა: ' + error.message); return; }
+    if (error || !data) { alert('შექმნა ვერ მოხერხდა: ' + (error?.message ?? 'უცნობი შეცდომა')); return; }
     queryClient.invalidateQueries({ queryKey: ['admin-courses'] });
     navigate(`/courses/${data.id}`);
   };
 
   const handleDelete = async (id: number, title: string) => {
     if (!confirm(`წავშალოთ "${title}"?`)) return;
+    // Cascade: delete related data first
+    await supabase.from('course_syllabus').delete().eq('course_id', id);
+    await supabase.from('course_faq').delete().eq('course_id', id);
+    await supabase.from('course_registrations').delete().eq('course_id', id);
     const { error } = await supabase.from('courses').delete().eq('id', id);
     if (error) { alert('წაშლა ვერ მოხერხდა: ' + error.message); return; }
     queryClient.invalidateQueries({ queryKey: ['admin-courses'] });

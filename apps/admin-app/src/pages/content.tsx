@@ -129,7 +129,8 @@ function StatsEditor({ queryClient }: { queryClient: ReturnType<typeof useQueryC
   const remove = async (idx: number, id: number) => {
     if (id > 0) {
       if (!confirm('წავშალოთ?')) return;
-      await supabase.from('landing_stats').delete().eq('id', id);
+      const { error } = await supabase.from('landing_stats').delete().eq('id', id);
+      if (error) { alert('წაშლისას შეცდომა: ' + error.message); return; }
     }
     setList(prev => prev.filter((_, i) => i !== idx));
     queryClient.invalidateQueries({ queryKey: ['admin-landing-stats'] });
@@ -229,7 +230,8 @@ function TestimonialsEditor({ queryClient }: { queryClient: ReturnType<typeof us
   const remove = async (idx: number, id: number) => {
     if (id > 0) {
       if (!confirm('წავშალოთ?')) return;
-      await supabase.from('landing_testimonials').delete().eq('id', id);
+      const { error } = await supabase.from('landing_testimonials').delete().eq('id', id);
+      if (error) { alert('წაშლისას შეცდომა: ' + error.message); return; }
     }
     setList(prev => prev.filter((_, i) => i !== idx));
     queryClient.invalidateQueries({ queryKey: ['admin-landing-testimonials'] });
@@ -338,7 +340,8 @@ function FaqEditor({ queryClient }: { queryClient: ReturnType<typeof useQueryCli
   const remove = async (idx: number, id: number) => {
     if (id > 0) {
       if (!confirm('წავშალოთ?')) return;
-      await supabase.from('landing_faq').delete().eq('id', id);
+      const { error } = await supabase.from('landing_faq').delete().eq('id', id);
+      if (error) { alert('წაშლისას შეცდომა: ' + error.message); return; }
     }
     setList(prev => prev.filter((_, i) => i !== idx));
     queryClient.invalidateQueries({ queryKey: ['admin-landing-faq'] });
