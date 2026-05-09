@@ -50,17 +50,27 @@ export function LandingHeader({ activePath }: LandingHeaderProps) {
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-7 mr-6">
-            {NAV_ITEMS.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className={`text-sm font-medium transition-colors ${
-                  activePath === item.href ? 'text-[#004aad]' : 'text-gray-700 hover:text-[#004aad]'
-                }`}
-              >
-                {item.label}
-              </a>
-            ))}
+            {NAV_ITEMS.map((item) => {
+              const isActive = activePath === item.href;
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className={`relative text-sm font-medium transition-colors py-2 ${
+                    isActive ? 'text-[#004aad]' : 'text-gray-700 hover:text-[#004aad]'
+                  }`}
+                >
+                  {item.label}
+                  {isActive && (
+                    <motion.span
+                      layoutId="navIndicator"
+                      className="absolute left-0 right-0 -bottom-0.5 h-[2px] bg-[#004aad] rounded-full"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </a>
+              );
+            })}
           </nav>
 
           {/* Language */}

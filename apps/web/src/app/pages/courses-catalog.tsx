@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown, Clock, Globe, ArrowRight, Flame } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { useNavigate } from 'react-router';
 import { LandingHeader } from '../components/landing-header';
 import { CourseCardLanding } from '../components/course-card-landing';
@@ -114,36 +114,48 @@ export function CoursesCatalog() {
 
               {/* Tribe filter */}
               <div className="flex items-center gap-2">
-                {TRIBE_DB_VALUES.map((tribe) => (
-                  <button
-                    key={tribe}
-                    onClick={() => setSelectedTribe(tribe)}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                      selectedTribe === tribe
-                        ? 'bg-[#004aad] text-white shadow-sm'
-                        : 'bg-white border border-gray-200 text-gray-600 hover:border-gray-300'
-                    }`}
-                  >
-                    {tribe === '_all' ? t.catalogAll : tribe}
-                  </button>
-                ))}
+                {TRIBE_DB_VALUES.map((tribe) => {
+                  const isActive = selectedTribe === tribe;
+                  return (
+                    <button
+                      key={tribe}
+                      onClick={() => setSelectedTribe(tribe)}
+                      className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                        isActive ? 'text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-gray-300'
+                      }`}
+                    >
+                      {isActive && (
+                        <motion.span
+                          layoutId="tribePill"
+                          className="absolute inset-0 bg-[#004aad] rounded-lg shadow-sm"
+                          transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                        />
+                      )}
+                      <span className="relative z-10">{tribe === '_all' ? t.catalogAll : tribe}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
 
           {/* Course grid - same cards as landing */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {sorted.map((course, i) => (
-              <motion.div
-                key={course.id ?? i}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: i * 0.05 }}
-              >
-                <CourseCardLanding course={course} onClick={() => navigate(`/courses/${course.id}`)} />
-              </motion.div>
-            ))}
-          </div>
+          <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <AnimatePresence mode="popLayout">
+              {sorted.map((course, i) => (
+                <motion.div
+                  key={course.id ?? i}
+                  layout
+                  initial={{ opacity: 0, y: 20, scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.15 } }}
+                  transition={{ duration: 0.35, delay: i * 0.03, ease: [0.21, 0.47, 0.32, 0.98] }}
+                >
+                  <CourseCardLanding course={course} onClick={() => navigate(`/courses/${course.id}`)} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
 
           {sorted.length === 0 && (
             <div className="text-center py-20 text-foreground-faint">
