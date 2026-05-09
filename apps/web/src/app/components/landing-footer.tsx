@@ -20,7 +20,7 @@ export function LandingFooter() {
     [t.footerResources]: [
       { label: t.footerFaq, href: '/#faq' },
       { label: t.footerTerms, href: '#' },
-      { label: t.footerPrivacy, href: '#' },
+      { label: t.footerPrivacy, href: '/privacy' },
     ],
   };
 

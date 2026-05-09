@@ -8,6 +8,7 @@ const Masterclass = lazy(() => import('./pages/masterclass').then(m => ({ defaul
 const CertificatesLanding = lazy(() => import('./pages/certificates-landing').then(m => ({ default: m.CertificatesLanding })));
 const Career = lazy(() => import('./pages/career').then(m => ({ default: m.Career })));
 const About = lazy(() => import('./pages/about').then(m => ({ default: m.About })));
+const Privacy = lazy(() => import('./pages/privacy').then(m => ({ default: m.Privacy })));
 
 function PageLoader() {
   return (
@@ -29,6 +30,7 @@ export const router = createBrowserRouter([
   { path: '/certificates', element: <LazyPage><CertificatesLanding /></LazyPage> },
   { path: '/career', element: <LazyPage><Career /></LazyPage> },
   { path: '/about', element: <LazyPage><About /></LazyPage> },
+  { path: '/privacy', element: <LazyPage><Privacy /></LazyPage> },
   {
     path: '*',
     element: (
