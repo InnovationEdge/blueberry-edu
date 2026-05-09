@@ -35,7 +35,7 @@ function HeroVideo() {
   );
 }
 
-/* ─── Animated counter — counts up from 0 ─── */
+/* ─── Animated counter - counts up from 0 ─── */
 function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: string }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
@@ -105,7 +105,7 @@ export function Landing() {
 
       <LandingHeader activePath="/" />
 
-      {/* ═══ HERO — Compact with particle canvas ═══ */}
+      {/* ═══ HERO - Compact with particle canvas ═══ */}
       <section ref={heroRef} className="relative h-screen flex items-end overflow-hidden bg-transparent">
         {/* Background video */}
         <HeroVideo />
@@ -113,10 +113,10 @@ export function Landing() {
         {/* Particle network on top */}
         <div className="absolute inset-0 z-[2]"><HeroCanvas /></div>
 
-        {/* Bottom gradient — stronger */}
+        {/* Bottom gradient - stronger */}
         <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black via-black/80 to-transparent z-[3]" />
 
-        {/* Content — bottom-left */}
+        {/* Content - bottom-left */}
         <div className="relative z-[4] w-full px-5 md:px-12 lg:px-16 xl:px-20 self-end pb-24 md:pb-28">
           <div className="max-w-3xl">
             <motion.div
@@ -161,7 +161,7 @@ export function Landing() {
         </div>
       </section>
 
-      {/* ═══ COMPANIES — Lovable style: centered, faded edges, grayscale ═══ */}
+      {/* ═══ COMPANIES - Lovable style: centered, faded edges, grayscale ═══ */}
       <section className="relative z-10 py-16 md:py-20 bg-background overflow-hidden">
         <p className="text-center text-foreground-faint text-xs uppercase tracking-[0.2em] mb-12">
           {p.landingCompanies}
@@ -196,7 +196,7 @@ export function Landing() {
         }
       `}</style>
 
-      {/* ═══ COURSES — Lovable "Discover templates" style ═══ */}
+      {/* ═══ COURSES - Lovable "Discover templates" style ═══ */}
       <section className="py-20 md:py-32 bg-surface">
         <div className="px-5 md:px-12 lg:px-16">
           <Reveal>
@@ -228,7 +228,7 @@ export function Landing() {
         </div>
       </section>
 
-      {/* ═══ STATS — ჩვენ რიცხვებში ═══ */}
+      {/* ═══ STATS - ჩვენ რიცხვებში ═══ */}
       <section className="py-20 md:py-32">
         <div className="max-w-[1300px] mx-auto px-5 md:px-12 lg:px-16">
           <Reveal>
@@ -254,10 +254,10 @@ export function Landing() {
       <section className="py-24 md:py-36">
         <div className="max-w-[1300px] mx-auto px-5 md:px-12 lg:px-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
-            {/* Left — Certificate (Coursera/Penn style) */}
+            {/* Left - Certificate (Coursera/Penn style) */}
             <Reveal>
               <div className="relative bg-white shadow-2xl rounded-sm overflow-hidden aspect-[1.414/1]">
-                {/* Wavy ornament border — CSS pattern */}
+                {/* Wavy ornament border - CSS pattern */}
                 <div className="absolute inset-0 pointer-events-none" style={{
                   borderImage: 'repeating-linear-gradient(45deg, #004aad18, #004aad18 2px, transparent 2px, transparent 8px) 14',
                   borderWidth: '14px',
@@ -265,7 +265,7 @@ export function Landing() {
                 }} />
 
                 <div className="relative p-6 md:p-8">
-                  {/* Right ribbon — Coursera exact style, long hanging */}
+                  {/* Right ribbon - Coursera exact style, long hanging */}
                   <div className="absolute -top-[14px] right-5 z-10" style={{ filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.2))' }}>
                     <div className="w-[110px] flex flex-col items-center" style={{ height: '65%', minHeight: '260px', background: 'linear-gradient(180deg, #f8f8f8 0%, #efefef 40%, #e0e0e0 80%, #cccccc 100%)', clipPath: 'polygon(0 0, 100% 0, 100% 92%, 50% 100%, 0 92%)', borderLeft: '1px solid rgba(0,0,0,0.06)', borderRight: '1px solid rgba(0,0,0,0.06)' }}>
                       {/* Top text */}
@@ -276,12 +276,12 @@ export function Landing() {
                       {/* Spacer to push logo to bottom area */}
                       <div className="flex-1" />
 
-                      {/* Seal — outer ring with text + logo center */}
+                      {/* Seal - outer ring with text + logo center */}
                       <div className="relative w-[80px] h-[80px] mb-8">
                         {/* Outer dashed ring */}
                         <div className="absolute inset-0 rounded-full border-[2px] border-[#5a6d7e]" />
                         <div className="absolute inset-[4px] rounded-full border border-[#5a6d7e]/30" />
-                        {/* Ring text — top arc */}
+                        {/* Ring text - top arc */}
                         <svg className="absolute inset-0 w-full h-full" viewBox="0 0 80 80">
                           <defs>
                             <path id="topArc" d="M 12,40 a 28,28 0 1,1 56,0" />
@@ -294,7 +294,7 @@ export function Landing() {
                             <textPath href="#bottomArc" startOffset="50%" textAnchor="middle">COURSE CERTIFICATE</textPath>
                           </text>
                         </svg>
-                        {/* Center — logo */}
+                        {/* Center - logo */}
                         <div className="absolute inset-[10px] rounded-full bg-white flex items-center justify-center overflow-hidden">
                           <Logo variant="academy" className="h-12 w-auto" />
                         </div>
@@ -317,7 +317,7 @@ export function Landing() {
                   {/* Course */}
                   <p className="text-sm md:text-base font-bold text-gray-900 italic mb-5" style={{ fontFamily: 'Georgia, serif' }}>React Native Development</p>
 
-                  {/* Bottom — signature left, seal + verify right */}
+                  {/* Bottom - signature left, seal + verify right */}
                   <div className="flex items-end justify-between">
                     <div>
                       <svg viewBox="0 0 200 50" className="w-32 h-8 text-gray-700">
@@ -336,7 +336,7 @@ export function Landing() {
               </div>
             </Reveal>
 
-            {/* Right — Description */}
+            {/* Right - Description */}
             <Reveal delay={0.15}>
               <div>
                 <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-6"><span className="text-brand">{p.landingCertTitle}</span></h2>

@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+import { motion, AnimatePresence, useInView } from 'motion/react';
 import { LandingHeader } from '../components/landing-header';
 import { LandingFooter } from '../components/landing-footer';
 import { useDocumentTitle } from '../hooks/use-document-title';
@@ -307,6 +309,22 @@ const PRIVACY: Record<Lang, PrivacyContent> = {
   },
 };
 
+function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  return (
+    <motion.section
+      ref={ref}
+      initial={{ opacity: 0, y: 24 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.55, delay, ease: [0.21, 0.47, 0.32, 0.98] }}
+      className="space-y-3"
+    >
+      {children}
+    </motion.section>
+  );
+}
+
 function renderBody(items: Section['body']) {
   return items.map((item, i) => {
     if (typeof item === 'string') {
@@ -342,6 +360,16 @@ function renderList(items: NonNullable<Section['list']>) {
   );
 }
 
+function renderSection(s: Section) {
+  return (
+    <>
+      <h2 className="text-2xl font-bold tracking-tight">{s.heading}</h2>
+      {renderBody(s.body)}
+      {s.list && renderList(s.list)}
+    </>
+  );
+}
+
 export function Privacy() {
   const { language } = useAuth();
   const t = PRIVACY[language as Lang] ?? PRIVACY.ka;
@@ -354,50 +382,75 @@ export function Privacy() {
       <div className="h-[72px]" />
 
       <section className="relative bg-[#004aad] text-white overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-[-40%] right-[-15%] w-[700px] h-[700px] bg-white/5 rounded-full blur-[120px]" />
+        <div className="absolute inset-0 pointer-events-none">
+          <motion.div
+            className="absolute top-[-40%] right-[-15%] w-[700px] h-[700px] bg-white/5 rounded-full blur-[120px]"
+            animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.7, 0.5] }}
+            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          <motion.div
+            className="absolute bottom-[-30%] left-[-10%] w-[500px] h-[500px] bg-white/5 rounded-full blur-[100px]"
+            animate={{ scale: [1, 1.12, 1], opacity: [0.4, 0.6, 0.4] }}
+            transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+          />
         </div>
+
         <div className="relative max-w-[900px] mx-auto px-6 md:px-12 py-16 md:py-24">
-          <p className="text-white/50 text-sm font-medium uppercase tracking-wider mb-4">{t.badge}</p>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-[-0.03em] leading-[1.1] mb-4">
-            {t.title}
-          </h1>
-          <p className="text-white/60 text-sm">{t.updated}</p>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={language}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }}
+            >
+              <p className="text-white/50 text-sm font-medium uppercase tracking-wider mb-4">{t.badge}</p>
+              <h1 className="text-4xl md:text-5xl font-extrabold tracking-[-0.03em] leading-[1.1] mb-4">
+                {t.title}
+              </h1>
+              <p className="text-white/60 text-sm">{t.updated}</p>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </section>
 
-      <article className="max-w-[820px] mx-auto px-6 md:px-12 py-16 md:py-20 space-y-10 text-foreground leading-relaxed">
-        <section className="space-y-3">
-          <p className="text-base text-foreground-subtle">{t.intro}</p>
-        </section>
+      <AnimatePresence mode="wait">
+        <motion.article
+          key={language}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="max-w-[820px] mx-auto px-6 md:px-12 py-16 md:py-20 space-y-12 text-foreground leading-relaxed"
+        >
+          <Reveal>
+            <p className="text-base text-foreground-subtle">{t.intro}</p>
+          </Reveal>
 
-        {t.sections.slice(0, 3).map((s, i) => (
-          <section key={i} className="space-y-3">
-            <h2 className="text-2xl font-bold tracking-tight">{s.heading}</h2>
-            {renderBody(s.body)}
-            {s.list && renderList(s.list)}
-          </section>
-        ))}
+          {t.sections.slice(0, 3).map((s, i) => (
+            <Reveal key={`a-${i}`} delay={i * 0.04}>
+              {renderSection(s)}
+            </Reveal>
+          ))}
 
-        <section className="space-y-3">
-          <h2 className="text-2xl font-bold tracking-tight">{t.metaSection.heading}</h2>
-          <p className="text-base text-foreground-subtle">
-            {t.metaSection.body}
-            <a href="https://www.facebook.com/privacy/policy" target="_blank" rel="noopener noreferrer" className="text-brand hover:underline">
-              {t.metaSection.metaPolicyLabel}
-            </a>
-            .
-          </p>
-        </section>
+          <Reveal delay={0.04}>
+            <h2 className="text-2xl font-bold tracking-tight">{t.metaSection.heading}</h2>
+            <p className="text-base text-foreground-subtle">
+              {t.metaSection.body}
+              <a href="https://www.facebook.com/privacy/policy" target="_blank" rel="noopener noreferrer" className="text-brand hover:underline">
+                {t.metaSection.metaPolicyLabel}
+              </a>
+              .
+            </p>
+          </Reveal>
 
-        {t.sections.slice(3).map((s, i) => (
-          <section key={i} className="space-y-3">
-            <h2 className="text-2xl font-bold tracking-tight">{s.heading}</h2>
-            {renderBody(s.body)}
-            {s.list && renderList(s.list)}
-          </section>
-        ))}
-      </article>
+          {t.sections.slice(3).map((s, i) => (
+            <Reveal key={`b-${i}`} delay={i * 0.04}>
+              {renderSection(s)}
+            </Reveal>
+          ))}
+        </motion.article>
+      </AnimatePresence>
 
       <LandingFooter />
     </div>

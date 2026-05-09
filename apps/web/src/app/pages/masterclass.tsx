@@ -72,12 +72,12 @@ export function Masterclass() {
         </div>
       </section>
 
-      {/* ═══ MAIN — form + info ═══ */}
+      {/* ═══ MAIN - form + info ═══ */}
       <section className="py-14 md:py-20">
         <div className="max-w-[1300px] mx-auto px-5 md:px-12 lg:px-16">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-12 md:gap-16">
 
-            {/* Left — რა მოიცავს + course select */}
+            {/* Left - რა მოიცავს + course select */}
             <div>
               <h2 className="text-2xl md:text-3xl font-bold mb-8">{t.mcWhatIncludes}</h2>
 
@@ -128,7 +128,7 @@ export function Masterclass() {
               )}
             </div>
 
-            {/* Right — Registration form */}
+            {/* Right - Registration form */}
             <div>
               <div className="sticky top-[88px]">
                 <div className="bg-card border border-border-subtle rounded-2xl p-7 shadow-lg">

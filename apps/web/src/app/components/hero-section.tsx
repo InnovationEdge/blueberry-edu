@@ -51,7 +51,7 @@ export function HeroSection({ courses, interval = 6000 }: HeroSectionProps) {
         </div>
       ))}
 
-      {/* Gradients — always dark for image readability */}
+      {/* Gradients - always dark for image readability */}
       <div className="absolute inset-0 bg-gradient-to-r from-overlay/90 via-overlay/50 to-transparent" />
       <div className="absolute inset-0 bg-gradient-to-t from-overlay via-transparent to-transparent" />
       <div className="absolute inset-0 bg-gradient-to-b from-overlay/40 via-transparent to-overlay" />

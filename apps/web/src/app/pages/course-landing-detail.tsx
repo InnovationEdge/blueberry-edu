@@ -188,12 +188,12 @@ export function CourseLandingDetail() {
                 <h2 className="text-xl font-bold mb-5">{t.detailScheduleTitle}</h2>
                 <div className="bg-card border border-border-subtle rounded-xl divide-y divide-border-subtle">
                   {[
-                    { icon: Calendar, label: t.detailStartDate, value: course.start_date ?? '—' },
+                    { icon: Calendar, label: t.detailStartDate, value: course.start_date ?? '-' },
                     { icon: Clock, label: t.detailDuration, value: course.duration },
-                    { icon: User, label: t.detailMentor, value: course.mentor_name ?? '—', sub: course.mentor_role },
+                    { icon: User, label: t.detailMentor, value: course.mentor_name ?? '-', sub: course.mentor_role },
                     { icon: MapPin, label: t.detailFormat, value: course.format ?? 'Google Meet' },
-                    { icon: Calendar, label: t.detailScheduleDays, value: course.schedule_days ?? '—' },
-                    { icon: Clock, label: t.detailLectureTime, value: course.schedule_time ?? '—' },
+                    { icon: Calendar, label: t.detailScheduleDays, value: course.schedule_days ?? '-' },
+                    { icon: Clock, label: t.detailLectureTime, value: course.schedule_time ?? '-' },
                   ].map((row, i) => {
                     const Icon = row.icon;
                     return (
@@ -243,7 +243,7 @@ export function CourseLandingDetail() {
               {/* Price + Register */}
               <div className="bg-card border border-border-subtle rounded-2xl p-7 shadow-lg glow-card">
                 <p className="text-4xl font-extrabold tracking-tight mb-1">{course.price}₾</p>
-                <p className="text-sm text-foreground-faint mb-5">{t.detailStarting}: {course.start_date ?? '—'}</p>
+                <p className="text-sm text-foreground-faint mb-5">{t.detailStarting}: {course.start_date ?? '-'}</p>
 
                 {!registration.isSubmitted ? (
                   <form onSubmit={handleSubmit} className="space-y-3 mb-4">
@@ -283,9 +283,9 @@ export function CourseLandingDetail() {
                   { label: t.detailCategory, value: course.tribe },
                   { label: t.detailDuration, value: course.duration },
                   { label: t.detailFormat, value: course.format ?? 'Google Meet' },
-                  { label: t.detailLevel, value: course.level ?? '—' },
+                  { label: t.detailLevel, value: course.level ?? '-' },
                   { label: t.detailLanguage, value: course.language ?? 'ქართული' },
-                  { label: t.detailMentor, value: course.mentor_name ?? '—' },
+                  { label: t.detailMentor, value: course.mentor_name ?? '-' },
                 ].map((item, i) => (
                   <div key={i} className="flex items-center justify-between text-sm">
                     <span className="text-foreground-faint">{item.label}</span>

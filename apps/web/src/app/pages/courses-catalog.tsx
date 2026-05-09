@@ -50,7 +50,7 @@ export function CoursesCatalog() {
       {/* Spacer for fixed header */}
       <div className="h-[72px]" />
 
-      {/* ═══ FEATURED BANNER — digitaledu.ge style ═══ */}
+      {/* ═══ FEATURED BANNER - digitaledu.ge style ═══ */}
       {featured && (
         <section className="relative bg-gradient-to-br from-[#e8f4fd] via-[#f0f4ff] to-[#e8f0fe] overflow-hidden">
           <div className="max-w-[1300px] mx-auto px-5 md:px-12 lg:px-16">
@@ -74,7 +74,7 @@ export function CoursesCatalog() {
                 </button>
               </motion.div>
 
-              {/* Right — course card preview */}
+              {/* Right - course card preview */}
               <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.15 }} className="hidden md:block">
                 <div className="relative">
                   <div className="absolute -top-3 -right-3 z-10 bg-[#ef4444] text-white px-4 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-lg">
@@ -131,7 +131,7 @@ export function CoursesCatalog() {
             </div>
           </div>
 
-          {/* Course grid — same cards as landing */}
+          {/* Course grid - same cards as landing */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {sorted.map((course, i) => (
               <motion.div

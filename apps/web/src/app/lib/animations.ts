@@ -1,4 +1,4 @@
-/** Shared animation constants — single source of truth */
+/** Shared animation constants - single source of truth */
 
 export const EASE_OUT = [0.25, 0.1, 0.25, 1] as const;
 export const EASE_SMOOTH = 'easeOut' as const;

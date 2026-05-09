@@ -17,7 +17,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const openLogin = () => {
-    // Placeholder — მომავალში Supabase Auth
+    // Placeholder - მომავალში Supabase Auth
   };
 
   return (
